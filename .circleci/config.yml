@@ -1,0 +1,75 @@
+version: 2
+jobs:
+  build:
+    environment:
+      - EXPO_USERNAME: $EXPO_USERNAME
+      - EXPO_PASSWORD: $EXPO_PASSWORD
+      - PROJECT_NAME: $PROJECT_NAME
+      - APPLE_TEAM_ID: $APPLE_TEAM_ID
+      - APPLE_ID: $APPLE_ID
+      - APPLE_ID_PASSWORD: $APPLE_ID_PASSWORD
+    docker:
+      - image: circleci/node:6.11.1
+    branches:
+      only:
+        - master
+    steps:
+      - checkout
+      - run:
+          name: Install expect
+          command: sudo apt-get update; sudo apt-get install expect
+      - run:
+          name: Install Expo CLI Globally
+          command: sudo npm install -g exp
+      - run:
+          name: Update yarn
+          command: sudo npm install --global yarn
+      - run:
+          name: Install node modules
+          command: yarn
+      - run:
+          name: Log In To Expo
+          command: |
+            expect -c '\
+              set timeout 10
+              spawn exp signin
+              expect "? Username/Email Address:"
+              send -- "$EXPO_USERNAME\r"
+              expect "? Password:"
+              send -- "$EXPO_PASSWORD\r"
+              expect eof'
+      - run:
+          name: Publish to Expo
+          command: exp publish
+      - run:
+          name: Build Standalone app for IOS
+          command: |
+            expect -c '\
+              set timeout 10
+              spawn exp build:ios
+              expect default
+              send -- "$APPLE_ID\r"
+              expect default
+              send -- "$APPLE_ID_PASSWORD\r"
+              expect default
+              send -- "$APPLE_TEAM_ID\r"
+              expect default
+              send -- "1\r"
+              expect default
+              send -- "1\r"
+              expect eof'
+      - run:
+          name: Check IOS build status
+          command: exp build:status
+      - run:
+          name: Build Standalone app for Android
+          command: |
+            expect -c '\
+              set timeout 10
+              spawn exp build:android
+              expect default
+              send -- "1\r"
+              expect eof'
+      - run:
+          name: Check Android build status
+          command: exp build:status

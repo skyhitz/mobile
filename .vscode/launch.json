@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug in Exponent",
+        "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+        "type": "reactnative",
+        "request": "launch",
+        "platform": "exponent",
+        "sourceMaps": true,
+        "outDir": "${workspaceRoot}/.vscode/.react"
+      },
+      {
+        "name": "Current TS File",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceRoot}/node_modules/ts-node/dist/_bin.js",
+        "args": [
+          "${relativeFile}"
+        ],
+        "cwd": "${workspaceRoot}",
+        "protocol": "inspector"
+      }
+    ]
+  }
