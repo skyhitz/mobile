@@ -10,6 +10,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 @inject(stores => ({
   user: stores.sessionStore.user,
   subscribed: stores.paymentsStore.subscribed,
+  credits: stores.paymentsStore.credits,
 }))
 export default class ProfileSettingsTopContainer extends React.Component {
   render() {
@@ -57,6 +58,7 @@ export default class ProfileSettingsTopContainer extends React.Component {
               <View style={styles.profileInfo}>
                 <Text style={styles.text}>{this.props.user.displayName}</Text>
                 {this.renderStar()}
+                <Text style={styles.text}>{this.props.credits}</Text>
               </View>
             </View>
           </View>
@@ -103,6 +105,7 @@ const styles = StyleSheet.create({
   },
   starsIcon: {
     backgroundColor: 'transparent',
-    marginLeft: 10,
+    marginLeft: 15,
+    marginRight: 5,
   },
 });
