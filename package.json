@@ -25,7 +25,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.1.tar.gz",
     "react-native-iphone-x-helper": "^1.0.2",
     "react-navigation": "^2.18.2",
-    "skyhitz-common": "https://github.com/skyhitz/common.git#c1bfd35c306d700580d46edaf340f14035b26284"
+    "skyhitz-common": "https://github.com/skyhitz/common.git#46b832ae24bd95389c57678f837fd6011c7457d3"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
