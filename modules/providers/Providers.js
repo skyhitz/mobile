@@ -18,6 +18,7 @@ import {
   entryStore,
   userEntriesStore,
   paymentsStore,
+  userFavoritesStore,
 } from 'skyhitz-common';
 
 export default class Providers extends React.Component {
@@ -41,6 +42,7 @@ export default class Providers extends React.Component {
         entryStore={entryStore}
         userEntriesStore={userEntriesStore}
         paymentsStore={paymentsStore}
+        userFavoritesStore={userFavoritesStore}
       >
         {this.props.children}
       </Provider>
