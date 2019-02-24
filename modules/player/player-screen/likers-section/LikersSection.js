@@ -9,7 +9,6 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
-import StarBtn from 'app/modules/player/player-screen/star-btn/StarBtn';
 import Divider from 'app/modules/ui/Divider';
 import Layout from 'app/constants/Layout';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
@@ -49,7 +48,6 @@ export default class LikersSection extends React.Component {
           <Text style={styles.likedByText}>Liked By</Text>
           <View style={styles.actionsWrap}>
             <LikeBtn />
-            <StarBtn />
           </View>
         </View>
         <Divider />

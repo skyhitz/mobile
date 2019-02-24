@@ -14,6 +14,7 @@ import {
 import { PlaceholderBackground } from 'app/assets/images/Images';
 import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import LikersSection from 'app/modules/player/player-screen/likers-section/LikersSection';
+import StarBtn from 'app/modules/player/player-screen/star-btn/StarBtn';
 
 @inject(stores => ({
   entry: stores.playerStore.entry,
@@ -35,6 +36,7 @@ export default class PlayerScreen extends React.Component {
             <PlayerNav />
             <VideoPlayer />
             <PlayerEntryInfo />
+            <StarBtn />
             <PlayerControls />
             <LikersSection />
           </View>

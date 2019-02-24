@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { inject } from 'mobx-react/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
+
+const Placeholder = () => <View style={styles.controlTouch} />;
 
 @inject(stores => ({
   sendCredit: stores.userFavoritesStore.sendCredit.bind(
@@ -10,19 +12,29 @@ import Colors from 'app/constants/Colors';
   ),
   isFavorited: stores.userFavoritesStore.isFavorited,
   availableToCredit: stores.userFavoritesStore.availableToCredit,
+  credits: stores.userFavoritesStore.creditsSent,
   entry: stores.playerStore.entry,
   user: stores.sessionStore.user,
 }))
 export default class StarBtn extends React.Component {
   render() {
     if (!this.props.entry) {
-      return null;
+      return <Placeholder />;
     }
     if (this.props.entry.userUsername === this.props.user.username) {
-      return null;
+      return (
+        <View style={styles.controlTouch}>
+          <MaterialIcons
+            name="star-border"
+            size={28}
+            color={Colors.dividerBackground}
+          />
+          <Text style={styles.creditsText}>{this.props.credits}</Text>
+        </View>
+      );
     }
     if (!this.props.availableToCredit) {
-      return null;
+      return <Placeholder />;
     }
     if (this.props.isFavorited) {
       return (
@@ -35,6 +47,7 @@ export default class StarBtn extends React.Component {
             size={28}
             color={Colors.brandBlue}
           />
+          <Text style={styles.creditsText}>{this.props.credits}</Text>
         </TouchableOpacity>
       );
     }
@@ -48,6 +61,7 @@ export default class StarBtn extends React.Component {
           size={28}
           color={Colors.dividerBackground}
         />
+        <Text style={styles.creditsText}>{this.props.credits}</Text>
       </TouchableOpacity>
     );
   }
@@ -55,9 +69,13 @@ export default class StarBtn extends React.Component {
 
 var styles = StyleSheet.create({
   controlTouch: {
-    width: 32,
-    height: 28,
-    marginBottom: 6,
-    marginLeft: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+  },
+  creditsText: {
+    color: 'white',
+    marginLeft: 10,
   },
 });
