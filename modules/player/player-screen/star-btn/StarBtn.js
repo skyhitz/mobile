@@ -11,10 +11,14 @@ import Colors from 'app/constants/Colors';
   isFavorited: stores.userFavoritesStore.isFavorited,
   availableToCredit: stores.userFavoritesStore.availableToCredit,
   entry: stores.playerStore.entry,
+  user: stores.sessionStore.user,
 }))
 export default class StarBtn extends React.Component {
   render() {
     if (!this.props.entry) {
+      return null;
+    }
+    if (this.props.entry.userUsername === this.props.user.username) {
       return null;
     }
     if (!this.props.availableToCredit) {
