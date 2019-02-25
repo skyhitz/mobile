@@ -58,7 +58,9 @@ export default class ProfileSettingsTopContainer extends React.Component {
               <View style={styles.profileInfo}>
                 <Text style={styles.text}>{this.props.user.displayName}</Text>
                 {this.renderStar()}
-                <Text style={styles.text}>{this.props.credits}</Text>
+                <Text style={styles.text}>
+                  {this.props.credits ? this.props.credits : ''}
+                </Text>
               </View>
             </View>
           </View>
