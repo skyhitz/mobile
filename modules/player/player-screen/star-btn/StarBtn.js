@@ -12,7 +12,8 @@ const Placeholder = () => <View style={styles.controlTouch} />;
   ),
   isFavorited: stores.userFavoritesStore.isFavorited,
   availableToCredit: stores.userFavoritesStore.availableToCredit,
-  credits: stores.userFavoritesStore.creditsSent,
+  creditsSent: stores.userFavoritesStore.creditsSent,
+  totalCredits: stores.userFavoritesStore.totalCredits,
   entry: stores.playerStore.entry,
   user: stores.sessionStore.user,
 }))
@@ -29,7 +30,7 @@ export default class StarBtn extends React.Component {
             size={28}
             color={Colors.dividerBackground}
           />
-          <Text style={styles.creditsText}>{this.props.credits}</Text>
+          <Text style={styles.creditsText}>{this.props.totalCredits}</Text>
         </View>
       );
     }
@@ -47,7 +48,7 @@ export default class StarBtn extends React.Component {
             size={28}
             color={Colors.brandBlue}
           />
-          <Text style={styles.creditsText}>{this.props.credits}</Text>
+          <Text style={styles.creditsText}>{this.props.totalCredits}</Text>
         </TouchableOpacity>
       );
     }
@@ -61,7 +62,7 @@ export default class StarBtn extends React.Component {
           size={28}
           color={Colors.dividerBackground}
         />
-        <Text style={styles.creditsText}>{this.props.credits}</Text>
+        <Text style={styles.creditsText}>{this.props.totalCredits}</Text>
       </TouchableOpacity>
     );
   }
