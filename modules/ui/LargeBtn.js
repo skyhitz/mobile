@@ -7,7 +7,7 @@ export default class LargeBtn extends React.Component {
     return (
       <TouchableOpacity
         rejectResponderTermination
-        style={styles.btn}
+        style={this.props.disabled ? styles.btnDisabled : styles.btn}
         onPress={this.props.onPress}
         disabled={this.props.disabled}
       >
@@ -25,6 +25,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  btnDisabled: {
+    backgroundColor: Colors.brandBlue,
+    width: 220,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.5,
   },
   white: {
     color: Colors.white,

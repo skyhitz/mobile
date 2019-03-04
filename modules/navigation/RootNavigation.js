@@ -17,6 +17,7 @@ import RemovePlaylistModal from 'app/modules/playlists/RemovePlaylistModal';
 import EntryOptionsModal from 'app/modules/search/EntryOptionsModal';
 import SelectPlaylistModal from 'app/modules/playlists/SelectPlaylistModal';
 import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
+import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import Colors from 'app/constants/Colors';
 
@@ -55,6 +56,14 @@ const AppStack = createStackNavigator(
     UploadMusicModal: {
       screen: UploadMusicModal,
       path: `upload-music-modal`,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
+    },
+    WithdrawalModal: {
+      screen: WithdrawalModal,
+      path: `withdrawal-modal`,
       navigationOptions: {
         header: null,
         gesturesEnabled: false,

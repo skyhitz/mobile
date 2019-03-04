@@ -22,6 +22,7 @@ import {
 } from 'app/modules/ui/UserAvatar';
 import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
 import { trackSignOut } from 'app/analytics/Tracking';
+import { navigate } from 'app/modules/navigation/Navigator';
 
 @inject(stores => ({
   profile: stores.editProfileStore.profile,
@@ -62,6 +63,9 @@ export default class EditProfileScreen extends React.Component {
   async handleLogOut() {
     await this.props.logOut();
     trackSignOut();
+  }
+  async handleWithdrawal() {
+    navigate('WithdrawalModal');
   }
   renderAvatar() {
     if (this.props.loadingAvatar) {
@@ -185,6 +189,26 @@ export default class EditProfileScreen extends React.Component {
             />
           </View>
         </View>
+        <Text style={styles.privateInfo}>Credits</Text>
+        <View style={styles.inputContainerBottom}>
+          <TouchableOpacity
+            style={styles.fieldWithoutBorder}
+            rejectResponderTermination
+            onPress={this.handleWithdrawal.bind(this)}
+          >
+            <View>
+              <MaterialCommunityIcons
+                name="coin"
+                size={22}
+                color={Colors.dividerBackground}
+                style={styles.placeholderIcon}
+              />
+              <Text style={styles.input}>
+                Withdrawal XLM to External Wallet
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.privateInfo}>MORE</Text>
         <View style={styles.inputContainerBottom}>
           <TouchableOpacity
@@ -261,7 +285,7 @@ const styles = StyleSheet.create({
     color: Colors.defaultTextLight,
     fontSize: 14,
     paddingLeft: 36,
-    bottom: 8,
+    bottom: 10,
   },
   field: {
     maxHeight: 40,
