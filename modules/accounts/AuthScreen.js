@@ -68,12 +68,12 @@ export default class AuthScreen extends React.Component {
           </View>
           <View>
             <View style={styles.signInWrap}>
-              <TouchableHighlight
+              {/* <TouchableHighlight
                 style={styles.loginFacebook}
                 onPress={this.handleFacebookSignIn.bind(this)}
               >
                 {this.renderButtonMessage(this.state.loading)}
-              </TouchableHighlight>
+              </TouchableHighlight> */}
               <View style={styles.joinContainer}>
                 <TouchableHighlight
                   style={styles.joinBtn}
