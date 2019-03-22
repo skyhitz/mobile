@@ -6,7 +6,6 @@
   "license": "MIT",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "dev": "expo start",
     "start": "expo start",
     "eject": "expo eject",
     "android": "expo start --android",
