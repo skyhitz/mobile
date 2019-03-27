@@ -6357,9 +6357,9 @@ sisteransi@^0.1.1:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-0.1.1.tgz#5431447d5f7d1675aac667ccd0b865a4994cb3ce"
   integrity sha512-PmGOd02bM9YO5ifxpw36nrNMBTptEtfRl4qUYl9SndkolplkrZZOW7PGHjrZL53QvMVj9nQ+TKqUnRsw4tJa4g==
 
-"skyhitz-common@https://github.com/skyhitz/common.git#a14041d445f091f3375d7e46ed995158889a1989":
+"skyhitz-common@https://github.com/skyhitz/common.git#ba389a03bdc4ab927c12e4b79b42f6d572632ee3":
   version "0.0.17"
-  resolved "https://github.com/skyhitz/common.git#a14041d445f091f3375d7e46ed995158889a1989"
+  resolved "https://github.com/skyhitz/common.git#ba389a03bdc4ab927c12e4b79b42f6d572632ee3"
   dependencies:
     "@types/algoliasearch" "^3.30.1"
     "@types/node" "^8.0.31"
