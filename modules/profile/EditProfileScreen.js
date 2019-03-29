@@ -49,6 +49,7 @@ import { navigate } from 'app/modules/navigation/Navigator';
     stores.editProfileStore
   ),
   logOut: stores.sessionStore.signOut.bind(stores.sessionStore),
+  credits: stores.paymentsStore.credits,
 }))
 export default class EditProfileScreen extends React.Component {
   static navigationOptions = {
@@ -75,6 +76,35 @@ export default class EditProfileScreen extends React.Component {
       return UserAvatarMediumWithUrlOnly(this.props.avatarUrl);
     }
     return UserAvatarMedium(this.props.profile);
+  }
+  renderWithdrawalXLM() {
+    if (this.props.credits && this.props.credits > 0) {
+      return (
+        <View style={styles.withdrawalXLMField}>
+          <Text style={styles.privateInfo}>Credits</Text>
+          <View style={styles.inputContainerBottom}>
+            <TouchableOpacity
+              style={styles.fieldWithoutBorder}
+              rejectResponderTermination
+              onPress={this.handleWithdrawal.bind(this)}
+            >
+              <View>
+                <MaterialCommunityIcons
+                  name="coin"
+                  size={22}
+                  color={Colors.dividerBackground}
+                  style={styles.placeholderIcon}
+                />
+                <Text style={styles.input}>
+                  Withdrawal XLM to External Wallet
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+    return null;
   }
   render() {
     return (
@@ -189,26 +219,7 @@ export default class EditProfileScreen extends React.Component {
             />
           </View>
         </View>
-        <Text style={styles.privateInfo}>Credits</Text>
-        <View style={styles.inputContainerBottom}>
-          <TouchableOpacity
-            style={styles.fieldWithoutBorder}
-            rejectResponderTermination
-            onPress={this.handleWithdrawal.bind(this)}
-          >
-            <View>
-              <MaterialCommunityIcons
-                name="coin"
-                size={22}
-                color={Colors.dividerBackground}
-                style={styles.placeholderIcon}
-              />
-              <Text style={styles.input}>
-                Withdrawal XLM to External Wallet
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        {this.renderWithdrawalXLM()}
         <Text style={styles.privateInfo}>MORE</Text>
         <View style={styles.inputContainerBottom}>
           <TouchableOpacity
@@ -292,6 +303,11 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomColor: Colors.dividerBackground,
     borderBottomWidth: 1,
+    justifyContent: 'flex-end',
+  },
+  withdrawalXLMField: {
+    maxHeight: 80,
+    flex: 1,
     justifyContent: 'flex-end',
   },
   fieldWithoutBorder: {
