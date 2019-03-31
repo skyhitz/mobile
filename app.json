@@ -25,7 +25,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.skyhitz.skyhitz",
-      "buildNumber": "0.1.5",
+      "buildNumber": "0.1.6",
       "icon": "./assets/images/icon-1024x1024.png",
       "appStoreUrl": "https://itunes.apple.com/us/app/skyhitz/id1105406020",
       "associatedDomains": [
@@ -42,7 +42,7 @@
     },
     "android": {
       "package": "com.skyhitz.skyhitz",
-      "versionCode": 15,
+      "versionCode": 16,
       "icon": "./assets/images/icon-1024x1024.png",
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz",
       "config": {
