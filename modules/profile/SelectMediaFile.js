@@ -69,7 +69,10 @@ class CircleWrap extends React.Component {
   updateTitle: stores.entryStore.updateTitle.bind(stores.entryStore),
   create: stores.entryStore.create.bind(stores.entryStore),
   canCreate: stores.entryStore.canCreate,
-  refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(stores.userEntriesStore)
+  refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(
+    stores.userEntriesStore
+  ),
+  clearStore: stores.entryStore.clearStore.bind(stores.entryStore),
 }))
 export default class SelectMediaFile extends React.Component {
   async selectVideo() {
@@ -142,6 +145,7 @@ export default class SelectMediaFile extends React.Component {
   async onCreate() {
     await this.props.create();
     await this.props.refreshUserEntries();
+    this.props.clearStore();
     goBack();
   }
 
