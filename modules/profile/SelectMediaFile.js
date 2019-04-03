@@ -139,7 +139,15 @@ export default class SelectMediaFile extends React.Component {
   }
 
   renderUploadView() {
-    return <View style={styles.wrap}>{this.renderUploadViewText()}</View>;
+    return (
+      <View style={styles.wrap}>
+        {this.renderUploadViewText()}
+        <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
+          Only original video music related material will be uploaded. We take
+          copyright law very seriously.
+        </Text>
+      </View>
+    );
   }
 
   async onCreate() {
