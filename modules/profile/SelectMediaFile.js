@@ -144,7 +144,7 @@ export default class SelectMediaFile extends React.Component {
         {this.renderUploadViewText()}
         <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
           Only original video music related material will be uploaded. We take
-          copyright law very seriously.
+          copyright law very seriously. Maximum file size allowed: 50MB
         </Text>
       </View>
     );
