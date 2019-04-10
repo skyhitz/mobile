@@ -16,13 +16,18 @@ const Placeholder = () => <View style={styles.controlTouch} />;
   totalCredits: stores.userFavoritesStore.totalCredits,
   entry: stores.playerStore.entry,
   user: stores.sessionStore.user,
+  credits: stores.paymentsStore.credits,
 }))
 export default class StarBtn extends React.Component {
   render() {
     if (!this.props.entry || !this.props.totalCredits) {
       return <Placeholder />;
     }
-    if (this.props.entry.userUsername === this.props.user.username) {
+    if (
+      this.props.entry.userUsername === this.props.user.username ||
+      !this.props.availableToCredit ||
+      !this.props.credits
+    ) {
       return (
         <View style={styles.controlTouch}>
           <MaterialIcons
@@ -33,9 +38,6 @@ export default class StarBtn extends React.Component {
           <Text style={styles.creditsText}>{this.props.totalCredits}</Text>
         </View>
       );
-    }
-    if (!this.props.availableToCredit) {
-      return <Placeholder />;
     }
     if (this.props.isFavorited) {
       return (
