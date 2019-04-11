@@ -5,7 +5,7 @@
     "slug": "skyhitz",
     "privacy": "public",
     "sdkVersion": "31.0.0",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/icon.png",
@@ -25,7 +25,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.skyhitz.skyhitz",
-      "buildNumber": "0.1.6",
+      "buildNumber": "0.1.7",
       "icon": "./assets/images/icon-1024x1024.png",
       "appStoreUrl": "https://itunes.apple.com/us/app/skyhitz/id1105406020",
       "associatedDomains": [
@@ -42,7 +42,7 @@
     },
     "android": {
       "package": "com.skyhitz.skyhitz",
-      "versionCode": 16,
+      "versionCode": 17,
       "icon": "./assets/images/icon-1024x1024.png",
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz",
       "config": {
