@@ -20,7 +20,7 @@ const Placeholder = () => <View style={styles.controlTouch} />;
 }))
 export default class StarBtn extends React.Component {
   render() {
-    if (!this.props.entry || !this.props.totalCredits) {
+    if (!this.props.entry) {
       return <Placeholder />;
     }
     if (
