@@ -4,7 +4,7 @@
     "description": "Connecting friends through music",
     "slug": "skyhitz",
     "privacy": "public",
-    "sdkVersion": "31.0.0",
+    "sdkVersion": "32.0.0",
     "version": "0.1.9",
     "orientation": "portrait",
     "primaryColor": "#cccccc",

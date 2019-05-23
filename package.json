@@ -19,10 +19,10 @@
   "dependencies": {
     "@expo/vector-icons": "8.0.0",
     "babel-preset-expo": "5.0.0",
-    "expo": "^31.0.4",
+    "expo": "^32.0.0",
     "mobx-react": "4.3.3",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.1.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-iphone-x-helper": "1.2.0",
     "react-navigation": "^2.18.2",
     "skyhitz-common": "https://github.com/skyhitz/common.git#3b3869b7d20802e7ea5ced95c88f5fb3a33c8243"
@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-prettier": "^2.1.1",
     "eslint-plugin-react": "^7.0.1",
-    "jest-expo": "^31.0.0",
+    "jest-expo": "^32.0.0",
     "metro-bundler": "^0.20.0",
     "prettier": "^1.4.0",
     "react-native-typescript-transformer": "^1.1.4"
