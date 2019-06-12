@@ -1,20 +1,10 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "commonjs",
+    "noEmit": true,
+    "lib": ["esnext"],
+    "jsx": "react-native",
     "moduleResolution": "node",
-    "target": "es2015",
-    "jsx": "react",
-    "experimentalDecorators": true,
-    "allowJs": true,
-    "types":[
-      "node"
-    ],
-    "typeRoots": [
-      "./node_modules/@types/**/*.d.ts",
-      "./@types/**/*.d.ts"
-    ],
-    "baseUrl": "./"
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   }
 }

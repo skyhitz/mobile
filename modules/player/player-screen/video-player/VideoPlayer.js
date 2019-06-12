@@ -13,7 +13,7 @@ import {
 import SpinnerView from 'app/modules/player/player-screen/video-player/SpinnerView';
 import FullscreenControlIos from 'app/modules/player/player-screen/video-player/FullscreenControlIos';
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
-import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
+// import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
 import VideoErrorText from 'app/modules/player/player-screen/video-player/VideoErrorText';
 // import {
 //   setNowPlaying,
@@ -181,7 +181,7 @@ export default class VideoPlayer extends React.Component {
     return (
       <View style={styles.bottomBar}>
         <CurrentTimeDisplay />
-        <SeekBar />
+        {/* <SeekBar /> */}
         <DurationDisplay />
         {Platform.OS === 'ios' && <FullscreenControlIos />}
       </View>

@@ -39,7 +39,7 @@ const SeekBar = inject(stores => ({
           playbackState === PLAYBACK_STATES.ERROR
         }
         minimumTrackTintColor={Colors.brandBlue}
-        maximumTractTintColor={Colors.brandBlue}
+        maximumTrackTintColor={Colors.brandBlue}
         thumbTintColor={Colors.brandBlue}
       />
     </TouchableWithoutFeedback>
