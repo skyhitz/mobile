@@ -30,7 +30,7 @@ const SeekBar = inject(stores => ({
     >
       <Slider
         style={{ marginRight: 10, marginLeft: 10, flex: 1 }}
-        value={seekSliderPosition}
+        value={seekSliderPosition ? seekSliderPosition : 0}
         onValueChange={onSeekSliderValueChange.bind(this)}
         onSlidingComplete={onSeekSliderSlidingComplete.bind(this)}
         disabled={

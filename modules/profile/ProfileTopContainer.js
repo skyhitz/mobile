@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground, Text } from 'react-native';
 import { inject } from 'mobx-react/native';
-import { BlurView } from 'expo';
+import { BlurView } from 'expo-blur';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';

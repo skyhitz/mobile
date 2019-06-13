@@ -1,5 +1,5 @@
 import React from 'react';
-import { Audio, Video } from 'expo';
+import { Video, Audio } from 'expo-av';
 import { View, NetInfo, StyleSheet, Platform } from 'react-native';
 import { inject } from 'mobx-react/native';
 import {
@@ -13,7 +13,7 @@ import {
 import SpinnerView from 'app/modules/player/player-screen/video-player/SpinnerView';
 import FullscreenControlIos from 'app/modules/player/player-screen/video-player/FullscreenControlIos';
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
-// import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
+import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
 import VideoErrorText from 'app/modules/player/player-screen/video-player/VideoErrorText';
 // import {
 //   setNowPlaying,
@@ -51,23 +51,15 @@ export default class VideoPlayer extends React.Component {
   async componentDidMount() {
     this._setupNetInfoListener();
 
-    // Set audio mode to play even in silent mode (like the YouTube app)
-    try {
-      Audio.setAudioModeAsync({
-        playsInSilentModeIOS: true,
-        allowsRecordingIOS: false,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-        shouldDuckAndroid: true,
-        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        playThroughEarpieceAndroid: false,
-      });
-    } catch (e) {
-      this.props.errorCallback({
-        type: 'NON_FATAL',
-        message: 'setAudioModeAsync error',
-        obj: e,
-      });
-    }
+    Audio.setAudioModeAsync({
+      playsInSilentModeIOS: true,
+      allowsRecordingIOS: false,
+      staysActiveInBackground: true,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      shouldDuckAndroid: false,
+      playThroughEarpieceAndroid: false,
+    });
   }
 
   componentWillUnmount() {
@@ -181,7 +173,7 @@ export default class VideoPlayer extends React.Component {
     return (
       <View style={styles.bottomBar}>
         <CurrentTimeDisplay />
-        {/* <SeekBar /> */}
+        <SeekBar />
         <DurationDisplay />
         {Platform.OS === 'ios' && <FullscreenControlIos />}
       </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject } from 'mobx-react/native';
-import { BlurView } from 'expo';
+import { BlurView } from 'expo-blur';
 import PlayerNav from 'app/modules/player/player-screen/PlayerNav';
 import VideoPlayer from 'app/modules/player/player-screen/video-player/VideoPlayer';
 import PlayerControls from 'app/modules/player/player-screen/player-controls/PlayerControls';

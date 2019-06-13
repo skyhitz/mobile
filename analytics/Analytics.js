@@ -1,4 +1,4 @@
-import { Amplitude } from 'expo';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Environment from 'app/environment/Environment';
 
 export const events = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground, Text } from 'react-native';
-import { BlurView } from 'expo';
+import { BlurView } from 'expo-blur';
 import { inject } from 'mobx-react/native';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';

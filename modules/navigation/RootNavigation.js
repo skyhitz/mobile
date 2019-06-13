@@ -5,7 +5,7 @@
 import React from 'react';
 import { Linking, StyleSheet, StatusBar, View } from 'react-native';
 import { inject } from 'mobx-react/native';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import { forVertical } from 'app/modules/navigation/Interpolators';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';

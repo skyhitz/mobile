@@ -7,7 +7,8 @@ import {
   View,
 } from 'react-native';
 import { inject } from 'mobx-react/native';
-import { Asset, Constants } from 'expo';
+import { Asset } from 'expo-asset';
+import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import {
   Ionicons,
