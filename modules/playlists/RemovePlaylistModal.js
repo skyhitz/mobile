@@ -5,19 +5,13 @@
 
 import React from 'react';
 import {
-  ScrollView,
   TouchableOpacity,
   StyleSheet,
   Text,
   View,
-  TextInput,
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react/native';
-import PlaylistRow from 'app/modules/playlists/PlaylistRow';
-import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
-import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
 
@@ -25,7 +19,7 @@ import { goBack } from 'app/modules/navigation/Navigator';
   remove: stores.playlistsStore.remove.bind(stores.playlistsStore),
   playlist: stores.playlistsStore.playlistToBeRemoved,
 }))
-export default class RemovePlaylistModal extends React.Component {
+export default class RemovePlaylistModal extends React.Component<any, any> {
   get title() {
     if (this.props.playlist && this.props.playlist.title) {
       return this.props.playlist.title;
@@ -50,14 +44,12 @@ export default class RemovePlaylistModal extends React.Component {
           </View>
           <View style={styles.modalActionsWrap}>
             <TouchableOpacity
-              rejectResponderTermination
               style={styles.actionBtn}
               onPress={() => goBack()}
             >
               <Text style={styles.white}>CANCEL</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              rejectResponderTermination
               onPress={this.remove.bind(this)}
             >
               <View style={styles.actionBtn}>

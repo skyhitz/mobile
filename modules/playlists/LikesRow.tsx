@@ -1,57 +1,44 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
+import { UserAvatar } from 'app/modules/ui/UserAvatar';
+import { trackOpenProfile } from 'app/analytics/Tracking';
 import { EvilIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react/native';
 
 @inject(stores => ({
-  addToPlaylist: stores.playlistsStore.addToPlaylist.bind(
-    stores.playlistsStore
-  ),
+  count: stores.likesStore.userLikesCount,
+  likes: stores.likesStore.userLikes,
+  setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),
 }))
-export default class SelectPlaylistRow extends React.Component<any, any> {
-  get entries() {
-    return this.props.playlist.entries;
-  }
-
-  get count() {
-    return this.props.playlist.entriesCount;
-  }
-
-  copy() {
-    if (!this.count) {
+export default class LikesRow extends React.Component<any, any> {
+  likesCopy() {
+    if (!this.props.count) {
       return null;
     }
-    if (this.count === 1) {
+    if (this.props.count === 1) {
       return '1 Video';
     }
-    return `${this.count} Videos`;
+    return `${this.props.count} Videos`;
   }
-
-  handleNavigation() {
-    this.props.addToPlaylist(this.props.playlist.id);
-    navigate('Main');
+  handleLikesNavigation() {
+    navigate('LikesScreen');
+    this.props.setPlaylistMode(this.props.likes);
   }
-
   render() {
     return (
       <View style={styles.rowWrap}>
         <View style={styles.rowWrap}>
-          <TouchableOpacity onPress={this.handleNavigation.bind(this)}>
+          <TouchableOpacity onPress={this.handleLikesNavigation.bind(this)}>
             <View style={styles.row}>
               <View style={styles.leftSection}>
-                <Image
-                  source={{ uri: this.props.playlist.photoUrl }}
-                  style={styles.thumb}
-                />
-                <Text style={styles.likesText}>
-                  {this.props.playlist.title}
-                </Text>
+                <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
+                <Text style={styles.likesText}>Likes</Text>
               </View>
               <View style={styles.rightSection}>
-                <Text style={styles.videosText}>{this.copy()}</Text>
+                <Text style={styles.videosText}>{this.likesCopy()}</Text>
                 <EvilIcons
                   name={'chevron-right'}
                   size={36}
@@ -71,7 +58,7 @@ let styles = StyleSheet.create({
   rowWrap: {
     flex: 1,
     backgroundColor: Colors.listItemBackground,
-    height: 50,
+    maxHeight: 50,
   },
   row: {
     flexDirection: 'row',
@@ -82,12 +69,6 @@ let styles = StyleSheet.create({
     paddingBottom: 6,
     paddingLeft: 10,
     backgroundColor: Colors.listItemBackground,
-  },
-  thumb: {
-    margin: 1,
-    width: 28,
-    height: 28,
-    borderRadius: 14,
   },
   leftSection: {
     width: 100,
@@ -106,7 +87,7 @@ let styles = StyleSheet.create({
   likesText: {
     fontWeight: 'bold',
     color: Colors.defaultTextDark,
-    paddingLeft: 15,
+    paddingLeft: 5,
   },
   videosText: {
     color: Colors.defaultTextDark,

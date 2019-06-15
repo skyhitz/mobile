@@ -10,7 +10,7 @@ import { goBack } from 'app/modules/navigation/Navigator';
   toggleLike: stores.likesStore.toggleLike.bind(stores.likesStore),
   isEntryLiked: stores.likesStore.isEntryLiked.bind(stores.likesStore),
 }))
-export default class LikeOptionRow extends React.Component {
+export default class LikeOptionRow extends React.Component<any, any> {
   handleToggle() {
     this.props.toggleLike(this.props.entry);
     this.forceUpdate();

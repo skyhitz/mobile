@@ -1,5 +1,4 @@
 import React from 'react';
-import { inject } from 'mobx-react/native';
 import { Text, Platform } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import { MaterialTopTabBar } from 'react-navigation-tabs';
