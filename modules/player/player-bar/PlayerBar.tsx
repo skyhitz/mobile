@@ -1,5 +1,5 @@
 import React from 'react';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 let Dimensions = require('Dimensions');
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { EvilIcons } from '@expo/vector-icons';
@@ -16,6 +16,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { Stores } from 'skyhitz-common';
 
 const animationSpeed = 350;
 
@@ -27,7 +28,7 @@ if (isIphoneX()) {
   tabNavBottom = 123;
 }
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   show: stores.playerStore.show,
   showPlayer: stores.playerStore.showPlayer.bind(stores.playerStore),
   hidePlayer: stores.playerStore.hidePlayer.bind(stores.playerStore),

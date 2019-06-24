@@ -1,10 +1,11 @@
 import React from 'react';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { withNavigationFocus } from 'react-navigation';
 import SearchUserList from 'app/modules/search/SearchUserList';
 import TopRecentUserView from 'app/modules/search/TopRecentUserView';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   isSearchActive: stores.usersSearchStore.active,
   inputSearchStore: stores.inputSearchStore,
 }))

@@ -1,9 +1,10 @@
 import React from 'react';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { PlayBtnWhite, PauseBtnWhite } from 'app/assets/images/Images';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   playing: stores.playerStore.isPlaying,
   pauseAsync: stores.playerStore.pauseAsync.bind(stores.playerStore),
   playAsync: stores.playerStore.playAsync.bind(stores.playerStore),

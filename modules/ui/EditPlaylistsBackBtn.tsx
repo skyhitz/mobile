@@ -2,10 +2,11 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import { navigate, goBack } from 'app/modules/navigation/Navigator';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   editMode: stores.playlistsStore.editMode,
 }))
 export default class EditPlaylistsBackBtn extends React.Component<any, any> {

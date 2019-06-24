@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
+import { Stores } from 'skyhitz-common';
 
-const PlayerEntryInfo = inject(stores => ({
+const PlayerEntryInfo = inject((stores:Stores) => ({
   entry: stores.playerStore.entry,
 }))(({ entry }:any) => {
   if (!entry) {

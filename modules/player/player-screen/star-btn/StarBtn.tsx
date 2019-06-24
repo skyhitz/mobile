@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
+import { Stores } from 'skyhitz-common';
 
 const Placeholder = () => <View style={styles.controlTouch} />;
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   sendCredit: stores.userFavoritesStore.sendCredit.bind(
     stores.userFavoritesStore
   ),

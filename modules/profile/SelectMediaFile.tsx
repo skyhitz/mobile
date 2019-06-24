@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   TextInput,
 } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import {
   MaterialIcons,
   FontAwesome,
@@ -18,6 +18,7 @@ import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { goBack } from 'app/modules/navigation/Navigator';
+import { Stores } from 'skyhitz-common';
 
 export const LoadingIndicator = () => {
   return (
@@ -49,11 +50,11 @@ class CircleWrap extends React.Component<any, any> {
   }
 }
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   uploadVideo: stores.entryStore.uploadVideo.bind(stores.entryStore),
   uploadArtwork: stores.entryStore.uploadArtwork.bind(stores.entryStore),
   updateLoadingVideo: stores.entryStore.updateLoadingVideo.bind(
-    stores.updateLoadingVideo
+    stores.entryStore.updateLoadingVideo
   ),
   uploadingVideo: stores.entryStore.uploadingVideo,
   loadingVideo: stores.entryStore.loadingVideo,

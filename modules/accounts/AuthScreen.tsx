@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { Facebook, Constants } from 'expo';
 import Layout from 'app/constants/Layout';
 import { navigate } from 'app/modules/navigation/Navigator';
@@ -16,8 +16,9 @@ import { AuthBackground, Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
 import { identifyUser } from 'app/analytics/Analytics';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   signInWithFacebook: stores.sessionStore.signInWithFacebook.bind(
     stores.sessionStore
   ),

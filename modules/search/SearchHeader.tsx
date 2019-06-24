@@ -1,12 +1,13 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import SearchBar from 'app/modules/ui/searchbar/SearchBar';
+import { Stores } from 'skyhitz-common';
 
 let platform = Platform.OS === 'ios' ? 'ios' : 'android';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   inputSearchStore: stores.inputSearchStore,
 }))
 class SearchHeader extends React.Component<any, any> {

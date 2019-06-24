@@ -1,7 +1,7 @@
 import React from 'react';
 import { Video, Audio } from 'expo-av';
 import { View, NetInfo, StyleSheet, Platform } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import {
   CurrentTimeDisplay,
   DurationDisplay,
@@ -15,6 +15,7 @@ import FullscreenControlIos from 'app/modules/player/player-screen/video-player/
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
 import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
 import VideoErrorText from 'app/modules/player/player-screen/video-player/VideoErrorText';
+import { Stores } from 'skyhitz-common';
 // import {
 //   setNowPlaying,
 //   updatePlayback,
@@ -22,7 +23,7 @@ import VideoErrorText from 'app/modules/player/player-screen/video-player/VideoE
 // } from 'locked-screen-music-control';
 // import { observe } from 'mobx';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   onPlaybackStatusUpdate: stores.playerStore.onPlaybackStatusUpdate.bind(
     stores.playerStore
   ),

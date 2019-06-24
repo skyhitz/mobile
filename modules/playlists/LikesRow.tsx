@@ -6,9 +6,10 @@ import { navigate } from 'app/modules/navigation/Navigator';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
 import { trackOpenProfile } from 'app/analytics/Tracking';
 import { EvilIcons } from '@expo/vector-icons';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   count: stores.likesStore.userLikesCount,
   likes: stores.likesStore.userLikes,
   setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),

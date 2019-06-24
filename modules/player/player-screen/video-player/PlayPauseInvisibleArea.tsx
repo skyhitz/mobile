@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import {
   PLAYBACK_STATES,
   SEEK_STATES,
@@ -9,8 +9,9 @@ import {
   videoHeight,
   videoWidth,
 } from 'app/modules/player/player-screen/video-player/VideoConstants';
+import { Stores } from 'skyhitz-common';
 
-const PlayPauseInvisibleArea = inject(stores => ({
+const PlayPauseInvisibleArea = inject((stores:Stores) => ({
   playbackState: stores.playerStore.playbackState,
   seekState: stores.playerStore.seekState,
   togglePlay: stores.playerStore.togglePlay.bind(stores.playerStore),

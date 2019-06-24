@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { Ionicons } from '@expo/vector-icons';
 import {
   ReplayIcon,
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
 import Colors from 'app/constants/Colors';
+import { Stores } from 'skyhitz-common';
 
-const PlayBtn = inject(stores => ({
+const PlayBtn = inject((stores:Stores) => ({
   togglePlay: stores.playerStore.togglePlay.bind(stores.playerStore),
   replay: stores.playerStore.replay.bind(stores.playerStore),
   playbackState: stores.playerStore.playbackState,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import {
   StyleSheet,
   View,
@@ -12,8 +12,9 @@ import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import Divider from 'app/modules/ui/Divider';
 import Layout from 'app/constants/Layout';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   likers: stores.likesStore.entryLikes,
   hasMoreLikers: stores.likesStore.hasMoreLikers,
   plusLikers: stores.likesStore.plusLikers,

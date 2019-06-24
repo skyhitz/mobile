@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { PrevBtnWhite } from 'app/assets/images/Images';
+import { Stores } from 'skyhitz-common';
 
-const PrevBtn = inject(stores => ({
+const PrevBtn = inject((stores:Stores) => ({
   playPrev: stores.playerStore.playPrev.bind(stores.playerStore),
 }))(({ playPrev }: any) => (
   <TouchableOpacity style={styles.controlTouch} onPress={() => playPrev()}>

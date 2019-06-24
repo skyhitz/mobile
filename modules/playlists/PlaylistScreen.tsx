@@ -6,15 +6,16 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import EntryRow from 'app/modules/ui/EntryRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import { navigate } from 'app/modules/navigation/Navigator';
 import LargeBtn from 'app/modules/ui/LargeBtn';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
   playlist: stores.playlistsStore.playlist,
   loading: stores.playlistsStore.loading,

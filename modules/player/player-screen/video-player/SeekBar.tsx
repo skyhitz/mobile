@@ -1,10 +1,11 @@
 import React from 'react';
 import { TouchableWithoutFeedback, Slider } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/UiStates';
 import Colors from 'app/constants/Colors';
+import { Stores } from 'skyhitz-common';
 
-const SeekBar = inject(stores => ({
+const SeekBar = inject((stores:Stores) => ({
   onSliderLayout: stores.playerStore.onSliderLayout.bind(stores.playerStore),
   onSeekBarTap: stores.playerStore.onSeekBarTap.bind(stores.playerStore),
   onSeekSliderValueChange: stores.playerStore.onSeekSliderValueChange.bind(

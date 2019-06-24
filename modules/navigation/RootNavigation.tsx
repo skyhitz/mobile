@@ -1,6 +1,6 @@
 import React from 'react';
 import { Linking, StyleSheet, StatusBar, View } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Constants from 'expo-constants';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import { forVertical } from 'app/modules/navigation/Interpolators';
@@ -16,6 +16,7 @@ import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import Colors from 'app/constants/Colors';
+import { Stores } from 'skyhitz-common';
 
 const AuthStack = createStackNavigator({
   Accounts: {
@@ -108,7 +109,7 @@ const RootStackNavigator = createSwitchNavigator(
   }
 );
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   user: stores.sessionStore.user,
   loadUserLikes: stores.likesStore.refreshLikes.bind(stores.likesStore),
   loadPlaylists: stores.playlistsStore.refreshPlaylists.bind(

@@ -4,9 +4,9 @@ import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { EvilIcons } from '@expo/vector-icons';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 
-@inject(stores => ({
+@inject((stores: Stores) => ({
   addToPlaylist: stores.playlistsStore.addToPlaylist.bind(
     stores.playlistsStore
   ),

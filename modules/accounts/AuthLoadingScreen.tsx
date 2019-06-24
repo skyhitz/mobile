@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import {
@@ -17,8 +17,9 @@ import Colors from 'app/constants/Colors';
 import { Images } from 'app/assets/images/Images';
 import { identifyUser } from 'app/analytics/Analytics';
 import { setNavigator, navigate } from 'app/modules/navigation/Navigator';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   hideTopPadding: stores.playerStore.show,
   loadSession: stores.sessionStore.loadSession.bind(stores.sessionStore),
   user: stores.sessionStore.user,

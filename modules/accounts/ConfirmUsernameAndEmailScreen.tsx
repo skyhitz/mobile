@@ -4,7 +4,7 @@ import Colors from 'app/constants/Colors';
 import { AuthBackground2 } from 'app/assets/images/Images';
 import { HeaderBackButton } from 'react-navigation';
 import { goBack, navigate } from 'app/modules/navigation/Navigator';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { identifyUser } from 'app/analytics/Analytics';
@@ -17,8 +17,9 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   validateUsername: stores.usernameAndEmailValidationStore.validateUsername.bind(
     stores.usernameAndEmailValidationStore
   ),

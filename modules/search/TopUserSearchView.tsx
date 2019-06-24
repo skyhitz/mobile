@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import UserRow from 'app/modules/ui/UserRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   getTopSearches: stores.usersSearchStore.getTopSearches.bind(
     stores.usersSearchStore
   ),

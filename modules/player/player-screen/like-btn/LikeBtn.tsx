@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   toggleLike: stores.likesStore.toggleLike.bind(stores.likesStore),
   isLiked: stores.likesStore.isLiked,
   entry: stores.playerStore.entry,

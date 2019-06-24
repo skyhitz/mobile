@@ -1,10 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { goBack } from 'app/modules/navigation/Navigator';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   updateProfile: stores.editProfileStore.updateProfile.bind(
     stores.editProfileStore
   ),

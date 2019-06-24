@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import UserRow from 'app/modules/ui/UserRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   recentSearches: stores.usersSearchStore.recentSearches,
   loadingRecentSearches: stores.usersSearchStore.loadingRecentSearches,
   getProfileInfo: stores.profileStore.getProfileInfo.bind(stores.profileStore),

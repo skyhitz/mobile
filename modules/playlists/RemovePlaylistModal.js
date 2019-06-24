@@ -4,18 +4,13 @@
  */
 
 import React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { inject } from 'mobx-react/native';
+import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
 
-@inject(stores => ({
+@inject((stores: Stores) => ({
   remove: stores.playlistsStore.remove.bind(stores.playlistsStore),
   playlist: stores.playlistsStore.playlistToBeRemoved,
 }))
@@ -43,15 +38,10 @@ export default class RemovePlaylistModal extends React.Component<any, any> {
             </Text>
           </View>
           <View style={styles.modalActionsWrap}>
-            <TouchableOpacity
-              style={styles.actionBtn}
-              onPress={() => goBack()}
-            >
+            <TouchableOpacity style={styles.actionBtn} onPress={() => goBack()}>
               <Text style={styles.white}>CANCEL</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.remove.bind(this)}
-            >
+            <TouchableOpacity onPress={this.remove.bind(this)}>
               <View style={styles.actionBtn}>
                 <Text style={styles.white}>REMOVE</Text>
               </View>

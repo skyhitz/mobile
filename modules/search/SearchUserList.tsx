@@ -1,12 +1,13 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import UserRow from 'app/modules/ui/UserRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
+import { Stores } from 'skyhitz-common';
 
-const UserSearchList = inject(stores => ({
+const UserSearchList = inject((stores:Stores) => ({
   users: stores.usersSearchStore.users,
   searching: stores.usersSearchStore.searching,
   query: stores.usersSearchStore.query,

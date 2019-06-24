@@ -3505,6 +3505,13 @@ hoist-non-react-statics@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
 
+hoist-non-react-statics@^3.0.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
+  integrity sha512-0XsbTXxgiaCDYDIWFcwkmerZPSwywfUqYmwT4jzewKTQSWoE6FCMoUVOeBJWK3E/CrWbxRG3m5GzY4lnIwGRBA==
+  dependencies:
+    react-is "^16.7.0"
+
 home-or-tmp@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/home-or-tmp/-/home-or-tmp-3.0.0.tgz#57a8fe24cf33cdd524860a15821ddc25c86671fb"
@@ -4601,15 +4608,18 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mobx-react@4.3.3:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-4.3.3.tgz#4ad76c03d1e942b431e942f9ea18df0756771655"
+mobx-react@5.4.4:
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-5.4.4.tgz#b3de9c6eabcd0ed8a40036888cb0221ab9568b80"
+  integrity sha512-2mTzpyEjVB/RGk2i6KbcmP4HWcAUFox5ZRCrGvSyz49w20I4C4qql63grPpYrS9E9GKwgydBHQlA4y665LuRCQ==
   dependencies:
-    hoist-non-react-statics "^2.3.1"
+    hoist-non-react-statics "^3.0.0"
+    react-lifecycles-compat "^3.0.2"
 
-mobx@^3.3.0:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.4.1.tgz#37abe5ee882d401828d9f26c6c1a2f47614bbbef"
+mobx@5.10.0:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.10.0.tgz#6107a73a27aee72abdc977ab75f9ec0d0983aa61"
+  integrity sha512-pYtQtxr80ugbj7xO4pmZRm1n0ZqG2Wo+ykr/03ZRG18Ib8dqUgpzso6aEJyu3fM7JurFmC1dOqmjeCHO8N+3Yg==
 
 morgan@^1.9.0:
   version "1.9.0"
@@ -5256,9 +5266,15 @@ react-is@^16.5.2:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.3.tgz#d2d7462fcfcbe6ec0da56ad69047e47e56e7eac0"
   integrity sha512-u7FDWtthB4rWibG/+mFbVd5FvdI20yde86qKGx4lVUTWmPlSWQ4QxbBIrrs+HnXGbxOUlUzTAP/VDmvCwaP2yA==
 
-react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
+react-is@^16.7.0:
+  version "16.8.6"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
+  integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
+
+react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
 react-native-branch@2.2.5:
   version "2.2.5"
@@ -5940,9 +5956,9 @@ simple-plist@^1.0.0:
     bplist-parser "0.1.1"
     plist "^3.0.1"
 
-"skyhitz-common@https://github.com/skyhitz/common.git#3b3869b7d20802e7ea5ced95c88f5fb3a33c8243":
+"skyhitz-common@https://github.com/skyhitz/common.git#8c4546f0da021dedf2d714a7bcb108a0ceda54d0":
   version "0.0.17"
-  resolved "https://github.com/skyhitz/common.git#3b3869b7d20802e7ea5ced95c88f5fb3a33c8243"
+  resolved "https://github.com/skyhitz/common.git#8c4546f0da021dedf2d714a7bcb108a0ceda54d0"
   dependencies:
     "@types/algoliasearch" "^3.30.1"
     "@types/node" "^8.0.31"
@@ -5954,7 +5970,7 @@ simple-plist@^1.0.0:
     immutable "^3.8.1"
     lodash.debounce "^4.0.8"
     lodash.merge "4.6.0"
-    mobx "^3.3.0"
+    mobx "5.10.0"
     typescript "^2.2.2"
 
 slash@^2.0.0:

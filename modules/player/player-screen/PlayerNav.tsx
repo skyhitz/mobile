@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
+import { Stores } from 'skyhitz-common';
 
-const PlayerNav = inject(stores => ({
+const PlayerNav = inject((stores:Stores) => ({
   hidePlayer: stores.playerStore.hidePlayer.bind(stores.playerStore),
   entry: stores.playerStore.entry,
 }))(({ hidePlayer, entry }: any) => {

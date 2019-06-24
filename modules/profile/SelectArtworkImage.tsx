@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
+import { Stores } from 'skyhitz-common';
 
 export const LoadingImage = () => {
   return (
@@ -26,7 +27,7 @@ export const LoadingImage = () => {
   );
 };
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   uploadImage: stores.playlistsStore.uploadImage.bind(stores.playlistsStore),
   playlistPhotoUrl: stores.playlistsStore.modalPlaylistPhotoUrl,
   loadingImage: stores.playlistsStore.loadingImage,

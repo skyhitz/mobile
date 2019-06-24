@@ -8,7 +8,7 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { HeaderBackButton } from 'react-navigation';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
@@ -17,8 +17,9 @@ import { AuthBackground2 } from 'app/assets/images/Images';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { trackSignUp } from 'app/analytics/Tracking';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   validateUsername: stores.signUpValidationStore.validateUsername.bind(
     stores.signUpValidationStore
   ),

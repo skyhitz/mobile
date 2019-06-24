@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import {
   MaterialIcons,
   MaterialCommunityIcons,
@@ -23,8 +23,9 @@ import {
 import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
 import { trackSignOut } from 'app/analytics/Tracking';
 import { navigate } from 'app/modules/navigation/Navigator';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   profile: stores.editProfileStore.profile,
   avatarUrl: stores.editProfileStore.avatarUrl,
   loadingAvatar: stores.editProfileStore.loadingAvatar,

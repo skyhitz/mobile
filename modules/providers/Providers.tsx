@@ -1,4 +1,4 @@
-import { Provider } from 'mobx-react/native';
+import { Provider } from 'mobx-react';
 import React from 'react';
 import {
   sessionStore,

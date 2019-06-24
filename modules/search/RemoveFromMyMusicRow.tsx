@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   remove: stores.entryStore.remove.bind(stores.entryStore),
   refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(stores.userEntriesStore)
 }))

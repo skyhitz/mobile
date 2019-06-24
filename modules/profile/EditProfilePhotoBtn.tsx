@@ -1,10 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   uploadProfilePhoto: stores.editProfileStore.uploadProfilePhoto.bind(
     stores.editProfileStore
   ),

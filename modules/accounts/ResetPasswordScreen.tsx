@@ -4,7 +4,7 @@ import { goBack } from 'app/modules/navigation/Navigator';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import { AuthBackground2 } from 'app/assets/images/Images';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   StyleSheet,
@@ -16,8 +16,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { trackResetPassword } from 'app/analytics/Tracking';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   validateEmail: stores.resetPasswordValidationStore.validateEmail.bind(
     stores.resetPasswordValidationStore
   ),

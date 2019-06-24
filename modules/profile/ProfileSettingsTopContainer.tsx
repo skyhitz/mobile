@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground, Text } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   user: stores.sessionStore.user,
   subscribed: stores.paymentsStore.subscribed,
   credits: stores.paymentsStore.credits,

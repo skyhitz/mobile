@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import SelectPlaylistRow from 'app/modules/playlists/SelectPlaylistRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
@@ -16,8 +16,9 @@ import SelectPlaylistImage from 'app/modules/playlists/SelectPlaylistImage';
 import Layout from 'app/constants/Layout';
 import { navigate } from 'app/modules/navigation/Navigator';
 import ArrowDownBackBtn from 'app/modules/ui/ArrowDownBackBtn';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   playlists: stores.playlistsStore.playlists,
   loading: stores.playlistsStore.loading,
 }))

@@ -4,10 +4,11 @@
  */
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/UiStates';
+import { Stores } from 'skyhitz-common';
 
-export const CurrentTimeDisplay = inject(stores => ({
+export const CurrentTimeDisplay = inject((stores:Stores) => ({
   positionDisplay: stores.playerStore.positionDisplay,
   playbackState: stores.playerStore.playbackState,
 }))(({ positionDisplay, playbackState }: any) => {
@@ -17,7 +18,7 @@ export const CurrentTimeDisplay = inject(stores => ({
   return <Text style={styles.text}>{'00:00'}</Text>;
 });
 
-export const DurationDisplay = inject(stores => ({
+export const DurationDisplay = inject((stores:Stores) => ({
   durationDisplay: stores.playerStore.durationDisplay,
   playbackState: stores.playerStore.playbackState,
 }))(({ durationDisplay, playbackState }: any) => {

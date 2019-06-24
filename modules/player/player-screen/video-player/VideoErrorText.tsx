@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import {
   videoHeight,
   videoWidth,
 } from 'app/modules/player/player-screen/video-player/VideoConstants';
 import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/UiStates';
+import { Stores } from 'skyhitz-common';
 
-const VideoErrorText = inject(stores => ({
+const VideoErrorText = inject((stores:Stores) => ({
   playbackState: stores.playerStore.playbackState,
   error: stores.playerStore.error,
 }))(({ playbackState, error }: any) => {

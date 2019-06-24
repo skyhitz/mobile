@@ -1,6 +1,6 @@
 import React from 'react';
 import { HeaderBackButton } from 'react-navigation';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
@@ -17,8 +17,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { trackChangePassword } from 'app/analytics/Tracking';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   validatePassword: stores.updatePasswordValidationStore.validatePassword.bind(
     stores.updatePasswordValidationStore
   ),

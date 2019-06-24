@@ -8,15 +8,14 @@ import {
   TextInput,
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
 import LargeBtn from 'app/modules/ui/LargeBtn';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
-  withdrawAddress: stores.paymentsStore.withdrawAddress,
-  creditsToWithdraw: stores.paymentsStore.creditsToWithdraw,
+@inject((stores:Stores) => ({
   withdrawToExternalWallet: stores.paymentsStore.withdrawToExternalWallet.bind(
     stores.paymentsStore
   ),

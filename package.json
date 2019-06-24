@@ -24,12 +24,12 @@
     "expo-av": "~5.0.0",
     "expo-blur": "~5.0.0",
     "expo-constants": "~5.0.0",
-    "mobx-react": "4.3.3",
+    "mobx-react": "5.4.4",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-iphone-x-helper": "1.2.0",
     "react-navigation": "^2.18.2",
-    "skyhitz-common": "https://github.com/skyhitz/common.git#3b3869b7d20802e7ea5ced95c88f5fb3a33c8243"
+    "skyhitz-common": "https://github.com/skyhitz/common.git#8c4546f0da021dedf2d714a7bcb108a0ceda54d0"
   },
   "devDependencies": {
     "@types/react": "^16.8.19",

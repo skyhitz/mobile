@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Header, createStackNavigator } from 'react-navigation';
-import { inject } from 'mobx-react/native';
+import { createStackNavigator } from 'react-navigation';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import ProfileSettingsTopContainer from 'app/modules/profile/ProfileSettingsTopContainer';
 import EditBtn from 'app/modules/ui/EditBtn';
@@ -13,8 +13,9 @@ import LikesRow from 'app/modules/playlists/LikesRow';
 import PlaylistsRow from 'app/modules/playlists/PlaylistsRow';
 import PlaylistScreen from 'app/modules/playlists/PlaylistScreen';
 import MyMusicRow from 'app/modules/playlists/MyMusicRow';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   user: stores.sessionStore.user,
 }))
 class ProfileSettingsScreen extends React.Component<any, any> {

@@ -8,13 +8,14 @@ import {
   TextInput,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import SelectPlaylistImage from 'app/modules/playlists/SelectPlaylistImage';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   create: stores.playlistsStore.create.bind(stores.playlistsStore),
   modalPlaylistName: stores.playlistsStore.modalPlaylistName,
   modalPlaylistDescription: stores.playlistsStore.modalPlaylistDescription,

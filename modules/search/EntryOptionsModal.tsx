@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { goBack } from 'app/modules/navigation/Navigator';
 import Layout from 'app/constants/Layout';
@@ -8,8 +8,9 @@ import LikeOptionRow from 'app/modules/search/LikeOptionRow';
 import AddToPlaylistOptionRow from 'app/modules/search/AddToPlaylistOptionRow';
 import RemoveFromPlaylistOptionRow from 'app/modules/search/RemoveFromPlaylistOptionRow';
 import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
+import { Stores } from 'skyhitz-common';
 
-@inject(stores => ({
+@inject((stores:Stores) => ({
   playlistsCount: stores.playlistsStore.playlistsCount,
   user: stores.sessionStore.user,
 }))
