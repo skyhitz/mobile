@@ -58,6 +58,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerLeft: <CancelEditBtn />,
     headerRight: <DoneEditBtn />,

@@ -15,7 +15,7 @@ import PlaylistScreen from 'app/modules/playlists/PlaylistScreen';
 import MyMusicRow from 'app/modules/playlists/MyMusicRow';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   user: stores.sessionStore.user,
 }))
 class ProfileSettingsScreen extends React.Component<any, any> {
@@ -24,6 +24,7 @@ class ProfileSettingsScreen extends React.Component<any, any> {
     headerTintColor: Colors.tabIconSelected,
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerRight: <EditBtn />,
   };

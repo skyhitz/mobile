@@ -19,7 +19,7 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { trackSignUp } from 'app/analytics/Tracking';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   validateUsername: stores.signUpValidationStore.validateUsername.bind(
     stores.signUpValidationStore
   ),
@@ -49,6 +49,7 @@ export default class SignUpScreen extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerLeft: (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />

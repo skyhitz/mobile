@@ -19,7 +19,7 @@ import {
 import { trackSignIn } from 'app/analytics/Tracking';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   validateUsernameOrEmail: stores.signInValidationStore.validateUsernameOrEmail.bind(
     stores.signInValidationStore
   ),
@@ -45,6 +45,7 @@ export default class SignInScreen extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerLeft: (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />

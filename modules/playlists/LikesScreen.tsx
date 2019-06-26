@@ -7,7 +7,7 @@ import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
   entries: stores.likesStore.userLikes,
   loading: stores.likesStore.loading,
@@ -18,6 +18,7 @@ export default class LikesScreen extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerTintColor: Colors.tabIconSelected,
   };

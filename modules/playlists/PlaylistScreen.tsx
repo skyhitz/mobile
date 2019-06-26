@@ -15,7 +15,7 @@ import { navigate } from 'app/modules/navigation/Navigator';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
   playlist: stores.playlistsStore.playlist,
   loading: stores.playlistsStore.loading,
@@ -26,6 +26,7 @@ export default class PlaylistScreen extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerTintColor: Colors.tabIconSelected,
   });

@@ -34,6 +34,7 @@ export default createStackNavigator({
       headerTintColor: Colors.tabIconSelected,
       headerStyle: {
         backgroundColor: Colors.headerBackground,
+        borderBottomWidth: 0,
       },
     }),
     path: 'profile',

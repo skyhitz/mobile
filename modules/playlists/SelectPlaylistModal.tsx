@@ -18,7 +18,7 @@ import { navigate } from 'app/modules/navigation/Navigator';
 import ArrowDownBackBtn from 'app/modules/ui/ArrowDownBackBtn';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   playlists: stores.playlistsStore.playlists,
   loading: stores.playlistsStore.loading,
 }))
@@ -28,6 +28,7 @@ export default class SelectPlaylistModal extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerTintColor: Colors.tabIconSelected,
     headerLeft: <ArrowDownBackBtn />,

@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   validateUsername: stores.usernameAndEmailValidationStore.validateUsername.bind(
     stores.usernameAndEmailValidationStore
   ),
@@ -43,6 +43,7 @@ export default class ConfirmUsernameAndEmail extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerLeft: (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />

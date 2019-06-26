@@ -19,7 +19,7 @@ import {
 import { trackChangePassword } from 'app/analytics/Tracking';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   validatePassword: stores.updatePasswordValidationStore.validatePassword.bind(
     stores.updatePasswordValidationStore
   ),
@@ -42,6 +42,7 @@ export default class UpdatePasswordScreen extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerLeft: (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />

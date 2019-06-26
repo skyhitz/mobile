@@ -18,7 +18,7 @@ import {
 import { trackResetPassword } from 'app/analytics/Tracking';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   validateEmail: stores.resetPasswordValidationStore.validateEmail.bind(
     stores.resetPasswordValidationStore
   ),
@@ -36,6 +36,7 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
+      borderBottomWidth: 0,
     },
     headerLeft: (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
