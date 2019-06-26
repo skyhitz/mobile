@@ -4,7 +4,7 @@
     "**/node_modules/skyhitz-common": false
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "[javascript]": {
     "editor.formatOnSave": true
   }

@@ -17,7 +17,7 @@ const labelStyle = props => ({
 });
 
 const indicatorStyle = {
-  borderBottomColor: Colors.brandBlue,
+  borderBottomColor: Colors.lightBrandBlue,
   borderBottomWidth: 1,
   alignSelf: 'flex-end',
   backgroundColor: 'transparent',
@@ -36,14 +36,14 @@ const TabsView = createMaterialTopTabNavigator(
     Music: {
       screen: SearchEntryView,
       navigationOptions: {
-        tabBarLabel: props => renderTabBarLabel(props, 'MUSIC'),
+        tabBarLabel: props => renderTabBarLabel(props, 'Music'),
       },
       path: `music`,
     },
     Influencers: {
       screen: SearchUserView,
       navigationOptions: {
-        tabBarLabel: props => renderTabBarLabel(props, 'INFLUENCERS'),
+        tabBarLabel: props => renderTabBarLabel(props, 'Influencers'),
       },
       path: `influencers`,
     },
@@ -54,11 +54,11 @@ const TabsView = createMaterialTopTabNavigator(
     swipeEnabled: true,
     animationEnabled: true,
     tabBarOptions: {
-      activeTintColor: Colors.brandBlue,
+      activeTintColor: Colors.white,
       showIcon: false,
       style: {
         height: 36,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.tabsBackground,
       },
     },
   }

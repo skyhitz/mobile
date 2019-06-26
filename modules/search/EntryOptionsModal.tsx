@@ -10,7 +10,7 @@ import RemoveFromPlaylistOptionRow from 'app/modules/search/RemoveFromPlaylistOp
 import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   playlistsCount: stores.playlistsStore.playlistsCount,
   user: stores.sessionStore.user,
 }))
@@ -62,7 +62,7 @@ export default class EntryOptionsModal extends React.Component<any, any> {
         </View>
         <View style={styles.bottomWrap}>
           <TouchableOpacity onPress={() => goBack()}>
-            <Text style={styles.btnText}>CANCEL</Text>
+            <Text style={styles.btnText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -51,7 +51,6 @@ export default class PlaylistsRow extends React.Component<any, any> {
             </View>
           </TouchableOpacity>
         </View>
-        <Divider />
       </View>
     );
   }

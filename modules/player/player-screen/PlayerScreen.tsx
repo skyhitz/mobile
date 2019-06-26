@@ -16,8 +16,9 @@ import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import LikersSection from 'app/modules/player/player-screen/likers-section/LikersSection';
 import StarBtn from 'app/modules/player/player-screen/star-btn/StarBtn';
 import { Stores } from 'skyhitz-common';
+import Colors from 'app/constants/Colors';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   entry: stores.playerStore.entry,
 }))
 export default class PlayerScreen extends React.Component<any, any> {
@@ -27,29 +28,21 @@ export default class PlayerScreen extends React.Component<any, any> {
       source = { uri: this.props.entry.imageUrl };
     }
     return (
-      <ImageBackground style={StyleSheet.absoluteFill} source={source}>
-        <BlurView
-          blurType="dark"
-          intensity={100}
-          style={StyleSheet.absoluteFill}
-        >
-          <View style={styles.container}>
-            <PlayerNav />
-            <VideoPlayer />
-            <PlayerEntryInfo />
-            <StarBtn />
-            <PlayerControls />
-            <LikersSection />
-          </View>
-        </BlurView>
-      </ImageBackground>
+      <View style={styles.container}>
+        <PlayerNav />
+        <VideoPlayer />
+        <PlayerEntryInfo />
+        <StarBtn />
+        <PlayerControls />
+        <LikersSection />
+      </View>
     );
   }
 }
 
 let styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(0, 0, 0, 0.53)',
+    backgroundColor: Colors.darkBlue,
     flex: 1,
     justifyContent: 'space-between',
   },

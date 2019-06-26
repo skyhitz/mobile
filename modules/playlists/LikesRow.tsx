@@ -49,7 +49,6 @@ export default class LikesRow extends React.Component<any, any> {
             </View>
           </TouchableOpacity>
         </View>
-        <Divider />
       </View>
     );
   }

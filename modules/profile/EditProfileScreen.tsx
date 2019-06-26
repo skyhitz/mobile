@@ -25,7 +25,7 @@ import { trackSignOut } from 'app/analytics/Tracking';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   profile: stores.editProfileStore.profile,
   avatarUrl: stores.editProfileStore.avatarUrl,
   loadingAvatar: stores.editProfileStore.loadingAvatar,
@@ -254,7 +254,6 @@ const styles = StyleSheet.create({
     paddingRight: formPadding,
     marginTop: 0,
     flex: 1,
-    backgroundColor: Colors.white,
     maxHeight: 120,
     borderBottomColor: Colors.dividerBackground,
     borderBottomWidth: 1,
@@ -266,7 +265,6 @@ const styles = StyleSheet.create({
     paddingRight: formPadding,
     marginTop: 0,
     flex: 1,
-    backgroundColor: Colors.white,
     maxHeight: 80,
     borderBottomColor: Colors.dividerBackground,
     borderBottomWidth: 1,
@@ -278,7 +276,6 @@ const styles = StyleSheet.create({
     paddingRight: formPadding,
     marginTop: 0,
     flex: 1,
-    backgroundColor: Colors.white,
     maxHeight: 40,
     borderBottomColor: Colors.dividerBackground,
     borderBottomWidth: 1,

@@ -7,7 +7,7 @@ import { Stores } from 'skyhitz-common';
 
 let platform = Platform.OS === 'ios' ? 'ios' : 'android';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   inputSearchStore: stores.inputSearchStore,
 }))
 class SearchHeader extends React.Component<any, any> {
@@ -42,7 +42,7 @@ class SearchHeader extends React.Component<any, any> {
           height: 30,
           margin: 7.5,
           borderRadius: 5,
-          color: Colors.defaultTextDark,
+          color: Colors.searchTextColor,
         }}
       />
     );

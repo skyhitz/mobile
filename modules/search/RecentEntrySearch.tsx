@@ -6,7 +6,7 @@ import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   loadPlayAndPushToCueList: stores.playerStore.loadPlayAndPushToCueList.bind(
     stores.playerStore
   ),
@@ -29,7 +29,7 @@ export default class RecentEntrySearch extends React.Component<any, any> {
     }
     return (
       <View>
-        <Text style={styles.recentText}>RECENT</Text>
+        <Text style={styles.recentText}>Recent</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
         {this.props.recentSearches.map(entry =>
           EntryRow(
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   recentText: {
     color: Colors.defaultTextLight,
     fontSize: 14,
-    paddingTop: 10,
+    paddingTop: 14,
     paddingLeft: 8,
   },
 });

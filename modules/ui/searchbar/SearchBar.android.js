@@ -77,7 +77,7 @@ class SearchBar extends Component {
       <MaterialIcon
         size={25}
         color={ANDROID_GRAY}
-        name={hasFocus ? 'arrow-left' : 'magnify'}
+        name={'magnify'}
         onPress={hasFocus ? this.cancel : null}
       />
     );
@@ -159,15 +159,17 @@ SearchBar.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.darkBlue,
-    width: SCREEN_WIDTH,
-    paddingTop: 8,
-    paddingBottom: 8,
+    backgroundColor: Colors.white,
+    width: SCREEN_WIDTH - 8,
+    marginTop: 6,
+    marginBottom: 8,
+    marginLeft: 4,
+    marginRight: 4,
+    borderRadius: 6,
+    height: 40,
   },
   input: {
     flex: 1,
-    marginLeft: 24,
-    marginRight: 8,
     color: Colors.searchTextColor,
   },
   inputContainer: {

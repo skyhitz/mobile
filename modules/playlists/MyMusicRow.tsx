@@ -47,7 +47,6 @@ export default class MyMusicRow extends React.Component<any, any> {
             </View>
           </TouchableOpacity>
         </View>
-        <Divider />
       </View>
     );
   }

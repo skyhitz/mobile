@@ -7,7 +7,7 @@ var styles = StyleSheet.create({
     width: 3,
     height: 3,
     borderRadius: 1.5,
-    backgroundColor: Colors.threeDotsDark,
+    backgroundColor: Colors.white,
     marginLeft: 2,
   },
   dots: {

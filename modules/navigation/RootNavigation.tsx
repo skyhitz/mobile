@@ -109,7 +109,7 @@ const RootStackNavigator = createSwitchNavigator(
   }
 );
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   user: stores.sessionStore.user,
   loadUserLikes: stores.likesStore.refreshLikes.bind(stores.likesStore),
   loadPlaylists: stores.playlistsStore.refreshPlaylists.bind(
@@ -153,11 +153,13 @@ export default class RootNavigator extends React.Component<any, any> {
   componentWillUnmount() {
     Linking.removeEventListener('url', this.handleOpenURL);
   }
+  componentWillMount() {
+    StatusBar.setBarStyle('light-content');
+  }
 
   render() {
     return (
       <View style={[styles.container]}>
-        <StatusBar barStyle="light-content" />
         <RootStackNavigator uriPrefix={Constants.linkingUri} />
       </View>
     );

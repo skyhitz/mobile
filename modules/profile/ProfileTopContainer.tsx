@@ -7,7 +7,7 @@ import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   user: stores.profileStore.user,
 }))
 export default class ProfileTopContainer extends React.Component<any, any> {
@@ -20,30 +20,22 @@ export default class ProfileTopContainer extends React.Component<any, any> {
       source = { uri: this.props.user.avatarUrl };
     }
     if (source) {
-      return (
-        <View style={styles.container}>
-          <ImageBackground source={source} style={StyleSheet.absoluteFill}>
-            {this.renderBlurSection()}
-          </ImageBackground>
-        </View>
-      );
+      return <View style={styles.container}>{this.renderBlurSection()}</View>;
     }
     return <View style={styles.container}>{this.renderBlurSection()}</View>;
   }
   renderBlurSection() {
     return (
-      <BlurView blurType="dark" intensity={100} style={StyleSheet.absoluteFill}>
-        <View style={styles.overlay}>
-          <View style={styles.topContainer}>
-            <View style={styles.topHeader}>
-              {UserAvatarMedium(this.props.user)}
-              <View style={styles.profileInfo}>
-                <Text style={styles.text}>{this.props.user.displayName}</Text>
-              </View>
+      <View style={styles.overlay}>
+        <View style={styles.topContainer}>
+          <View style={styles.topHeader}>
+            {UserAvatarMedium(this.props.user)}
+            <View style={styles.profileInfo}>
+              <Text style={styles.text}>{this.props.user.displayName}</Text>
             </View>
           </View>
         </View>
-      </BlurView>
+      </View>
     );
   }
 }

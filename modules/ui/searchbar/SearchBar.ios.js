@@ -17,7 +17,7 @@ import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
 import Input from 'app/modules/ui/Input';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const IOS_GRAY = '#7d7d7d';
+const IOS_GRAY = Colors.searchTextColor;
 
 class SearchBar extends Component {
   focus = () => {
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     backgroundColor: Colors.darkBlue,
-    paddingBottom: 10,
+    paddingBottom: 5,
     paddingTop: 6,
     flexDirection: 'row',
   },
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   cancelBtn: {
-    color: Colors.searchTextColor,
+    color: Colors.white,
     fontSize: 14,
     paddingLeft: 10,
     paddingTop: 8,

@@ -7,7 +7,7 @@ import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   recentSearches: stores.usersSearchStore.recentSearches,
   loadingRecentSearches: stores.usersSearchStore.loadingRecentSearches,
   getProfileInfo: stores.profileStore.getProfileInfo.bind(stores.profileStore),
@@ -25,7 +25,7 @@ export default class RecentUserSearch extends React.Component<any, any> {
     }
     return (
       <View>
-        <Text style={styles.recentText}>RECENT</Text>
+        <Text style={styles.recentText}>Recent</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
         {this.props.recentSearches.map(user => (
           <UserRow user={user} key={user.id} />
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   recentText: {
     color: Colors.defaultTextLight,
     fontSize: 14,
-    paddingTop: 10,
+    paddingTop: 14,
     paddingLeft: 10,
   },
 });

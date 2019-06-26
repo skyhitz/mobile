@@ -28,7 +28,6 @@ export default class ShareAppBanner extends React.Component<any, any> {
           <Text style={styles.adsText}>Upload your music!</Text>
           <LargeBtn onPress={this.onUpload.bind(this)} text="Upload" />
         </View>
-        <Divider />
       </View>
     );
   }

@@ -39,7 +39,7 @@ export default class RemovePlaylistModal extends React.Component<any, any> {
           </View>
           <View style={styles.modalActionsWrap}>
             <TouchableOpacity style={styles.actionBtn} onPress={() => goBack()}>
-              <Text style={styles.white}>CANCEL</Text>
+              <Text style={styles.white}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.remove.bind(this)}>
               <View style={styles.actionBtn}>

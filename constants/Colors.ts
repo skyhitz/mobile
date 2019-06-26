@@ -1,14 +1,16 @@
 const tintColor = '#1eaeff';
-const darkBlue = '#292B33';
+const darkBlue = '#1A1B20';
 const darkBlueTransparent = 'rgba(41, 43, 51, 0.9)';
 const lightRed = '#d9544f';
 const lightGrey = '#dbdbdb';
 const darkGrey = 'rgb(43, 48, 51)';
+const lightBrandBlue = '#1dadff';
 
 export default {
   tintColor,
   darkBlue,
   darkBlueTransparent,
+  lightBrandBlue: lightBrandBlue,
   tabIconDefault: '#ccc',
   tabIconSelected: '#eee',
   tabBar: '#fefefe',
@@ -20,9 +22,9 @@ export default {
   noticeText: '#fff',
   white: '#ffffff',
   brandBlue: tintColor,
-  defaultTextDark: darkGrey,
-  defaultTextLight: 'rgba(81, 88, 94, 0.78)',
-  listItemBackground: '#edf1f2',
+  defaultTextDark: 'white',
+  defaultTextLight: 'white',
+  listItemBackground: darkBlue,
   loadingScreenBackground: '#17191C',
   darkInputTextBackground: darkBlue,
   overlayBackground: darkBlue,
@@ -31,7 +33,7 @@ export default {
   underlayColor: darkBlue,
   profileOverlayBackground: 'rgba(0,0,0,0.3)',
   lightBlueBtn: 'rgba(0, 174, 239,0.9)',
-  searchTextColor: '#86939e',
+  searchTextColor: '#000000',
   transparent: 'rgba(0,0,0,0)',
   dividerBackground: lightGrey,
   threeDotsDark: darkGrey,

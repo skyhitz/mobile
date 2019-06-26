@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground, Text } from 'react-native';
-import { BlurView } from 'expo-blur';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
@@ -8,12 +7,15 @@ import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   user: stores.sessionStore.user,
   subscribed: stores.paymentsStore.subscribed,
   credits: stores.paymentsStore.credits,
 }))
-export default class ProfileSettingsTopContainer extends React.Component<any, any> {
+export default class ProfileSettingsTopContainer extends React.Component<
+  any,
+  any
+> {
   render() {
     if (!this.props.user) {
       return null;
@@ -26,13 +28,7 @@ export default class ProfileSettingsTopContainer extends React.Component<any, an
       source = { uri: this.props.user.bannerUrl };
     }
     if (source) {
-      return (
-        <View style={styles.container}>
-          <ImageBackground source={source} style={StyleSheet.absoluteFill}>
-            {this.renderBlurSection()}
-          </ImageBackground>
-        </View>
-      );
+      return <View style={styles.container}>{this.renderBlurSection()}</View>;
     }
     return <View style={styles.container}>{this.renderBlurSection()}</View>;
   }
@@ -51,22 +47,20 @@ export default class ProfileSettingsTopContainer extends React.Component<any, an
   }
   renderBlurSection() {
     return (
-      <BlurView blurType="dark" intensity={100} style={StyleSheet.absoluteFill}>
-        <View style={styles.overlay}>
-          <View style={styles.topContainer}>
-            <View style={styles.topHeader}>
-              {UserAvatarMedium(this.props.user)}
-              <View style={styles.profileInfo}>
-                <Text style={styles.text}>{this.props.user.displayName}</Text>
-                {this.renderStar()}
-                <Text style={styles.text}>
-                  {this.props.credits ? this.props.credits : ''}
-                </Text>
-              </View>
+      <View style={styles.overlay}>
+        <View style={styles.topContainer}>
+          <View style={styles.topHeader}>
+            {UserAvatarMedium(this.props.user)}
+            <View style={styles.profileInfo}>
+              <Text style={styles.text}>{this.props.user.displayName}</Text>
+              {this.renderStar()}
+              <Text style={styles.text}>
+                {this.props.credits ? this.props.credits : ''}
+              </Text>
             </View>
           </View>
         </View>
-      </BlurView>
+      </View>
     );
   }
 }
@@ -79,7 +73,6 @@ const styles = StyleSheet.create({
     height: 100,
   },
   overlay: {
-    backgroundColor: Colors.profileOverlayBackground,
     flex: 1,
     justifyContent: 'center',
   },

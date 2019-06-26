@@ -15,7 +15,7 @@ import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   create: stores.playlistsStore.create.bind(stores.playlistsStore),
   modalPlaylistName: stores.playlistsStore.modalPlaylistName,
   modalPlaylistDescription: stores.playlistsStore.modalPlaylistDescription,
@@ -83,11 +83,8 @@ export default class EditPlaylistModal extends React.Component<any, any> {
           </View>
           <SelectPlaylistImage />
           <View style={styles.modalActionsWrap}>
-            <TouchableOpacity
-              style={styles.actionBtn}
-              onPress={() => goBack()}
-            >
-              <Text style={styles.white}>CANCEL</Text>
+            <TouchableOpacity style={styles.actionBtn} onPress={() => goBack()}>
+              <Text style={styles.white}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity
               disabled={!this.props.canCreate}

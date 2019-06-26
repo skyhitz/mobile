@@ -14,7 +14,7 @@ import Colors from 'app/constants/Colors';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-class Input extends Component<any,any> {
+class Input extends Component<any, any> {
   shakeAnimationValue;
   input;
   componentWillMount() {
@@ -88,6 +88,7 @@ class Input extends Component<any,any> {
           )}
           <TextInput
             autoCorrect={false}
+            placeholderTextColor="#ffff"
             ref={input => (this.input = input)}
             underlineColorAndroid={Colors.transparent}
             style={[
@@ -127,9 +128,9 @@ const styles = StyleSheet.create({
   },
   input: {
     alignSelf: 'center',
-    color: 'black',
     fontSize: 18,
-    marginLeft: 10,
+    marginLeft: 5,
+    color: 'white',
   },
   error: {
     color: '#FF2D00',
