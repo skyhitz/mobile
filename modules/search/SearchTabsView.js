@@ -8,7 +8,6 @@ import Colors from 'app/constants/Colors';
 
 const labelStyle = props => ({
   fontSize: 12,
-  fontWeight: 'bold',
   color: props.focused ? props.tintColor : Colors.defaultTextLight,
   textAlign: 'center',
   alignSelf: 'center',

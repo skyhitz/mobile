@@ -1,15 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { EvilIcons, Ionicons } from '@expo/vector-icons';
+import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
-import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
-import { UserAvatar } from 'app/modules/ui/UserAvatar';
-import { trackOpenProfile } from 'app/analytics/Tracking';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   count: stores.userEntriesStore.entriesCount,
   entries: stores.userEntriesStore.entries,
 }))
@@ -33,7 +30,11 @@ export default class MyMusicRow extends React.Component<any, any> {
           <TouchableOpacity onPress={this.handleNavigation.bind(this)}>
             <View style={styles.row}>
               <View style={styles.leftSection}>
-                <Ionicons name={'md-star'} size={32} color={Colors.brandBlue} />
+                <MaterialIcons
+                  name="star-border"
+                  size={30}
+                  color={Colors.brandBlue}
+                />
                 <Text style={styles.likesText}>My Music</Text>
               </View>
               <View style={styles.rightSection}>
@@ -85,7 +86,7 @@ let styles = StyleSheet.create({
   likesText: {
     fontWeight: 'bold',
     color: Colors.defaultTextDark,
-    paddingLeft: 15,
+    paddingLeft: 10,
   },
   videosText: {
     color: Colors.defaultTextDark,

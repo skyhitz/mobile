@@ -174,7 +174,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
             />
           </View>
         </View>
-        <Text style={styles.privateInfo}>PRIVATE INFORMATION</Text>
+        <Text style={styles.privateInfo}>Private Information</Text>
         <View style={styles.inputContainerMiddle}>
           <View style={styles.field}>
             <MaterialIcons
@@ -216,7 +216,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
           </View>
         </View>
         {this.renderWithdrawalXLM()}
-        <Text style={styles.privateInfo}>MORE</Text>
+        <Text style={styles.privateInfo}>More</Text>
         <View style={styles.inputContainerBottom}>
           <TouchableOpacity
             style={styles.fieldWithoutBorder}
@@ -256,9 +256,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
     flex: 1,
     maxHeight: 120,
-    borderBottomColor: Colors.dividerBackground,
+    borderBottomColor: Colors.transparent,
     borderBottomWidth: 1,
-    borderTopColor: Colors.dividerBackground,
+    borderTopColor: Colors.transparent,
     borderTopWidth: 1,
   },
   inputContainerMiddle: {
@@ -267,9 +267,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
     flex: 1,
     maxHeight: 80,
-    borderBottomColor: Colors.dividerBackground,
+    borderBottomColor: Colors.transparent,
     borderBottomWidth: 1,
-    borderTopColor: Colors.dividerBackground,
+    borderTopColor: Colors.transparent,
     borderTopWidth: 1,
   },
   inputContainerBottom: {
@@ -278,9 +278,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
     flex: 1,
     maxHeight: 40,
-    borderBottomColor: Colors.dividerBackground,
+    borderBottomColor: Colors.transparent,
     borderBottomWidth: 1,
-    borderTopColor: Colors.dividerBackground,
+    borderTopColor: Colors.transparent,
     borderTopWidth: 1,
   },
   input: {
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     maxHeight: 40,
     flex: 1,
     borderBottomColor: Colors.dividerBackground,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     justifyContent: 'flex-end',
   },
   withdrawalXLMField: {
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.transparent,
   },
   privateInfo: {
-    paddingLeft: 15,
+    paddingLeft: 18,
     paddingTop: 10,
     paddingBottom: 5,
     fontSize: 10,

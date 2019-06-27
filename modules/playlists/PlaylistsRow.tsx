@@ -2,14 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { EvilIcons, Ionicons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
-import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
-import { UserAvatar } from 'app/modules/ui/UserAvatar';
-import { trackOpenProfile } from 'app/analytics/Tracking';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   count: stores.playlistsStore.playlistsCount,
   playlists: stores.playlistsStore.playlists,
 }))
@@ -34,8 +31,8 @@ export default class PlaylistsRow extends React.Component<any, any> {
             <View style={styles.row}>
               <View style={styles.leftSection}>
                 <Ionicons
-                  name={'ios-musical-notes'}
-                  size={32}
+                  name={'ios-list'}
+                  size={30}
                   color={Colors.brandBlue}
                 />
                 <Text style={styles.likesText}>Playlists</Text>
@@ -89,7 +86,7 @@ let styles = StyleSheet.create({
   likesText: {
     fontWeight: 'bold',
     color: Colors.defaultTextDark,
-    paddingLeft: 15,
+    paddingLeft: 16,
   },
   videosText: {
     color: Colors.defaultTextDark,

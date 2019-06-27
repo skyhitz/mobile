@@ -5,7 +5,7 @@ import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   uploadProfilePhoto: stores.editProfileStore.uploadProfilePhoto.bind(
     stores.editProfileStore
   ),
@@ -33,7 +33,7 @@ export default class EditProfilePhotoBtn extends React.Component<any, any> {
         style={styles.btn}
         onPress={this.changeProfilePhoto.bind(this)}
       >
-        <Text style={{ color: Colors.brandBlue }}>Change Profile Photo</Text>
+        <Text style={{ color: Colors.white }}>Change Profile Photo</Text>
       </TouchableOpacity>
     );
   }

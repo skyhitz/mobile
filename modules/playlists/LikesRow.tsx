@@ -9,7 +9,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   count: stores.likesStore.userLikesCount,
   likes: stores.likesStore.userLikes,
   setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),
@@ -35,7 +35,7 @@ export default class LikesRow extends React.Component<any, any> {
           <TouchableOpacity onPress={this.handleLikesNavigation.bind(this)}>
             <View style={styles.row}>
               <View style={styles.leftSection}>
-                <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
+                <EvilIcons name={'like'} size={30} color={Colors.brandBlue} />
                 <Text style={styles.likesText}>Likes</Text>
               </View>
               <View style={styles.rightSection}>
@@ -87,7 +87,7 @@ let styles = StyleSheet.create({
   likesText: {
     fontWeight: 'bold',
     color: Colors.defaultTextDark,
-    paddingLeft: 5,
+    paddingLeft: 10,
   },
   videosText: {
     color: Colors.defaultTextDark,

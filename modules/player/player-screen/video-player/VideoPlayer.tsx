@@ -23,7 +23,7 @@ import { Stores } from 'skyhitz-common';
 // } from 'locked-screen-music-control';
 // import { observe } from 'mobx';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   onPlaybackStatusUpdate: stores.playerStore.onPlaybackStatusUpdate.bind(
     stores.playerStore
   ),
@@ -64,7 +64,7 @@ export default class VideoPlayer extends React.Component<any, any> {
   }
 
   // componentWillUnmount() {
-    // this.disposer();
+  // this.disposer();
   // }
 
   // disposer = observe(musicControlEvents, ({ object }) => {

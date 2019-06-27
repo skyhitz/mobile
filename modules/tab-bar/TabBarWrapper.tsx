@@ -6,7 +6,7 @@ import PlayerBar from 'app/modules/player/player-bar/PlayerBar';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   bottom: stores.playerStore.tabBarBottomPosition,
 }))
 export default class TabBarWrapper extends React.Component<any, any> {
@@ -22,6 +22,8 @@ export default class TabBarWrapper extends React.Component<any, any> {
           style={{
             bottom: this.props.bottom,
             backgroundColor: Colors.tabsBackground,
+            borderTopColor: Colors.lightBrandBlue,
+            borderTopWidth: 1,
           }}
         />
       </View>

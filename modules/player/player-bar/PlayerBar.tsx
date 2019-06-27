@@ -28,7 +28,7 @@ if (isIphoneX()) {
   tabNavBottom = 123;
 }
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   show: stores.playerStore.show,
   showPlayer: stores.playerStore.showPlayer.bind(stores.playerStore),
   hidePlayer: stores.playerStore.hidePlayer.bind(stores.playerStore),
@@ -114,6 +114,9 @@ export default class PlayerBar extends React.Component<any, any> {
       this.props.updateTabBarBottomPosition(this._animatedValueY);
     });
     this._panResponder = PanResponder.create({
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        return !(gestureState.dx === 0 && gestureState.dy === 0);
+      },
       onMoveShouldSetPanResponderCapture: () => true, // Same here, tell iOS that we allow dragging
       onPanResponderGrant: () => {
         this.state.pan.setOffset({
@@ -159,34 +162,7 @@ export default class PlayerBar extends React.Component<any, any> {
         style={this.getTabPlayerStyle()}
         {...this._panResponder.panHandlers}
       >
-        <View style={styles.bg}>
-          <View style={styles.blur}>
-            <View style={styles.tabPlayerLeftSection}>
-              <TouchableOpacity
-                onPress={this.props.showPlayer}
-              >
-                <EvilIcons
-                  name={'chevron-up'}
-                  size={36}
-                  color={Colors.white}
-                  style={styles.arrowUp}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={this.props.showPlayer}
-              >
-                <Text
-                  style={styles.entryTitle}
-                  ellipsizeMode="tail"
-                  numberOfLines={1}
-                >
-                  {this.props.entry ? this.props.entry.title : ''}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <PlayBtnSmall />
-          </View>
-        </View>
+        <PlayerTabBar />
       </Animated.View>
     );
   }
@@ -199,6 +175,37 @@ export default class PlayerBar extends React.Component<any, any> {
             <PlayerScreen />
           </Animated.View>
         </Animated.View>
+      </View>
+    );
+  }
+}
+
+@inject((stores: Stores) => ({
+  showPlayer: stores.playerStore.showPlayer.bind(stores.playerStore),
+  entry: stores.playerStore.entry,
+}))
+class PlayerTabBar extends React.Component<any, any> {
+  render() {
+    return (
+      <View style={styles.bg}>
+        <TouchableOpacity onPress={() => this.props.showPlayer()}>
+          <View style={styles.tabPlayerLeftSection}>
+            <EvilIcons
+              name={'chevron-up'}
+              size={36}
+              color={Colors.white}
+              style={styles.arrowUp}
+            />
+            <Text
+              style={styles.entryTitle}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {this.props.entry ? this.props.entry.title : ''}
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <PlayBtnSmall />
       </View>
     );
   }
@@ -217,6 +224,9 @@ let styles = StyleSheet.create({
   bg: {
     width: Dimensions.get('window').width,
     height: 39,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   modalPlayer: {
     width: Dimensions.get('window').width,
@@ -233,20 +243,14 @@ let styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    borderBottomColor: '#1dadff',
-    borderBottomWidth: 1,
     backgroundColor: 'rgba(41, 43, 51, 0.85)',
-  },
-  blur: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   tabPlayerLeftSection: {
     justifyContent: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
     maxWidth: Layout.window.width - 70,
+    position: 'relative',
   },
   entryTitle: {
     fontSize: 12,
