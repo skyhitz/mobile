@@ -101,7 +101,6 @@ ios/Podfile.lock
 ios/Pods
 .expo
 .expo-source
-.expo-shared
 skyhitz.jks
 
 yarn-error.log
