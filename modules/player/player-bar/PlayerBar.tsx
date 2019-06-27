@@ -42,7 +42,6 @@ export default class PlayerBar extends React.Component<any, any> {
   _animatedValueX;
   _animatedValueY;
   _panResponder;
-  blockPanGesture;
   state = {
     pan: new Animated.ValueXY(),
   };
@@ -104,7 +103,6 @@ export default class PlayerBar extends React.Component<any, any> {
     }).start();
   }
   componentWillMount() {
-    console.log('component will mount');
     this._animatedValueX = 0;
     this._animatedValueY = 0;
     this.state.pan.x.addListener(value => (this._animatedValueX = value.value));
@@ -138,7 +136,6 @@ export default class PlayerBar extends React.Component<any, any> {
         Animated.event([null, gestureEvent])(e, gestureState);
       },
       onPanResponderRelease: (e, gestureState) => {
-        if (this.blockPanGesture) return;
         this.state.pan.flattenOffset();
         if (gestureState.dy < -10) {
           return this.props.showPlayer();
@@ -160,7 +157,6 @@ export default class PlayerBar extends React.Component<any, any> {
     return this.hideModalPlayer();
   }
   handleOnTabBarPress() {
-    console.log('on tab bar press');
     this.props.showPlayer();
   }
   renderTabBar() {
