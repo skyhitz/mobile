@@ -42,6 +42,7 @@ export default class PlayerBar extends React.Component<any, any> {
   _animatedValueX;
   _animatedValueY;
   _panResponder;
+  blockPanGesture;
   state = {
     pan: new Animated.ValueXY(),
   };
@@ -103,6 +104,7 @@ export default class PlayerBar extends React.Component<any, any> {
     }).start();
   }
   componentWillMount() {
+    console.log('component will mount');
     this._animatedValueX = 0;
     this._animatedValueY = 0;
     this.state.pan.x.addListener(value => (this._animatedValueX = value.value));
@@ -114,9 +116,9 @@ export default class PlayerBar extends React.Component<any, any> {
       this.props.updateTabBarBottomPosition(this._animatedValueY);
     });
     this._panResponder = PanResponder.create({
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        return !(gestureState.dx === 0 && gestureState.dy === 0);
-      },
+      onStartShouldSetPanResponder: () => false,
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponderCapture: () => true, // Same here, tell iOS that we allow dragging
       onPanResponderGrant: () => {
         this.state.pan.setOffset({
@@ -136,11 +138,12 @@ export default class PlayerBar extends React.Component<any, any> {
         Animated.event([null, gestureEvent])(e, gestureState);
       },
       onPanResponderRelease: (e, gestureState) => {
+        if (this.blockPanGesture) return;
         this.state.pan.flattenOffset();
         if (gestureState.dy < -10) {
           return this.props.showPlayer();
         }
-        this.hideModalPlayer(true);
+        this.props.hidePlayer();
       },
     });
     if (this.props.hideTabPlayer) {
@@ -156,13 +159,40 @@ export default class PlayerBar extends React.Component<any, any> {
     }
     return this.hideModalPlayer();
   }
+  handleOnTabBarPress() {
+    console.log('on tab bar press');
+    this.props.showPlayer();
+  }
   renderTabBar() {
     return (
       <Animated.View
         style={this.getTabPlayerStyle()}
         {...this._panResponder.panHandlers}
       >
-        <PlayerTabBar />
+        <View style={styles.bg}>
+          <TouchableOpacity
+            onPress={() => this.handleOnTabBarPress()}
+            onLongPress={() => this.handleOnTabBarPress()}
+            style={styles.tabPlayerLeftSection}
+          >
+            <View style={styles.tabPlayerLeftSection}>
+              <EvilIcons
+                name={'chevron-up'}
+                size={36}
+                color={Colors.white}
+                style={styles.arrowUp}
+              />
+              <Text
+                style={styles.entryTitle}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+              >
+                {this.props.entry ? this.props.entry.title : ''}
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <PlayBtnSmall />
+        </View>
       </Animated.View>
     );
   }
@@ -175,37 +205,6 @@ export default class PlayerBar extends React.Component<any, any> {
             <PlayerScreen />
           </Animated.View>
         </Animated.View>
-      </View>
-    );
-  }
-}
-
-@inject((stores: Stores) => ({
-  showPlayer: stores.playerStore.showPlayer.bind(stores.playerStore),
-  entry: stores.playerStore.entry,
-}))
-class PlayerTabBar extends React.Component<any, any> {
-  render() {
-    return (
-      <View style={styles.bg}>
-        <TouchableOpacity onPress={() => this.props.showPlayer()}>
-          <View style={styles.tabPlayerLeftSection}>
-            <EvilIcons
-              name={'chevron-up'}
-              size={36}
-              color={Colors.white}
-              style={styles.arrowUp}
-            />
-            <Text
-              style={styles.entryTitle}
-              ellipsizeMode="tail"
-              numberOfLines={1}
-            >
-              {this.props.entry ? this.props.entry.title : ''}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <PlayBtnSmall />
       </View>
     );
   }
@@ -250,7 +249,8 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     maxWidth: Layout.window.width - 70,
-    position: 'relative',
+    height: 39,
+    zIndex: 11,
   },
   entryTitle: {
     fontSize: 12,
