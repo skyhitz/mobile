@@ -128,23 +128,6 @@ class SearchBar extends Component {
   }
 }
 
-SearchBar.propTypes = {
-  clearIcon: PropTypes.bool,
-  loadingProps: PropTypes.object,
-  noIcon: PropTypes.bool,
-  showLoading: PropTypes.bool,
-  containerStyle: ViewPropTypes.style,
-  leftIcon: PropTypes.object,
-  leftIconContainerStyle: ViewPropTypes.style,
-  rightIconContainerStyle: ViewPropTypes.style,
-  inputStyle: Text.propTypes.style,
-  onClearText: PropTypes.func,
-  onCancel: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  onChangeText: PropTypes.func,
-};
-
 SearchBar.defaultProps = {
   clearIcon: true,
   loadingProps: {},
@@ -159,13 +142,11 @@ SearchBar.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
-    width: SCREEN_WIDTH - 8,
+    width: SCREEN_WIDTH,
     marginTop: 6,
     marginBottom: 8,
     marginLeft: 4,
     marginRight: 4,
-    borderRadius: 6,
     height: 40,
   },
   input: {
@@ -173,8 +154,12 @@ const styles = StyleSheet.create({
     color: Colors.searchTextColor,
   },
   inputContainer: {
+    backgroundColor: Colors.white,
     borderBottomWidth: 0,
-    width: SCREEN_WIDTH,
+    marginLeft: 10,
+    marginRight: 10,
+    width: SCREEN_WIDTH - 30,
+    borderRadius: 6,
   },
   rightIconContainerStyle: {
     marginRight: 8,

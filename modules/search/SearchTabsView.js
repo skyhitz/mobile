@@ -7,11 +7,11 @@ import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
 
 const labelStyle = props => ({
-  fontSize: 12,
+  fontSize: 14,
   color: props.focused ? props.tintColor : Colors.defaultTextLight,
   textAlign: 'center',
   alignSelf: 'center',
-  paddingTop: 2,
+  paddingTop: 0,
   paddingBottom: 4,
 });
 
@@ -56,7 +56,7 @@ const TabsView = createMaterialTopTabNavigator(
       activeTintColor: Colors.white,
       showIcon: false,
       style: {
-        height: 36,
+        height: 38,
         backgroundColor: Colors.tabsBackground,
       },
     },
