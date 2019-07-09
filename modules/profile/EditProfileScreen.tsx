@@ -239,6 +239,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
 }
 
 const formPadding = 20;
+const maxHeight = 50;
 
 const styles = StyleSheet.create({
   container: {
@@ -255,7 +256,7 @@ const styles = StyleSheet.create({
     paddingRight: formPadding,
     marginTop: 0,
     flex: 1,
-    maxHeight: 120,
+    maxHeight: maxHeight * 3,
     borderBottomColor: Colors.transparent,
     borderBottomWidth: 1,
     borderTopColor: Colors.transparent,
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
     paddingRight: formPadding,
     marginTop: 0,
     flex: 1,
-    maxHeight: 80,
+    maxHeight: maxHeight * 2,
     borderBottomColor: Colors.transparent,
     borderBottomWidth: 1,
     borderTopColor: Colors.transparent,
@@ -277,7 +278,7 @@ const styles = StyleSheet.create({
     paddingRight: formPadding,
     marginTop: 0,
     flex: 1,
-    maxHeight: 40,
+    maxHeight: maxHeight,
     borderBottomColor: Colors.transparent,
     borderBottomWidth: 1,
     borderTopColor: Colors.transparent,
@@ -291,7 +292,7 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   field: {
-    maxHeight: 40,
+    maxHeight: maxHeight,
     flex: 1,
     borderBottomColor: Colors.dividerBackground,
     borderBottomWidth: 0.5,
@@ -303,21 +304,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   fieldWithoutBorder: {
-    maxHeight: 40,
+    maxHeight: maxHeight,
     flex: 1,
     justifyContent: 'flex-end',
   },
   placeholderIcon: {
     position: 'absolute',
-    bottom: 8,
+    bottom: 12,
     left: 0,
     backgroundColor: Colors.transparent,
   },
   privateInfo: {
     paddingLeft: 18,
-    paddingTop: 10,
+    paddingTop: 40,
     paddingBottom: 5,
-    fontSize: 10,
+    fontSize: 14,
     fontWeight: 'bold',
     color: Colors.defaultTextLight,
   },
