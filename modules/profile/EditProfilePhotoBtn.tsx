@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { ImagePicker, Permissions } from 'expo';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'skyhitz-common';

@@ -13,7 +13,9 @@ import {
   MaterialIcons,
   FontAwesome,
 } from '@expo/vector-icons';
-import { ImagePicker, Permissions, FileSystem } from 'expo';
+import { FileSystem } from 'expo';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import LargeBtn from 'app/modules/ui/LargeBtn';
@@ -78,7 +80,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
   async selectVideo() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status === 'granted') {
-      let video = await ImagePicker.launchImageLibraryAsync({
+      let video: any = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: false,
       });

@@ -7,7 +7,8 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import { ImagePicker, Permissions } from 'expo';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 import { inject } from 'mobx-react';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
