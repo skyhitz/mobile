@@ -9,6 +9,7 @@ import AddToPlaylistOptionRow from 'app/modules/search/AddToPlaylistOptionRow';
 import RemoveFromPlaylistOptionRow from 'app/modules/search/RemoveFromPlaylistOptionRow';
 import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
 import { Stores } from 'skyhitz-common';
+const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
 @inject((stores: Stores) => ({
   playlistsCount: stores.playlistsStore.playlistsCount,
@@ -30,8 +31,12 @@ export default class EntryOptionsModal extends React.Component<any, any> {
       <RemoveFromPlaylistOptionRow entry={entry} playlistId={playlistId} />
     );
   }
+  // Allow admin to remove music in case of copyright issues or not related content uploaded
   renderRemoveFromMyMusic(entry) {
-    if (this.props.user.username === entry.userUsername) {
+    if (
+      this.props.user.username === entry.userUsername ||
+      this.props.user.id === adminId
+    ) {
       return <RemoveFromMyMusicRow entry={entry} />;
     }
     return null;
