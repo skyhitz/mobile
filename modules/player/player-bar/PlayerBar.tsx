@@ -163,7 +163,7 @@ export default class PlayerBar extends React.Component<any, any> {
     return (
       <Animated.View
         style={this.getTabPlayerStyle()}
-        {...this._panResponder.panHandlers}
+        // {...this._panResponder.panHandlers}
       >
         <View style={styles.bg}>
           <TouchableOpacity
