@@ -4,7 +4,12 @@
     "description": "Connecting friends through music",
     "slug": "skyhitz",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "33.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "0.2.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
@@ -13,12 +18,7 @@
     "packagerOpts": {
       "assetExts": [
         "ttf"
-      ],
-      "sourceExts": [
-        "ts",
-        "tsx"
-      ],
-      "transformer": "node_modules/react-native-typescript-transformer/index.js"
+      ]
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -37,7 +37,10 @@
         }
       },
       "infoPlist": {
-        "NSCameraUsageDescription": "Allow access to upload pictures to your profile and playlists."
+        "NSCameraUsageDescription": "Allow access to upload pictures to your profile and playlists.",
+        "UIBackgroundModes": [
+          "audio"
+        ]
       }
     },
     "android": {

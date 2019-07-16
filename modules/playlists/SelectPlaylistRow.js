@@ -3,17 +3,15 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
-import { UserAvatar } from 'app/modules/ui/UserAvatar';
-import { trackOpenProfile } from 'app/analytics/Tracking';
-import { MaterialIcons, EvilIcons, Ionicons } from '@expo/vector-icons';
-import { inject } from 'mobx-react/native';
+import { EvilIcons } from '@expo/vector-icons';
+import { inject } from 'mobx-react';
 
-@inject(stores => ({
+@inject((stores: Stores) => ({
   addToPlaylist: stores.playlistsStore.addToPlaylist.bind(
     stores.playlistsStore
   ),
 }))
-export default class SelectPlaylistRow extends React.Component {
+export default class SelectPlaylistRow extends React.Component<any, any> {
   get entries() {
     return this.props.playlist.entries;
   }

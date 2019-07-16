@@ -1,5 +1,4 @@
 import React from 'react';
-import { inject } from 'mobx-react/native';
 import { Text, Platform } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import { MaterialTopTabBar } from 'react-navigation-tabs';
@@ -8,17 +7,16 @@ import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
 
 const labelStyle = props => ({
-  fontSize: 12,
-  fontWeight: 'bold',
+  fontSize: 14,
   color: props.focused ? props.tintColor : Colors.defaultTextLight,
   textAlign: 'center',
   alignSelf: 'center',
-  paddingTop: 2,
+  paddingTop: 0,
   paddingBottom: 4,
 });
 
 const indicatorStyle = {
-  borderBottomColor: Colors.brandBlue,
+  borderBottomColor: Colors.lightBrandBlue,
   borderBottomWidth: 1,
   alignSelf: 'flex-end',
   backgroundColor: 'transparent',
@@ -37,14 +35,14 @@ const TabsView = createMaterialTopTabNavigator(
     Music: {
       screen: SearchEntryView,
       navigationOptions: {
-        tabBarLabel: props => renderTabBarLabel(props, 'MUSIC'),
+        tabBarLabel: props => renderTabBarLabel(props, 'Music'),
       },
       path: `music`,
     },
     Influencers: {
       screen: SearchUserView,
       navigationOptions: {
-        tabBarLabel: props => renderTabBarLabel(props, 'INFLUENCERS'),
+        tabBarLabel: props => renderTabBarLabel(props, 'Influencers'),
       },
       path: `influencers`,
     },
@@ -55,11 +53,11 @@ const TabsView = createMaterialTopTabNavigator(
     swipeEnabled: true,
     animationEnabled: true,
     tabBarOptions: {
-      activeTintColor: Colors.brandBlue,
+      activeTintColor: Colors.white,
       showIcon: false,
       style: {
-        height: 36,
-        backgroundColor: Colors.white,
+        height: 38,
+        backgroundColor: Colors.tabsBackground,
       },
     },
   }

@@ -1,16 +1,16 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
 
-@inject(stores => ({
+@inject((stores: Stores) => ({
   toggleLike: stores.likesStore.toggleLike.bind(stores.likesStore),
   isEntryLiked: stores.likesStore.isEntryLiked.bind(stores.likesStore),
 }))
-export default class LikeOptionRow extends React.Component {
+export default class LikeOptionRow extends React.Component<any, any> {
   handleToggle() {
     this.props.toggleLike(this.props.entry);
     this.forceUpdate();
