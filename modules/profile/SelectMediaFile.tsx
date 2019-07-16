@@ -9,11 +9,8 @@ import {
   TextInput,
 } from 'react-native';
 import { inject } from 'mobx-react';
-import {
-  MaterialIcons,
-  FontAwesome,
-} from '@expo/vector-icons';
-import { FileSystem } from 'expo';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
@@ -52,7 +49,7 @@ class CircleWrap extends React.Component<any, any> {
   }
 }
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   uploadVideo: stores.entryStore.uploadVideo.bind(stores.entryStore),
   uploadArtwork: stores.entryStore.uploadArtwork.bind(stores.entryStore),
   updateLoadingVideo: stores.entryStore.updateLoadingVideo.bind(
@@ -87,9 +84,10 @@ export default class SelectMediaFile extends React.Component<any, any> {
 
       this.props.updateLoadingVideo(true);
       let data = await FileSystem.readAsStringAsync(video.uri, {
-        encoding: FileSystem.EncodingTypes.Base64,
+        encoding: FileSystem.EncodingType.Base64,
       });
       this.props.updateLoadingVideo(false);
+
       if (video && !video.cancelled) {
         await this.props.uploadVideo(data);
       }
@@ -129,9 +127,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
       );
     }
     return (
-      <TouchableOpacity
-        onPress={this.selectVideo.bind(this)}
-      >
+      <TouchableOpacity onPress={this.selectVideo.bind(this)}>
         <CircleWrap>
           <Text style={{ color: Colors.white }}>Select Video</Text>
         </CircleWrap>
@@ -168,9 +164,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
     }
     if (!this.props.artworkUrl) {
       return (
-        <TouchableOpacity
-          onPress={this.selectArtwork.bind(this)}
-        >
+        <TouchableOpacity onPress={this.selectArtwork.bind(this)}>
           <CircleWrap>
             <Text style={{ color: Colors.white }}>Select Artwork</Text>
           </CircleWrap>
