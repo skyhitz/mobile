@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Exponent",
   "author": "Alejo Mendoza",
   "license": "MIT",
@@ -24,7 +24,6 @@
     "expo-av": "~5.0.0",
     "expo-blur": "~5.0.0",
     "expo-constants": "~5.0.0",
-    "expo-file-system": "~5.0.1",
     "expo-image-picker": "~5.0.2",
     "expo-permissions": "~5.0.1",
     "mobx-react": "5.4.4",
@@ -32,7 +31,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-iphone-x-helper": "1.2.0",
     "react-navigation": "^2.18.2",
-    "skyhitz-common": "https://github.com/skyhitz/common.git#646aac41c3632f1d6dafc7f8a6c8fdacf1bc4669"
+    "skyhitz-common": "https://github.com/skyhitz/common.git#f2170f13c78008d9a9ce3dc78e030feb2676bca6"
   },
   "devDependencies": {
     "@types/react": "^16.8.19",
