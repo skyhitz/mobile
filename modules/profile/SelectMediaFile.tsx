@@ -82,14 +82,8 @@ export default class SelectMediaFile extends React.Component<any, any> {
         allowsEditing: false,
       });
 
-      this.props.updateLoadingVideo(true);
-      let data = await FileSystem.readAsStringAsync(video.uri, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-      this.props.updateLoadingVideo(false);
-
       if (video && !video.cancelled) {
-        await this.props.uploadVideo(data);
+        await this.props.uploadVideo(video);
       }
     }
   }
