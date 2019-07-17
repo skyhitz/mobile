@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { inject } from 'mobx-react';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
