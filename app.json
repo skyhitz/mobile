@@ -29,8 +29,7 @@
         }
       },
       "infoPlist": {
-        "NSCameraUsageDescription": "Allow access to upload pictures to your profile and playlists.",
-        "UIBackgroundModes": ["audio"]
+        "NSCameraUsageDescription": "Allow access to upload pictures to your profile and playlists."
       }
     },
     "android": {
