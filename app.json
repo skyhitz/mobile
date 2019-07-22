@@ -38,7 +38,7 @@
       "icon": "./assets/images/icon-1024x1024.png",
       "adaptiveIcon": {
         "backgroundColor": "#1A1B20",
-        "backgroundImage": "./assets/images/ic_launcher.png"
+        "foregroundImage": "./assets/images/ic_launcher.png"
       },
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz",
       "config": {
