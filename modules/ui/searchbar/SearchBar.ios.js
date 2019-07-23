@@ -115,15 +115,14 @@ class SearchBar extends Component {
                   {...otherLoadingProps}
                 />
               )}
-              {clearIcon &&
-                !isEmpty && (
-                  <Ionicon
-                    name={'ios-close-circle'}
-                    size={20}
-                    color={IOS_GRAY}
-                    onPress={() => this.clear()}
-                  />
-                )}
+              {clearIcon && !isEmpty && (
+                <Ionicon
+                  name={'ios-close-circle'}
+                  size={20}
+                  color={IOS_GRAY}
+                  onPress={() => this.clear()}
+                />
+              )}
             </View>
           }
           rightIconContainerStyle={[
@@ -180,6 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   inputContainer: {
+    marginTop: 10,
     borderBottomWidth: 0,
     backgroundColor: Colors.white,
     borderRadius: 6,
