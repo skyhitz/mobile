@@ -1,9 +1,11 @@
 {
   "expo": {
-    "name": "skyhitz",
+    "name": "Skyhitz",
     "description": "Connecting friends through music",
     "slug": "skyhitz",
     "privacy": "public",
+    "owner": "Skyhitz",
+    "githubUrl": "https://github.com/skyhitz/mobile",
     "sdkVersion": "34.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "0.2.5",
