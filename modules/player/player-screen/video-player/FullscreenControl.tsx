@@ -7,7 +7,7 @@ import {
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
 import { Stores } from 'skyhitz-common';
 
-const FullscreenControlIos = inject((stores:Stores) => ({
+const FullscreenControl = inject((stores: Stores) => ({
   isOnFullScreenMode: stores.playerStore.isOnFullScreenMode,
   presentFullscreenPlayer: stores.playerStore.presentFullscreenPlayer.bind(
     stores.playerStore
@@ -22,7 +22,11 @@ const FullscreenControlIos = inject((stores:Stores) => ({
     dismissFullscreenPlayer,
   }: any) => (
     <Control
-      style={{ backgroundColor: 'transparent' }}
+      style={{
+        backgroundColor: 'transparent',
+        marginLeft: 10,
+        marginRight: 10,
+      }}
       center={false}
       callback={() => {
         isOnFullScreenMode
@@ -35,4 +39,4 @@ const FullscreenControlIos = inject((stores:Stores) => ({
   )
 );
 
-export default FullscreenControlIos;
+export default FullscreenControl;

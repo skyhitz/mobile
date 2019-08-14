@@ -11,7 +11,7 @@ import {
   videoWidth,
 } from 'app/modules/player/player-screen/video-player/VideoConstants';
 import SpinnerView from 'app/modules/player/player-screen/video-player/SpinnerView';
-import FullscreenControlIos from 'app/modules/player/player-screen/video-player/FullscreenControlIos';
+import FullscreenControl from 'app/modules/player/player-screen/video-player/FullscreenControl';
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
 import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
 import VideoErrorText from 'app/modules/player/player-screen/video-player/VideoErrorText';
@@ -176,7 +176,7 @@ export default class VideoPlayer extends React.Component<any, any> {
         <CurrentTimeDisplay />
         <SeekBar />
         <DurationDisplay />
-        {Platform.OS === 'ios' && <FullscreenControlIos />}
+        <FullscreenControl />
       </View>
     );
   }

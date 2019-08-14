@@ -5,12 +5,14 @@ const lightRed = '#d9544f';
 const lightGrey = '#dbdbdb';
 const darkGrey = 'rgb(43, 48, 51)';
 const lightBrandBlue = '#1dadff';
+const backgroundTrackColor = 'rgba(30,174,255, 0.3)';
 
 export default {
   tintColor,
   darkBlue,
   darkBlueTransparent,
   lightBrandBlue: lightBrandBlue,
+  backgroundTrackColor: backgroundTrackColor,
   tabIconDefault: '#ccc',
   tabIconSelected: '#eee',
   tabBar: '#fefefe',
