@@ -18,7 +18,7 @@ import Colors from 'app/constants/Colors';
 import { identifyUser } from 'app/analytics/Analytics';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   signInWithFacebook: stores.sessionStore.signInWithFacebook.bind(
     stores.sessionStore
   ),
@@ -48,7 +48,7 @@ export default class AuthScreen extends React.Component<any, any> {
       }
       if (user && user.id) {
         identifyUser(user);
-        return navigate('Main');
+        return navigate('ProfileSettings');
       }
     }
     this.setState({ loading: false });
@@ -106,12 +106,7 @@ export default class AuthScreen extends React.Component<any, any> {
   }
   renderButtonMessage(loading) {
     if (loading) {
-      return (
-        <ActivityIndicator
-          size="small"
-          color={Colors.white}
-        />
-      );
+      return <ActivityIndicator size="small" color={Colors.white} />;
     }
     return <Text style={styles.loginFb}>LOGIN WITH FACEBOOK</Text>;
   }

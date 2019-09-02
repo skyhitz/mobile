@@ -32,7 +32,7 @@ export default class SelectPlaylistRow extends React.Component<any, any> {
 
   handleNavigation() {
     this.props.addToPlaylist(this.props.playlist.id);
-    navigate('Main');
+    navigate('ProfileSettings');
   }
 
   render() {

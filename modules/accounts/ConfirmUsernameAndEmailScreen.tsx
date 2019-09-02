@@ -72,7 +72,7 @@ export default class ConfirmUsernameAndEmail extends React.Component<any, any> {
       );
       identifyUser(user);
       this.setState({ loading: false });
-      return navigate('Main');
+      return navigate('ProfileSettings');
     } catch (e) {
       this.props.setBackendError(e);
     }

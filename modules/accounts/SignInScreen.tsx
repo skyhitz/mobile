@@ -68,7 +68,7 @@ export default class SignInScreen extends React.Component<any, any> {
       });
       trackSignIn(user);
       this.setState({ loading: false });
-      return navigate('Main');
+      return navigate('ProfileSettings');
     } catch (e) {
       this.props.setBackendError(e);
     }

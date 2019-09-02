@@ -64,7 +64,7 @@ export default class UpdatePasswordScreen extends React.Component<any, any> {
       await this.props.updatePassword(this.state.token, this.state.password);
       this.setState({ loading: false });
       trackChangePassword();
-      return navigate('Main');
+      return navigate('ProfileSettings');
     } catch (e) {
       this.props.setBackendError(e);
     }

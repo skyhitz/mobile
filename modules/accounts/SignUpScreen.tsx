@@ -77,7 +77,7 @@ export default class SignUpScreen extends React.Component<any, any> {
       });
       trackSignUp(user);
       this.setState({ loading: false });
-      return navigate('Main');
+      return navigate('ProfileSettings');
     } catch (e) {
       this.props.setBackendError(e);
     }
