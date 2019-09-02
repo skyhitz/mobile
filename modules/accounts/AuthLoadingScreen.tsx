@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { inject } from 'mobx-react';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -19,7 +15,7 @@ import { identifyUser } from 'app/analytics/Analytics';
 import { setNavigator, navigate } from 'app/modules/navigation/Navigator';
 import { Stores } from 'skyhitz-common';
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   hideTopPadding: stores.playerStore.show,
   loadSession: stores.sessionStore.loadSession.bind(stores.sessionStore),
   user: stores.sessionStore.user,
@@ -37,7 +33,7 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    navigate(this.props.user ? 'App' : 'Auth');
+    navigate(this.props.user ? 'ProfileSettings' : 'Auth');
   };
 
   async loadSessionAndIdentifyUser() {
