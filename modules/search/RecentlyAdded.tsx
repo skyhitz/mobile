@@ -10,28 +10,28 @@ import { Stores } from 'skyhitz-common';
   loadPlayAndPushToCueList: stores.playerStore.loadPlayAndPushToCueList.bind(
     stores.playerStore
   ),
-  getRecentSearches: stores.entriesSearchStore.getRecentSearches.bind(
+  getRecentlyAdded: stores.entriesSearchStore.getRecentlyAdded.bind(
     stores.entriesSearchStore
   ),
-  recentSearches: stores.entriesSearchStore.recentSearches,
-  loadingRecentSearches: stores.entriesSearchStore.loadingRecentSearches,
+  recentlyAdded: stores.entriesSearchStore.recentlyAdded,
+  loadingRecentlyAdded: stores.entriesSearchStore.loadingRecentlyAdded,
   disablePlaylistMode: stores.playerStore.disablePlaylistMode.bind(
     stores.playerStore
   ),
 }))
-export default class RecentEntrySearch extends React.Component<any, any> {
+export default class RecentlyAdded extends React.Component<any, any> {
   componentWillMount() {
-    this.props.getRecentSearches();
+    this.props.getRecentlyAdded();
   }
   render() {
-    if (!this.props.loadingRecentSearches && !this.props.recentSearches.size) {
+    if (!this.props.loadingRecentlyAdded && !this.props.recentlyAdded.size) {
       return null;
     }
     return (
       <View>
-        <Text style={styles.recentText}>Recent Searches</Text>
+        <Text style={styles.recentText}>Recently Added</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentSearches.map(entry =>
+        {this.props.recentlyAdded.map(entry =>
           EntryRow(
             this.props.loadPlayAndPushToCueList,
             entry,
