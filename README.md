@@ -5,7 +5,7 @@ Skyhitz is a music app for [iOS](https://apps.apple.com/us/app/skyhitz/id1105406
 * The app is being built with [Expo](https://expo.io) using `Typescript`, `React` and `Mobx React`. 
 * It consumes a [common module](https://github.com/skyhitz/common) that manages all the state of the app and makes requests to a [GraphQL Api](https://github.com/skyhitz/api).
 * Works on iOS and Android
-* For a good developer experience we recomend using `VSCode` so you can better navigate the entire code easily. 
+* For a good developer experience we recomend using `VSCode` so you can navigate better the entire code. 
 
 ## Dependencies
 
@@ -28,3 +28,4 @@ Skyhitz is a music app for [iOS](https://apps.apple.com/us/app/skyhitz/id1105406
 
 * This is a self-funded project so we appreciate any donations in [XLM](https://www.stellar.org/lumens).
 * Stellar XLM Address `GCBUQ5P3AORPFS3P5QEQCFXXPXLX3YI2TFUMZP4ENZQTJH7CLIHBE5IG` Memo Id `12`
+* For more info visit [Skyhitz.io](https://skyhitz.io)
