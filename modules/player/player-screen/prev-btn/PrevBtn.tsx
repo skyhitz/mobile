@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { inject } from 'mobx-react';
 import { PrevBtnWhite } from 'app/assets/images/Images';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 const PrevBtn = inject((stores:Stores) => ({
   playPrev: stores.playerStore.playPrev.bind(stores.playerStore),

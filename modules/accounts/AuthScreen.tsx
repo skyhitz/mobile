@@ -16,7 +16,8 @@ import { AuthBackground, Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
 import { identifyUser } from 'app/analytics/Analytics';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   signInWithFacebook: stores.sessionStore.signInWithFacebook.bind(

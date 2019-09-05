@@ -5,7 +5,8 @@ import { BlurView } from 'expo-blur';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   user: stores.profileStore.user,

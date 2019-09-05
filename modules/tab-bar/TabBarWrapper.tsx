@@ -4,7 +4,8 @@ import { BottomTabBar } from 'react-navigation-tabs';
 import { inject } from 'mobx-react';
 import PlayerBar from 'app/modules/player/player-bar/PlayerBar';
 import Colors from 'app/constants/Colors';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   bottom: stores.playerStore.tabBarBottomPosition,

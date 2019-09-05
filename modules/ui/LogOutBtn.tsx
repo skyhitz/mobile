@@ -4,7 +4,8 @@ import { inject } from 'mobx-react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { trackSignOut } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores:Stores) => ({
   logOut: stores.sessionStore.signOut.bind(stores.sessionStore),

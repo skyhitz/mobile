@@ -23,7 +23,8 @@ import {
 import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
 import { trackSignOut } from 'app/analytics/Tracking';
 import { navigate } from 'app/modules/navigation/Navigator';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   profile: stores.editProfileStore.profile,

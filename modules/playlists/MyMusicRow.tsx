@@ -4,7 +4,8 @@ import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   count: stores.userEntriesStore.entriesCount,

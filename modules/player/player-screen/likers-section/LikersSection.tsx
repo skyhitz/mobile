@@ -12,7 +12,8 @@ import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import Divider from 'app/modules/ui/Divider';
 import Layout from 'app/constants/Layout';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores:Stores) => ({
   likers: stores.likesStore.entryLikes,

@@ -3,7 +3,8 @@ import { inject } from 'mobx-react';
 import { withNavigationFocus } from 'react-navigation';
 import SearchUserList from 'app/modules/search/SearchUserList';
 import TopRecentUserView from 'app/modules/search/TopRecentUserView';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores:Stores) => ({
   isSearchActive: stores.usersSearchStore.active,

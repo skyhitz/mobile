@@ -12,7 +12,8 @@ import * as Permissions from 'expo-permissions';
 import { FontAwesome } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 export const LoadingImage = () => {
   return (

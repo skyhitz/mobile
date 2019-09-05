@@ -2,7 +2,8 @@ import React from 'react';
 import { inject } from 'mobx-react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { PlayBtnWhite, PauseBtnWhite } from 'app/assets/images/Images';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores:Stores) => ({
   playing: stores.playerStore.isPlaying,

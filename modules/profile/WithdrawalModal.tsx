@@ -13,7 +13,8 @@ import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
 import LargeBtn from 'app/modules/ui/LargeBtn';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores:Stores) => ({
   withdrawToExternalWallet: stores.paymentsStore.withdrawToExternalWallet.bind(

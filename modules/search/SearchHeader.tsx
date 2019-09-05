@@ -3,7 +3,8 @@ import { Platform, StyleSheet } from 'react-native';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import SearchBar from 'app/modules/ui/searchbar/SearchBar';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 let platform = Platform.OS === 'ios' ? 'ios' : 'android';
 

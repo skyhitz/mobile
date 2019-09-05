@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { inject } from 'mobx-react';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 const PlayerEntryInfo = inject((stores:Stores) => ({
   entry: stores.playerStore.entry,

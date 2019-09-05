@@ -17,7 +17,8 @@ import { AuthBackground2 } from 'app/assets/images/Images';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { trackSignUp } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   validateUsername: stores.signUpValidationStore.validateUsername.bind(

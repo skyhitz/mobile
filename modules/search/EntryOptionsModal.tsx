@@ -8,7 +8,8 @@ import LikeOptionRow from 'app/modules/search/LikeOptionRow';
 import AddToPlaylistOptionRow from 'app/modules/search/AddToPlaylistOptionRow';
 import RemoveFromPlaylistOptionRow from 'app/modules/search/RemoveFromPlaylistOptionRow';
 import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
 @inject((stores: Stores) => ({

@@ -17,7 +17,8 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   validateUsername: stores.usernameAndEmailValidationStore.validateUsername.bind(

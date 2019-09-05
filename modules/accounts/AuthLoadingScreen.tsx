@@ -13,7 +13,8 @@ import Colors from 'app/constants/Colors';
 import { Images } from 'app/assets/images/Images';
 import { identifyUser } from 'app/analytics/Analytics';
 import { setNavigator, navigate } from 'app/modules/navigation/Navigator';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   hideTopPadding: stores.playerStore.show,

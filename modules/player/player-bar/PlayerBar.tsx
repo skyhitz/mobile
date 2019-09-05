@@ -1,6 +1,5 @@
 import React from 'react';
 import { inject } from 'mobx-react';
-let Dimensions = require('Dimensions');
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { EvilIcons } from '@expo/vector-icons';
 import PlayBtnSmall from 'app/modules/player/player-bar/play-btn-small/PlayBtnSmall';
@@ -15,8 +14,10 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Dimensions,
 } from 'react-native';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 const animationSpeed = 350;
 

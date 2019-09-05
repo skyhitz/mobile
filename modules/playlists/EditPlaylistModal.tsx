@@ -13,7 +13,8 @@ import Colors from 'app/constants/Colors';
 import SelectPlaylistImage from 'app/modules/playlists/SelectPlaylistImage';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   create: stores.playlistsStore.create.bind(stores.playlistsStore),

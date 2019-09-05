@@ -3,7 +3,8 @@ import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores:Stores) => ({
   edit: stores.playlistsStore.edit.bind(stores.playlistsStore),

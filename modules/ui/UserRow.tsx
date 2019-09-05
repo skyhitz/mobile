@@ -6,7 +6,8 @@ import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
 import { trackOpenProfile } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores:Stores) => ({
   getProfileInfo: stores.profileStore.getProfileInfo.bind(stores.profileStore),

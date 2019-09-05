@@ -17,7 +17,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { trackSignIn } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   validateUsernameOrEmail: stores.signInValidationStore.validateUsernameOrEmail.bind(

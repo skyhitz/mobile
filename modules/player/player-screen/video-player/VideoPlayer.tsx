@@ -15,7 +15,8 @@ import FullscreenControl from 'app/modules/player/player-screen/video-player/Ful
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
 import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
 import VideoErrorText from 'app/modules/player/player-screen/video-player/VideoErrorText';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 // import {
 //   setNowPlaying,
 //   updatePlayback,

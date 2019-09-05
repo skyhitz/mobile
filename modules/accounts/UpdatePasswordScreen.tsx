@@ -17,7 +17,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { trackChangePassword } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   validatePassword: stores.updatePasswordValidationStore.validatePassword.bind(

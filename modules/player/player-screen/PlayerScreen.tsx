@@ -15,7 +15,8 @@ import { PlaceholderBackground } from 'app/assets/images/Images';
 import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import LikersSection from 'app/modules/player/player-screen/likers-section/LikersSection';
 import StarBtn from 'app/modules/player/player-screen/star-btn/StarBtn';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'skyhitz-common';
+type Stores = typeof stores;
 import Colors from 'app/constants/Colors';
 
 @inject((stores: Stores) => ({
