@@ -25,7 +25,7 @@ type Stores = typeof stores;
   ),
 }))
 export default class AuthScreen extends React.Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       loading: false,
@@ -105,7 +105,7 @@ export default class AuthScreen extends React.Component<any, any> {
       </ImageBackground>
     );
   }
-  renderButtonMessage(loading) {
+  renderButtonMessage(loading: any) {
     if (loading) {
       return <ActivityIndicator size="small" color={Colors.white} />;
     }
