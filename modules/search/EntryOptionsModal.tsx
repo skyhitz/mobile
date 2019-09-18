@@ -8,6 +8,7 @@ import LikeOptionRow from 'app/modules/search/LikeOptionRow';
 import AddToPlaylistOptionRow from 'app/modules/search/AddToPlaylistOptionRow';
 import RemoveFromPlaylistOptionRow from 'app/modules/search/RemoveFromPlaylistOptionRow';
 import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
+import SetPrice from 'app/modules/search/SetPrice';
 import { Stores } from 'skyhitz-common';
 const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
@@ -41,6 +42,15 @@ export default class EntryOptionsModal extends React.Component<any, any> {
     }
     return null;
   }
+  renderSetPrice(entry) {
+    if (
+      this.props.user.username === entry.userUsername ||
+      this.props.user.id === adminId
+    ) {
+      return <SetPrice entry={entry} />;
+    }
+    return null;
+  }
   render() {
     const { entry, options } = this.props.navigation.state.params;
 
@@ -64,6 +74,7 @@ export default class EntryOptionsModal extends React.Component<any, any> {
           {this.renderAddEntryToPlaylist(entry)}
           {this.renderRemoveFromPlaylist(entry, options)}
           {this.renderRemoveFromMyMusic(entry)}
+          {this.renderSetPrice(entry)}
         </View>
         <View style={styles.bottomWrap}>
           <TouchableOpacity onPress={() => goBack()}>
@@ -140,6 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 40,
     maxHeight: 50,
   },
 });

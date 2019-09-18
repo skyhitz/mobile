@@ -38,6 +38,7 @@ export default {
   searchTextColor: '#000000',
   transparent: 'rgba(0,0,0,0)',
   dividerBackground: lightGrey,
+  lightGrey: lightGrey,
   threeDotsDark: darkGrey,
   facebookBtnBackground: '#44619D',
   joinBtnBackground: '#00aeef',

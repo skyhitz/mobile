@@ -11,6 +11,7 @@ import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
 import EditPlaylistModal from 'app/modules/playlists/EditPlaylistModal';
 import RemovePlaylistModal from 'app/modules/playlists/RemovePlaylistModal';
 import EntryOptionsModal from 'app/modules/search/EntryOptionsModal';
+import PricingOptionsModal from 'app/modules/search/PricingOptionsModal';
 import SelectPlaylistModal from 'app/modules/playlists/SelectPlaylistModal';
 import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
@@ -77,6 +78,13 @@ const AppStack = createStackNavigator(
     EntryOptionsModal: {
       screen: EntryOptionsModal,
       path: `entry-options-modal`,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    PricingOptionsModal: {
+      screen: PricingOptionsModal,
+      path: `pricing-options-modal`,
       navigationOptions: {
         header: null,
       },
