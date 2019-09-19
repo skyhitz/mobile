@@ -25,6 +25,10 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
   updatePricing: stores.entryStore.updatePricing.bind(stores.entryStore),
 }))
 export default class PricingOptionsModal extends React.Component<any, any> {
+  handleUpdatePricing(entry) {
+    this.props.updatePricing(entry);
+    goBack();
+  }
   render() {
     const { entry } = this.props.navigation.state.params;
 
@@ -48,7 +52,11 @@ export default class PricingOptionsModal extends React.Component<any, any> {
           <MaterialCommunityIcons
             name="circle-medium"
             size={24}
-            color={Colors.dividerBackground}
+            color={
+              this.props.availableForSale
+                ? Colors.lightBrandBlue
+                : Colors.dividerBackground
+            }
             style={styles.placeholderIcon}
           />
           <Text
@@ -101,12 +109,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
         </View>
 
         <View style={styles.bottomWrap}>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.updatePricing();
-              goBack();
-            }}
-          >
+          <TouchableOpacity onPress={() => this.handleUpdatePricing(entry)}>
             <Text style={styles.btnText}>Done</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => goBack()}>
