@@ -5556,9 +5556,9 @@ simple-plist@^1.0.0:
     bplist-parser "0.1.1"
     plist "^3.0.1"
 
-"skyhitz-common@https://github.com/skyhitz/common.git#016493f6b7d5dc5bcc9b1175f0334f13127a38e3":
+"skyhitz-common@https://github.com/skyhitz/common.git#6756b562e5611fe157c55b094cb5fe842918328a":
   version "0.0.17"
-  resolved "https://github.com/skyhitz/common.git#016493f6b7d5dc5bcc9b1175f0334f13127a38e3"
+  resolved "https://github.com/skyhitz/common.git#6756b562e5611fe157c55b094cb5fe842918328a"
   dependencies:
     "@types/algoliasearch" "^3.30.1"
     "@types/node" "^8.0.31"

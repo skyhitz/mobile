@@ -32,7 +32,7 @@
     "react-native-iphone-x-helper": "1.2.0",
     "react-native-slider": "^0.11.0",
     "react-navigation": "^2.18.2",
-    "skyhitz-common": "https://github.com/skyhitz/common.git#016493f6b7d5dc5bcc9b1175f0334f13127a38e3"
+    "skyhitz-common": "https://github.com/skyhitz/common.git#6756b562e5611fe157c55b094cb5fe842918328a"
   },
   "devDependencies": {
     "@types/react": "^16.8.19",
