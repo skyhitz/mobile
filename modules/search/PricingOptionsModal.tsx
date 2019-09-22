@@ -23,10 +23,22 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
   availableForSale: stores.entryStore.availableForSale,
   price: stores.entryStore.price,
   updatePricing: stores.entryStore.updatePricing.bind(stores.entryStore),
+  refreshEntries: stores.userEntriesStore.refreshEntries.bind(
+    stores.userEntriesStore
+  ),
 }))
 export default class PricingOptionsModal extends React.Component<any, any> {
-  handleUpdatePricing(entry) {
-    this.props.updatePricing(entry);
+  componentWillMount() {
+    const { entry } = this.props.navigation.state.params;
+    if (!entry) return;
+    this.props.updateAvailableForSale(entry.forSale);
+    if (entry.price) {
+      this.props.updatePrice(entry.price.toString());
+    }
+  }
+  async handleUpdatePricing(entry) {
+    await this.props.updatePricing(entry);
+    this.props.refreshEntries();
     goBack();
   }
   render() {

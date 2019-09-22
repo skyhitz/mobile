@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "dev": "SKYHITZ_ENV=staging expo start",
+    "dev": "expo start",
     "start:prod": "expo start --no-dev",
     "eject": "expo eject",
     "android": "expo start --android",
@@ -32,7 +32,7 @@
     "react-native-iphone-x-helper": "1.2.0",
     "react-native-slider": "^0.11.0",
     "react-navigation": "^2.18.2",
-    "skyhitz-common": "https://github.com/skyhitz/common.git#45b45ce3658f303f1b98a43068d7f7673d76f604"
+    "skyhitz-common": "https://github.com/skyhitz/common.git#a88054a0fa561e28f42b11db3cfa828ab9ea7100"
   },
   "devDependencies": {
     "@types/react": "^16.8.19",
