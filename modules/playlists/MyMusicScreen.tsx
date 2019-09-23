@@ -32,7 +32,14 @@ export default class MyMusicScreen extends React.Component<any, any> {
       >
         {SearchingLoader(this.props.loading)}
         {this.props.entries.map(entry =>
-          EntryRow(this.props.loadAndPlay, entry)
+          EntryRow(
+            this.props.loadAndPlay,
+            entry,
+            null,
+            null,
+            null,
+            this.props.navigation.state.routeName
+          )
         )}
         <BottomPlaceholder />
       </ScrollView>

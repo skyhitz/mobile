@@ -1,6 +1,6 @@
 import { NavigationActions, StackActions } from 'react-navigation';
 
-const instance:any = {};
+export const instance: any = {};
 
 export function setNavigator(nav) {
   if (nav) {

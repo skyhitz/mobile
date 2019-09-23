@@ -52,7 +52,11 @@ export default class EntryOptionsModal extends React.Component<any, any> {
     return null;
   }
   render() {
-    const { entry, options } = this.props.navigation.state.params;
+    const {
+      entry,
+      options,
+      previousScreen,
+    } = this.props.navigation.state.params;
 
     return (
       <View style={styles.container}>
@@ -73,8 +77,13 @@ export default class EntryOptionsModal extends React.Component<any, any> {
           <LikeOptionRow entry={entry} />
           {this.renderAddEntryToPlaylist(entry)}
           {this.renderRemoveFromPlaylist(entry, options)}
-          {this.renderRemoveFromMyMusic(entry)}
-          {this.renderSetPrice(entry)}
+
+          {previousScreen === 'MyMusicScreen'
+            ? this.renderRemoveFromMyMusic(entry)
+            : null}
+          {previousScreen === 'MyMusicScreen'
+            ? this.renderSetPrice(entry)
+            : null}
         </View>
         <View style={styles.bottomWrap}>
           <TouchableOpacity onPress={() => goBack()}>

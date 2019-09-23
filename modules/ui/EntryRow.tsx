@@ -18,7 +18,8 @@ const EntryRow = (
   entry,
   addRecentEntrySearch?,
   options?,
-  disablePlaylistMode?
+  disablePlaylistMode?,
+  previousScreen?
 ) => {
   return (
     <View key={entry.id} style={styles.rowWrap}>
@@ -53,7 +54,11 @@ const EntryRow = (
       </TouchableOpacity>
       <ThreeDots
         onPress={() =>
-          navigate('EntryOptionsModal', { entry: entry, options: options })
+          navigate('EntryOptionsModal', {
+            entry: entry,
+            options: options,
+            previousScreen: previousScreen,
+          })
         }
       />
     </View>
