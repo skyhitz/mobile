@@ -1,22 +1,15 @@
 import React from 'react';
 import { inject } from 'mobx-react';
-import { BlurView } from 'expo-blur';
 import PlayerNav from 'app/modules/player/player-screen/PlayerNav';
 import VideoPlayer from 'app/modules/player/player-screen/video-player/VideoPlayer';
 import PlayerControls from 'app/modules/player/player-screen/player-controls/PlayerControls';
 import PlayerEntryInfo from 'app/modules/player/player-screen/PlayerEntryInfo';
-import Divider from 'app/modules/ui/Divider';
-import { StyleSheet, ImageBackground, View, Text } from 'react-native';
-import {
-  videoHeight,
-  videoWidth,
-} from 'app/modules/player/player-screen/video-player/VideoConstants';
+import { StyleSheet, View } from 'react-native';
 import { PlaceholderBackground } from 'app/assets/images/Images';
-import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import LikersSection from 'app/modules/player/player-screen/likers-section/LikersSection';
-import StarBtn from 'app/modules/player/player-screen/star-btn/StarBtn';
 import { Stores } from 'skyhitz-common';
 import Colors from 'app/constants/Colors';
+import BuyBtn from 'app/modules/ui/buy-btn/BuyBtn';
 
 @inject((stores: Stores) => ({
   entry: stores.playerStore.entry,
@@ -32,7 +25,7 @@ export default class PlayerScreen extends React.Component<any, any> {
         <PlayerNav />
         <VideoPlayer />
         <PlayerEntryInfo />
-        <StarBtn />
+        <BuyBtn />
         <PlayerControls />
         <LikersSection />
       </View>
