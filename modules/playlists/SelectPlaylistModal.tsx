@@ -39,13 +39,15 @@ export default class SelectPlaylistModal extends React.Component<any, any> {
     return (
       <ScrollView style={styles.listWrap}>
         {SearchingLoader(this.props.loading)}
-        {this.props.playlists.map((playlist, index) => (
-          <SelectPlaylistRow
-            key={playlist.id}
-            playlist={playlist}
-            index={index}
-          />
-        ))}
+        {this.props.playlists.map(
+          (playlist: { id: string | number | undefined }, index: any) => (
+            <SelectPlaylistRow
+              key={playlist.id}
+              playlist={playlist}
+              index={index}
+            />
+          )
+        )}
         <BottomPlaceholder />
       </ScrollView>
     );

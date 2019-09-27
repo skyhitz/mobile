@@ -43,7 +43,7 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       email: '',
@@ -69,7 +69,7 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
     }
     this.setState({ loading: false });
   }
-  updateEmail(text) {
+  updateEmail(text: any) {
     this.setState({ email: text });
     this.props.validateEmail(this.state.email);
   }
@@ -120,7 +120,7 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
     );
   }
 
-  renderButtonMessage(loading) {
+  renderButtonMessage(loading: any) {
     if (loading) {
       return (
         <ActivityIndicator

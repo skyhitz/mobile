@@ -32,7 +32,7 @@ export default class RecentEntrySearch extends React.Component<any, any> {
       <View>
         <Text style={styles.recentText}>Recent Searches</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentSearches.map(entry =>
+        {this.props.recentSearches.map((entry: any) =>
           EntryRow(
             this.props.loadPlayAndPushToCueList,
             entry,

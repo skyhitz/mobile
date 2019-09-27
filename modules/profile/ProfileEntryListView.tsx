@@ -8,14 +8,14 @@ import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-const ProfileEntryListView = inject((stores:Stores) => ({
+const ProfileEntryListView = inject((stores: Stores) => ({
   loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
   entries: stores.profileStore.entries,
   loading: stores.profileStore.loadingEntries,
 }))(({ loadAndPlay, entries, loading }: any) => (
   <ScrollView style={{ backgroundColor: Colors.listItemBackground, flex: 1 }}>
     {SearchingLoader(loading)}
-    {entries.map(entry => EntryRow(loadAndPlay, entry))}
+    {entries.map((entry: any) => EntryRow(loadAndPlay, entry))}
     <BottomPlaceholder />
   </ScrollView>
 ));

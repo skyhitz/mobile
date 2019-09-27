@@ -1,3 +1,5 @@
+/// <reference path="./TabBarWrapper.d.ts" />
+
 import React from 'react';
 import { View } from 'react-native';
 import { BottomTabBar } from 'react-navigation-tabs';
@@ -11,7 +13,7 @@ type Stores = typeof stores;
   bottom: stores.playerStore.tabBarBottomPosition,
 }))
 export default class TabBarWrapper extends React.Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
   }
   render() {

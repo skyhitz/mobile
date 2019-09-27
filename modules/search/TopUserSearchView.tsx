@@ -7,7 +7,7 @@ import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   getTopSearches: stores.usersSearchStore.getTopSearches.bind(
     stores.usersSearchStore
   ),
@@ -26,9 +26,11 @@ export default class TopUserSearchView extends React.Component<any, any> {
       <View>
         <Text style={styles.recentText}>TOP</Text>
         {SearchingLoader(this.props.loadingTopSearches)}
-        {this.props.topSearches.map(user => (
-          <UserRow user={user} key={user.id} />
-        ))}
+        {this.props.topSearches.map(
+          (user: { id: string | number | undefined }) => (
+            <UserRow user={user} key={user.id} />
+          )
+        )}
       </View>
     );
   }

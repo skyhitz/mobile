@@ -22,7 +22,7 @@ type Stores = typeof stores;
   user: stores.sessionStore.user,
 }))
 export default class AuthLoadingScreen extends React.Component<any, any> {
-  constructor(props) {
+  constructor(props: { navigation: any }) {
     super(props);
     setNavigator(props.navigation);
     this._bootstrapAsync();

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { inject } from 'mobx-react';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
@@ -13,8 +7,6 @@ import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import PlaylistRow from 'app/modules/playlists/PlaylistRow';
 import EditPlaylistsBtn from 'app/modules/ui/EditPlaylistsBtn';
 import EditPlaylistsBackBtn from 'app/modules/ui/EditPlaylistsBackBtn';
-import SelectPlaylistImage from 'app/modules/playlists/SelectPlaylistImage';
-import Layout from 'app/constants/Layout';
 import { navigate } from 'app/modules/navigation/Navigator';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import * as stores from 'app/skyhitz-common';
@@ -56,9 +48,11 @@ export default class PlaylistsScreen extends React.Component<any, any> {
     return (
       <ScrollView style={styles.listWrap}>
         {SearchingLoader(this.props.loading)}
-        {this.props.playlists.map((playlist, index) => (
-          <PlaylistRow key={playlist.id} playlist={playlist} index={index} />
-        ))}
+        {this.props.playlists.map(
+          (playlist: { id: string | number | undefined }, index: any) => (
+            <PlaylistRow key={playlist.id} playlist={playlist} index={index} />
+          )
+        )}
         <View style={styles.btnWrap}>
           <LargeBtn text="CREATE PLAYLIST" onPress={this.showModal} />
         </View>

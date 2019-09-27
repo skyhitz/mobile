@@ -16,7 +16,7 @@ import LargeBtn from 'app/modules/ui/LargeBtn';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   withdrawToExternalWallet: stores.paymentsStore.withdrawToExternalWallet.bind(
     stores.paymentsStore
   ),
@@ -24,7 +24,7 @@ type Stores = typeof stores;
   credits: stores.paymentsStore.credits,
 }))
 export default class WithdrawalModal extends React.Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       withdrawAddress: null,
@@ -36,7 +36,7 @@ export default class WithdrawalModal extends React.Component<any, any> {
       withdrawAddress: withdrawAddress,
     });
   }
-  updateAmount(creditsToWithdraw) {
+  updateAmount(creditsToWithdraw: any) {
     if (this.props.credits < creditsToWithdraw) {
       return;
     }
@@ -62,10 +62,7 @@ export default class WithdrawalModal extends React.Component<any, any> {
     return (
       <View style={styles.modal}>
         <View style={styles.modalWrap}>
-          <TouchableOpacity
-            style={styles.closeBtn}
-            onPress={() => goBack()}
-          >
+          <TouchableOpacity style={styles.closeBtn} onPress={() => goBack()}>
             <MaterialIcons name="close" size={28} color={Colors.white} />
           </TouchableOpacity>
           <View>

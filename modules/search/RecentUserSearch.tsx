@@ -28,9 +28,11 @@ export default class RecentUserSearch extends React.Component<any, any> {
       <View>
         <Text style={styles.recentText}>Recent</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentSearches.map(user => (
-          <UserRow user={user} key={user.id} />
-        ))}
+        {this.props.recentSearches.map(
+          (user: { id: string | number | undefined }) => (
+            <UserRow user={user} key={user.id} />
+          )
+        )}
         <BottomPlaceholder />
       </View>
     );

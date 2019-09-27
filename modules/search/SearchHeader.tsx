@@ -16,7 +16,7 @@ class SearchHeader extends React.Component<any, any> {
     value: '',
   };
 
-  changeText = value => {
+  changeText = (value: any) => {
     this.setState({ value });
   };
 
@@ -25,7 +25,7 @@ class SearchHeader extends React.Component<any, any> {
       <SearchBar
         platform={platform}
         cancelButtonTitle="Cancel"
-        onChangeText={q => {
+        onChangeText={(q: any) => {
           this.props.inputSearchStore.search(q);
           this.changeText(q);
         }}

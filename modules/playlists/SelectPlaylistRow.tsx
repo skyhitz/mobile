@@ -5,6 +5,8 @@ import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { EvilIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   addToPlaylist: stores.playlistsStore.addToPlaylist.bind(

@@ -32,7 +32,7 @@ export default class RecentlyAdded extends React.Component<any, any> {
       <View>
         <Text style={styles.recentText}>Recently Added</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentlyAdded.map(entry =>
+        {this.props.recentlyAdded.map((entry: any) =>
           EntryRow(
             this.props.loadPlayAndPushToCueList,
             entry,

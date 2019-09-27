@@ -6,7 +6,7 @@ import TopRecentEntryView from 'app/modules/search/TopRecentEntryView';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   isSearchActive: stores.entriesSearchStore.active,
   inputSearchStore: stores.inputSearchStore,
 }))
@@ -15,7 +15,7 @@ class SearchEntryView extends React.Component<any, any> {
     tabBarLabel: 'Music',
   };
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props: { isFocused: any }) {
     if (props.isFocused) {
       this.props.inputSearchStore.updateSearchType('entries');
     }
