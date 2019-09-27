@@ -3,7 +3,8 @@ import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 const Placeholder = () => <View style={styles.controlTouch} />;
 

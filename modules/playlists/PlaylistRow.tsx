@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-import { MaterialIcons, EvilIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, EvilIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
 import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
-import { UserAvatar } from 'app/modules/ui/UserAvatar';
-import { trackOpenProfile } from 'app/analytics/Tracking';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),

@@ -16,7 +16,8 @@ import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { goBack } from 'app/modules/navigation/Navigator';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 export const LoadingIndicator = () => {
   return (

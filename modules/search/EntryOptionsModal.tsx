@@ -9,7 +9,8 @@ import AddToPlaylistOptionRow from 'app/modules/search/AddToPlaylistOptionRow';
 import RemoveFromPlaylistOptionRow from 'app/modules/search/RemoveFromPlaylistOptionRow';
 import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
 import SetPrice from 'app/modules/search/SetPrice';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
 @inject((stores: Stores) => ({
@@ -17,13 +18,16 @@ const adminId = '-LbM3m6WKdVQAsY3zrAd';
   user: stores.sessionStore.user,
 }))
 export default class EntryOptionsModal extends React.Component<any, any> {
-  renderAddEntryToPlaylist(entry) {
+  renderAddEntryToPlaylist(entry: any) {
     if (!this.props.playlistsCount) {
       return null;
     }
     return <AddToPlaylistOptionRow entry={entry} />;
   }
-  renderRemoveFromPlaylist(entry, options) {
+  renderRemoveFromPlaylist(
+    entry: any,
+    options: { removeFromPlaylist: any; playlistId: any },
+  ) {
     if (!options) {
       return null;
     }
@@ -33,7 +37,7 @@ export default class EntryOptionsModal extends React.Component<any, any> {
     );
   }
   // Allow admin to remove music in case of copyright issues or not related content uploaded
-  renderRemoveFromMyMusic(entry) {
+  renderRemoveFromMyMusic(entry: { userUsername: any }) {
     if (
       this.props.user.username === entry.userUsername ||
       this.props.user.id === adminId
@@ -42,7 +46,7 @@ export default class EntryOptionsModal extends React.Component<any, any> {
     }
     return null;
   }
-  renderSetPrice(entry) {
+  renderSetPrice(entry: any) {
     if (
       this.props.user.username === entry.userUsername ||
       this.props.user.id === adminId

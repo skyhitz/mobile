@@ -3,7 +3,8 @@ import { Platform, StyleSheet } from 'react-native';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import SearchBar from 'app/modules/ui/searchbar/SearchBar';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 let platform = Platform.OS === 'ios' ? 'ios' : 'android';
 
@@ -15,7 +16,7 @@ class SearchHeader extends React.Component<any, any> {
     value: '',
   };
 
-  changeText = value => {
+  changeText = (value: any) => {
     this.setState({ value });
   };
 
@@ -24,7 +25,7 @@ class SearchHeader extends React.Component<any, any> {
       <SearchBar
         platform={platform}
         cancelButtonTitle="Cancel"
-        onChangeText={q => {
+        onChangeText={(q: any) => {
           this.props.inputSearchStore.search(q);
           this.changeText(q);
         }}

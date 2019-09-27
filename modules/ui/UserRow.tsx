@@ -6,9 +6,10 @@ import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
 import { trackOpenProfile } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   getProfileInfo: stores.profileStore.getProfileInfo.bind(stores.profileStore),
   addRecentUserSearch: stores.usersSearchStore.addRecentUserSearch.bind(
     stores.usersSearchStore
@@ -22,9 +23,11 @@ export default class UserRow extends React.Component<any, any> {
         <View style={styles.rowWrap}>
           <TouchableOpacity
             onPress={() => {
-              this.props.getProfileInfo(this.props.user).then(entries => {
-                this.props.setPlaylistMode(entries);
-              });
+              this.props
+                .getProfileInfo(this.props.user)
+                .then((entries: any) => {
+                  this.props.setPlaylistMode(entries);
+                });
               navigate('UserProfile', {
                 username: this.props.user.username,
               });

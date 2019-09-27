@@ -1,20 +1,14 @@
 import React from 'react';
 import { inject } from 'mobx-react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  PixelRatio,
-  TouchableHighlight,
-} from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import Divider from 'app/modules/ui/Divider';
 import Layout from 'app/constants/Layout';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   likers: stores.likesStore.entryLikes,
   hasMoreLikers: stores.likesStore.hasMoreLikers,
   plusLikers: stores.likesStore.plusLikers,
@@ -24,11 +18,13 @@ export default class LikersSection extends React.Component<any, any> {
     if (!this.props.likers) {
       return null;
     }
-    return this.props.likers.map((liker, i) => (
-      <View style={styles.liker} key={i}>
-        {UserAvatar(liker)}
-      </View>
-    ));
+    return this.props.likers.map(
+      (liker: any, i: string | number | undefined) => (
+        <View style={styles.liker} key={i}>
+          {UserAvatar(liker)}
+        </View>
+      )
+    );
   }
 
   renderMoreLikersBtn() {

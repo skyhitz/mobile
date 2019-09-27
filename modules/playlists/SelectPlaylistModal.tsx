@@ -16,7 +16,8 @@ import SelectPlaylistImage from 'app/modules/playlists/SelectPlaylistImage';
 import Layout from 'app/constants/Layout';
 import { navigate } from 'app/modules/navigation/Navigator';
 import ArrowDownBackBtn from 'app/modules/ui/ArrowDownBackBtn';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   playlists: stores.playlistsStore.playlists,
@@ -38,13 +39,15 @@ export default class SelectPlaylistModal extends React.Component<any, any> {
     return (
       <ScrollView style={styles.listWrap}>
         {SearchingLoader(this.props.loading)}
-        {this.props.playlists.map((playlist, index) => (
-          <SelectPlaylistRow
-            key={playlist.id}
-            playlist={playlist}
-            index={index}
-          />
-        ))}
+        {this.props.playlists.map(
+          (playlist: { id: string | number | undefined }, index: any) => (
+            <SelectPlaylistRow
+              key={playlist.id}
+              playlist={playlist}
+              index={index}
+            />
+          )
+        )}
         <BottomPlaceholder />
       </ScrollView>
     );

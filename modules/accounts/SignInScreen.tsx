@@ -17,7 +17,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { trackSignIn } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   validateUsernameOrEmail: stores.signInValidationStore.validateUsernameOrEmail.bind(
@@ -51,7 +52,7 @@ export default class SignInScreen extends React.Component<any, any> {
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       usernameOrEmail: '',
@@ -77,10 +78,10 @@ export default class SignInScreen extends React.Component<any, any> {
   goToResetPassword() {
     navigate('ResetPassword');
   }
-  updateUsernameOrEmail(text) {
+  updateUsernameOrEmail(text: any) {
     this.setState({ usernameOrEmail: text });
   }
-  updatePassword(text) {
+  updatePassword(text: any) {
     this.setState({ password: text });
     this.props.validatePassword(this.state.password);
   }
@@ -158,7 +159,7 @@ export default class SignInScreen extends React.Component<any, any> {
     );
   }
 
-  renderButtonMessage(loading) {
+  renderButtonMessage(loading: any) {
     if (loading) {
       return (
         <ActivityIndicator

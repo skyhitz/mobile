@@ -3,7 +3,8 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores:Stores) => ({
   toggleLike: stores.likesStore.toggleLike.bind(stores.likesStore),

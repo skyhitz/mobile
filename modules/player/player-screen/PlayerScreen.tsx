@@ -7,9 +7,10 @@ import PlayerEntryInfo from 'app/modules/player/player-screen/PlayerEntryInfo';
 import { StyleSheet, View } from 'react-native';
 import { PlaceholderBackground } from 'app/assets/images/Images';
 import LikersSection from 'app/modules/player/player-screen/likers-section/LikersSection';
-import { Stores } from 'skyhitz-common';
 import Colors from 'app/constants/Colors';
 import BuyBtn from 'app/modules/ui/buy-btn/BuyBtn';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   entry: stores.playerStore.entry,
