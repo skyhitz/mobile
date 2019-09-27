@@ -3,7 +3,7 @@ import CenteredView from 'app/modules/player/player-screen/video-player/Centered
 import { inject } from 'mobx-react';
 import { Spinner } from 'app/modules/player/player-screen/video-player/VideoIcons';
 import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/UiStates';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 const BUFFERING_SHOW_DELAY = 200;

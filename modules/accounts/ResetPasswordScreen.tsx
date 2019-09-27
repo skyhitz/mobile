@@ -16,7 +16,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { trackResetPassword } from 'app/analytics/Tracking';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({

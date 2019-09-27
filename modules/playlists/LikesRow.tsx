@@ -7,7 +7,7 @@ import { UserAvatar } from 'app/modules/ui/UserAvatar';
 import { trackOpenProfile } from 'app/analytics/Tracking';
 import { EvilIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({

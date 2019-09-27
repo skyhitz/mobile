@@ -6,7 +6,7 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { inject } from 'mobx-react';
 import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/UiStates';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 export const CurrentTimeDisplay = inject((stores: Stores) => ({

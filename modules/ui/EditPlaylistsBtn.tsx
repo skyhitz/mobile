@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 @inject((stores:Stores) => ({

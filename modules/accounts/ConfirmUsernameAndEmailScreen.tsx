@@ -17,7 +17,7 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -50,7 +50,11 @@ export default class ConfirmUsernameAndEmail extends React.Component<any, any> {
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });
-  constructor(props) {
+  constructor(props: {
+    navigation: {
+      state: { params: { token: any; email: any; username: any } };
+    };
+  }) {
     let { token, email, username } = props.navigation.state.params;
     super(props);
     this.state = {
@@ -79,11 +83,11 @@ export default class ConfirmUsernameAndEmail extends React.Component<any, any> {
     }
     this.setState({ loading: false });
   }
-  updateEmail(text) {
+  updateEmail(text: any) {
     this.setState({ email: text });
     this.props.validateEmail(text);
   }
-  updateUsername(text) {
+  updateUsername(text: any) {
     this.setState({ username: text });
     this.props.validateUsername(text);
   }
@@ -159,7 +163,7 @@ export default class ConfirmUsernameAndEmail extends React.Component<any, any> {
     );
   }
 
-  renderButtonMessage(loading) {
+  renderButtonMessage(loading: any) {
     if (loading) {
       return (
         <ActivityIndicator

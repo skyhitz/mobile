@@ -1,6 +1,5 @@
 import React from 'react';
 import { inject } from 'mobx-react';
-import { BlurView } from 'expo-blur';
 import PlayerNav from 'app/modules/player/player-screen/PlayerNav';
 import VideoPlayer from 'app/modules/player/player-screen/video-player/VideoPlayer';
 import PlayerControls from 'app/modules/player/player-screen/player-controls/PlayerControls';
@@ -15,7 +14,7 @@ import { PlaceholderBackground } from 'app/assets/images/Images';
 import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import LikersSection from 'app/modules/player/player-screen/likers-section/LikersSection';
 import StarBtn from 'app/modules/player/player-screen/star-btn/StarBtn';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 import Colors from 'app/constants/Colors';
 

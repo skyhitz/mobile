@@ -3,7 +3,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { inject } from 'mobx-react';
 import SearchEntryList from 'app/modules/search/SearchEntryList';
 import TopRecentEntryView from 'app/modules/search/TopRecentEntryView';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 @inject((stores:Stores) => ({

@@ -5,7 +5,7 @@ import {
   FullscreenEnterIcon,
   FullscreenExitIcon,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 const FullscreenControl = inject((stores: Stores) => ({

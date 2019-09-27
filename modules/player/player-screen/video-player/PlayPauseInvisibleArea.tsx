@@ -9,7 +9,7 @@ import {
   videoHeight,
   videoWidth,
 } from 'app/modules/player/player-screen/video-player/VideoConstants';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 const PlayPauseInvisibleArea = inject((stores:Stores) => ({

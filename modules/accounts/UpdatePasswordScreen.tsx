@@ -17,7 +17,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { trackChangePassword } from 'app/analytics/Tracking';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -49,7 +49,7 @@ export default class UpdatePasswordScreen extends React.Component<any, any> {
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });
-  constructor(props) {
+  constructor(props: { navigation: { state: { params: { token: any } } } }) {
     let { token } = props.navigation.state.params;
     super(props);
     this.state = {
@@ -71,11 +71,11 @@ export default class UpdatePasswordScreen extends React.Component<any, any> {
     }
     this.setState({ loading: false });
   }
-  updatePasswordInput(text) {
+  updatePasswordInput(text: any) {
     this.setState({ password: text });
     this.props.validatePassword(text);
   }
-  updatePasswordConfirmation(text) {
+  updatePasswordConfirmation(text: any) {
     this.setState({ passwordConfirmation: text });
     this.props.validatePasswordConfirmation(text, this.state.password);
   }
@@ -151,7 +151,7 @@ export default class UpdatePasswordScreen extends React.Component<any, any> {
     );
   }
 
-  renderButtonMessage(loading) {
+  renderButtonMessage(loading: any) {
     if (loading) {
       return (
         <ActivityIndicator

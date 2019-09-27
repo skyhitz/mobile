@@ -6,7 +6,7 @@ import {
   videoWidth,
 } from 'app/modules/player/player-screen/video-player/VideoConstants';
 import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/UiStates';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 const VideoErrorText = inject((stores:Stores) => ({

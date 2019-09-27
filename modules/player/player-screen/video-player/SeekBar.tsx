@@ -4,7 +4,7 @@ import Slider from 'react-native-slider';
 import { inject } from 'mobx-react';
 import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/UiStates';
 import Colors from 'app/constants/Colors';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 const SeekBar = inject((stores: Stores) => ({

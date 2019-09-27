@@ -15,7 +15,7 @@ import FullscreenControl from 'app/modules/player/player-screen/video-player/Ful
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
 import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
 import VideoErrorText from 'app/modules/player/player-screen/video-player/VideoErrorText';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 // import {
 //   setNowPlaying,
@@ -43,7 +43,7 @@ type Stores = typeof stores;
   playPrev: stores.playerStore.playPrev.bind(stores.playerStore),
 }))
 export default class VideoPlayer extends React.Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       playingNowEntryId: '',
@@ -90,7 +90,7 @@ export default class VideoPlayer extends React.Component<any, any> {
     );
   }
 
-  _onConnectionChange(connectionInfo) {
+  _onConnectionChange(connectionInfo: any) {
     this.props.debug && console.info('[networkState]', connectionInfo.type);
     this.props.setNetworkState(connectionInfo.type);
   }
@@ -106,7 +106,7 @@ export default class VideoPlayer extends React.Component<any, any> {
     );
   }
 
-  handleOnPlaybackStatusUpdate(status) {
+  handleOnPlaybackStatusUpdate(status: any) {
     this.props.onPlaybackStatusUpdate(status);
     this.updateLockedScreenMusicControls(status);
   }
@@ -115,7 +115,7 @@ export default class VideoPlayer extends React.Component<any, any> {
   //   return this.props.entry.id !== this.state.playingNowEntryId;
   // }
 
-  updateLockedScreenMusicControls(status) {
+  updateLockedScreenMusicControls(status: any) {
     // if (!this.props.entry) {
     //   return;
     // }

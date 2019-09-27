@@ -7,7 +7,7 @@ import {
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
 import Colors from 'app/constants/Colors';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 const PlayBtn = inject((stores:Stores) => ({

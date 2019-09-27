@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { inject } from 'mobx-react';
 import { ShuffleIconBlue, ShuffleIconGrey } from 'app/assets/images/Images';
-import * as stores from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 const ShuffleBtn = inject((stores:Stores) => ({
