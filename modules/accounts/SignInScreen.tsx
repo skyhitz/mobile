@@ -135,9 +135,13 @@ export default class SignInScreen extends React.Component<any, any> {
             />
           </View>
           <TouchableHighlight
-            style={[styles.joinBtn]}
+            style={[
+              styles.joinBtn,
+              { opacity: this.props.validForm ? 1 : 0.5 },
+            ]}
             onPress={this.signIn.bind(this)}
             underlayColor={Colors.underlayColor}
+            disabled={!this.props.validForm}
           >
             {this.renderButtonMessage(this.state.loading)}
           </TouchableHighlight>
