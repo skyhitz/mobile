@@ -27,7 +27,6 @@ class SearchBar extends Component {
   clear = () => {
     this.input.clear();
     this.onChangeText('');
-    this.props.onClearText();
   };
 
   cancel = () => {
@@ -107,15 +106,14 @@ class SearchBar extends Component {
                   {...otherLoadingProps}
                 />
               )}
-              {clearIcon &&
-                !isEmpty && (
-                  <MaterialIcon
-                    name={'close'}
-                    size={25}
-                    color={ANDROID_GRAY}
-                    onPress={() => this.clear()}
-                  />
-                )}
+              {clearIcon && !isEmpty && (
+                <MaterialIcon
+                  name={'close'}
+                  size={25}
+                  color={ANDROID_GRAY}
+                  onPress={() => this.clear()}
+                />
+              )}
             </View>
           }
           rightIconContainerStyle={[
@@ -133,7 +131,6 @@ SearchBar.defaultProps = {
   loadingProps: {},
   noIcon: false,
   showLoading: false,
-  onClearText: () => null,
   onCancel: () => null,
   onFocus: () => null,
   onBlur: () => null,

@@ -16,7 +16,6 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import { trackChangePassword } from 'app/analytics/Tracking';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -64,7 +63,6 @@ export default class UpdatePasswordScreen extends React.Component<any, any> {
     try {
       await this.props.updatePassword(this.state.token, this.state.password);
       this.setState({ loading: false });
-      trackChangePassword();
       return navigate('ProfileSettings');
     } catch (e) {
       this.props.setBackendError(e);

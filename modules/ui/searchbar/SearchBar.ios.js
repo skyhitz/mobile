@@ -31,7 +31,6 @@ class SearchBar extends Component {
   clear = () => {
     this.input.clear();
     this.onChangeText('');
-    this.props.onClearText && this.props.onClearText();
   };
 
   cancel = () => {
@@ -66,7 +65,6 @@ class SearchBar extends Component {
 
   render() {
     const {
-      cancelButtonTitle,
       clearIcon,
       containerStyle,
       leftIcon,
@@ -131,7 +129,7 @@ class SearchBar extends Component {
           ]}
         />
         <TouchableOpacity onPress={this.cancel}>
-          <Text style={styles.cancelBtn}>{cancelButtonTitle}</Text>
+          <Text style={styles.cancelBtn}>{'Cancel'}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -139,12 +137,10 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  cancelButtonTitle: PropTypes.string,
   clearIcon: PropTypes.bool,
   loadingProps: PropTypes.object,
   noIcon: PropTypes.bool,
   showLoading: PropTypes.bool,
-  onClearText: PropTypes.func,
   onCancel: PropTypes.func,
   containerStyle: ViewPropTypes.style,
   leftIcon: PropTypes.object,
@@ -155,12 +151,10 @@ SearchBar.propTypes = {
 };
 
 SearchBar.defaultProps = {
-  cancelButtonTitle: 'Cancel',
   clearIcon: true,
   loadingProps: {},
   noIcon: false,
   showLoading: false,
-  onClearText: null,
   onCancel: null,
   placeholderTextColor: IOS_GRAY,
 };

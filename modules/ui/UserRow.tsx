@@ -1,11 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { inject } from 'mobx-react';
-import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
-import { trackOpenProfile } from 'app/analytics/Tracking';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -31,7 +29,6 @@ export default class UserRow extends React.Component<any, any> {
               navigate('UserProfile', {
                 username: this.props.user.username,
               });
-              trackOpenProfile(this.props.user);
               if (this.props.recentSearch) {
                 this.props.addRecentUserSearch(this.props.user.id);
               }

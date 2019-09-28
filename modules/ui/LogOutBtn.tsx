@@ -3,11 +3,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { trackSignOut } from 'app/analytics/Tracking';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   logOut: stores.sessionStore.signOut.bind(stores.sessionStore),
   clearLikes: stores.likesStore.clearLikes.bind(stores.likesStore.clearLikes),
   clearPlaylists: stores.playlistsStore.clearPlaylists.bind(
@@ -19,7 +18,6 @@ export default class LogOutBtn extends React.Component<any, any> {
     await this.props.logOut();
     this.props.clearLikes();
     this.props.clearPlaylists();
-    trackSignOut();
   }
   render() {
     return (

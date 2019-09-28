@@ -21,7 +21,6 @@ import {
   LoadingUserAvatar,
 } from 'app/modules/ui/UserAvatar';
 import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
-import { trackSignOut } from 'app/analytics/Tracking';
 import { navigate } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
@@ -66,7 +65,6 @@ export default class EditProfileScreen extends React.Component<any, any> {
   };
   async handleLogOut() {
     await this.props.logOut();
-    trackSignOut();
   }
   async handleWithdrawal() {
     navigate('WithdrawalModal');

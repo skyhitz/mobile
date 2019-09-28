@@ -15,7 +15,6 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import { trackResetPassword } from 'app/analytics/Tracking';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -63,7 +62,6 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
           'Check your email. We just sent you a link to reset your password.',
         buttonColor: Colors.valid,
       });
-      trackResetPassword();
     } catch (e) {
       this.props.setBackendError(e);
     }

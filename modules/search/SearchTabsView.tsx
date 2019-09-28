@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, Platform } from 'react-native';
+import { Text } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import { MaterialTopTabBar } from 'react-navigation-tabs';
 import SearchEntryView from 'app/modules/search/SearchEntryView';
 import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
 
-const labelStyle = props => ({
+const labelStyle = (props: { focused: any; tintColor: any }) => ({
   fontSize: 14,
   color: props.focused ? props.tintColor : Colors.defaultTextLight,
   textAlign: 'center',
@@ -22,11 +22,11 @@ const indicatorStyle = {
   backgroundColor: 'transparent',
 };
 
-function renderTabBarLabel(props, title) {
-  return <Text style={labelStyle(props)}> {title} </Text>;
+function renderTabBarLabel(props: any, title: React.ReactNode) {
+  return <Text style={labelStyle(props) as any}> {title} </Text>;
 }
 
-function renderTabBarTop(props) {
+function renderTabBarTop(props: JSX.IntrinsicAttributes) {
   return <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />;
 }
 
@@ -35,14 +35,14 @@ const TabsView = createMaterialTopTabNavigator(
     Music: {
       screen: SearchEntryView,
       navigationOptions: {
-        tabBarLabel: props => renderTabBarLabel(props, 'Music'),
+        tabBarLabel: (props: any) => renderTabBarLabel(props, 'Music'),
       },
       path: `music`,
     },
     Influencers: {
       screen: SearchUserView,
       navigationOptions: {
-        tabBarLabel: props => renderTabBarLabel(props, 'Influencers'),
+        tabBarLabel: (props: any) => renderTabBarLabel(props, 'Influencers'),
       },
       path: `influencers`,
     },

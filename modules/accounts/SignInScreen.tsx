@@ -16,7 +16,6 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import { trackSignIn } from 'app/analytics/Tracking';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -67,7 +66,6 @@ export default class SignInScreen extends React.Component<any, any> {
         usernameOrEmail: this.state.usernameOrEmail,
         password: this.state.password,
       });
-      trackSignIn(user);
       this.setState({ loading: false });
       return navigate('ProfileSettings');
     } catch (e) {
@@ -137,13 +135,9 @@ export default class SignInScreen extends React.Component<any, any> {
             />
           </View>
           <TouchableHighlight
-            style={[
-              styles.joinBtn,
-              { opacity: this.props.validForm ? 1 : 0.5 },
-            ]}
+            style={[styles.joinBtn]}
             onPress={this.signIn.bind(this)}
             underlayColor={Colors.underlayColor}
-            disabled={!this.props.validForm}
           >
             {this.renderButtonMessage(this.state.loading)}
           </TouchableHighlight>

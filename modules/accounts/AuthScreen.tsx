@@ -15,7 +15,6 @@ import { navigate } from 'app/modules/navigation/Navigator';
 import { AuthBackground, Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
-import { identifyUser } from 'app/analytics/Analytics';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -48,7 +47,7 @@ export default class AuthScreen extends React.Component<any, any> {
         });
       }
       if (user && user.id) {
-        identifyUser(user);
+        // identifyUser(user);
         return navigate('ProfileSettings');
       }
     }

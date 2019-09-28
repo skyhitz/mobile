@@ -11,13 +11,14 @@ type Stores = typeof stores;
   inputSearchStore: stores.inputSearchStore,
 }))
 class SearchUserView extends React.Component<any, any> {
+  state = {};
   static navigationOptions = {
     tabBarLabel: 'Influencers',
   };
 
-  componentWillReceiveProps(props: { isFocused: any }) {
+  static async getDerivedStateFromProps(props: any) {
     if (props.isFocused) {
-      this.props.inputSearchStore.updateSearchType('users');
+      props.inputSearchStore.updateSearchType('users');
     }
   }
 

@@ -9,17 +9,16 @@ import {
 } from 'react-native';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
-import { trackPlayEntry } from 'app/analytics/Tracking';
 import ThreeDots from 'app/modules/ui/ThreeDots';
 import { navigate } from 'app/modules/navigation/Navigator';
 
 const EntryRow = (
-  play,
-  entry,
-  addRecentEntrySearch?,
-  options?,
-  disablePlaylistMode?,
-  previousScreen?
+  play: any,
+  entry: any,
+  addRecentEntrySearch?: any,
+  options?: any,
+  disablePlaylistMode?: any,
+  previousScreen?: any
 ) => {
   return (
     <View key={entry.id} style={styles.rowWrap}>
@@ -30,7 +29,6 @@ const EntryRow = (
             disablePlaylistMode();
           }
           play(entry);
-          trackPlayEntry(entry);
           if (addRecentEntrySearch) {
             addRecentEntrySearch(entry.id);
           }

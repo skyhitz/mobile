@@ -39,8 +39,8 @@ export default class MyMusicScreen extends React.Component<any, any> {
             null,
             null,
             null,
-            this.props.navigation.state.routeName,
-          ),
+            this.props.navigation.state.routeName
+          )
         )}
         <BottomPlaceholder />
       </ScrollView>

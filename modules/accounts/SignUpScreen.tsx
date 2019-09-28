@@ -16,7 +16,6 @@ import { goBack, navigate } from 'app/modules/navigation/Navigator';
 import { AuthBackground2 } from 'app/assets/images/Images';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { trackSignUp } from 'app/analytics/Tracking';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -76,7 +75,6 @@ export default class SignUpScreen extends React.Component<any, any> {
         email: this.state.email,
         password: this.state.password,
       });
-      trackSignUp(user);
       this.setState({ loading: false });
       return navigate('ProfileSettings');
     } catch (e) {

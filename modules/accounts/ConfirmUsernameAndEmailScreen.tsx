@@ -7,7 +7,6 @@ import { goBack, navigate } from 'app/modules/navigation/Navigator';
 import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
-import { identifyUser } from 'app/analytics/Analytics';
 import {
   StyleSheet,
   View,
@@ -75,7 +74,7 @@ export default class ConfirmUsernameAndEmail extends React.Component<any, any> {
         this.state.email,
         this.state.token
       );
-      identifyUser(user);
+      // identifyUser(user);
       this.setState({ loading: false });
       return navigate('ProfileSettings');
     } catch (e) {

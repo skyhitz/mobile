@@ -1,15 +1,18 @@
 import { observable, computed } from 'mobx';
 
 export class SignInValidationStore {
-  @observable usernameOrEmailError: string;
-  @observable usernameOrEmailValid: boolean;
-  @observable passwordError: string;
-  @observable passwordValid: boolean;
-  @observable backendError: string;
+  @observable
+  usernameOrEmailError!: string;
+  @observable
+  usernameOrEmailValid!: boolean;
+  @observable
+  passwordError!: string;
+  @observable
+  passwordValid!: boolean;
+  @observable
+  backendError!: string;
 
-  constructor (
-  ) {
-  }
+  constructor() {}
 
   validateUsernameOrEmail(usernameOrEmail: string) {
     if (!usernameOrEmail) {
@@ -24,8 +27,8 @@ export class SignInValidationStore {
       return;
     }
 
-    this.usernameOrEmailError = null;
-    return this.usernameOrEmailValid = true;
+    this.usernameOrEmailError = '';
+    return (this.usernameOrEmailValid = true);
   }
 
   validatePassword(password: string) {
@@ -41,8 +44,8 @@ export class SignInValidationStore {
       return;
     }
 
-    this.passwordError = null;
-    return this.passwordValid = true;
+    this.passwordError = '';
+    return (this.passwordValid = true);
   }
 
   @computed
@@ -70,5 +73,4 @@ export class SignInValidationStore {
   setBackendError(error: string) {
     this.backendError = error;
   }
-
 }

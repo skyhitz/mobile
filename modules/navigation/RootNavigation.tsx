@@ -132,7 +132,10 @@ const RootStackNavigator = createSwitchNavigator(
   ),
 }))
 export default class RootNavigator extends React.Component<any, any> {
-  async componentWillReceiveProps(props) {
+  state = {};
+  static async getDerivedStateFromProps(props: any) {
+    StatusBar.setBarStyle('light-content');
+
     // Kicks user out in case there is an authentication error and the user is set to null.
     // This could happen if a non authorized request is made to a protected endpoint.
     // Automatically redirects to accounts if the user logs out.
@@ -140,30 +143,12 @@ export default class RootNavigator extends React.Component<any, any> {
       navigate('Auth');
     } else {
       [
-        await this.props.loadUserLikes(),
-        await this.props.loadPlaylists(),
-        await this.props.loadUserEntries(),
-        await this.props.loadPayments(),
+        await props.loadUserLikes(),
+        await props.loadPlaylists(),
+        await props.loadUserEntries(),
+        await props.loadPayments(),
       ];
     }
-  }
-
-  handleOpenURL(url) {}
-
-  componentDidMount() {
-    Linking.addEventListener('url', ({ url }: { url: string }) => {
-      this.handleOpenURL(url);
-    });
-    Linking.getInitialURL().then(
-      (url: string) => url && this.handleOpenURL(url)
-    );
-  }
-
-  componentWillUnmount() {
-    Linking.removeEventListener('url', this.handleOpenURL);
-  }
-  componentWillMount() {
-    StatusBar.setBarStyle('light-content');
   }
 
   render() {
