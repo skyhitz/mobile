@@ -25,7 +25,7 @@ export default class ShareAppBanner extends React.Component<any, any> {
     return (
       <View style={styles.wrap}>
         <View style={styles.bannerWrap}>
-          <Text style={styles.adsText}>Upload your music!</Text>
+          <Text style={styles.adsText}>Upload your music videos!</Text>
           <LargeBtn onPress={this.onUpload.bind(this)} text="Upload" />
         </View>
       </View>
