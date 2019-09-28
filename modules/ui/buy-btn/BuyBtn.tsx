@@ -17,7 +17,9 @@ export default class BuyBtn extends React.Component<any, any> {
   render() {
     if (
       !this.props.entry ||
-      this.props.entry.userUsername === this.props.user.username
+      this.props.entry.userUsername === this.props.user.username ||
+      !this.props.entry.forSale ||
+      !this.props.entry.price
     ) {
       return <Placeholder />;
     }
