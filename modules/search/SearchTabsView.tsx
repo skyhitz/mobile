@@ -1,3 +1,5 @@
+/// <reference path="../tab-bar/TabBarWrapper.d.ts" />
+
 import React from 'react';
 import { Text } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
