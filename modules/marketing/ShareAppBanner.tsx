@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  Linking,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, Linking, View } from 'react-native';
 import Colors from 'app/constants/Colors';
-import Divider from 'app/modules/ui/Divider';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { navigate } from 'app/modules/navigation/Navigator';
 
