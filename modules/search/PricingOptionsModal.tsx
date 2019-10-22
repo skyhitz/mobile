@@ -36,7 +36,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
       this.props.updatePrice(entry.price.toString());
     }
   }
-  async handleUpdatePricing(entry) {
+  async handleUpdatePricing(entry: any) {
     await this.props.updatePricing(entry);
     this.props.refreshEntries();
     goBack();
@@ -132,9 +132,6 @@ export default class PricingOptionsModal extends React.Component<any, any> {
     );
   }
 }
-
-const formPadding = 20;
-const maxHeight = 50;
 
 const styles = StyleSheet.create({
   container: {

@@ -150,13 +150,15 @@ export class EntriesBackend {
     videoUrl: string,
     description: string,
     title: string,
-    id: string
+    id: string,
+    forSale: boolean = false,
+    price: number = 0
   ) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", id: "${id}"){
+        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", id: "${id}", forSale: ${forSale}, price: ${price}){
           videoUrl
           imageUrl
           description

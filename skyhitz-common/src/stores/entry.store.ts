@@ -163,7 +163,9 @@ export class EntryStore {
       this.videoUrl,
       this.description,
       this.title,
-      this.id
+      this.id,
+      this.availableForSale,
+      this.price
     );
     entriesBackend.youtubeUpload(
       this.videoUrl,
