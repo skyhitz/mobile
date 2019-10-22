@@ -24,34 +24,39 @@ export default class BuyBtn extends React.Component<any, any> {
       return <Placeholder />;
     }
     return (
-      <TouchableOpacity
-        style={styles.controlTouch}
-        onPress={() => this.props.buyEntry(this.props.entry)}
-      >
-        <Entypo
-          style={styles.priceTag}
-          name="price-tag"
-          size={28}
-          color={Colors.dividerBackground}
-        />
-        <Text style={styles.creditsText}>
-          $ {this.props.entry.price} - Buy Now
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.wrap}>
+        <TouchableOpacity
+          style={styles.controlTouch}
+          onPress={() => this.props.buyEntry(this.props.entry)}
+        >
+          <Text style={styles.creditsText}>
+            $ {this.props.entry.price} - Buy Now
+          </Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 }
 
 var styles = StyleSheet.create({
-  controlTouch: {
+  wrap: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 30,
+  },
+  controlTouch: {
+    backgroundColor: Colors.brandBlue,
+    borderRadius: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 8,
+    height: 40,
   },
   creditsText: {
     color: 'white',
-    marginLeft: 10,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   priceTag: {
     paddingTop: 15,
