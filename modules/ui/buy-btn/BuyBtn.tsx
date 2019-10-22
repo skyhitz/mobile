@@ -51,6 +51,7 @@ var styles = StyleSheet.create({
     paddingRight: 20,
     paddingTop: 8,
     height: 40,
+    marginBottom: 20,
   },
   creditsText: {
     color: 'white',
