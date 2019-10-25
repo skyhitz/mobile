@@ -4,6 +4,7 @@ const darkBlueTransparent = 'rgba(41, 43, 51, 0.9)';
 const lightRed = '#d9544f';
 const lightGrey = '#dbdbdb';
 const darkGrey = 'rgb(43, 48, 51)';
+const grey = '#858586';
 const lightBrandBlue = '#1dadff';
 const backgroundTrackColor = 'rgba(30,174,255, 0.3)';
 
@@ -11,6 +12,8 @@ export default {
   tintColor,
   darkBlue,
   darkBlueTransparent,
+  darkGrey,
+  grey,
   lightBrandBlue: lightBrandBlue,
   backgroundTrackColor: backgroundTrackColor,
   tabIconDefault: '#ccc',

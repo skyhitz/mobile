@@ -15,6 +15,7 @@ import PricingOptionsModal from 'app/modules/search/PricingOptionsModal';
 import SelectPlaylistModal from 'app/modules/playlists/SelectPlaylistModal';
 import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
+import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
@@ -63,6 +64,14 @@ const AppStack = createStackNavigator(
     WithdrawalModal: {
       screen: WithdrawalModal,
       path: `withdrawal-modal`,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
+    },
+    BuyOptionsModal: {
+      screen: BuyOptionsModal,
+      path: `buy-options-modal`,
       navigationOptions: {
         header: null,
         gesturesEnabled: false,

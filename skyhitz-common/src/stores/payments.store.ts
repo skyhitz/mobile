@@ -14,7 +14,7 @@ export class PaymentsStore {
   @observable
   submittingSubscription: boolean = false;
   @observable
-  submittingWithdraw: boolean;
+  submittingWithdraw: boolean = false;
 
   constructor() {}
 

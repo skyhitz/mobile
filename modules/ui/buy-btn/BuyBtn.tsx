@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { inject } from 'mobx-react';
-import { Entypo } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'skyhitz-common';
+import { navigate } from 'app/modules/navigation/Navigator';
 
 const Placeholder = () => <View style={styles.controlTouch} />;
 
@@ -14,6 +14,11 @@ const Placeholder = () => <View style={styles.controlTouch} />;
   credits: stores.paymentsStore.credits,
 }))
 export default class BuyBtn extends React.Component<any, any> {
+  showBuyOptionsModal() {
+    navigate('BuyOptionsModal', {
+      entry: this.props.entry,
+    });
+  }
   render() {
     if (
       !this.props.entry ||
@@ -27,7 +32,7 @@ export default class BuyBtn extends React.Component<any, any> {
       <View style={styles.wrap}>
         <TouchableOpacity
           style={styles.controlTouch}
-          onPress={() => this.props.buyEntry(this.props.entry)}
+          onPress={() => this.showBuyOptionsModal()}
         >
           <Text style={styles.creditsText}>
             $ {this.props.entry.price} - Buy Now
