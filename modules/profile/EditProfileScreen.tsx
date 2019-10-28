@@ -23,6 +23,7 @@ import {
 import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
 import { navigate } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
+import LargeBtn from '../ui/LargeBtn';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -82,25 +83,11 @@ export default class EditProfileScreen extends React.Component<any, any> {
     if (this.props.credits && this.props.credits > 0) {
       return (
         <View style={styles.withdrawalXLMField}>
-          <Text style={styles.privateInfo}>Credits</Text>
-          <View style={styles.inputContainerBottom}>
-            <TouchableOpacity
-              style={styles.fieldWithoutBorder}
-              onPress={this.handleWithdrawal.bind(this)}
-            >
-              <View>
-                <MaterialCommunityIcons
-                  name="coin"
-                  size={22}
-                  color={Colors.dividerBackground}
-                  style={styles.placeholderIcon}
-                />
-                <Text style={styles.input}>
-                  Withdrawal XLM to External Wallet
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.creditsInfo}>Credits</Text>
+          <LargeBtn
+            text="Withdraw to external wallet"
+            onPress={this.handleWithdrawal.bind(this)}
+          />
         </View>
       );
     }
@@ -283,12 +270,31 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.transparent,
     borderTopWidth: 1,
   },
+  withdrawalContainer: {
+    paddingLeft: formPadding,
+    paddingRight: formPadding,
+    marginTop: 0,
+    flex: 1,
+    height: 50,
+    minHeight: 50,
+    borderBottomColor: Colors.transparent,
+    borderBottomWidth: 1,
+    borderTopColor: Colors.transparent,
+    borderTopWidth: 1,
+  },
   input: {
     backgroundColor: Colors.transparent,
     color: Colors.defaultTextLight,
     fontSize: 14,
     paddingLeft: 36,
     bottom: 10,
+  },
+  withdrawInput: {
+    backgroundColor: Colors.transparent,
+    color: Colors.defaultTextLight,
+    fontSize: 14,
+    paddingLeft: 36,
+    bottom: 0,
   },
   field: {
     maxHeight: maxHeight,
@@ -298,9 +304,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   withdrawalXLMField: {
+    paddingLeft: 18,
     maxHeight: 80,
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    marginTop: 20,
   },
   fieldWithoutBorder: {
     maxHeight: maxHeight,
@@ -313,10 +322,22 @@ const styles = StyleSheet.create({
     left: 0,
     backgroundColor: Colors.transparent,
   },
+  coinIcon: {
+    position: 'absolute',
+    left: 20,
+    backgroundColor: Colors.transparent,
+  },
   privateInfo: {
     paddingLeft: 18,
-    paddingTop: 40,
+    paddingTop: 30,
     paddingBottom: 5,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: Colors.defaultTextLight,
+  },
+  creditsInfo: {
+    paddingTop: 20,
+    paddingBottom: 20,
     fontSize: 14,
     fontWeight: 'bold',
     color: Colors.defaultTextLight,
