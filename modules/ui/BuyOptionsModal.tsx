@@ -12,13 +12,24 @@ import { Stores } from 'skyhitz-common';
   refreshEntries: stores.userEntriesStore.refreshEntries.bind(
     stores.userEntriesStore
   ),
+  refreshRecentSearches: stores.entriesSearchStore.getRecentSearches.bind(
+    stores.entriesSearchStore
+  ),
+  refreshSubscription: stores.paymentsStore.refreshSubscription.bind(
+    stores.paymentsStore
+  ),
   entry: stores.playerStore.entry,
 }))
 export default class BuyOptionsModal extends React.Component<any, any> {
   async buyEntry(id: string) {
     await this.props.buyEntry(id);
+    [
+      await this.props.refreshEntries(),
+      await this.props.refreshRecentSearches(),
+      await this.props.refreshSubscription(),
+    ];
     this.props.entry.availableForSale = false;
-    this.props.refreshEntries();
+
     goBack();
   }
   render() {
