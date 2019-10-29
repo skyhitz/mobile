@@ -45,9 +45,7 @@ networkInterface.useAfter([
           .text()
           .then((bodyText: any) => {
             console.info(
-              `Network Error: ${response.status} (${
-                response.statusText
-              }) - ${bodyText}`
+              `Network Error: ${response.status} (${response.statusText}) - ${bodyText}`
             );
             next();
           });

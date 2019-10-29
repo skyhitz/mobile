@@ -1,5 +1,4 @@
-import { observable, observe, IObservableObject} from 'mobx';
-import { Query } from '../types/index';
+import { observable, observe, IObservableObject } from 'mobx';
 import { Set, List } from 'immutable';
 import { likesBackend } from '../backends/likes.backend';
 import { Entry, User } from '../models';
@@ -32,11 +31,10 @@ export class LikesStore {
     return num > 999 ? (num / 1000).toFixed(1) + 'k' : num;
   }
 
-  constructor (
+  constructor(
     public observables: IObservableObject,
-    public session: IObservableObject,
-  ) {
-  }
+    public session: IObservableObject
+  ) {}
 
   public clearLikes() {
     this.entryLikes = List([]);
@@ -51,32 +49,32 @@ export class LikesStore {
     this.refreshEntryLikes(this.entry.id);
   });
 
-  public userDisposer = observe(this.session, ({object}) => {
+  public userDisposer = observe(this.session, ({ object }) => {
     this.user = object.user;
   });
 
   public refreshEntryLikes(id: string) {
     this.loadingEntryLikes = true;
-    likesBackend.entryLikes(id)
-      .then(payload => {
-        this.entryLikesCount = payload.count;
-        let users = payload.users.map((userPayload: any) => new User(userPayload));
-        this.entryLikes = List(users);
-        this.loadingEntryLikes = false;
-      });
+    likesBackend.entryLikes(id).then(payload => {
+      this.entryLikesCount = payload.count;
+      let users = payload.users.map(
+        (userPayload: any) => new User(userPayload)
+      );
+      this.entryLikes = List(users);
+      this.loadingEntryLikes = false;
+    });
   }
 
   public refreshLikes() {
     this.loading = true;
-    likesBackend.userLikes()
-      .then(userLikes => {
-        let ids = userLikes.map((like: any) => like.id);
-        let entries = userLikes.map((like: any) => new Entry(like));
-        this.ids = Set(ids);
-        this.userLikes = List(entries);
-        this.userLikesCount = this.userLikes.size;
-        this.loading = false;
-      });
+    likesBackend.userLikes().then(userLikes => {
+      let ids = userLikes.map((like: any) => like.id);
+      let entries = userLikes.map((like: any) => new Entry(like));
+      this.ids = Set(ids);
+      this.userLikes = List(entries);
+      this.userLikesCount = this.userLikes.size;
+      this.loading = false;
+    });
   }
 
   async unlike(entry: Entry) {
@@ -129,6 +127,3 @@ export class LikesStore {
     return this.ids.has(entry.id);
   }
 }
-
-
-

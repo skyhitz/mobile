@@ -19,6 +19,7 @@ export class EntriesBackend {
         'userUsername',
         'description',
         'title',
+        'artist',
         'id',
         'videoUrl',
         'price',
@@ -39,6 +40,7 @@ export class EntriesBackend {
           userDisplayName
           description
           title
+          artist
           id
           videoUrl
           price
@@ -71,6 +73,7 @@ export class EntriesBackend {
           userUsername
           description
           title
+          artist
           id
           videoUrl
           price
@@ -129,6 +132,7 @@ export class EntriesBackend {
           userDisplayName
           description
           title
+          artist
           id
           videoUrl
         }
@@ -150,6 +154,7 @@ export class EntriesBackend {
     videoUrl: string,
     description: string,
     title: string,
+    artist: string,
     id: string,
     forSale: boolean = false,
     price: number = 0
@@ -158,11 +163,12 @@ export class EntriesBackend {
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", id: "${id}", forSale: ${forSale}, price: ${price}){
+        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", artist: "${artist}", id: "${id}", forSale: ${forSale}, price: ${price}){
           videoUrl
           imageUrl
           description
           title
+          artist
           id
         }
       }
@@ -185,6 +191,7 @@ export class EntriesBackend {
               userUsername
               description
               title
+              artist
               id
               videoUrl
               price
@@ -217,6 +224,7 @@ export class EntriesBackend {
               userUsername
               description
               title
+              artist
               id
               videoUrl
               price
@@ -249,6 +257,7 @@ export class EntriesBackend {
               userUsername
               description
               title
+              artist
               id
               videoUrl
               price

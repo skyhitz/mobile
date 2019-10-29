@@ -70,6 +70,7 @@ class CircleWrap extends React.Component<any, any> {
     stores.entryStore
   ),
   updateTitle: stores.entryStore.updateTitle.bind(stores.entryStore),
+  updateArtist: stores.entryStore.updateArtist.bind(stores.entryStore),
   create: stores.entryStore.create.bind(stores.entryStore),
   canCreate: stores.entryStore.canCreate,
   refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(
@@ -195,6 +196,26 @@ export default class SelectMediaFile extends React.Component<any, any> {
     return (
       <View style={styles.wrap}>
         <View style={styles.inputContainerTop}>
+          <View style={styles.field}>
+            <FontAwesome
+              name="info-circle"
+              size={24}
+              color={Colors.dividerBackground}
+              style={styles.placeholderIcon}
+            />
+            <TextInput
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+              placeholder="Artist"
+              autoCorrect={false}
+              autoFocus={true}
+              style={styles.input}
+              placeholderTextColor="white"
+              value={this.props.artist}
+              onChangeText={t => this.props.updateArtist(t)}
+              maxLength={34}
+            />
+          </View>
           <View style={styles.field}>
             <FontAwesome
               name="info-circle"

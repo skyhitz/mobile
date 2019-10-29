@@ -26,7 +26,7 @@ export default class EntryOptionsModal extends React.Component<any, any> {
   }
   renderRemoveFromPlaylist(
     entry: any,
-    options: { removeFromPlaylist: any; playlistId: any },
+    options: { removeFromPlaylist: any; playlistId: any }
   ) {
     if (!options) {
       return null;
@@ -74,7 +74,7 @@ export default class EntryOptionsModal extends React.Component<any, any> {
             ellipsizeMode="tail"
             numberOfLines={1}
           >
-            {entry.userDisplayName}
+            {entry.artist}
           </Text>
         </View>
         <View style={styles.options}>

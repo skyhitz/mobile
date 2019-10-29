@@ -24,6 +24,8 @@ export class EntryStore {
   @observable
   title!: string;
   @observable
+  artist!: string;
+  @observable
   id!: string;
   @observable
   availableForSale!: boolean;
@@ -116,6 +118,11 @@ export class EntryStore {
   };
 
   @action
+  updateArtist = (text: string) => {
+    this.artist = text;
+  };
+
+  @action
   updateId = (text: string) => {
     this.id = text;
   };
@@ -139,6 +146,7 @@ export class EntryStore {
     this.updateEtag('');
     this.updateDescription('');
     this.updateTitle('');
+    this.updateArtist('');
     this.updateId('');
     this.updateAvailableForSale(false);
     this.updatePrice(0);
@@ -152,7 +160,8 @@ export class EntryStore {
       this.videoUrl &&
       this.description &&
       this.title &&
-      this.id
+      this.id &&
+      this.artist
     );
   }
 
@@ -163,16 +172,17 @@ export class EntryStore {
       this.videoUrl,
       this.description,
       this.title,
+      this.artist,
       this.id,
       this.availableForSale,
       this.price
     );
-    entriesBackend.youtubeUpload(
-      this.videoUrl,
-      this.description,
-      this.title,
-      this.id
-    );
+    // entriesBackend.youtubeUpload(
+    //   this.videoUrl,
+    //   this.description,
+    //   this.title,
+    //   this.id
+    // );
   }
 
   async updatePricing(entry: any) {

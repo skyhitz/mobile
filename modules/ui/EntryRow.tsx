@@ -45,7 +45,7 @@ const EntryRow = (
               ellipsizeMode="tail"
               numberOfLines={1}
             >
-              {entry.userDisplayName}
+              {entry.artist}
             </Text>
           </View>
         </View>
