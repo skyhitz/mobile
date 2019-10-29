@@ -5,7 +5,7 @@ import Colors from 'app/constants/Colors';
 import { Stores } from 'skyhitz-common';
 import { navigate } from 'app/modules/navigation/Navigator';
 
-const Placeholder = () => <View style={styles.controlTouch} />;
+const Placeholder = () => <View style={styles.placeholder} />;
 
 @inject((stores: Stores) => ({
   buyEntry: stores.paymentsStore.buyEntry.bind(stores.paymentsStore),
@@ -48,6 +48,15 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  placeholder: {
+    backgroundColor: 'transparent',
+    borderRadius: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 8,
+    height: 40,
+    marginBottom: 20,
   },
   controlTouch: {
     backgroundColor: Colors.brandBlue,
