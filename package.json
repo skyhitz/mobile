@@ -21,7 +21,6 @@
     "apollo-client": "^1.9.3",
     "babel-preset-expo": "^7.0.0",
     "expo": "^35.0.0",
-    "expo-analytics-amplitude": "~7.0.0",
     "expo-asset": "~7.0.0",
     "expo-av": "~7.0.0",
     "expo-constants": "~7.0.0",
