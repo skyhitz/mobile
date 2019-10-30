@@ -1,13 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 import { navigate } from 'app/modules/navigation/Navigator';
-import { UserAvatar } from 'app/modules/ui/UserAvatar';
-import { trackOpenProfile } from 'app/analytics/Tracking';
 import { EvilIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   count: stores.likesStore.userLikesCount,

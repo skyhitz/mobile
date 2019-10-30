@@ -3,10 +3,16 @@ import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
 
 export default class LargeBtn extends React.Component<any, any> {
+  getStyles() {
+    if (this.props.secondary) {
+      return styles.backgroundBtn;
+    }
+    return this.props.disabled ? styles.btnDisabled : styles.btn;
+  }
   render() {
     return (
       <TouchableOpacity
-        style={this.props.disabled ? styles.btnDisabled : styles.btn}
+        style={this.getStyles()}
         onPress={this.props.onPress}
         disabled={this.props.disabled}
       >
@@ -17,6 +23,14 @@ export default class LargeBtn extends React.Component<any, any> {
 }
 
 const styles = StyleSheet.create({
+  backgroundBtn: {
+    backgroundColor: Colors.grey,
+    width: 220,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   btn: {
     backgroundColor: Colors.brandBlue,
     width: 220,

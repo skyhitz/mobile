@@ -5,7 +5,8 @@ import EntryRow from 'app/modules/ui/EntryRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
@@ -31,8 +32,15 @@ export default class MyMusicScreen extends React.Component<any, any> {
         }}
       >
         {SearchingLoader(this.props.loading)}
-        {this.props.entries.map(entry =>
-          EntryRow(this.props.loadAndPlay, entry)
+        {this.props.entries.map((entry: any) =>
+          EntryRow(
+            this.props.loadAndPlay,
+            entry,
+            null,
+            null,
+            null,
+            this.props.navigation.state.routeName
+          )
         )}
         <BottomPlaceholder />
       </ScrollView>

@@ -16,8 +16,8 @@ import { goBack, navigate } from 'app/modules/navigation/Navigator';
 import { AuthBackground2 } from 'app/assets/images/Images';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { trackSignUp } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   validateUsername: stores.signUpValidationStore.validateUsername.bind(
@@ -56,7 +56,7 @@ export default class SignUpScreen extends React.Component<any, any> {
     ),
   });
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       username: '',
@@ -75,7 +75,6 @@ export default class SignUpScreen extends React.Component<any, any> {
         email: this.state.email,
         password: this.state.password,
       });
-      trackSignUp(user);
       this.setState({ loading: false });
       return navigate('ProfileSettings');
     } catch (e) {
@@ -83,16 +82,16 @@ export default class SignUpScreen extends React.Component<any, any> {
     }
     return this.setState({ loading: false });
   }
-  updateDisplayName(text) {
+  updateDisplayName(text: any) {
     this.setState({ displayName: text });
   }
-  updateUsername(text) {
+  updateUsername(text: any) {
     this.setState({ username: text });
   }
-  updateEmail(text) {
+  updateEmail(text: any) {
     this.setState({ email: text });
   }
-  updatePassword(text) {
+  updatePassword(text: any) {
     this.setState({ password: text });
     this.props.validatePassword(this.state.password);
   }
@@ -209,7 +208,7 @@ export default class SignUpScreen extends React.Component<any, any> {
     );
   }
 
-  renderButtonMessage(loading) {
+  renderButtonMessage(loading: any) {
     if (loading) {
       return (
         <ActivityIndicator

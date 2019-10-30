@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { inject } from 'mobx-react';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
-const PlayerEntryInfo = inject((stores:Stores) => ({
+const PlayerEntryInfo = inject((stores: Stores) => ({
   entry: stores.playerStore.entry,
-}))(({ entry }:any) => {
+}))(({ entry }: any) => {
   if (!entry) {
     return null;
   }
@@ -18,7 +19,7 @@ const PlayerEntryInfo = inject((stores:Stores) => ({
       </View>
       <View style={styles.row}>
         <Text style={styles.entryArtist} ellipsizeMode="tail" numberOfLines={1}>
-          {entry.userDisplayName}
+          {entry.artist}
         </Text>
       </View>
     </View>

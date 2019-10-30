@@ -7,16 +7,21 @@ import {
   Image,
   ActivityIndicator,
   TextInput,
+  Switch,
 } from 'react-native';
 import { inject } from 'mobx-react';
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import {
+  MaterialIcons,
+  FontAwesome,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
-import Layout from 'app/constants/Layout';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { goBack } from 'app/modules/navigation/Navigator';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 export const LoadingIndicator = () => {
   return (
@@ -65,21 +70,36 @@ class CircleWrap extends React.Component<any, any> {
     stores.entryStore
   ),
   updateTitle: stores.entryStore.updateTitle.bind(stores.entryStore),
+  updateArtist: stores.entryStore.updateArtist.bind(stores.entryStore),
   create: stores.entryStore.create.bind(stores.entryStore),
   canCreate: stores.entryStore.canCreate,
   refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(
     stores.userEntriesStore
   ),
   clearStore: stores.entryStore.clearStore.bind(stores.entryStore),
+  updateAvailableForSale: stores.entryStore.updateAvailableForSale.bind(
+    stores.entryStore
+  ),
+  updatePrice: stores.entryStore.updatePrice.bind(stores.entryStore),
+  availableForSale: stores.entryStore.availableForSale,
+  price: stores.entryStore.price,
 }))
 export default class SelectMediaFile extends React.Component<any, any> {
   async selectVideo() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    console.log('status:', status);
     if (status === 'granted') {
-      let video: any = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-        allowsEditing: false,
-      });
+      let video: any;
+      try {
+        video = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+          allowsEditing: false,
+        });
+      } catch (e) {
+        console.log('error', e);
+      }
+
+      console.log('here is my video:', video);
 
       if (video && !video.cancelled) {
         await this.props.uploadVideo(video);
@@ -186,8 +206,29 @@ export default class SelectMediaFile extends React.Component<any, any> {
             <TextInput
               underlineColorAndroid="transparent"
               autoCapitalize="none"
+              placeholder="Artist"
+              autoCorrect={false}
+              autoFocus={true}
+              style={styles.input}
+              placeholderTextColor="white"
+              value={this.props.artist}
+              onChangeText={t => this.props.updateArtist(t)}
+              maxLength={34}
+            />
+          </View>
+          <View style={styles.field}>
+            <FontAwesome
+              name="info-circle"
+              size={24}
+              color={Colors.dividerBackground}
+              style={styles.placeholderIcon}
+            />
+            <TextInput
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
               placeholder="Title"
               autoCorrect={false}
+              autoFocus={true}
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.title}
@@ -195,7 +236,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               maxLength={34}
             />
           </View>
-          <View style={styles.fieldWithoutBorder}>
+          <View style={styles.field}>
             <MaterialIcons
               name="description"
               size={22}
@@ -214,13 +255,73 @@ export default class SelectMediaFile extends React.Component<any, any> {
               maxLength={60}
             />
           </View>
+          <View style={styles.field}>
+            <MaterialIcons
+              name={'attach-money'}
+              size={20}
+              color={Colors.dividerBackground}
+              style={styles.placeholderIcon}
+            />
+            <Text
+              style={styles.priceDescription}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {'Price USD: '}
+            </Text>
+            <TextInput
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+              placeholder=""
+              keyboardType={'numeric'}
+              autoCorrect={false}
+              style={styles.input}
+              placeholderTextColor="white"
+              value={this.props.price}
+              onChangeText={price => this.props.updatePrice(price)}
+              maxLength={30}
+            />
+          </View>
+          <View style={styles.field}>
+            <MaterialCommunityIcons
+              name="circle-medium"
+              size={24}
+              color={
+                this.props.availableForSale
+                  ? Colors.lightBrandBlue
+                  : Colors.dividerBackground
+              }
+              style={styles.placeholderIcon}
+            />
+            <Text
+              style={styles.priceDescription}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {'Available for Sale: '}
+            </Text>
+            <Switch
+              onValueChange={forSale =>
+                this.props.updateAvailableForSale(forSale)
+              }
+              value={this.props.availableForSale}
+              style={styles.input}
+              trackColor={{
+                false: Colors.defaultTextLight,
+                true: Colors.lightBrandBlue,
+              }}
+              thumbColor={Colors.lightGrey}
+            />
+          </View>
         </View>
         {this.renderArtworkSection()}
-        <LargeBtn
-          disabled={!this.props.canCreate}
-          onPress={this.onCreate.bind(this)}
-          text="Done"
-        />
+        <View style={styles.btn}>
+          <LargeBtn
+            disabled={!this.props.canCreate}
+            onPress={this.onCreate.bind(this)}
+            text="Done"
+          />
+        </View>
       </View>
     );
   }
@@ -232,10 +333,9 @@ export default class SelectMediaFile extends React.Component<any, any> {
     return this.renderInfoView();
   }
 }
-const formPadding = 20;
+
 const circleSize = 120;
 const circleBorderRadius = circleSize / 2;
-const modalWidth = Layout.window.width - 100;
 
 const styles = StyleSheet.create({
   wrap: {
@@ -244,8 +344,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btn: {
-    marginBottom: 20,
-    marginTop: 20,
+    marginTop: 40,
   },
   imageLoader: {
     borderRadius: circleBorderRadius,
@@ -261,34 +360,33 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
   },
   field: {
-    maxHeight: 40,
-    width: modalWidth,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: 50,
     flex: 1,
     borderBottomColor: Colors.dividerBackground,
     borderBottomWidth: 1,
-    justifyContent: 'flex-end',
-  },
-  fieldWithoutBorder: {
-    width: modalWidth,
-    maxHeight: 40,
-    flex: 1,
-    justifyContent: 'flex-end',
+    minWidth: 300,
   },
   placeholderIcon: {
-    position: 'absolute',
-    bottom: 8,
-    left: 0,
     backgroundColor: Colors.transparent,
   },
   input: {
     backgroundColor: Colors.transparent,
     color: Colors.white,
     fontSize: 14,
-    paddingLeft: 36,
-    bottom: 8,
+    paddingLeft: 10,
   },
   inputContainerTop: {
     flex: 1,
-    maxHeight: 100,
+    maxHeight: 250,
+    marginBottom: 40,
+  },
+  priceDescription: {
+    color: Colors.defaultTextLight,
+    fontSize: 16,
+    paddingLeft: 10,
+    paddingRight: 40,
   },
 });

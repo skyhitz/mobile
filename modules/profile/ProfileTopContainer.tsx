@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground, Text } from 'react-native';
 import { inject } from 'mobx-react';
-import { BlurView } from 'expo-blur';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   user: stores.profileStore.user,

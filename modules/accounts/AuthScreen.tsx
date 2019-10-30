@@ -15,8 +15,8 @@ import { navigate } from 'app/modules/navigation/Navigator';
 import { AuthBackground, Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
-import { identifyUser } from 'app/analytics/Analytics';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   signInWithFacebook: stores.sessionStore.signInWithFacebook.bind(
@@ -24,7 +24,7 @@ import { Stores } from 'skyhitz-common';
   ),
 }))
 export default class AuthScreen extends React.Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       loading: false,
@@ -47,7 +47,7 @@ export default class AuthScreen extends React.Component<any, any> {
         });
       }
       if (user && user.id) {
-        identifyUser(user);
+        // identifyUser(user);
         return navigate('ProfileSettings');
       }
     }
@@ -104,7 +104,7 @@ export default class AuthScreen extends React.Component<any, any> {
       </ImageBackground>
     );
   }
-  renderButtonMessage(loading) {
+  renderButtonMessage(loading: any) {
     if (loading) {
       return <ActivityIndicator size="small" color={Colors.white} />;
     }

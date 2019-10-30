@@ -1,6 +1,5 @@
 import React from 'react';
 import { inject } from 'mobx-react';
-let Dimensions = require('Dimensions');
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { EvilIcons } from '@expo/vector-icons';
 import PlayBtnSmall from 'app/modules/player/player-bar/play-btn-small/PlayBtnSmall';
@@ -15,8 +14,11 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Dimensions,
+  PanResponderInstance,
 } from 'react-native';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 const animationSpeed = 350;
 
@@ -39,9 +41,9 @@ if (isIphoneX()) {
   entry: stores.playerStore.entry,
 }))
 export default class PlayerBar extends React.Component<any, any> {
-  _animatedValueX;
-  _animatedValueY;
-  _panResponder;
+  _animatedValueX!: number;
+  _animatedValueY!: number;
+  _panResponder!: PanResponderInstance;
   state = {
     pan: new Animated.ValueXY(),
   };
@@ -126,7 +128,7 @@ export default class PlayerBar extends React.Component<any, any> {
         this.state.pan.setValue({ x: 0, y: 0 }); //Initial value
       },
       onPanResponderMove: (e, gestureState) => {
-        let gestureEvent = {
+        let gestureEvent: any = {
           dy: this.state.pan.y,
         };
         // sets limit to block dragging the player bar down
@@ -147,10 +149,10 @@ export default class PlayerBar extends React.Component<any, any> {
       this.state.pan.setValue({ x: 0, y: 39 });
     }
   }
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props: { show: any }) {
     this.toggleModalPlayer(props.show);
   }
-  toggleModalPlayer(show) {
+  toggleModalPlayer(show: any) {
     if (show) {
       return this.showModalPlayer();
     }
@@ -183,7 +185,9 @@ export default class PlayerBar extends React.Component<any, any> {
                 ellipsizeMode="tail"
                 numberOfLines={1}
               >
-                {this.props.entry ? this.props.entry.title : ''}
+                {this.props.entry
+                  ? this.props.entry.title + '  -  ' + this.props.entry.artist
+                  : ''}
               </Text>
             </View>
           </TouchableOpacity>

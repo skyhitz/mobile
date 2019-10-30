@@ -11,12 +11,15 @@ import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
 import EditPlaylistModal from 'app/modules/playlists/EditPlaylistModal';
 import RemovePlaylistModal from 'app/modules/playlists/RemovePlaylistModal';
 import EntryOptionsModal from 'app/modules/search/EntryOptionsModal';
+import PricingOptionsModal from 'app/modules/search/PricingOptionsModal';
 import SelectPlaylistModal from 'app/modules/playlists/SelectPlaylistModal';
 import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
+import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import Colors from 'app/constants/Colors';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 const AuthStack = createStackNavigator({
   Accounts: {
@@ -66,6 +69,14 @@ const AppStack = createStackNavigator(
         gesturesEnabled: false,
       },
     },
+    BuyOptionsModal: {
+      screen: BuyOptionsModal,
+      path: `buy-options-modal`,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
+    },
     RemovePlaylistModal: {
       screen: RemovePlaylistModal,
       path: 'remove-playlist',
@@ -77,6 +88,13 @@ const AppStack = createStackNavigator(
     EntryOptionsModal: {
       screen: EntryOptionsModal,
       path: `entry-options-modal`,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    PricingOptionsModal: {
+      screen: PricingOptionsModal,
+      path: `pricing-options-modal`,
       navigationOptions: {
         header: null,
       },
@@ -123,7 +141,10 @@ const RootStackNavigator = createSwitchNavigator(
   ),
 }))
 export default class RootNavigator extends React.Component<any, any> {
-  async componentWillReceiveProps(props) {
+  state = {};
+  static async getDerivedStateFromProps(props: any) {
+    StatusBar.setBarStyle('light-content');
+
     // Kicks user out in case there is an authentication error and the user is set to null.
     // This could happen if a non authorized request is made to a protected endpoint.
     // Automatically redirects to accounts if the user logs out.
@@ -131,30 +152,12 @@ export default class RootNavigator extends React.Component<any, any> {
       navigate('Auth');
     } else {
       [
-        await this.props.loadUserLikes(),
-        await this.props.loadPlaylists(),
-        await this.props.loadUserEntries(),
-        await this.props.loadPayments(),
+        await props.loadUserLikes(),
+        await props.loadPlaylists(),
+        await props.loadUserEntries(),
+        await props.loadPayments(),
       ];
     }
-  }
-
-  handleOpenURL(url) {}
-
-  componentDidMount() {
-    Linking.addEventListener('url', ({ url }: { url: string }) => {
-      this.handleOpenURL(url);
-    });
-    Linking.getInitialURL().then(
-      (url: string) => url && this.handleOpenURL(url)
-    );
-  }
-
-  componentWillUnmount() {
-    Linking.removeEventListener('url', this.handleOpenURL);
-  }
-  componentWillMount() {
-    StatusBar.setBarStyle('light-content');
   }
 
   render() {

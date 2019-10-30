@@ -19,7 +19,7 @@ import {
   userEntriesStore,
   paymentsStore,
   userFavoritesStore,
-} from 'skyhitz-common';
+} from 'app/skyhitz-common';
 
 export default class Providers extends React.Component<any, any> {
   render() {

@@ -5,7 +5,8 @@ import UserRow from 'app/modules/ui/UserRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   recentSearches: stores.usersSearchStore.recentSearches,
@@ -27,9 +28,11 @@ export default class RecentUserSearch extends React.Component<any, any> {
       <View>
         <Text style={styles.recentText}>Recent</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentSearches.map(user => (
-          <UserRow user={user} key={user.id} />
-        ))}
+        {this.props.recentSearches.map(
+          (user: { id: string | number | undefined }) => {
+            return <UserRow user={user} key={user.id} />;
+          }
+        )}
         <BottomPlaceholder />
       </View>
     );

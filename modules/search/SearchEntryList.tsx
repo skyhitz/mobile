@@ -5,9 +5,10 @@ import EntryRow from 'app/modules/ui/EntryRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
-const SearchEntryList = inject((stores:Stores) => ({
+const SearchEntryList = inject((stores: Stores) => ({
   loadPlayAndPushToCueList: stores.playerStore.loadPlayAndPushToCueList.bind(
     stores.playerStore
   ),
@@ -36,7 +37,7 @@ const SearchEntryList = inject((stores:Stores) => ({
       }}
     >
       {SearchingLoader(searching, query)}
-      {entries.map(entry =>
+      {entries.map((entry: any) =>
         EntryRow(
           loadPlayAndPushToCueList,
           entry,

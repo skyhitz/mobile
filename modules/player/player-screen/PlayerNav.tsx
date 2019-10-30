@@ -4,7 +4,8 @@ import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 const PlayerNav = inject((stores:Stores) => ({
   hidePlayer: stores.playerStore.hidePlayer.bind(stores.playerStore),

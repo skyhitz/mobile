@@ -13,7 +13,8 @@ import LikesRow from 'app/modules/playlists/LikesRow';
 import PlaylistsRow from 'app/modules/playlists/PlaylistsRow';
 import PlaylistScreen from 'app/modules/playlists/PlaylistScreen';
 import MyMusicRow from 'app/modules/playlists/MyMusicRow';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   user: stores.sessionStore.user,

@@ -11,9 +11,9 @@ import {
 } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { Images } from 'app/assets/images/Images';
-import { identifyUser } from 'app/analytics/Analytics';
 import { setNavigator, navigate } from 'app/modules/navigation/Navigator';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   hideTopPadding: stores.playerStore.show,
@@ -21,7 +21,7 @@ import { Stores } from 'skyhitz-common';
   user: stores.sessionStore.user,
 }))
 export default class AuthLoadingScreen extends React.Component<any, any> {
-  constructor(props) {
+  constructor(props: { navigation: any }) {
     super(props);
     setNavigator(props.navigation);
     this._bootstrapAsync();
@@ -39,7 +39,7 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
   async loadSessionAndIdentifyUser() {
     let user = await this.props.loadSession();
     if (user) {
-      identifyUser(user);
+      // identifyUser(user);
     }
     return;
   }

@@ -8,7 +8,9 @@ import LikeOptionRow from 'app/modules/search/LikeOptionRow';
 import AddToPlaylistOptionRow from 'app/modules/search/AddToPlaylistOptionRow';
 import RemoveFromPlaylistOptionRow from 'app/modules/search/RemoveFromPlaylistOptionRow';
 import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
-import { Stores } from 'skyhitz-common';
+import SetPrice from 'app/modules/search/SetPrice';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
 @inject((stores: Stores) => ({
@@ -16,13 +18,16 @@ const adminId = '-LbM3m6WKdVQAsY3zrAd';
   user: stores.sessionStore.user,
 }))
 export default class EntryOptionsModal extends React.Component<any, any> {
-  renderAddEntryToPlaylist(entry) {
+  renderAddEntryToPlaylist(entry: any) {
     if (!this.props.playlistsCount) {
       return null;
     }
     return <AddToPlaylistOptionRow entry={entry} />;
   }
-  renderRemoveFromPlaylist(entry, options) {
+  renderRemoveFromPlaylist(
+    entry: any,
+    options: { removeFromPlaylist: any; playlistId: any }
+  ) {
     if (!options) {
       return null;
     }
@@ -32,7 +37,7 @@ export default class EntryOptionsModal extends React.Component<any, any> {
     );
   }
   // Allow admin to remove music in case of copyright issues or not related content uploaded
-  renderRemoveFromMyMusic(entry) {
+  renderRemoveFromMyMusic(entry: { userUsername: any }) {
     if (
       this.props.user.username === entry.userUsername ||
       this.props.user.id === adminId
@@ -41,8 +46,21 @@ export default class EntryOptionsModal extends React.Component<any, any> {
     }
     return null;
   }
+  renderSetPrice(entry: any) {
+    if (
+      this.props.user.username === entry.userUsername ||
+      this.props.user.id === adminId
+    ) {
+      return <SetPrice entry={entry} />;
+    }
+    return null;
+  }
   render() {
-    const { entry, options } = this.props.navigation.state.params;
+    const {
+      entry,
+      options,
+      previousScreen,
+    } = this.props.navigation.state.params;
 
     return (
       <View style={styles.container}>
@@ -56,14 +74,20 @@ export default class EntryOptionsModal extends React.Component<any, any> {
             ellipsizeMode="tail"
             numberOfLines={1}
           >
-            {entry.userDisplayName}
+            {entry.artist}
           </Text>
         </View>
         <View style={styles.options}>
           <LikeOptionRow entry={entry} />
           {this.renderAddEntryToPlaylist(entry)}
           {this.renderRemoveFromPlaylist(entry, options)}
-          {this.renderRemoveFromMyMusic(entry)}
+
+          {previousScreen === 'MyMusicScreen'
+            ? this.renderRemoveFromMyMusic(entry)
+            : null}
+          {previousScreen === 'MyMusicScreen'
+            ? this.renderSetPrice(entry)
+            : null}
         </View>
         <View style={styles.bottomWrap}>
           <TouchableOpacity onPress={() => goBack()}>
@@ -140,6 +164,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 40,
     maxHeight: 50,
   },
 });

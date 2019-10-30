@@ -1,14 +1,11 @@
-/**
- * @providesModule remove-playlist-modal
- * @flow
- */
-
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   remove: stores.playlistsStore.remove.bind(stores.playlistsStore),

@@ -15,8 +15,8 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import { trackResetPassword } from 'app/analytics/Tracking';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   validateEmail: stores.resetPasswordValidationStore.validateEmail.bind(
@@ -42,7 +42,7 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       email: '',
@@ -62,13 +62,12 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
           'Check your email. We just sent you a link to reset your password.',
         buttonColor: Colors.valid,
       });
-      trackResetPassword();
     } catch (e) {
       this.props.setBackendError(e);
     }
     this.setState({ loading: false });
   }
-  updateEmail(text) {
+  updateEmail(text: any) {
     this.setState({ email: text });
     this.props.validateEmail(this.state.email);
   }
@@ -119,7 +118,7 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
     );
   }
 
-  renderButtonMessage(loading) {
+  renderButtonMessage(loading: any) {
     if (loading) {
       return (
         <ActivityIndicator

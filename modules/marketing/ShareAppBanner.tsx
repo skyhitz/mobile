@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  Linking,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, Linking, View } from 'react-native';
 import Colors from 'app/constants/Colors';
-import Divider from 'app/modules/ui/Divider';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { navigate } from 'app/modules/navigation/Navigator';
 
@@ -25,7 +18,7 @@ export default class ShareAppBanner extends React.Component<any, any> {
     return (
       <View style={styles.wrap}>
         <View style={styles.bannerWrap}>
-          <Text style={styles.adsText}>Upload your music!</Text>
+          <Text style={styles.adsText}>Upload your music videos!</Text>
           <LargeBtn onPress={this.onUpload.bind(this)} text="Upload" />
         </View>
       </View>

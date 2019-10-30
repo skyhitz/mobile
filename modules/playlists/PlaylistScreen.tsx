@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { inject } from 'mobx-react';
 import EntryRow from 'app/modules/ui/EntryRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
@@ -13,7 +7,8 @@ import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import { navigate } from 'app/modules/navigation/Navigator';
 import LargeBtn from 'app/modules/ui/LargeBtn';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
@@ -21,7 +16,7 @@ import { Stores } from 'skyhitz-common';
   loading: stores.playlistsStore.loading,
 }))
 export default class PlaylistScreen extends React.Component<any, any> {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: any) => ({
     title: navigation.state.params.title,
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
@@ -59,7 +54,7 @@ export default class PlaylistScreen extends React.Component<any, any> {
       >
         {this.renderInstructionsToAddPlaylist()}
         {SearchingLoader(this.props.loading)}
-        {this.props.playlist.entries.map(entry =>
+        {this.props.playlist.entries.map((entry: any) =>
           EntryRow(this.props.loadAndPlay, entry, null, {
             removeFromPlaylist: true,
             playlistId: this.props.playlist.id,

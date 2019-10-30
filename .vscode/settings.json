@@ -1,8 +1,5 @@
 {
   "javascript.validate.enable": false,
-  "search.exclude": {
-    "**/node_modules/skyhitz-common": false
-  },
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true,
   "[javascript]": {

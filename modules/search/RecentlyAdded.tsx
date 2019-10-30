@@ -4,7 +4,8 @@ import { inject } from 'mobx-react';
 import EntryRow from 'app/modules/ui/EntryRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
-import { Stores } from 'skyhitz-common';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   loadPlayAndPushToCueList: stores.playerStore.loadPlayAndPushToCueList.bind(
@@ -31,7 +32,7 @@ export default class RecentlyAdded extends React.Component<any, any> {
       <View>
         <Text style={styles.recentText}>Recently Added</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentlyAdded.map(entry =>
+        {this.props.recentlyAdded.map((entry: any) =>
           EntryRow(
             this.props.loadPlayAndPushToCueList,
             entry,
