@@ -185,7 +185,9 @@ export default class PlayerBar extends React.Component<any, any> {
                 ellipsizeMode="tail"
                 numberOfLines={1}
               >
-                {this.props.entry ? this.props.entry.title : ''}
+                {this.props.entry
+                  ? this.props.entry.title + '  -  ' + this.props.entry.artist
+                  : ''}
               </Text>
             </View>
           </TouchableOpacity>
