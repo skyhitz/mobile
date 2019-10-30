@@ -10,7 +10,9 @@
     "start:prod": "expo start --no-dev",
     "eject": "expo eject",
     "android": "expo start --android",
-    "ios": "expo start --ios"
+    "ios": "expo start --ios",
+    "build:ios": "expo build:ios",
+    "build:android": "expo build:android"
   },
   "peerDependencies": {
     "react-navigation-tabs": "2.0.0-alpha"
