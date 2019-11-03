@@ -87,7 +87,6 @@ class CircleWrap extends React.Component<any, any> {
 export default class SelectMediaFile extends React.Component<any, any> {
   async selectVideo() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    console.log('status:', status);
     if (status === 'granted') {
       let video: any;
       try {
@@ -226,7 +225,6 @@ export default class SelectMediaFile extends React.Component<any, any> {
               autoCapitalize="none"
               placeholder="Title"
               autoCorrect={false}
-              autoFocus={true}
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.title}

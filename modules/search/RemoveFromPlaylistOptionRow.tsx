@@ -8,12 +8,15 @@ import { goBack } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   removeEntryFromPlaylist: stores.playlistsStore.removeEntryFromPlaylist.bind(
     stores.playlistsStore
   ),
 }))
-export default class RemoveFromPlaylistOptionRow extends React.Component<any, any> {
+export default class RemoveFromPlaylistOptionRow extends React.Component<
+  any,
+  any
+> {
   handleRemoveFromPlaylist() {
     this.props.removeEntryFromPlaylist(
       this.props.playlistId,
@@ -46,7 +49,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 50,
+    maxHeight: 50,
     width: Layout.window.width - 60,
   },
   text: {

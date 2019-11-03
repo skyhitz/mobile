@@ -8,13 +8,18 @@ import { goBack } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   remove: stores.entryStore.remove.bind(stores.entryStore),
-  refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(stores.userEntriesStore)
+  refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(
+    stores.userEntriesStore
+  ),
 }))
 export default class RemoveFromMyMusicRow extends React.Component<any, any> {
   async handleRemoveEntry() {
-    await this.props.remove(this.props.entry.id, this.props.entry.cloudinaryPublicId);
+    await this.props.remove(
+      this.props.entry.id,
+      this.props.entry.cloudinaryPublicId
+    );
     await this.props.refreshUserEntries();
     goBack();
   }
@@ -43,7 +48,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 50,
+    maxHeight: 50,
     width: Layout.window.width - 60,
   },
   text: {

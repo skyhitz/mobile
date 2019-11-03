@@ -31,7 +31,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 50,
+    maxHeight: 50,
     width: Layout.window.width - 60,
   },
   text: {

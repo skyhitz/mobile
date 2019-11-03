@@ -8,7 +8,7 @@ import { navigate } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   selectEntryToBeAdded: stores.playlistsStore.selectEntryToBeAdded.bind(
     stores.playlistsStore
   ),
@@ -39,7 +39,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 50,
+    maxHeight: 50,
     width: Layout.window.width - 60,
   },
   text: {
