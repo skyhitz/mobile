@@ -114,7 +114,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
             autoFocus={true}
             style={styles.input}
             placeholderTextColor="white"
-            value={this.props.price}
+            value={this.props.price ? String(this.props.price) : undefined}
             onChangeText={price => this.props.updatePrice(price)}
             maxLength={30}
           />
