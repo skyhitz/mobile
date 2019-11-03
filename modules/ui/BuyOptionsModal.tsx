@@ -28,7 +28,7 @@ export default class BuyOptionsModal extends React.Component<any, any> {
       await this.props.refreshRecentSearches(),
       await this.props.refreshSubscription(),
     ];
-    this.props.entry.availableForSale = false;
+    this.props.entry.forSale = false;
 
     goBack();
   }
