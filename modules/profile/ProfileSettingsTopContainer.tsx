@@ -37,10 +37,10 @@ export default class ProfileSettingsTopContainer extends React.Component<
     if (this.props.subscribed) {
       return (
         <MaterialIcons
-          name="star-border"
           size={22}
-          color={Colors.brandBlue}
           style={styles.starsIcon}
+          name={'attach-money'}
+          color={Colors.white}
         />
       );
     }
@@ -103,6 +103,6 @@ const styles = StyleSheet.create({
   starsIcon: {
     backgroundColor: 'transparent',
     marginLeft: 15,
-    marginRight: 5,
+    marginRight: 1,
   },
 });

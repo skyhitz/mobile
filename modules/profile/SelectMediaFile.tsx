@@ -99,8 +99,6 @@ export default class SelectMediaFile extends React.Component<any, any> {
         console.log('error', e);
       }
 
-      console.log('here is my video:', video);
-
       if (video && !video.cancelled) {
         await this.props.uploadVideo(video);
       }
