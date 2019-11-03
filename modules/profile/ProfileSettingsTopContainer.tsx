@@ -33,8 +33,8 @@ export default class ProfileSettingsTopContainer extends React.Component<
     }
     return <View style={styles.container}>{this.renderBlurSection()}</View>;
   }
-  renderStar() {
-    if (this.props.subscribed && this.props.credits < 0) {
+  renderDollarSign() {
+    if (this.props.subscribed && this.props.credits > 0) {
       return (
         <MaterialIcons
           size={22}
@@ -54,7 +54,7 @@ export default class ProfileSettingsTopContainer extends React.Component<
             {UserAvatarMedium(this.props.user)}
             <View style={styles.profileInfo}>
               <Text style={styles.text}>{this.props.user.displayName}</Text>
-              {this.renderStar()}
+              {this.renderDollarSign()}
               <Text style={styles.text}>
                 {this.props.credits ? this.props.credits : ''}
               </Text>
