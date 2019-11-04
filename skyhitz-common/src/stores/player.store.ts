@@ -1,4 +1,4 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
@@ -8,7 +8,7 @@ import { PlaybackState, SeekState, ControlsState } from '../types/index';
 export class PlayerStore {
   constructor() {}
   public observables = observable({
-    entry: null
+    entry: null,
   });
   @computed
   get entry(): Entry {
@@ -57,6 +57,14 @@ export class PlayerStore {
   @observable
   playlistMode: boolean = false;
   playbackInstance: any;
+
+  @action
+  async refreshEntry() {
+    if (this.entry && this.entry.id) {
+      let entry = await entriesBackend.getById(this.entry.id);
+      this.observables.entry = entry;
+    }
+  }
 
   setPlaylistMode(entries: List<Entry>) {
     this.playlistMode = true;
@@ -192,7 +200,6 @@ export class PlayerStore {
         this.currentIndex = 0;
         return this.loadAndPlay(entry);
       }
-
     }
 
     this.currentIndex++;
@@ -252,9 +259,7 @@ export class PlayerStore {
 
     if (!status.isLoaded) {
       if (status.error) {
-        const errorMsg = `Encountered a fatal error during playback: ${
-          status.error
-        }`;
+        const errorMsg = `Encountered a fatal error during playback: ${status.error}`;
         this.error = errorMsg;
         return this.setPlaybackState('ERROR');
       }
@@ -292,7 +297,7 @@ export class PlayerStore {
     }
 
     return 'PAUSED';
-  }
+  };
 
   toggleShuffle() {
     this.shuffle = !this.shuffle;
@@ -430,7 +435,7 @@ export class PlayerStore {
 
       this.pauseAsync();
     }
-  }
+  };
 
   onSeekSliderSlidingComplete = async (value: number) => {
     if (this.playbackInstance != null && this.seekState !== 'SEEKED') {
@@ -443,7 +448,7 @@ export class PlayerStore {
       this.playbackInstance
         .setStatusAsync({
           positionMillis: value * this.playbackInstanceDuration,
-          shouldPlay: this.shouldPlayAtEndOfSeek
+          shouldPlay: this.shouldPlayAtEndOfSeek,
         })
         .then((status: any) => {
           this.setSeekState('NOT_SEEKING');
@@ -453,7 +458,7 @@ export class PlayerStore {
           console.info('Seek error: ', message);
         });
     }
-  }
+  };
 
   onSeekBarTap = (evt: any) => {
     if (
@@ -468,11 +473,11 @@ export class PlayerStore {
       this.onSeekSliderValueChange();
       this.onSeekSliderSlidingComplete(value);
     }
-  }
+  };
 
   onSliderLayout = (evt: any) => {
     this.sliderWidth = evt.nativeEvent.layout.width;
-  }
+  };
 
   setNetworkState(state: any) {
     this.networkState = state;

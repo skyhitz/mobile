@@ -18,6 +18,7 @@ import { Stores } from 'skyhitz-common';
   refreshSubscription: stores.paymentsStore.refreshSubscription.bind(
     stores.paymentsStore
   ),
+  refreshEntry: stores.playerStore.refreshEntry.bind(stores.playerStore),
   entry: stores.playerStore.entry,
 }))
 export default class BuyOptionsModal extends React.Component<any, any> {
@@ -28,7 +29,7 @@ export default class BuyOptionsModal extends React.Component<any, any> {
       await this.props.refreshRecentSearches(),
       await this.props.refreshSubscription(),
     ];
-    this.props.entry.forSale = false;
+    this.props.refreshEntry();
 
     goBack();
   }
