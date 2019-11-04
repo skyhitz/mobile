@@ -34,7 +34,7 @@ export default class ProfileSettingsTopContainer extends React.Component<
     return <View style={styles.container}>{this.renderBlurSection()}</View>;
   }
   renderDollarSign() {
-    if (this.props.subscribed && this.props.credits > 0) {
+    if (this.props.credits > 0) {
       return (
         <MaterialIcons
           size={22}
