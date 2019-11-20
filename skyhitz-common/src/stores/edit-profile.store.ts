@@ -1,5 +1,4 @@
 import { User } from '../models/user.model';
-import { entriesBackend } from '../backends/entries.backend';
 import { observable, observe, action } from 'mobx';
 import { userBackend } from '../backends/user.backend';
 import { SessionStore } from './session.store';
@@ -16,7 +15,7 @@ export class EditProfileStore {
   @observable profile: User;
   @observable loadingAvatar: boolean;
 
-  constructor(public sessionStore: SessionStore) {}
+  constructor(public sessionStore: SessionStore) { }
 
   public disposer = observe(this.sessionStore.session, ({ object }) => {
     this.profile = object.user;
@@ -78,6 +77,30 @@ export class EditProfileStore {
   @action
   updatePhone = (text: string) => {
     this.phone = text;
+  }
+
+  get validationError() {
+    if (!this.avatarUrl) {
+      return 'Upload a profile picture.';
+    }
+
+    if (!this.displayName) {
+      return 'Add a display name.';
+    }
+
+    if (!this.description) {
+      return 'Add a description.';
+    }
+
+    if (!this.username) {
+      return 'Add a username.';
+    }
+
+    if (!this.email) {
+      return 'Add an email.';
+    }
+
+    return null;
   }
 
   get canUpdate() {

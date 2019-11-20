@@ -52,6 +52,7 @@ type Stores = typeof stores;
   ),
   logOut: stores.sessionStore.signOut.bind(stores.sessionStore),
   credits: stores.paymentsStore.credits,
+  validationError: stores.editProfileStore.validationError,
 }))
 export default class EditProfileScreen extends React.Component<any, any> {
   static navigationOptions = {
@@ -96,10 +97,16 @@ export default class EditProfileScreen extends React.Component<any, any> {
   render() {
     return (
       <View style={styles.container}>
+        <View
+          style={[styles.errorContainer, { opacity: this.props.validationError ? 1 : 0 }]}
+        >
+          <Text style={styles.error}>{this.props.validationError}</Text>
+        </View>
         <View style={styles.headerWrap}>
           {this.renderAvatar()}
           <EditProfilePhotoBtn />
         </View>
+
         <View style={styles.inputContainerTop}>
           <View style={styles.field}>
             <MaterialCommunityIcons
@@ -131,7 +138,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
             <TextInput
               underlineColorAndroid="transparent"
               autoCapitalize="none"
-              placeholder="Info"
+              placeholder="Description"
               autoCorrect={false}
               style={styles.input}
               placeholderTextColor="white"
@@ -341,5 +348,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: Colors.defaultTextLight,
+  },
+  errorContainer: {
+    maxHeight: 40,
+    backgroundColor: Colors.errorBackground,
+    paddingLeft: formPadding,
+    paddingRight: formPadding,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  error: {
+    color: Colors.white,
   },
 });
