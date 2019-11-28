@@ -13,6 +13,7 @@ export class LikesBackend {
               description
               title
               id
+              artist
             }
           }
         `,

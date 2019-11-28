@@ -21,7 +21,7 @@ export default class LikersSection extends React.Component<any, any> {
     return this.props.likers.map(
       (liker: any, i: string | number | undefined) => (
         <View style={styles.liker} key={i}>
-          {UserAvatar(liker)}
+          <UserAvatar user={liker} />
         </View>
       )
     );

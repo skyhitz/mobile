@@ -2,19 +2,35 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, ActivityIndicator } from 'react-native';
 import Colors from 'app/constants/Colors';
 
-export const UserAvatar = user => {
-  if (!user) {
-    return null;
+export class UserAvatar extends React.Component<any, any> {
+  state = {
+    fallbackToInitials: false,
+  };
+
+  loadFallback() {
+    this.setState({ fallbackToInitials: true });
   }
-  if (user.avatarUrl) {
-    return <Image source={{ uri: user.avatarUrl }} style={styles.thumb} />;
+
+  render() {
+    if (!this.props.user) {
+      return null;
+    }
+    if (this.props.user.avatarUrl && !this.state.fallbackToInitials) {
+      return (
+        <Image
+          source={{ uri: this.props.user.avatarUrl }}
+          style={styles.thumb}
+          onError={() => this.loadFallback()}
+        />
+      );
+    }
+    return (
+      <View style={[styles.thumb, { backgroundColor: Colors.lightBlueBtn }]}>
+        <Text style={styles.userAvatarText}>{this.props.user.initials}</Text>
+      </View>
+    );
   }
-  return (
-    <View style={[styles.thumb, { backgroundColor: Colors.lightBlueBtn }]}>
-      <Text style={styles.userAvatarText}>{user.initials}</Text>
-    </View>
-  );
-};
+}
 
 export const UserAvatarMedium = user => {
   if (!user) {

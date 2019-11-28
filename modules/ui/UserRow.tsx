@@ -35,7 +35,7 @@ export default class UserRow extends React.Component<any, any> {
             }}
           >
             <View style={styles.row}>
-              {UserAvatar(this.props.user)}
+              <UserAvatar user={this.props.user} />
               <View>
                 <Text style={styles.username}>{this.props.user.username}</Text>
                 <Text style={styles.displayName}>

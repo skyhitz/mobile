@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "1.17.5",
+  "version": "1.17.6",
   "description": "Exponent",
   "author": "Alejo Mendoza",
   "license": "MIT",
@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "NODE_ENV=development expo start",
     "start:prod": "expo start --no-dev",
+    "expo:publish": "expo publish",
     "eject": "expo eject",
     "android": "expo start --android",
     "ios": "expo start --ios",
