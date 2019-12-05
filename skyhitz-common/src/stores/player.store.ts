@@ -166,7 +166,10 @@ export class PlayerStore {
   async loadAsync(streamUrl: string) {
     return await this.playbackInstance.loadAsync(
       { uri: streamUrl },
-      { shouldPlay: true, positionMillis: 0 }
+      {
+        shouldPlay: true,
+        positionMillis: 0,
+      }
     );
   }
 
@@ -183,6 +186,13 @@ export class PlayerStore {
     this.observables.entry = entry;
     this.showPlayer();
     let { videoUrl } = entry;
+
+    if (!videoUrl) {
+      return;
+    }
+    // let pos = videoUrl.lastIndexOf('.');
+    // videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
+
     let loadStream = await this.loadAsync(videoUrl);
     this.setPlaybackState('PLAYING');
     return loadStream;
