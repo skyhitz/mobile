@@ -104,7 +104,7 @@ export default class PlayerBar extends React.Component<any, any> {
       toValue: 0,
     }).start();
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._animatedValueX = 0;
     this._animatedValueY = 0;
     this.state.pan.x.addListener(value => (this._animatedValueX = value.value));
@@ -149,7 +149,7 @@ export default class PlayerBar extends React.Component<any, any> {
       this.state.pan.setValue({ x: 0, y: 39 });
     }
   }
-  componentWillReceiveProps(props: { show: any }) {
+  UNSAFE_componentWillReceiveProps(props: { show: any }) {
     this.toggleModalPlayer(props.show);
   }
   toggleModalPlayer(show: any) {

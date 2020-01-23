@@ -17,7 +17,7 @@ type Stores = typeof stores;
   ),
 }))
 export default class RecentUserSearch extends React.Component<any, any> {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getRecentSearches();
   }
   render() {
