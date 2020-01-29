@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Colors from 'app/constants/Colors';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 var styles = StyleSheet.create({
   dot: {

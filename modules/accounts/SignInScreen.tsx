@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderBackButton } from 'react-navigation';
+import { HeaderBackButton } from 'react-navigation-stack';
 import { goBack, navigate } from 'app/modules/navigation/Navigator';
 import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -47,7 +47,7 @@ export default class SignInScreen extends React.Component<any, any> {
       backgroundColor: Colors.headerBackground,
       borderBottomWidth: 0,
     },
-    headerLeft: (
+    headerLeft: () => (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderBackButton } from 'react-navigation';
+import { HeaderBackButton } from 'react-navigation-stack';
 import { goBack } from 'app/modules/navigation/Navigator';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
@@ -38,7 +38,7 @@ export default class ResetPasswordScreen extends React.Component<any, any> {
       backgroundColor: Colors.headerBackground,
       borderBottomWidth: 0,
     },
-    headerLeft: (
+    headerLeft: () => (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });

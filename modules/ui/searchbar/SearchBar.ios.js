@@ -9,12 +9,12 @@ import {
   View,
   ActivityIndicator,
   Text,
-  TouchableOpacity,
 } from 'react-native';
 import Colors from 'app/constants/Colors';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
 import Input from 'app/modules/ui/Input';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const IOS_GRAY = Colors.searchTextColor;

@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({

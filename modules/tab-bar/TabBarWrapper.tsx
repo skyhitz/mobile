@@ -1,5 +1,3 @@
-/// <reference path="./TabBarWrapper.d.ts" />
-
 import React from 'react';
 import { View } from 'react-native';
 import { BottomTabBar } from 'react-navigation-tabs';

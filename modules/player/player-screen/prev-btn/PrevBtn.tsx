@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { inject } from 'mobx-react';
 import { PrevBtnWhite } from 'app/assets/images/Images';
 import * as stores from 'app/skyhitz-common';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 type Stores = typeof stores;
 
-const PrevBtn = inject((stores:Stores) => ({
+const PrevBtn = inject((stores: Stores) => ({
   playPrev: stores.playerStore.playPrev.bind(stores.playerStore),
 }))(({ playPrev }: any) => (
   <TouchableOpacity style={styles.controlTouch} onPress={() => playPrev()}>

@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import * as stores from 'app/skyhitz-common';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 type Stores = typeof stores;
 
-const PlayerNav = inject((stores:Stores) => ({
+const PlayerNav = inject((stores: Stores) => ({
   hidePlayer: stores.playerStore.hidePlayer.bind(stores.playerStore),
   entry: stores.playerStore.entry,
 }))(({ hidePlayer, entry }: any) => {
@@ -48,6 +49,7 @@ let styles = StyleSheet.create({
     paddingRight: 12,
     marginTop: 2,
     width: 60,
+    height: 40,
     alignSelf: 'center',
   },
   arrowDown: {

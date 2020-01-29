@@ -60,10 +60,10 @@ export default class EditProfileScreen extends React.Component<any, any> {
     headerTitleStyle: { color: Colors.white },
     headerStyle: {
       backgroundColor: Colors.headerBackground,
-      borderBottomWidth: 0,
+      shadowColor: 'transparent',
     },
-    headerLeft: <CancelEditBtn />,
-    headerRight: <DoneEditBtn />,
+    headerLeft: () => <CancelEditBtn />,
+    headerRight: () => <DoneEditBtn />,
   };
   async handleLogOut() {
     await this.props.logOut();
@@ -98,7 +98,10 @@ export default class EditProfileScreen extends React.Component<any, any> {
     return (
       <View style={styles.container}>
         <View
-          style={[styles.errorContainer, { opacity: this.props.validationError ? 1 : 0 }]}
+          style={[
+            styles.errorContainer,
+            { opacity: this.props.validationError ? 1 : 0 },
+          ]}
         >
           <Text style={styles.error}>{this.props.validationError}</Text>
         </View>

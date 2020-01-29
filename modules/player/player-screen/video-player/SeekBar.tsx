@@ -1,6 +1,5 @@
 import React from 'react';
-import { TouchableWithoutFeedback, Platform } from 'react-native';
-import Slider from 'react-native-slider';
+import { Slider, TouchableWithoutFeedback } from 'react-native';
 import { inject } from 'mobx-react';
 import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/UiStates';
 import Colors from 'app/constants/Colors';
@@ -44,7 +43,6 @@ const SeekBar = inject((stores: Stores) => ({
         minimumTrackTintColor={Colors.brandBlue}
         maximumTrackTintColor={Colors.backgroundTrackColor}
         thumbTintColor={Colors.brandBlue}
-        trackStyle={{ height: 2 }}
       />
     </TouchableWithoutFeedback>
   )

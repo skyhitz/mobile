@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import AuthScreen from 'app/modules/accounts/AuthScreen';
 import SignUpScreen from 'app/modules/accounts/SignUpScreen';
 import SignInScreen from 'app/modules/accounts/SignInScreen';
@@ -8,30 +8,30 @@ import ConfirmUsernameAndEmailScreen from 'app/modules/accounts/ConfirmUsernameA
 
 const AccountsNavigator = createStackNavigator({
   AuthScreen: {
-    screen: AuthScreen,
+    screen: AuthScreen as any,
     navigationOptions: {
-      header: null,
-      gesturesEnabled: false,
+      headerShown: false,
+      gestureEnabled: false,
     },
   },
   SignUp: {
-    screen: SignUpScreen,
+    screen: SignUpScreen as any,
     path: `sign-up`,
   },
   SignIn: {
-    screen: SignInScreen,
+    screen: SignInScreen as any,
     path: `sign-in`,
   },
   ResetPassword: {
-    screen: ResetPasswordScreen,
+    screen: ResetPasswordScreen as any,
     path: `reset-password`,
   },
   UpdatePassword: {
-    screen: UpdatePasswordScreen,
+    screen: UpdatePasswordScreen as any,
     path: `update-password/:token`,
   },
   ConfirmUsernameAndEmail: {
-    screen: ConfirmUsernameAndEmailScreen,
+    screen: ConfirmUsernameAndEmailScreen as any,
     path: `confirm-username-and-email`,
   },
 });

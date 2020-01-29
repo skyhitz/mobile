@@ -1,9 +1,6 @@
-/**
- * @providesModule control
- * @flow
- */
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const centeredContentWidth = 60;
 
@@ -13,7 +10,8 @@ const Control = ({ callback, center, children, ...otherProps }) => (
     hitSlop={{ top: 20, left: 20, bottom: 20, right: 20 }}
     onPress={() => {
       callback();
-    }}>
+    }}
+  >
     <View
       style={
         center
@@ -25,7 +23,8 @@ const Control = ({ callback, center, children, ...otherProps }) => (
               borderRadius: centeredContentWidth,
             }
           : {}
-      }>
+      }
+    >
       {children}
     </View>
   </TouchableOpacity>

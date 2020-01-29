@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderBackButton } from 'react-navigation';
+import { HeaderBackButton } from 'react-navigation-stack';
 import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Layout from 'app/constants/Layout';
@@ -44,7 +44,7 @@ export default class UpdatePasswordScreen extends React.Component<any, any> {
       backgroundColor: Colors.headerBackground,
       borderBottomWidth: 0,
     },
-    headerLeft: (
+    headerLeft: () => (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
-import { navigate, goBack } from 'app/modules/navigation/Navigator';
+import { goBack } from 'app/modules/navigation/Navigator';
 import Colors from 'app/constants/Colors';
 
 export default class ArrowDownBackBtn extends React.Component<any, any> {

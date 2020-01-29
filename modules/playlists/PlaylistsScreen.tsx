@@ -36,8 +36,8 @@ export default class PlaylistsScreen extends React.Component<any, any> {
       borderBottomWidth: 0,
     },
     headerTintColor: Colors.tabIconSelected,
-    headerRight: <EditPlaylistsBtn />,
-    headerLeft: <EditPlaylistsBackBtn />,
+    headerRight: () => <EditPlaylistsBtn />,
+    headerLeft: () => <EditPlaylistsBackBtn />,
   };
 
   showModal() {

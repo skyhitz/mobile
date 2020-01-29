@@ -11,13 +11,13 @@ import {
   StyleSheet,
   Animated,
   PanResponder,
-  TouchableOpacity,
   Text,
   View,
   Dimensions,
   PanResponderInstance,
 } from 'react-native';
 import * as stores from 'app/skyhitz-common';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 type Stores = typeof stores;
 
 const animationSpeed = 350;
@@ -149,8 +149,8 @@ export default class PlayerBar extends React.Component<any, any> {
       this.state.pan.setValue({ x: 0, y: 39 });
     }
   }
-  UNSAFE_componentWillReceiveProps(props: { show: any }) {
-    this.toggleModalPlayer(props.show);
+  componentDidUpdate() {
+    this.toggleModalPlayer(this.props.show);
   }
   toggleModalPlayer(show: any) {
     if (show) {

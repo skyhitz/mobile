@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { Ionicons, EvilIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
 import TabBarWrapper from 'app/modules/tab-bar/TabBarWrapper';
@@ -11,34 +11,30 @@ export default createBottomTabNavigator(
   {
     SearchNavigator: {
       screen: SearchNavigator,
-      navigationOptions: {
-        header: null,
-      },
       path: `search`,
     },
     ProfileSettings: {
       screen: ProfileSettingsScreen,
-      navigationOptions: {
-        header: null,
-      },
       path: `profile-settings`,
     },
   },
   {
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused }) => renderTabBarIcon(focused, navigation),
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused }: any) => renderTabBarIcon(focused, navigation),
     }),
     tabBarComponent: TabBarWrapper,
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: false,
     tabBarOptions: {
       showLabel: false,
+      activeBackgroundColor: 'transparent',
+      inactiveBackgroundColor: 'transparent',
+    },
+    navigationOptions: {
+      cardStyle: { backgroundColor: 'transparent' },
     },
   }
 );
 
-function renderTabBarIcon(focused, navigation) {
+function renderTabBarIcon(focused: any, navigation: any) {
   const { routeName } = navigation.state;
   let iconName;
   switch (routeName) {

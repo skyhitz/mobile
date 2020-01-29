@@ -1,20 +1,10 @@
 import React from 'react';
-import {
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { inject } from 'mobx-react';
 import SelectPlaylistRow from 'app/modules/playlists/SelectPlaylistRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
-import EditPlaylistsBackBtn from 'app/modules/ui/EditPlaylistsBackBtn';
-import SelectPlaylistImage from 'app/modules/playlists/SelectPlaylistImage';
-import Layout from 'app/constants/Layout';
-import { navigate } from 'app/modules/navigation/Navigator';
 import ArrowDownBackBtn from 'app/modules/ui/ArrowDownBackBtn';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
@@ -32,7 +22,7 @@ export default class SelectPlaylistModal extends React.Component<any, any> {
       borderBottomWidth: 0,
     },
     headerTintColor: Colors.tabIconSelected,
-    headerLeft: <ArrowDownBackBtn />,
+    headerLeft: () => <ArrowDownBackBtn />,
   };
 
   render() {

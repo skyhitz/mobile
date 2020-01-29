@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { inject } from 'mobx-react';
 import { ShuffleIconBlue, ShuffleIconGrey } from 'app/assets/images/Images';
 import * as stores from 'app/skyhitz-common';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 type Stores = typeof stores;
 
-const ShuffleBtn = inject((stores:Stores) => ({
+const ShuffleBtn = inject((stores: Stores) => ({
   toggleShuffle: stores.playerStore.toggleShuffle.bind(stores.playerStore),
   shuffle: stores.playerStore.shuffle,
 }))(({ toggleShuffle, shuffle }: any) => {

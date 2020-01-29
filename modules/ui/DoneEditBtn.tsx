@@ -6,7 +6,7 @@ import { goBack } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   updateProfile: stores.editProfileStore.updateProfile.bind(
     stores.editProfileStore
   ),
