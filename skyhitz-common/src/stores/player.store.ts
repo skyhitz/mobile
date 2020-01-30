@@ -7,11 +7,11 @@ import { PlaybackState, SeekState, ControlsState } from '../types/index';
 
 export class PlayerStore {
   constructor() {}
-  public observables = observable({
+  public observables: any = observable({
     entry: null,
   });
   @computed
-  get entry(): Entry {
+  get entry(): any {
     return this.observables.entry;
   }
   @observable
@@ -47,7 +47,7 @@ export class PlayerStore {
   @observable
   shouldPlayAtEndOfSeek: boolean = false;
   @observable
-  sliderWidth: number;
+  sliderWidth!: number;
   @observable
   cueList: List<Entry> = List([]);
   @observable
@@ -178,8 +178,10 @@ export class PlayerStore {
       return null;
     }
 
-    if (this.cueList.findIndex(item => item.id === entry.id) !== -1) {
-      this.currentIndex = this.cueList.findIndex(item => item.id === entry.id);
+    if (this.cueList.findIndex(item => !!item && item.id === entry.id) !== -1) {
+      this.currentIndex = this.cueList.findIndex(
+        item => !!item && item.id === entry.id
+      );
     }
 
     this.setPlaybackState('LOADING');
@@ -355,6 +357,9 @@ export class PlayerStore {
       this.entry.id
     );
     let relatedVideoId = this.findFirstRelatedVideoNotInCue(relatedVideoIds);
+    if (!relatedVideoId) {
+      return null;
+    }
     let entry = await entriesBackend.getById(relatedVideoId);
     if (entry) {
       return entry;
@@ -369,7 +374,7 @@ export class PlayerStore {
   findFirstRelatedVideoNotInCue(relatedVideoIds: string[]) {
     let relatedVideoId = relatedVideoIds.find(videoId => {
       let index = this.cueList.findIndex(entry => {
-        if (entry.id === videoId) {
+        if (entry && entry.id === videoId) {
           return true;
         }
         return false;
