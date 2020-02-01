@@ -8,7 +8,7 @@ import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
-  loadPlayAndPushToCueList: stores.playerStore.loadPlayAndPushToCueList.bind(
+  loadAndPlay: stores.playerStore.loadAndPlay.bind(
     stores.playerStore
   ),
   getRecentSearches: stores.entriesSearchStore.getRecentSearches.bind(
@@ -16,11 +16,12 @@ type Stores = typeof stores;
   ),
   recentSearches: stores.entriesSearchStore.recentSearches,
   loadingRecentSearches: stores.entriesSearchStore.loadingRecentSearches,
-  disablePlaylistMode: stores.playerStore.disablePlaylistMode.bind(
-    stores.playerStore
-  ),
+  setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore)
 }))
 export default class RecentEntrySearch extends React.Component<any, any> {
+  setRecentSearches() {
+    this.props.setPlaylistMode(this.props.recentSearches);
+  }
   UNSAFE_componentWillMount() {
     this.props.getRecentSearches();
   }
@@ -34,11 +35,11 @@ export default class RecentEntrySearch extends React.Component<any, any> {
         {SearchingLoader(this.props.loadingRecentSearches)}
         {this.props.recentSearches.map((entry: any) =>
           EntryRow(
-            this.props.loadPlayAndPushToCueList,
+            this.props.loadAndPlay,
             entry,
             null,
             null,
-            this.props.disablePlaylistMode
+            () => { this.setRecentSearches() }
           )
         )}
       </View>

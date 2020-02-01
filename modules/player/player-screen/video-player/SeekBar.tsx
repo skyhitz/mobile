@@ -6,7 +6,7 @@ import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-const SeekBar = inject((stores: Stores) => ({
+@inject((stores: Stores) => ({
   onSliderLayout: stores.playerStore.onSliderLayout.bind(stores.playerStore),
   onSeekBarTap: stores.playerStore.onSeekBarTap.bind(stores.playerStore),
   onSeekSliderValueChange: stores.playerStore.onSeekSliderValueChange.bind(
@@ -17,35 +17,27 @@ const SeekBar = inject((stores: Stores) => ({
   ),
   playbackState: stores.playerStore.playbackState,
   seekSliderPosition: stores.playerStore.seekSliderPosition,
-}))(
-  ({
-    onSliderLayout,
-    onSeekBarTap,
-    onSeekSliderValueChange,
-    onSeekSliderSlidingComplete,
-    playbackState,
-    seekSliderPosition,
-  }: any) => (
-    <TouchableWithoutFeedback
-      onLayout={onSliderLayout.bind(this)}
-      onPress={onSeekBarTap.bind(this)}
+}))
+export default class SeekBar extends React.Component<any, any> {
+  render() {
+    return <TouchableWithoutFeedback
+      onLayout={(evt) => this.props.onSliderLayout(evt)}
+      onPress={(evt) => this.props.onSeekBarTap(evt)}
     >
       <Slider
         style={{ marginRight: 10, marginLeft: 10, flex: 1 }}
-        value={seekSliderPosition ? seekSliderPosition : 0}
-        onValueChange={onSeekSliderValueChange.bind(this)}
-        onSlidingComplete={onSeekSliderSlidingComplete.bind(this)}
+        value={this.props.seekSliderPosition ? this.props.seekSliderPosition : 0}
+        onValueChange={(value) => this.props.onSeekSliderValueChange(value)}
+        onSlidingComplete={(value) => this.props.onSeekSliderSlidingComplete(value)}
         disabled={
-          playbackState === PLAYBACK_STATES.LOADING ||
-          playbackState === PLAYBACK_STATES.ENDED ||
-          playbackState === PLAYBACK_STATES.ERROR
+          this.props.playbackState === PLAYBACK_STATES.LOADING ||
+          this.props.playbackState === PLAYBACK_STATES.ENDED ||
+          this.props.playbackState === PLAYBACK_STATES.ERROR
         }
         minimumTrackTintColor={Colors.brandBlue}
         maximumTrackTintColor={Colors.backgroundTrackColor}
         thumbTintColor={Colors.brandBlue}
       />
     </TouchableWithoutFeedback>
-  )
-);
-
-export default SeekBar;
+  }
+}
