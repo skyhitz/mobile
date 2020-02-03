@@ -30,9 +30,9 @@ export class EntryStore {
   @observable
   availableForSale!: boolean;
   @observable
-  price!: number;
+  price: number | undefined;
 
-  constructor(private sessionStore: SessionStore) {}
+  constructor(private sessionStore: SessionStore) { }
 
   @computed
   get currentView() {
