@@ -15,8 +15,8 @@ class SearchEntryView extends React.Component<any, any> {
     tabBarLabel: 'Music',
   };
 
-  componentWillReceiveProps(props: { isFocused: any }) {
-    if (props.isFocused) {
+  componentDidUpdate() {
+    if (this.props.isFocused) {
       this.props.inputSearchStore.updateSearchType('entries');
     }
   }

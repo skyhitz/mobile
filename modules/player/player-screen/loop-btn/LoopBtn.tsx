@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { inject } from 'mobx-react';
 import { LoopIconBlue, LoopIconGrey } from 'app/assets/images/Images';
 import * as stores from 'app/skyhitz-common';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 type Stores = typeof stores;
 
-const LoopBtn = inject((stores:Stores) => ({
+const LoopBtn = inject((stores: Stores) => ({
   toggleLoop: stores.playerStore.toggleLoop.bind(stores.playerStore),
   loop: stores.playerStore.loop,
 }))(({ toggleLoop, loop }: any) => {

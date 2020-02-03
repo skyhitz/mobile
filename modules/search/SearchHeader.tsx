@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import SearchBar from 'app/modules/ui/searchbar/SearchBar';

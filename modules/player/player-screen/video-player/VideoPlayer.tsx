@@ -1,6 +1,6 @@
 import React from 'react';
 import { Video, Audio } from 'expo-av';
-import { View, NetInfo, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { inject } from 'mobx-react';
 import {
   CurrentTimeDisplay,
@@ -51,7 +51,7 @@ export default class VideoPlayer extends React.Component<any, any> {
   }
 
   async componentDidMount() {
-    this._setupNetInfoListener();
+    // this._setupNetInfoListener();
 
     Audio.setAudioModeAsync({
       playsInSilentModeIOS: true,
@@ -84,26 +84,26 @@ export default class VideoPlayer extends React.Component<any, any> {
   // });
 
   componentWillUnmount() {
-    NetInfo.removeEventListener(
-      'connectionChange',
-      this._onConnectionChange.bind(this)
-    );
+    // NetInfo.removeEventListener(
+    //   'connectionChange',
+    //   this._onConnectionChange.bind(this)
+    // );
   }
 
   _onConnectionChange(connectionInfo: any) {
-    this.props.debug && console.info('[networkState]', connectionInfo.type);
-    this.props.setNetworkState(connectionInfo.type);
+    // this.props.debug && console.info('[networkState]', connectionInfo.type);
+    // this.props.setNetworkState(connectionInfo.type);
   }
 
   _setupNetInfoListener() {
-    NetInfo.getConnectionInfo().then(connectionInfo => {
-      this.props.debug && console.info('[networkState]', connectionInfo.type);
-      this.props.setNetworkState(connectionInfo.type);
-    });
-    NetInfo.addEventListener(
-      'connectionChange',
-      this._onConnectionChange.bind(this)
-    );
+    // NetInfo.getConnectionInfo().then(connectionInfo => {
+    //   this.props.debug && console.info('[networkState]', connectionInfo.type);
+    //   this.props.setNetworkState(connectionInfo.type);
+    // });
+    // NetInfo.addEventListener(
+    //   'connectionChange',
+    //   this._onConnectionChange.bind(this)
+    // );
   }
 
   handleOnPlaybackStatusUpdate(status: any) {

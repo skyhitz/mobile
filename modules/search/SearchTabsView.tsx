@@ -1,8 +1,6 @@
-/// <reference path="../tab-bar/TabBarWrapper.d.ts" />
-
 import React from 'react';
 import { Text } from 'react-native';
-import { createMaterialTopTabNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { MaterialTopTabBar } from 'react-navigation-tabs';
 import SearchEntryView from 'app/modules/search/SearchEntryView';
 import SearchUserView from 'app/modules/search/SearchUserView';
@@ -14,13 +12,12 @@ const labelStyle = (props: { focused: any; tintColor: any }) => ({
   textAlign: 'center',
   alignSelf: 'center',
   paddingTop: 0,
-  paddingBottom: 4,
+  paddingBottom: 14,
 });
 
 const indicatorStyle = {
   borderBottomColor: Colors.lightBrandBlue,
   borderBottomWidth: 1,
-  alignSelf: 'flex-end',
   backgroundColor: 'transparent',
 };
 
@@ -28,7 +25,7 @@ function renderTabBarLabel(props: any, title: React.ReactNode) {
   return <Text style={labelStyle(props) as any}> {title} </Text>;
 }
 
-function renderTabBarTop(props: JSX.IntrinsicAttributes) {
+function renderTabBarTop(props: any) {
   return <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />;
 }
 
@@ -53,7 +50,6 @@ const TabsView = createMaterialTopTabNavigator(
     tabBarComponent: props => renderTabBarTop(props),
     tabBarPosition: 'top',
     swipeEnabled: true,
-    animationEnabled: true,
     tabBarOptions: {
       activeTintColor: Colors.white,
       showIcon: false,

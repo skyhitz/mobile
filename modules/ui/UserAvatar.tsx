@@ -32,7 +32,7 @@ export class UserAvatar extends React.Component<any, any> {
   }
 }
 
-export const UserAvatarMedium = user => {
+export const UserAvatarMedium = (user: any) => {
   if (!user) {
     return null;
   }
@@ -46,7 +46,7 @@ export const UserAvatarMedium = user => {
   );
 };
 
-export const UserAvatarMediumWithUrlOnly = url => (
+export const UserAvatarMediumWithUrlOnly = (url: any) => (
   <Image source={{ uri: url }} style={styles.profilepic} />
 );
 

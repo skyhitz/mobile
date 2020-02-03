@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ScrollView,
   TouchableOpacity,
   StyleSheet,
   Text,
@@ -27,8 +26,8 @@ export default class WithdrawalModal extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      withdrawAddress: null,
-      creditsToWithdraw: null,
+      withdrawAddress: undefined,
+      creditsToWithdraw: undefined,
     };
   }
   updateWithdrawAddress(withdrawAddress: string) {

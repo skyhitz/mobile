@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -7,17 +6,15 @@ import {
   TextInput,
   Dimensions,
   Animated,
-  Easing,
 } from 'react-native';
-import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
 import Colors from 'app/constants/Colors';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Input extends Component<any, any> {
-  shakeAnimationValue;
-  input;
-  componentWillMount() {
+  shakeAnimationValue: any;
+  input: any;
+  UNSAFE_componentWillMount() {
     this.shake = this.shake.bind(this);
     this.shakeAnimationValue = new Animated.Value(0);
     this.props.shake && this.shake();

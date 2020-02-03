@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ScrollView,
   TouchableOpacity,
   StyleSheet,
   Text,
@@ -185,7 +184,7 @@ const styles = StyleSheet.create({
   },
   modalActionsWrap: {
     maxHeight: 50,
-    width: innerModalWidth,
+    width: 275,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

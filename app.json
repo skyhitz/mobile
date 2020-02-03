@@ -5,7 +5,7 @@
     "slug": "skyhitz",
     "privacy": "public",
     "githubUrl": "https://github.com/skyhitz/mobile",
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import ProfileSettingsTopContainer from 'app/modules/profile/ProfileSettingsTopContainer';
@@ -27,7 +27,7 @@ class ProfileSettingsScreen extends React.Component<any, any> {
       backgroundColor: Colors.headerBackground,
       borderBottomWidth: 0,
     },
-    headerRight: <EditBtn />,
+    headerRight: () => <EditBtn />,
   };
   render() {
     if (!this.props.user) {
@@ -49,15 +49,15 @@ class ProfileSettingsScreen extends React.Component<any, any> {
 
 export default createStackNavigator({
   ProfileSettingsScreen: {
-    screen: ProfileSettingsScreen,
+    screen: ProfileSettingsScreen as any,
     path: 'profile',
   },
   LikesScreen: {
-    screen: LikesScreen,
+    screen: LikesScreen as any,
     path: 'likes',
   },
   PlaylistsScreen: {
-    screen: PlaylistsScreen,
+    screen: PlaylistsScreen as any,
     path: 'playlists',
   },
   PlaylistScreen: {

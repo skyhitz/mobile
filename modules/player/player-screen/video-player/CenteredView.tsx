@@ -6,7 +6,7 @@ import {
   centeredContentWidth,
 } from 'app/modules/player/player-screen/video-player/VideoConstants';
 
-const CenteredView = ({ children, ...otherProps }) => (
+const CenteredView = ({ children, ...otherProps }: any) => (
   <Animated.View
     {...otherProps}
     style={[

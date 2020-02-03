@@ -178,7 +178,7 @@ export default class Swipeable extends PureComponent {
     rightButtonsOpen: false,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { onPanAnimatedValueRef, onRef } = this.props;
 
     onRef(this);
@@ -550,8 +550,11 @@ export default class Swipeable extends PureComponent {
     onPanResponderTerminationRequest: this._handlePanResponderEnd,
   });
 
-  _handleLayout = ({ nativeEvent: { layout: { width } } }) =>
-    this.setState({ width });
+  _handleLayout = ({
+    nativeEvent: {
+      layout: { width },
+    },
+  }) => this.setState({ width });
 
   _canSwipeRight() {
     return this.props.leftContent || this._hasLeftButtons();

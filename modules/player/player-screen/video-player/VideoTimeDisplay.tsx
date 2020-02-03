@@ -1,7 +1,3 @@
-/**
- * @providesModule video-time-display
- * @flow
- */
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { inject } from 'mobx-react';

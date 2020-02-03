@@ -29,7 +29,7 @@ export const LoadingImage = () => {
   );
 };
 
-@inject((stores:Stores) => ({
+@inject((stores: Stores) => ({
   uploadImage: stores.playlistsStore.uploadImage.bind(stores.playlistsStore),
   playlistPhotoUrl: stores.playlistsStore.modalPlaylistPhotoUrl,
   loadingImage: stores.playlistsStore.loadingImage,
@@ -57,9 +57,7 @@ export default class SelectArtworkImage extends React.Component<any, any> {
     }
     if (!this.props.playlistPhotoUrl) {
       return (
-        <TouchableOpacity
-          onPress={this.selectImage.bind(this)}
-        >
+        <TouchableOpacity onPress={this.selectImage.bind(this)}>
           <View style={styles.imageLoader}>
             <FontAwesome name={'plus'} size={25} color={Colors.white} />
           </View>

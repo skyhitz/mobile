@@ -2,16 +2,15 @@ import { observable, computed, action } from 'mobx';
 import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
-import { youtubeApiBackend } from '../backends/youtube-api.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
 
 export class PlayerStore {
-  constructor() {}
-  public observables = observable({
+  constructor() { }
+  public observables: any = observable({
     entry: null,
   });
   @computed
-  get entry(): Entry {
+  get entry(): any {
     return this.observables.entry;
   }
   @observable
@@ -47,7 +46,7 @@ export class PlayerStore {
   @observable
   shouldPlayAtEndOfSeek: boolean = false;
   @observable
-  sliderWidth: number;
+  sliderWidth!: number;
   @observable
   cueList: List<Entry> = List([]);
   @observable
@@ -57,6 +56,8 @@ export class PlayerStore {
   @observable
   playlistMode: boolean = false;
   playbackInstance: any;
+  seekPosition!: number;
+
 
   @action
   async refreshEntry() {
@@ -177,9 +178,10 @@ export class PlayerStore {
     if (!entry) {
       return null;
     }
-
-    if (this.cueList.findIndex(item => item.id === entry.id) !== -1) {
-      this.currentIndex = this.cueList.findIndex(item => item.id === entry.id);
+    if (this.cueList.findIndex(item => !!item && (item.id === entry.id)) !== -1) {
+      this.currentIndex = this.cueList.findIndex(
+        item => !!item && (item.id === entry.id)
+      );
     }
 
     this.setPlaybackState('LOADING');
@@ -229,85 +231,11 @@ export class PlayerStore {
     this.currentIndex = 0;
   }
 
-  async setPlaybackState(playbackState: PlaybackState) {
-    if (this.playbackState !== playbackState) {
-      this.playbackState = playbackState;
-      this.handleEndedPlaybackState();
-      this.lastPlaybackStateUpdate = Date.now();
-    }
-  }
 
-  async handleEndedPlaybackState() {
-    if (this.playbackState === 'ENDED') {
-      let pause = await this.pauseAsync();
-      if (pause) {
-        return this.playNext();
-      }
-    }
-  }
-
-  get disablePlaybackStatusUpdate(): boolean {
-    if (
-      this.playbackState === 'ENDED' ||
-      this.playbackState === 'LOADING' ||
-      this.seekState === 'SEEKING' ||
-      this.seekState === 'SEEKED'
-    ) {
-      return true;
-    }
-    return false;
-  }
 
   onError(e: string) {
     console.info(e);
   }
-
-  onPlaybackStatusUpdate(status: any) {
-    if (this.disablePlaybackStatusUpdate) {
-      return;
-    }
-
-    if (!status.isLoaded) {
-      if (status.error) {
-        const errorMsg = `Encountered a fatal error during playback: ${status.error}`;
-        this.error = errorMsg;
-        return this.setPlaybackState('ERROR');
-      }
-      return;
-    }
-
-    if (this.networkState === 'none' && status.isBuffering) {
-      this.setPlaybackState('ERROR');
-      this.error =
-        'You are probably offline. Please make sure you are connected to the Internet to watch this video';
-      return;
-    }
-
-    if (status.isPlaying && !status.isBuffering) {
-      this.playbackInstancePosition = status.positionMillis;
-      this.playbackInstanceDuration = status.durationMillis;
-    }
-
-    this.shouldPlay = status.shouldPlay;
-
-    this.setPlaybackState(this.getPlaybackStateFromStatus(status));
-  }
-
-  getPlaybackStateFromStatus = (status: any) => {
-    if (status.didJustFinish && !status.isLooping) {
-      return 'ENDED';
-    }
-
-    if (status.isPlaying) {
-      return 'PLAYING';
-    }
-
-    if (status.isBuffering) {
-      return 'BUFFERING';
-    }
-
-    return 'PAUSED';
-  };
 
   toggleShuffle() {
     this.shuffle = !this.shuffle;
@@ -319,6 +247,27 @@ export class PlayerStore {
 
   showPlayer() {
     this.show = true;
+  }
+
+  get isCurrentIndexAtTheStartOfCue() {
+    return this.currentIndex === 0;
+  }
+
+  get isCurrentIndexAtTheEndOfCue() {
+    return this.currentIndex === this.cueList.size - 1;
+  }
+
+  @action
+  updateTabBarBottomPosition(bottom: number) {
+    this.tabBarBottomPosition = bottom;
+  }
+
+  @computed
+  get hideTabPlayer() {
+    if (!this.entry) {
+      return true;
+    }
+    return false;
   }
 
   async playPrev() {
@@ -340,58 +289,6 @@ export class PlayerStore {
     this.currentIndex--;
     let prevEntry = this.cueList.get(this.currentIndex);
     this.loadAndPlay(prevEntry);
-  }
-
-  get isCurrentIndexAtTheStartOfCue() {
-    return this.currentIndex === 0;
-  }
-
-  get isCurrentIndexAtTheEndOfCue() {
-    return this.currentIndex === this.cueList.size - 1;
-  }
-
-  async getRelatedVideo() {
-    let relatedVideoIds = await youtubeApiBackend.relatedVideoIds(
-      this.entry.id
-    );
-    let relatedVideoId = this.findFirstRelatedVideoNotInCue(relatedVideoIds);
-    let entry = await entriesBackend.getById(relatedVideoId);
-    if (entry) {
-      return entry;
-    }
-    let newEntry = await entriesBackend.create(relatedVideoId);
-    if (newEntry) {
-      return newEntry;
-    }
-    return null;
-  }
-
-  findFirstRelatedVideoNotInCue(relatedVideoIds: string[]) {
-    let relatedVideoId = relatedVideoIds.find(videoId => {
-      let index = this.cueList.findIndex(entry => {
-        if (entry.id === videoId) {
-          return true;
-        }
-        return false;
-      });
-      if (index === -1) {
-        return true;
-      }
-      return false;
-    });
-    return relatedVideoId;
-  }
-
-  updateTabBarBottomPosition(bottom: number) {
-    this.tabBarBottomPosition = bottom;
-  }
-
-  @computed
-  get hideTabPlayer() {
-    if (!this.entry) {
-      return true;
-    }
-    return false;
   }
 
   getMMSSFromMillis(millis: number) {
@@ -433,40 +330,40 @@ export class PlayerStore {
     return 0;
   }
 
-  onSeekSliderValueChange = () => {
+
+  onSeekSliderValueChange = (value: number) => {
     if (
       this.playbackInstance !== null &&
       this.seekState !== 'SEEKING' &&
       this.seekState !== 'SEEKED'
     ) {
+      this.shouldPlayAtEndOfSeek = false;
+      // this.seekPosition = value * this.playbackInstanceDuration;
       this.setSeekState('SEEKING');
 
-      this.shouldPlayAtEndOfSeek = this.shouldPlay;
-
-      this.pauseAsync();
+      if (this.isPlaying) {
+        this.pauseAsync();
+        this.shouldPlayAtEndOfSeek = true;
+      }
     }
   };
 
   onSeekSliderSlidingComplete = async (value: number) => {
     if (this.playbackInstance != null && this.seekState !== 'SEEKED') {
       this.setSeekState('SEEKED');
-      // If the video is going to play after seek, the user expects a spinner.
-      // Otherwise, the user expects the play button
-      this.setPlaybackState(
-        this.shouldPlayAtEndOfSeek ? 'BUFFERING' : 'PAUSED'
-      );
-      this.playbackInstance
-        .setStatusAsync({
-          positionMillis: value * this.playbackInstanceDuration,
-          shouldPlay: this.shouldPlayAtEndOfSeek,
-        })
-        .then((status: any) => {
-          this.setSeekState('NOT_SEEKING');
-          this.setPlaybackState(this.getPlaybackStateFromStatus(status));
-        })
-        .catch((message: any) => {
-          console.info('Seek error: ', message);
-        });
+      let status;
+      try {
+        status = await this.playbackInstance
+          .setStatusAsync({
+            positionMillis: value * this.playbackInstanceDuration,
+            shouldPlay: this.shouldPlayAtEndOfSeek,
+          })
+
+        this.setSeekState('NOT_SEEKING');
+        this.setPlaybackState(this.getPlaybackStateFromStatus(status));
+      } catch (message) {
+        console.info('Seek error: ', message);
+      }
     }
   };
 
@@ -480,7 +377,7 @@ export class PlayerStore {
       )
     ) {
       const value = evt.nativeEvent.locationX / this.sliderWidth;
-      this.onSeekSliderValueChange();
+      this.onSeekSliderValueChange(value);
       this.onSeekSliderSlidingComplete(value);
     }
   };
@@ -492,4 +389,89 @@ export class PlayerStore {
   setNetworkState(state: any) {
     this.networkState = state;
   }
+
+  generateRandomNumber(max: number): number {
+    var num = Math.floor(Math.random() * (max + 1));
+    return (num === this.currentIndex) ? this.generateRandomNumber(max) : num;
+  }
+
+  async handleEndedPlaybackState() {
+    if (this.playbackState === 'ENDED') {
+      let pause = await this.pauseAsync();
+      if (pause) {
+        if (this.shuffle) {
+          this.currentIndex = this.generateRandomNumber(this.cueList.size);
+        }
+        return this.playNext();
+      }
+    }
+  }
+
+  get disablePlaybackStatusUpdate(): boolean {
+    if (
+      this.playbackState === 'ENDED' ||
+      this.playbackState === 'LOADING' ||
+      this.seekState === 'SEEKING' ||
+      this.seekState === 'SEEKED'
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  onPlaybackStatusUpdate(status: any) {
+    if (this.disablePlaybackStatusUpdate) {
+      return;
+    }
+
+    if (!status.isLoaded) {
+      if (status.error) {
+        const errorMsg = `Encountered a fatal error during playback: ${status.error}`;
+        this.error = errorMsg;
+        return this.setPlaybackState('ERROR');
+      }
+      return;
+    }
+
+    if (this.networkState === 'none' && status.isBuffering) {
+      this.setPlaybackState('ERROR');
+      this.error =
+        'You are probably offline. Please make sure you are connected to the Internet to watch this video';
+      return;
+    }
+
+    if (status.isPlaying && !status.isBuffering) {
+      this.playbackInstancePosition = status.positionMillis;
+      this.playbackInstanceDuration = status.durationMillis;
+    }
+
+    this.shouldPlay = status.shouldPlay;
+
+    this.setPlaybackState(this.getPlaybackStateFromStatus(status));
+  }
+
+
+  async setPlaybackState(playbackState: PlaybackState) {
+    if (this.playbackState !== playbackState) {
+      this.playbackState = playbackState;
+      this.handleEndedPlaybackState();
+      this.lastPlaybackStateUpdate = Date.now();
+    }
+  }
+
+  getPlaybackStateFromStatus = (status: any) => {
+    if (status.didJustFinish && !status.isLooping) {
+      return 'ENDED';
+    }
+
+    if (status.isPlaying) {
+      return 'PLAYING';
+    }
+
+    if (status.isBuffering) {
+      return 'BUFFERING';
+    }
+
+    return 'PAUSED';
+  };
 }

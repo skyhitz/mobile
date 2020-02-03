@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'skyhitz-common';
 import { navigate } from 'app/modules/navigation/Navigator';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Placeholder = () => <View style={styles.placeholder} />;
 

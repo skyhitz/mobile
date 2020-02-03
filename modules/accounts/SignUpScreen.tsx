@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { inject } from 'mobx-react';
-import { HeaderBackButton } from 'react-navigation';
+import { HeaderBackButton } from 'react-navigation-stack';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import { goBack, navigate } from 'app/modules/navigation/Navigator';
@@ -51,7 +51,7 @@ export default class SignUpScreen extends React.Component<any, any> {
       backgroundColor: Colors.headerBackground,
       borderBottomWidth: 0,
     },
-    headerLeft: (
+    headerLeft: () => (
       <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
     ),
   });

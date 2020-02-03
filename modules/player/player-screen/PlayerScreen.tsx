@@ -1,5 +1,4 @@
 import React from 'react';
-import { inject } from 'mobx-react';
 import PlayerNav from 'app/modules/player/player-screen/PlayerNav';
 import VideoPlayer from 'app/modules/player/player-screen/video-player/VideoPlayer';
 import PlayerControls from 'app/modules/player/player-screen/player-controls/PlayerControls';

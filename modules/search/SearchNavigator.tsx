@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import SearchTabsView from 'app/modules/search/SearchTabsView';
 import SearchHeader from 'app/modules/search/SearchHeader';
 import Colors from 'app/constants/Colors';
@@ -23,14 +23,14 @@ export default createStackNavigator({
   Search: {
     screen: SearchScreen,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
     path: 'search',
   },
   UserProfile: {
     screen: ProfileScreen,
     navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.username,
+      title: navigation.state.params ? navigation.state.params.username : '',
       headerTintColor: Colors.tabIconSelected,
       headerStyle: {
         backgroundColor: Colors.headerBackground,

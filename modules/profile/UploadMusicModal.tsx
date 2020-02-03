@@ -1,25 +1,26 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import SelectMediaFile from 'app/modules/profile/SelectMediaFile';
 import Layout from 'app/constants/Layout';
 import { goBack } from 'app/modules/navigation/Navigator';
+import { inject } from 'mobx-react';
+import * as stores from 'app/skyhitz-common';
+type Stores = typeof stores;
 
+@inject((stores: Stores) => ({
+  clearUploadingError: stores.entryStore.clearUploadingError.bind(stores.entryStore),
+}))
 export default class UploadMusicModal extends React.Component<any, any> {
   render() {
     return (
       <View style={styles.modal}>
         <View style={styles.modalWrap}>
-          <TouchableOpacity
-            style={styles.closeBtn}
-            onPress={() => goBack()}
-          >
+          <TouchableOpacity style={styles.closeBtn} onPress={() => {
+            this.props.clearUploadingError();
+            goBack();
+          }}>
             <MaterialIcons name="close" size={28} color={Colors.white} />
           </TouchableOpacity>
           <View>

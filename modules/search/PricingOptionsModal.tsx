@@ -28,7 +28,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
   ),
 }))
 export default class PricingOptionsModal extends React.Component<any, any> {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { entry } = this.props.navigation.state.params;
     if (!entry) return;
     this.props.updateAvailableForSale(entry.forSale);

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Linking, StyleSheet, StatusBar, View } from 'react-native';
+import { StyleSheet, StatusBar, View } from 'react-native';
 import { inject } from 'mobx-react';
-import Constants from 'expo-constants';
-import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
-import { forVertical } from 'app/modules/navigation/Interpolators';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
 import { navigate } from 'app/modules/navigation/Navigator';
@@ -25,7 +24,7 @@ const AuthStack = createStackNavigator({
   Accounts: {
     screen: AccountsNavigator,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
     path: `accounts`,
   },
@@ -37,82 +36,86 @@ const AppStack = createStackNavigator(
       screen: MainTabNavigator,
       path: `main`,
       navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
+        headerShown: false,
+        gestureEnabled: false,
       },
     },
     EditProfileModal: {
-      screen: EditProfileScreen,
+      screen: EditProfileScreen as any,
       path: `edit-profile`,
     },
     EditPlaylistModal: {
       screen: EditPlaylistModal,
       path: `edit-playlist-modal`,
       navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
+        headerShown: false,
+        gestureEnabled: false,
+        cardStyle: { backgroundColor: 'transparent' },
       },
     },
     UploadMusicModal: {
       screen: UploadMusicModal,
       path: `upload-music-modal`,
       navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
+        headerShown: false,
+        gestureEnabled: false,
+        cardStyle: { backgroundColor: 'transparent' },
       },
     },
     WithdrawalModal: {
       screen: WithdrawalModal,
       path: `withdrawal-modal`,
       navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
+        headerShown: false,
+        gestureEnabled: false,
+        cardStyle: { backgroundColor: 'transparent' },
       },
     },
     BuyOptionsModal: {
       screen: BuyOptionsModal,
       path: `buy-options-modal`,
       navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
+        headerShown: false,
+        gestureEnabled: false,
+        cardStyle: { backgroundColor: 'transparent' },
       },
     },
     RemovePlaylistModal: {
       screen: RemovePlaylistModal,
       path: 'remove-playlist',
       navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
+        headerShown: false,
+        gestureEnabled: false,
+        cardStyle: { backgroundColor: 'transparent' },
       },
     },
     EntryOptionsModal: {
       screen: EntryOptionsModal,
       path: `entry-options-modal`,
       navigationOptions: {
-        header: null,
+        headerShown: false,
+        cardStyle: { backgroundColor: 'transparent' },
       },
     },
     PricingOptionsModal: {
       screen: PricingOptionsModal,
       path: `pricing-options-modal`,
       navigationOptions: {
-        header: null,
+        headerShown: false,
+        cardStyle: { backgroundColor: 'transparent' },
       },
     },
     SelectPlaylistModal: {
-      screen: SelectPlaylistModal,
+      screen: SelectPlaylistModal as any,
       path: `select-playlist-modal`,
       navigationOptions: {
-        gesturesEnabled: false,
+        gestureEnabled: false,
+        cardStyle: { backgroundColor: 'transparent' },
       },
     },
   },
   {
     mode: 'modal',
-    cardStyle: {
-      backgroundColor: 'transparent',
-    },
-    transitionConfig: () => ({ screenInterpolator: forVertical }),
   }
 );
 
@@ -126,6 +129,8 @@ const RootStackNavigator = createSwitchNavigator(
     initialRouteName: 'AuthLoading',
   }
 );
+
+const AppContainer = createAppContainer(RootStackNavigator);
 
 @inject((stores: Stores) => ({
   user: stores.sessionStore.user,
@@ -163,7 +168,7 @@ export default class RootNavigator extends React.Component<any, any> {
   render() {
     return (
       <View style={[styles.container]}>
-        <RootStackNavigator uriPrefix={Constants.linkingUri} />
+        <AppContainer style={[styles.appContainer]} />
       </View>
     );
   }
@@ -176,6 +181,9 @@ const styles = StyleSheet.create({
   },
   statusBarUnderlay: {
     height: 0,
+    backgroundColor: 'transparent',
+  },
+  appContainer: {
     backgroundColor: 'transparent',
   },
 });

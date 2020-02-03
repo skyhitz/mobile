@@ -55,6 +55,8 @@ class CircleWrap extends React.Component<any, any> {
 
 @inject((stores: Stores) => ({
   uploadVideo: stores.entryStore.uploadVideo.bind(stores.entryStore),
+  uploadingError: stores.entryStore.uploadingError,
+  clearUploadingError: stores.entryStore.clearUploadingError.bind(stores.entryStore),
   uploadArtwork: stores.entryStore.uploadArtwork.bind(stores.entryStore),
   updateLoadingVideo: stores.entryStore.updateLoadingVideo.bind(
     stores.entryStore.updateLoadingVideo
@@ -152,6 +154,16 @@ export default class SelectMediaFile extends React.Component<any, any> {
         <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
           Only original video music related material will be uploaded. We take
           copyright law very seriously. Maximum file size allowed: 50MB
+        </Text>
+      </View>
+    );
+  }
+
+  renderUploadErrorView() {
+    return (
+      <View style={styles.wrap}>
+        <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
+          {this.props.uploadingError}
         </Text>
       </View>
     );
@@ -268,6 +280,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
             <TextInput
               underlineColorAndroid="transparent"
               autoCapitalize="none"
+              returnKeyType={"done"}
               placeholder=""
               keyboardType={'numeric'}
               autoCorrect={false}
@@ -323,6 +336,9 @@ export default class SelectMediaFile extends React.Component<any, any> {
   }
 
   render() {
+    if (this.props.uploadingError) {
+      return this.renderUploadErrorView();
+    }
     if (this.props.currentView == 'upload') {
       return this.renderUploadView();
     }

@@ -11,7 +11,7 @@ export const LoopIconGrey = require('./loop-icon-grey.png');
 export const PrevBtnWhite = require('./prev-btn-white.png');
 export const ShuffleIconBlue = require('./shuffle-icon-blue.png');
 export const ShuffleIconGrey = require('./shuffle-icon-grey.png');
-export const DefaultBackImage = require('../../node_modules/react-navigation/src/views/assets/back-icon.png');
+export const DefaultBackImage = require('./back-icon.png');
 
 export const Images = [
   Icon,
