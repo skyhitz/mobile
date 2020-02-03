@@ -410,7 +410,6 @@ export class PlayerStore {
   get disablePlaybackStatusUpdate(): boolean {
     if (
       this.playbackState === 'ENDED' ||
-      this.playbackState === 'PAUSED' ||
       this.playbackState === 'LOADING' ||
       this.seekState === 'SEEKING' ||
       this.seekState === 'SEEKED'

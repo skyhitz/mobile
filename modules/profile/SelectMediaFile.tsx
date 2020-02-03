@@ -280,6 +280,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
             <TextInput
               underlineColorAndroid="transparent"
               autoCapitalize="none"
+              returnKeyType={"done"}
               placeholder=""
               keyboardType={'numeric'}
               autoCorrect={false}
