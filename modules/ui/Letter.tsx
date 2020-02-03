@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-export const Letter = props => {
+export const Letter = (props: any) => {
   const { children, spacing, textStyle } = props;
 
   const letterStyles = [textStyle, { paddingRight: spacing }];

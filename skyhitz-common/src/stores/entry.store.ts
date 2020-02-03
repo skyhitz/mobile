@@ -10,6 +10,8 @@ import UniqueIdGenerator from '../utils/unique-id-generator';
 
 export class EntryStore {
   @observable uploadingVideo: boolean = false;
+  @observable
+  uploadingError!: string;
   @observable loadingVideo: boolean = false;
   @observable
   artworkUrl!: string;
@@ -62,8 +64,13 @@ export class EntryStore {
       this.updateEtag(etag);
       this.updateVideoUrl(secure_url);
     } catch (e) {
-      console.log('error uploading video', e);
+      this.uploadingError = 'Error uploading video, please try again!';
     }
+  }
+
+  @action
+  clearUploadingError() {
+    this.uploadingError = '';
   }
 
   async uploadArtwork(image: any) {

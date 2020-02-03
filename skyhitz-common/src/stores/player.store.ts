@@ -2,7 +2,6 @@ import { observable, computed, action } from 'mobx';
 import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
-import { youtubeApiBackend } from '../backends/youtube-api.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
 
 export class PlayerStore {
@@ -258,6 +257,7 @@ export class PlayerStore {
     return this.currentIndex === this.cueList.size - 1;
   }
 
+  @action
   updateTabBarBottomPosition(bottom: number) {
     this.tabBarBottomPosition = bottom;
   }

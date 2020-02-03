@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ImageBackground, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
@@ -14,8 +14,8 @@ type Stores = typeof stores;
   credits: stores.paymentsStore.credits,
 }))
 export default class ProfileSettingsTopContainer extends React.Component<
-  any,
-  any
+any,
+any
 > {
   render() {
     if (!this.props.user) {

@@ -1,4 +1,4 @@
-import { View, ViewPropTypes as RNViewPropTypes } from 'react-native';
+import { ViewPropTypes as RNViewPropTypes } from 'react-native';
 
 const ViewPropTypes = RNViewPropTypes;
 

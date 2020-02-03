@@ -48,6 +48,53 @@ export default class PlayerBar extends React.Component<any, any> {
     pan: new Animated.ValueXY(),
   };
 
+  constructor(props: any) {
+    super(props);
+    this._animatedValueX = 0;
+    this._animatedValueY = 0;
+    this.state.pan.x.addListener(value => (this._animatedValueX = value.value));
+    this.state.pan.y.addListener(value => {
+      if (value.value > 0) {
+        return;
+      }
+      this._animatedValueY = value.value;
+      this.props.updateTabBarBottomPosition(this._animatedValueY);
+    });
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => false,
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: () => true, // Same here, tell iOS that we allow dragging
+      onPanResponderGrant: () => {
+        this.state.pan.setOffset({
+          x: this._animatedValueX,
+          y: this._animatedValueY,
+        });
+        this.state.pan.setValue({ x: 0, y: 0 }); //Initial value
+      },
+      onPanResponderMove: (e, gestureState) => {
+        let gestureEvent: any = {
+          dy: this.state.pan.y,
+        };
+        // sets limit to block dragging the player bar down
+        if (gestureState.dy > 0) {
+          gestureEvent = null;
+        }
+        Animated.event([null, gestureEvent])(e, gestureState);
+      },
+      onPanResponderRelease: (e, gestureState) => {
+        this.state.pan.flattenOffset();
+        if (gestureState.dy < -10) {
+          return this.props.showPlayer();
+        }
+        this.props.hidePlayer();
+      },
+    });
+    if (this.props.hideTabPlayer) {
+      this.state.pan.setValue({ x: 0, y: 40 });
+    }
+  }
+
   getTabBarStyles() {
     return [styles.container];
   }
@@ -103,51 +150,6 @@ export default class PlayerBar extends React.Component<any, any> {
       duration: fast ? 150 : animationSpeed,
       toValue: 0,
     }).start();
-  }
-  UNSAFE_componentWillMount() {
-    this._animatedValueX = 0;
-    this._animatedValueY = 0;
-    this.state.pan.x.addListener(value => (this._animatedValueX = value.value));
-    this.state.pan.y.addListener(value => {
-      if (value.value > 0) {
-        return;
-      }
-      this._animatedValueY = value.value;
-      this.props.updateTabBarBottomPosition(this._animatedValueY);
-    });
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => false,
-      onStartShouldSetPanResponderCapture: () => false,
-      onMoveShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponderCapture: () => true, // Same here, tell iOS that we allow dragging
-      onPanResponderGrant: () => {
-        this.state.pan.setOffset({
-          x: this._animatedValueX,
-          y: this._animatedValueY,
-        });
-        this.state.pan.setValue({ x: 0, y: 0 }); //Initial value
-      },
-      onPanResponderMove: (e, gestureState) => {
-        let gestureEvent: any = {
-          dy: this.state.pan.y,
-        };
-        // sets limit to block dragging the player bar down
-        if (gestureState.dy > 0) {
-          gestureEvent = null;
-        }
-        Animated.event([null, gestureEvent])(e, gestureState);
-      },
-      onPanResponderRelease: (e, gestureState) => {
-        this.state.pan.flattenOffset();
-        if (gestureState.dy < -10) {
-          return this.props.showPlayer();
-        }
-        this.props.hidePlayer();
-      },
-    });
-    if (this.props.hideTabPlayer) {
-      this.state.pan.setValue({ x: 0, y: 40 });
-    }
   }
   componentDidUpdate() {
     this.toggleModalPlayer(this.props.show);

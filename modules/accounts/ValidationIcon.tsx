@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 
-const validationIcon = isFieldValid => {
+const validationIcon = (isFieldValid: any) => {
   if (isFieldValid) {
     return (
       <Ionicons

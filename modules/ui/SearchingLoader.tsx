@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 
-const SearchingText = query => {
+const SearchingText = (query: any) => {
   if (query) {
     return (
       <Text style={styles.searchingText}>{`Searching for "${query}"`}</Text>
@@ -12,7 +12,7 @@ const SearchingText = query => {
   return <Text style={styles.searchingText}>{`Loading Music...`}</Text>;
 };
 
-const SearchingLoader = (searching, query?) => {
+const SearchingLoader = (searching: any, query?: any) => {
   if (searching) {
     return (
       <View style={styles.rowWrap}>
