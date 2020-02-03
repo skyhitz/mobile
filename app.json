@@ -13,7 +13,7 @@
     ],
     "version": "0.2.8",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
+    "primaryColor": "#1A1B1F",
     "icon": "./assets/images/icon.png",
     "scheme": "skyhitz",
     "packagerOpts": {

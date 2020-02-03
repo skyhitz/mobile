@@ -66,7 +66,7 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-prettier": "^2.1.1",
     "eslint-plugin-react": "^7.0.1",
-    "expo-cli": "^3.11.3",
+    "expo-cli": "^3.11.7",
     "prettier": "^1.4.0",
     "typescript": "^3.4.5"
   }
