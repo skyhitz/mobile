@@ -13,6 +13,7 @@ const AccountsNavigator = createStackNavigator({
       headerShown: false,
       gestureEnabled: false,
     },
+    path: `home`
   },
   SignUp: {
     screen: SignUpScreen as any,

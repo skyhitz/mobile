@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Platform } from 'react-native';
 import { inject } from 'mobx-react';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -24,17 +24,19 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
   constructor(props: { navigation: any }) {
     super(props);
     setNavigator(props.navigation);
-    this._bootstrapAsync();
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
+  async componentDidMount() {
     await this.loadResourcesAsync();
-
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    navigate(this.props.user ? 'ProfileSettings' : 'Auth');
-  };
+    if (Platform.OS === 'web') {
+      navigate('WebApp')
+    } else {
+      navigate(this.props.user ? 'ProfileSettings' : 'Auth');
+    }
+
+  }
 
   async loadSessionAndIdentifyUser() {
     let user = await this.props.loadSession();
