@@ -90,7 +90,7 @@ export default class PlayerBar extends React.Component<any, any> {
         this.props.hidePlayer();
       },
     });
-    if (this.props.hideTabPlayer) {
+    if (props.hideTabPlayer) {
       this.state.pan.setValue({ x: 0, y: 40 });
     }
   }

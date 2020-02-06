@@ -15,7 +15,7 @@ type Stores = typeof stores;
   loadingTopSearches: stores.usersSearchStore.loadingTopSearches,
 }))
 export default class TopUserSearchView extends React.Component<any, any> {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.props.getTopSearches();
   }
   render() {

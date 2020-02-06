@@ -31,11 +31,10 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     if (Platform.OS === 'web') {
-      navigate('WebApp')
+      navigate('WebApp');
     } else {
       navigate(this.props.user ? 'ProfileSettings' : 'Auth');
     }
-
   }
 
   async loadSessionAndIdentifyUser() {
@@ -64,7 +63,7 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={Colors.brandBlue} />
       </View>
     );
   }
