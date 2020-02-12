@@ -180,6 +180,39 @@ export class EntriesBackend {
       });
   }
 
+  async getTopChart(): Promise<Entry[]> {
+    return client
+      .query({
+        query: gql`
+          {
+            topChart {
+              imageUrl
+              userDisplayName
+              userUsername
+              description
+              title
+              artist
+              id
+              videoUrl
+              price
+              forSale
+            }
+          }
+        `,
+      })
+      .then((data: any) => data.data)
+      .then(({ topChart }: any) => {
+        if (!topChart) {
+          return [];
+        }
+        return topChart.map((entry: any) => new Entry(entry));
+      })
+      .catch(e => {
+        console.info(e);
+        return [];
+      });
+  }
+
   async getRecentSearches(): Promise<Entry[]> {
     return client
       .query({

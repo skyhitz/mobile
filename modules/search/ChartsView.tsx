@@ -10,19 +10,19 @@ type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
   loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
-  getRecentlyAdded: stores.entriesSearchStore.getRecentlyAdded.bind(
+  getTopChart: stores.entriesSearchStore.getTopChart.bind(
     stores.entriesSearchStore
   ),
-  recentlyAdded: stores.entriesSearchStore.recentlyAdded,
-  loadingRecentlyAdded: stores.entriesSearchStore.loadingRecentlyAdded,
+  topChart: stores.entriesSearchStore.topChart,
+  loadingTopChart: stores.entriesSearchStore.loadingTopChart,
   setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),
 }))
 class TopEntries extends React.Component<any, any> {
   setRecentlyAdded() {
-    this.props.setPlaylistMode(this.props.recentlyAdded);
+    this.props.setPlaylistMode(this.props.topChart);
   }
   componentDidMount() {
-    this.props.getRecentlyAdded();
+    this.props.getTopChart();
   }
   renderEntryRow(entry: any, index: number) {
     return EntryChartRow(
@@ -38,14 +38,14 @@ class TopEntries extends React.Component<any, any> {
     );
   }
   render() {
-    if (!this.props.loadingRecentlyAdded && !this.props.recentlyAdded.size) {
+    if (!this.props.loadingTopChart && !this.props.topChart.size) {
       return null;
     }
     return (
       <View>
         <Text style={styles.recentText}>Top Beats</Text>
-        {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentlyAdded.map((entry: any, index: number) =>
+        {SearchingLoader(this.props.loadingTopChart)}
+        {this.props.topChart.map((entry: any, index: number) =>
           this.renderEntryRow(entry, index)
         )}
       </View>
