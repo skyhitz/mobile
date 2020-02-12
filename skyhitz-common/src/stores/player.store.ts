@@ -98,7 +98,9 @@ export class PlayerStore {
   async pauseAsync() {
     if (this.playbackInstanceExists) {
       this.setPlaybackState('PAUSED');
-      return await this.playbackInstance.pauseAsync();
+      await this.playbackInstance.pauseAsync();
+      this.setPlaybackState('PAUSED');
+      return;
     }
   }
 
@@ -196,8 +198,8 @@ export class PlayerStore {
     if (!videoUrl) {
       return;
     }
-    // let pos = videoUrl.lastIndexOf('.');
-    // videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
+    let pos = videoUrl.lastIndexOf('.');
+    videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
 
     let loadStream = await this.loadAsync(videoUrl);
     this.setPlaybackState('PLAYING');
