@@ -95,6 +95,11 @@ export default class PlayerBar extends React.Component<any, any> {
     }
   }
 
+  componentWillUnmount() {
+    this.state.pan.x.removeAllListeners();
+    this.state.pan.y.removeAllListeners();
+  }
+
   getTabBarStyles() {
     return [styles.container];
   }
@@ -155,7 +160,7 @@ export default class PlayerBar extends React.Component<any, any> {
     this.toggleModalPlayer(this.props.show);
   }
   toggleModalPlayer(show: any) {
-    if (show) {
+    if (show && this.props.entry) {
       return this.showModalPlayer();
     }
     return this.hideModalPlayer();

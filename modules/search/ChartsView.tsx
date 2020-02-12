@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   recentText: {
     color: Colors.defaultTextLight,
     fontSize: 30,
-    paddingTop: 60,
+    paddingTop: 40,
     paddingBottom: 20,
     paddingLeft: 20,
   },
