@@ -7,7 +7,7 @@
     "githubUrl": "https://github.com/skyhitz/mobile",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "0.2.9",
+    "version": "0.3.0",
     "orientation": "portrait",
     "primaryColor": "#1A1B1F",
     "icon": "./assets/images/icon.png",
@@ -20,7 +20,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.skyhitz.skyhitz",
-      "buildNumber": "0.2.9",
+      "buildNumber": "0.3.0",
       "icon": "./assets/images/icon-1024x1024.png",
       "appStoreUrl": "https://itunes.apple.com/us/app/skyhitz/id1105406020",
       "associatedDomains": ["applinks:v9nr.app.link"],
@@ -37,7 +37,7 @@
     },
     "android": {
       "package": "com.skyhitz.skyhitz",
-      "versionCode": 29,
+      "versionCode": 30,
       "icon": "./assets/images/icon-1024x1024.png",
       "adaptiveIcon": {
         "backgroundColor": "#1A1B20",
