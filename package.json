@@ -14,7 +14,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "build:ios": "expo build:ios",
-    "build:android": "expo build:android"
+    "build:android": "expo build:android",
+    "upload:android": "expo upload:android",
+    "upload:ios": "expo upload:ios"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",

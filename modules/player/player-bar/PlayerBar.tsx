@@ -127,7 +127,7 @@ export default class PlayerBar extends React.Component<any, any> {
   }
   getTabPlayerOpacity() {
     if (this.props.hideTabPlayer) {
-      return 1;
+      return 0;
     }
     return this.state.pan.y.interpolate({
       inputRange: [-Dimensions.get('window').height, 0],
