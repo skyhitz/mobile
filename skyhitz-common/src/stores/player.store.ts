@@ -174,7 +174,7 @@ export class PlayerStore {
       {
         shouldPlay: true,
         positionMillis: 0,
-        progressUpdateIntervalMillis: 100,
+        progressUpdateIntervalMillis: 50,
       }
     );
   }
@@ -199,7 +199,8 @@ export class PlayerStore {
     }
     let pos = videoUrl.lastIndexOf('.');
     videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
-
+    let optimizedVideo = '/upload/vc_auto/q_auto:good';
+    videoUrl.replace('/upload', optimizedVideo);
     let loadStream = await this.loadAsync(videoUrl);
     this.setPlaybackState('PLAYING');
     return loadStream;
