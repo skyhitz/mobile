@@ -174,7 +174,6 @@ export class PlayerStore {
       {
         shouldPlay: true,
         positionMillis: 0,
-        androidImplementation: 'MediaPlayer',
         progressUpdateIntervalMillis: 100,
       }
     );
