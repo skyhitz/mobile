@@ -1,7 +1,7 @@
 {
   "name": "app",
-  "version": "1.17.6",
-  "description": "Exponent",
+  "version": "1.17.7",
+  "description": "Skyhitz is an app made for beatmakers",
   "author": "Alejo Mendoza",
   "license": "MIT",
   "main": "node_modules/expo/AppEntry.js",
@@ -68,7 +68,7 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-prettier": "^2.1.1",
     "eslint-plugin-react": "^7.0.1",
-    "expo-cli": "^3.11.7",
+    "expo-cli": "^3.13.1",
     "prettier": "^1.4.0",
     "typescript": "^3.4.5"
   }
