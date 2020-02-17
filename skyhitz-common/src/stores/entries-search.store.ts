@@ -9,11 +9,15 @@ export class EntriesSearchStore {
   @observable loadingRecentSearches: boolean = false;
   @observable loadingTopSearches: boolean = false;
   @observable loadingRecentlyAdded: boolean = false;
+  @observable load: boolean = false;
+  @observable loadingTopChart: boolean = false;
   @observable query: string = '';
   @observable public entries: List<Entry> = List([]);
   @observable public recentSearches: List<Entry> = List([]);
   @observable public recentlyAdded: List<Entry> = List([]);
   @observable public topSearches: List<Entry> = List([]);
+  @observable topChart: List<Entry> = List([]);
+
   @computed get active() {
     return !!this.query;
   }
@@ -46,12 +50,24 @@ export class EntriesSearchStore {
     this.recentSearches = entries;
   }
 
+  public setTopChart(entries: List<Entry>) {
+    this.topChart = entries;
+  }
+
   public setRecentlyAdded(entries: List<Entry>) {
     this.recentlyAdded = entries;
   }
 
   public setTopSearches(entries: List<Entry>) {
     this.topSearches = entries;
+  }
+
+  public getTopChart() {
+    this.loadingTopChart = true;
+    return entriesBackend.getTopChart().then(entries => {
+      this.setTopChart(List(entries));
+      this.loadingTopChart = false;
+    });
   }
 
   public getRecentSearches() {

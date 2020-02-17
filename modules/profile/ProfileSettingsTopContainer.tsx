@@ -14,8 +14,8 @@ type Stores = typeof stores;
   credits: stores.paymentsStore.credits,
 }))
 export default class ProfileSettingsTopContainer extends React.Component<
-any,
-any
+  any,
+  any
 > {
   render() {
     if (!this.props.user) {
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingLeft: 5,
   },
   profileInfo: {
     flexDirection: 'row',

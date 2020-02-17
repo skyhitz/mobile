@@ -12,13 +12,14 @@ import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
 import { navigate } from 'app/modules/navigation/Navigator';
 
-const EntryRow = (
+const EntryChartRow = (
   play: any,
   entry: any,
   addRecentEntrySearch?: any,
   options?: any,
   disablePlaylistMode?: any,
-  previousScreen?: any
+  previousScreen?: any,
+  position?: number
 ) => {
   return (
     <View key={entry.id} style={styles.rowWrap}>
@@ -36,6 +37,9 @@ const EntryRow = (
       >
         <View style={styles.row}>
           <Image source={{ uri: entry.imageUrl }} style={styles.thumb} />
+          <View style={styles.numberWrap}>
+            <Text style={styles.numbersText}>{position}</Text>
+          </View>
           <View style={styles.infoWrap}>
             <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
               {entry.title}
@@ -75,6 +79,18 @@ let styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 20,
   },
+  numbersText: {
+    color: Colors.defaultTextLight,
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  numberWrap: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 60,
+    height: 30,
+    textAlign: 'center',
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -89,22 +105,20 @@ let styles = StyleSheet.create({
     maxWidth: Layout.window.width - 80,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    paddingLeft: 10,
+    paddingLeft: 0,
   },
   title: {
     fontSize: 12,
     textAlign: 'left',
     fontWeight: 'bold',
-    paddingLeft: 10,
     color: Colors.defaultTextDark,
   },
   artistName: {
     fontSize: 12,
     textAlign: 'left',
-    paddingLeft: 10,
     marginTop: Platform.OS === 'ios' ? 3 : 0,
     color: Colors.defaultTextLight,
   },
 });
 
-export default EntryRow;
+export default EntryChartRow;

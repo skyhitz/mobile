@@ -17,7 +17,7 @@ type Stores = typeof stores;
   ),
 }))
 export default class RecentUserSearch extends React.Component<any, any> {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.props.getRecentSearches();
   }
   render() {
@@ -42,8 +42,8 @@ export default class RecentUserSearch extends React.Component<any, any> {
 const styles = StyleSheet.create({
   recentText: {
     color: Colors.defaultTextLight,
-    fontSize: 14,
+    fontSize: 18,
     paddingTop: 14,
-    paddingLeft: 10,
+    paddingLeft: 20,
   },
 });

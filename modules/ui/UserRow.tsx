@@ -63,7 +63,7 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 6,
     paddingBottom: 6,
-    paddingLeft: 10,
+    paddingLeft: 20,
     backgroundColor: Colors.listItemBackground,
   },
   username: {

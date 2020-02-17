@@ -21,7 +21,7 @@ type Stores = typeof stores;
   ),
 }))
 export default class TopEntrySearchView extends React.Component<any, any> {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.props.getTopSearches();
   }
   render() {

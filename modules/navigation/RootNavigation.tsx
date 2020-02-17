@@ -1,8 +1,10 @@
+/// <reference path="./CreateBrowserApp.d.ts"/>
 import React from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
+import { StyleSheet, StatusBar, View, Platform } from 'react-native';
 import { inject } from 'mobx-react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createBrowserApp } from '@react-navigation/web';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
 import { navigate } from 'app/modules/navigation/Navigator';
@@ -18,6 +20,8 @@ import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
+import WebApp from '../marketing/web/Home';
+
 type Stores = typeof stores;
 
 const AuthStack = createStackNavigator({
@@ -26,7 +30,7 @@ const AuthStack = createStackNavigator({
     navigationOptions: {
       headerShown: false,
     },
-    path: `accounts`,
+    path: ``,
   },
 });
 
@@ -119,18 +123,36 @@ const AppStack = createStackNavigator(
   }
 );
 
+const createApp = Platform.select({
+  web: (config: any) => createBrowserApp(config, { history: 'hash' }),
+  default: (config: any) => createAppContainer(config),
+});
+
 const RootStackNavigator = createSwitchNavigator(
   {
-    AuthLoading: AuthLoadingScreen,
-    App: AppStack,
-    Auth: AuthStack,
+    AuthLoading: {
+      screen: AuthLoadingScreen,
+      path: `auth-loading`
+    },
+    App: {
+      screen: AppStack,
+      path: `app`
+    },
+    Auth: {
+      screen: AuthStack,
+      path: `auth`
+    },
+    WebApp: {
+      screen: WebApp,
+      path: ``
+    }
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'AuthLoading'
   }
 );
 
-const AppContainer = createAppContainer(RootStackNavigator);
+const AppContainer = createApp(RootStackNavigator);
 
 @inject((stores: Stores) => ({
   user: stores.sessionStore.user,

@@ -5,7 +5,7 @@ import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
 
 export class PlayerStore {
-  constructor() { }
+  constructor() {}
   public observables: any = observable({
     entry: null,
   });
@@ -55,9 +55,9 @@ export class PlayerStore {
   retryTimes: number = 0;
   @observable
   playlistMode: boolean = false;
+  @observable
   playbackInstance: any;
   seekPosition!: number;
-
 
   @action
   async refreshEntry() {
@@ -83,6 +83,7 @@ export class PlayerStore {
     }
   }
 
+  @computed
   get playbackInstanceExists() {
     return !!this.playbackInstance;
   }
@@ -97,7 +98,9 @@ export class PlayerStore {
   async pauseAsync() {
     if (this.playbackInstanceExists) {
       this.setPlaybackState('PAUSED');
-      return await this.playbackInstance.pauseAsync();
+      await this.playbackInstance.pauseAsync();
+      this.setPlaybackState('PAUSED');
+      return;
     }
   }
 
@@ -157,6 +160,7 @@ export class PlayerStore {
     return this.playAsync();
   }
 
+  @computed
   get isPlaying() {
     if (this.playbackState === 'PLAYING') {
       return true;
@@ -170,6 +174,7 @@ export class PlayerStore {
       {
         shouldPlay: true,
         positionMillis: 0,
+        progressUpdateIntervalMillis: 50,
       }
     );
   }
@@ -178,9 +183,9 @@ export class PlayerStore {
     if (!entry) {
       return null;
     }
-    if (this.cueList.findIndex(item => !!item && (item.id === entry.id)) !== -1) {
+    if (this.cueList.findIndex(item => !!item && item.id === entry.id) !== -1) {
       this.currentIndex = this.cueList.findIndex(
-        item => !!item && (item.id === entry.id)
+        item => !!item && item.id === entry.id
       );
     }
 
@@ -192,9 +197,10 @@ export class PlayerStore {
     if (!videoUrl) {
       return;
     }
-    // let pos = videoUrl.lastIndexOf('.');
-    // videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
-
+    let pos = videoUrl.lastIndexOf('.');
+    videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
+    let optimizedVideo = '/upload/vc_auto/q_auto:good';
+    videoUrl.replace('/upload', optimizedVideo);
     let loadStream = await this.loadAsync(videoUrl);
     this.setPlaybackState('PLAYING');
     return loadStream;
@@ -231,28 +237,31 @@ export class PlayerStore {
     this.currentIndex = 0;
   }
 
-
-
   onError(e: string) {
     console.info(e);
   }
 
+  @action
   toggleShuffle() {
     this.shuffle = !this.shuffle;
   }
 
+  @action
   hidePlayer() {
     this.show = false;
   }
 
+  @action
   showPlayer() {
     this.show = true;
   }
 
+  @computed
   get isCurrentIndexAtTheStartOfCue() {
     return this.currentIndex === 0;
   }
 
+  @computed
   get isCurrentIndexAtTheEndOfCue() {
     return this.currentIndex === this.cueList.size - 1;
   }
@@ -291,33 +300,37 @@ export class PlayerStore {
     this.loadAndPlay(prevEntry);
   }
 
+  padWithZero = (value: number) => {
+    const result = value.toString();
+    if (value < 10) {
+      return '0' + result;
+    }
+    return result;
+  };
+
   getMMSSFromMillis(millis: number) {
     const totalSeconds = millis / 1000;
     const seconds = Math.floor(totalSeconds % 60);
     const minutes = Math.floor(totalSeconds / 60);
-
-    const padWithZero = (value: number) => {
-      const result = value.toString();
-      if (value < 10) {
-        return '0' + result;
-      }
-      return result;
-    };
-    return padWithZero(minutes) + ':' + padWithZero(seconds);
+    return this.padWithZero(minutes) + ':' + this.padWithZero(seconds);
   }
 
+  @computed
   get durationDisplay() {
     return this.getMMSSFromMillis(this.playbackInstanceDuration);
   }
 
+  @computed
   get positionDisplay() {
     return this.getMMSSFromMillis(this.playbackInstancePosition);
   }
 
+  @action
   setSeekState(seekState: SeekState) {
     this.seekState = seekState;
   }
 
+  @computed
   get seekSliderPosition() {
     if (
       this.playbackInstance !== null &&
@@ -329,7 +342,6 @@ export class PlayerStore {
     }
     return 0;
   }
-
 
   onSeekSliderValueChange = (value: number) => {
     if (
@@ -353,11 +365,10 @@ export class PlayerStore {
       this.setSeekState('SEEKED');
       let status;
       try {
-        status = await this.playbackInstance
-          .setStatusAsync({
-            positionMillis: value * this.playbackInstanceDuration,
-            shouldPlay: this.shouldPlayAtEndOfSeek,
-          })
+        status = await this.playbackInstance.setStatusAsync({
+          positionMillis: value * this.playbackInstanceDuration,
+          shouldPlay: this.shouldPlayAtEndOfSeek,
+        });
 
         this.setSeekState('NOT_SEEKING');
         this.setPlaybackState(this.getPlaybackStateFromStatus(status));
@@ -392,7 +403,7 @@ export class PlayerStore {
 
   generateRandomNumber(max: number): number {
     var num = Math.floor(Math.random() * (max + 1));
-    return (num === this.currentIndex) ? this.generateRandomNumber(max) : num;
+    return num === this.currentIndex ? this.generateRandomNumber(max) : num;
   }
 
   async handleEndedPlaybackState() {
@@ -407,6 +418,7 @@ export class PlayerStore {
     }
   }
 
+  @computed
   get disablePlaybackStatusUpdate(): boolean {
     if (
       this.playbackState === 'ENDED' ||
@@ -419,6 +431,7 @@ export class PlayerStore {
     return false;
   }
 
+  @action
   onPlaybackStatusUpdate(status: any) {
     if (this.disablePlaybackStatusUpdate) {
       return;
@@ -450,7 +463,7 @@ export class PlayerStore {
     this.setPlaybackState(this.getPlaybackStateFromStatus(status));
   }
 
-
+  @action
   async setPlaybackState(playbackState: PlaybackState) {
     if (this.playbackState !== playbackState) {
       this.playbackState = playbackState;

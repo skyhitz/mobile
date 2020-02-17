@@ -8,21 +8,19 @@ import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
-  loadAndPlay: stores.playerStore.loadAndPlay.bind(
-    stores.playerStore
-  ),
+  loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
   getRecentSearches: stores.entriesSearchStore.getRecentSearches.bind(
     stores.entriesSearchStore
   ),
   recentSearches: stores.entriesSearchStore.recentSearches,
   loadingRecentSearches: stores.entriesSearchStore.loadingRecentSearches,
-  setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore)
+  setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),
 }))
 export default class RecentEntrySearch extends React.Component<any, any> {
   setRecentSearches() {
     this.props.setPlaylistMode(this.props.recentSearches);
   }
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.props.getRecentSearches();
   }
   render() {
@@ -34,13 +32,9 @@ export default class RecentEntrySearch extends React.Component<any, any> {
         <Text style={styles.recentText}>Recent Searches</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
         {this.props.recentSearches.map((entry: any) =>
-          EntryRow(
-            this.props.loadAndPlay,
-            entry,
-            null,
-            null,
-            () => { this.setRecentSearches() }
-          )
+          EntryRow(this.props.loadAndPlay, entry, null, null, () => {
+            this.setRecentSearches();
+          })
         )}
       </View>
     );
@@ -50,8 +44,9 @@ export default class RecentEntrySearch extends React.Component<any, any> {
 const styles = StyleSheet.create({
   recentText: {
     color: Colors.defaultTextLight,
-    fontSize: 14,
+    fontSize: 18,
     paddingTop: 14,
-    paddingLeft: 8,
+    paddingBottom: 12,
+    paddingLeft: 20,
   },
 });

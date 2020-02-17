@@ -5,11 +5,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 var styles = StyleSheet.create({
   dot: {
-    width: 3,
-    height: 3,
-    borderRadius: 1.5,
+    width: 5,
+    height: 5,
+    borderRadius: 5,
     backgroundColor: Colors.white,
-    marginLeft: 2,
+    marginLeft: 5,
   },
   dots: {
     flexDirection: 'row',

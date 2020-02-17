@@ -21,33 +21,31 @@ const indicatorStyle = {
   backgroundColor: 'transparent',
 };
 
-function renderTabBarLabel(props: any, title: React.ReactNode) {
-  return <Text style={labelStyle(props) as any}> {title} </Text>;
-}
-
-function renderTabBarTop(props: any) {
-  return <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />;
-}
-
 const TabsView = createMaterialTopTabNavigator(
   {
     Music: {
       screen: SearchEntryView,
       navigationOptions: {
-        tabBarLabel: (props: any) => renderTabBarLabel(props, 'Music'),
+        tabBarLabel: (props: any) => (
+          <Text style={labelStyle(props) as any}> {'Music'} </Text>
+        ),
       },
       path: `music`,
     },
     Influencers: {
       screen: SearchUserView,
       navigationOptions: {
-        tabBarLabel: (props: any) => renderTabBarLabel(props, 'Influencers'),
+        tabBarLabel: (props: any) => (
+          <Text style={labelStyle(props) as any}> {'Beatmakers'} </Text>
+        ),
       },
-      path: `influencers`,
+      path: `beatmakers`,
     },
   },
   {
-    tabBarComponent: props => renderTabBarTop(props),
+    tabBarComponent: props => (
+      <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
+    ),
     tabBarPosition: 'top',
     swipeEnabled: true,
     tabBarOptions: {

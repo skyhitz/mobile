@@ -90,9 +90,14 @@ export default class PlayerBar extends React.Component<any, any> {
         this.props.hidePlayer();
       },
     });
-    if (this.props.hideTabPlayer) {
+    if (props.hideTabPlayer) {
       this.state.pan.setValue({ x: 0, y: 40 });
     }
+  }
+
+  componentWillUnmount() {
+    this.state.pan.x.removeAllListeners();
+    this.state.pan.y.removeAllListeners();
   }
 
   getTabBarStyles() {
@@ -122,7 +127,7 @@ export default class PlayerBar extends React.Component<any, any> {
   }
   getTabPlayerOpacity() {
     if (this.props.hideTabPlayer) {
-      return 1;
+      return 0;
     }
     return this.state.pan.y.interpolate({
       inputRange: [-Dimensions.get('window').height, 0],
@@ -155,7 +160,7 @@ export default class PlayerBar extends React.Component<any, any> {
     this.toggleModalPlayer(this.props.show);
   }
   toggleModalPlayer(show: any) {
-    if (show) {
+    if (show && this.props.entry) {
       return this.showModalPlayer();
     }
     return this.hideModalPlayer();

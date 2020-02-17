@@ -9,7 +9,7 @@ const SearchingText = (query: any) => {
       <Text style={styles.searchingText}>{`Searching for "${query}"`}</Text>
     );
   }
-  return <Text style={styles.searchingText}>{`Loading Music...`}</Text>;
+  return <Text style={styles.searchingText}>{`Loading Beats...`}</Text>;
 };
 
 const SearchingLoader = (searching: any, query?: any) => {

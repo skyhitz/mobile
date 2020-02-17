@@ -1,37 +1,29 @@
 {
   "expo": {
     "name": "Skyhitz",
-    "description": "Connecting friends through music",
+    "description": "Beatmakers' app",
     "slug": "skyhitz",
     "privacy": "public",
     "githubUrl": "https://github.com/skyhitz/mobile",
     "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "0.2.8",
+    "platforms": ["ios", "android", "web"],
+    "version": "0.3.0",
     "orientation": "portrait",
     "primaryColor": "#1A1B1F",
     "icon": "./assets/images/icon.png",
     "scheme": "skyhitz",
     "packagerOpts": {
-      "assetExts": [
-        "ttf"
-      ]
+      "assetExts": ["ttf"]
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "ios": {
       "bundleIdentifier": "com.skyhitz.skyhitz",
-      "buildNumber": "0.2.8",
+      "buildNumber": "0.3.0",
       "icon": "./assets/images/icon-1024x1024.png",
       "appStoreUrl": "https://itunes.apple.com/us/app/skyhitz/id1105406020",
-      "associatedDomains": [
-        "applinks:v9nr.app.link"
-      ],
+      "associatedDomains": ["applinks:v9nr.app.link"],
       "config": {
         "branch": {
           "apiKey": "key_live_kbFTx3k5raIhCfOlgrgJ5jiesDahyanm"
@@ -40,14 +32,12 @@
       "infoPlist": {
         "NSCameraUsageDescription": "Allow access to upload pictures to your profile and playlists.",
         "NSPhotoLibraryUsageDescription": "Allow access to your library so you can upload original music videos.",
-        "UIBackgroundModes": [
-          "audio"
-        ]
+        "UIBackgroundModes": ["audio"]
       }
     },
     "android": {
       "package": "com.skyhitz.skyhitz",
-      "versionCode": 28,
+      "versionCode": 30,
       "icon": "./assets/images/icon-1024x1024.png",
       "adaptiveIcon": {
         "backgroundColor": "#1A1B20",
@@ -71,9 +61,6 @@
       "resizeMode": "contain",
       "image": "./assets/images/icon-1024x1024.png"
     },
-    "assetBundlePatterns": [
-      "assets/images/*",
-      "assets/fonts/*"
-    ]
+    "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"]
   }
 }

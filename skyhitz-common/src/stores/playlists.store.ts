@@ -36,6 +36,10 @@ export class PlaylistsStore {
   public async refreshPlaylists() {
     this.loading = true;
     const userPlaylists = await playlistsBackend.userPlaylists();
+    if (!userPlaylists) {
+      this.loading = false;
+      return;
+    }
     const playlists = userPlaylists.map(playlist => new Playlist(playlist));
     this.loading = false;
     this.playlists = List(playlists);
@@ -118,7 +122,7 @@ export class PlaylistsStore {
   @action
   updateModalPlaylistPhotoUrl = (imageUrl: string) => {
     this.modalPlaylistPhotoUrl = imageUrl;
-  }
+  };
 
   async remove() {
     await playlistsBackend.removePlaylist(this.playlistToBeRemoved.id);

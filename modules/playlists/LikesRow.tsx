@@ -65,7 +65,8 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 9,
     paddingBottom: 6,
-    paddingLeft: 10,
+    paddingLeft: 20,
+    paddingRight: 5,
     backgroundColor: Colors.listItemBackground,
   },
   leftSection: {
