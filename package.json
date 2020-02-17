@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Skyhitz is an app made for beatmakers",
   "author": "Alejo Mendoza",
   "license": "MIT",
@@ -48,8 +48,8 @@
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^2.0.16",
-    "react-navigation-tabs": "^2.7.0"
+    "react-navigation-stack": "2.0.15",
+    "react-navigation-tabs": "2.7.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.6.0",
