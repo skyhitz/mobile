@@ -132,23 +132,23 @@ const RootStackNavigator = createSwitchNavigator(
   {
     AuthLoading: {
       screen: AuthLoadingScreen,
-      path: `auth-loading`
+      path: `auth-loading`,
     },
     App: {
       screen: AppStack,
-      path: `app`
+      path: `app`,
     },
     Auth: {
       screen: AuthStack,
-      path: `auth`
+      path: `auth`,
     },
     WebApp: {
       screen: WebApp,
-      path: ``
-    }
+      path: ``,
+    },
   },
   {
-    initialRouteName: 'AuthLoading'
+    initialRouteName: 'AuthLoading',
   }
 );
 
@@ -190,7 +190,7 @@ export default class RootNavigator extends React.Component<any, any> {
   render() {
     return (
       <View style={[styles.container]}>
-        <AppContainer style={[styles.appContainer]} />
+        <AppContainer />
       </View>
     );
   }
@@ -203,9 +203,6 @@ const styles = StyleSheet.create({
   },
   statusBarUnderlay: {
     height: 0,
-    backgroundColor: 'transparent',
-  },
-  appContainer: {
     backgroundColor: 'transparent',
   },
 });
