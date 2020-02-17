@@ -18,7 +18,6 @@ import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
-import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
 import WebApp from '../marketing/web/Home';
 
@@ -188,21 +187,6 @@ export default class RootNavigator extends React.Component<any, any> {
   }
 
   render() {
-    return (
-      <View style={[styles.container]}>
-        <AppContainer />
-      </View>
-    );
+    return <AppContainer />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.headerBackground,
-  },
-  statusBarUnderlay: {
-    height: 0,
-    backgroundColor: 'transparent',
-  },
-});
