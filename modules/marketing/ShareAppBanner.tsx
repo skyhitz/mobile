@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, Linking, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Linking } from 'expo';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { navigate } from 'app/modules/navigation/Navigator';

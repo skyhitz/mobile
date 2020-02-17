@@ -24,11 +24,6 @@
       "icon": "./assets/images/icon-1024x1024.png",
       "appStoreUrl": "https://itunes.apple.com/us/app/skyhitz/id1105406020",
       "associatedDomains": ["applinks:v9nr.app.link"],
-      "config": {
-        "branch": {
-          "apiKey": "key_live_kbFTx3k5raIhCfOlgrgJ5jiesDahyanm"
-        }
-      },
       "infoPlist": {
         "NSCameraUsageDescription": "Allow access to upload pictures to your profile and playlists.",
         "NSPhotoLibraryUsageDescription": "Allow access to your library so you can upload original music videos.",
@@ -43,12 +38,7 @@
         "backgroundColor": "#1A1B20",
         "foregroundImage": "./assets/images/ic_launcher.png"
       },
-      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz",
-      "config": {
-        "branch": {
-          "apiKey": "key_live_kbFTx3k5raIhCfOlgrgJ5jiesDahyanm"
-        }
-      }
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz"
     },
     "web": {
       "use": "nextjs"
