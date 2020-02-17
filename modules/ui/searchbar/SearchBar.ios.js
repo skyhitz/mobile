@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     backgroundColor: Colors.darkBlue,
     paddingBottom: 5,
-    paddingTop: 0,
+    paddingTop: 8,
     flexDirection: 'row',
   },
   input: {
