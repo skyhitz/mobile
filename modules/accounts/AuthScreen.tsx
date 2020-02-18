@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { inject } from 'mobx-react';
-import { Facebook, Constants } from 'expo';
 import Layout from 'app/constants/Layout';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { AuthBackground, Logo } from 'app/assets/images/Images';
@@ -29,29 +28,6 @@ export default class AuthScreen extends React.Component<any, any> {
     this.state = {
       loading: false,
     };
-  }
-  async handleFacebookSignIn() {
-    this.setState({ loading: true });
-    const { type, token } = await Facebook.logInWithReadPermissionsAsync(
-      Constants.manifest.facebookAppId,
-      { permissions: ['email', 'public_profile', 'user_friends'] }
-    );
-    if (type === 'success') {
-      let user = await this.props.signInWithFacebook(token);
-      this.setState({ loading: false });
-      if (user && !user.id) {
-        return navigate('ConfirmUsernameAndEmail', {
-          token: token,
-          email: user.email,
-          username: user.username,
-        });
-      }
-      if (user && user.id) {
-        // identifyUser(user);
-        return navigate('ProfileSettings');
-      }
-    }
-    this.setState({ loading: false });
   }
   render() {
     return (

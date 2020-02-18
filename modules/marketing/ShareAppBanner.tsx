@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Linking } from 'expo';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { navigate } from 'app/modules/navigation/Navigator';
@@ -9,11 +8,6 @@ export default class ShareAppBanner extends React.Component<any, any> {
   onUpload = async () => {
     navigate('UploadMusicModal');
   };
-
-  async openSkyhitzInstagram() {
-    let instagramURL = `instagram://user?username=skyhitz`;
-    Linking.openURL(instagramURL);
-  }
 
   render() {
     return (
