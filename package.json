@@ -17,7 +17,8 @@
     "build:android": "expo build:android -t app-bundle",
     "upload:android": "expo upload:android",
     "upload:ios": "expo upload:ios",
-    "expo:install": "expo install"
+    "expo:install": "expo install",
+    "build:ios-simulator": "expo build:ios -t simulator"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
