@@ -16,7 +16,7 @@ export default class TabBarWrapper extends React.Component<any, any> {
   }
   render() {
     return (
-      <View>
+      <View style={{ backgroundColor: Colors.tabsBackground }}>
         <PlayerBar />
         <BottomTabBar
           {...this.props}
