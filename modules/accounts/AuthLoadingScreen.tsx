@@ -28,8 +28,6 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
 
   async componentDidMount() {
     await this.loadResourcesAsync();
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
     if (Platform.OS === 'web') {
       navigate('WebApp');
     } else {

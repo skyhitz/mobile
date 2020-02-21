@@ -123,7 +123,7 @@ const AppStack = createStackNavigator(
 );
 
 const createApp = Platform.select({
-  web: (config: any) => createBrowserApp(config, { history: 'hash' }),
+  web: (config: any) => createBrowserApp(config, { history: 'browser' }),
   default: (config: any) => createAppContainer(config),
 });
 
@@ -131,7 +131,7 @@ const RootStackNavigator = createSwitchNavigator(
   {
     AuthLoading: {
       screen: AuthLoadingScreen,
-      path: `auth-loading`,
+      path: ``,
     },
     App: {
       screen: AppStack,
@@ -171,9 +171,6 @@ export default class RootNavigator extends React.Component<any, any> {
   static async getDerivedStateFromProps(props: any) {
     StatusBar.setBarStyle('light-content');
 
-    // Kicks user out in case there is an authentication error and the user is set to null.
-    // This could happen if a non authorized request is made to a protected endpoint.
-    // Automatically redirects to accounts if the user logs out.
     if (!props.user) {
       navigate('Auth');
     } else {

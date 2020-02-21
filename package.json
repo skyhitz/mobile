@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@bugsnag/expo": "^6.5.1",
+    "@expo/html-elements": "^0.0.0-alpha.4",
+    "@expo/match-media": "^0.0.0-alpha.5",
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/masked-view": "0.1.5",
     "@react-navigation/web": "~1.0.0-alpha.9",
@@ -52,7 +54,8 @@
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.1.0",
-    "react-navigation-tabs": "^2.7.0"
+    "react-navigation-tabs": "^2.7.0",
+    "react-responsive": "^8.0.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.6.0",
