@@ -56,14 +56,6 @@
       "bugsnag": {
         "apiKey": "cf69bb38defd14395a7340170c8e41f6"
       }
-    },
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "@bugsnag/expo/hooks/post-publish.js",
-          "config": {}
-        }
-      ]
     }
   }
 }

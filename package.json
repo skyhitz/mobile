@@ -21,7 +21,6 @@
     "build:ios-simulator": "expo build:ios -t simulator"
   },
   "dependencies": {
-    "@bugsnag/expo": "^6.5.1",
     "@expo/html-elements": "^0.0.0-alpha.4",
     "@expo/match-media": "^0.0.0-alpha.5",
     "@expo/vector-icons": "^10.0.0",
