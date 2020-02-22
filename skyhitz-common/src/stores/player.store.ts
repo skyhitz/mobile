@@ -100,7 +100,7 @@ export class PlayerStore {
       this.setPlaybackState('PAUSED');
       await this.playbackInstance.pauseAsync();
       this.setPlaybackState('PAUSED');
-      return;
+      return true;
     }
   }
 
