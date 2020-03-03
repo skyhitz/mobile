@@ -2,6 +2,7 @@ import React from 'react';
 import { H1, Main, P } from '@expo/html-elements';
 import { View } from 'react-native';
 import Colors from 'app/constants/Colors';
+import ScreenShots from './Screenshots';
 
 export default class MainWrapper extends React.Component {
   render() {
@@ -13,7 +14,7 @@ export default class MainWrapper extends React.Component {
           alignItems: 'center',
         }}
       >
-        <View>
+        <View style={{ alignItems: 'center' }}>
           <H1
             style={{
               textAlign: 'center',
@@ -42,6 +43,7 @@ export default class MainWrapper extends React.Component {
             beats for sale and buy fresh songwriting ideas from other producers.
             Connect with a worldwide community of music creators.
           </P>
+          <ScreenShots />
         </View>
       </Main>
     );
