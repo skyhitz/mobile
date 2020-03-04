@@ -45,22 +45,22 @@ export default class ScreenShots extends React.Component {
   render = () => {
     // center items on screen
     // const { width } = Dimensions.get('window');
-    const width = 287;
-    const contentOffset = (width - 287) / 2;
+    const width = 320;
 
     return (
       <SideSwipe
         index={this.state.currentIndex}
-        itemWidth={287}
+        itemWidth={width}
         style={{ width }}
         data={data}
-        contentOffset={contentOffset}
+        threshold={150}
+        contentOffset={0}
         onIndexChange={(index: any) =>
           this.setState(() => ({ currentIndex: index }))
         }
         useNativeDriver={false}
         renderItem={({ itemIndex, currentIndex, item, animatedValue }) => (
-          <View style={{ paddingHorizontal: 0 }}>
+          <View style={{ paddingHorizontal: 16.5 }}>
             <Image
               source={{
                 uri: item.src,

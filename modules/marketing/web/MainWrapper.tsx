@@ -22,10 +22,10 @@ export default class MainWrapper extends React.Component {
               fontFamily: 'Raleway-Light',
               fontSize: 65,
               fontWeight: '500',
-              maxWidth: 370,
+              maxWidth: 600,
             }}
           >
-            Buy and sell beats
+            Beats market for music creators
           </H1>
           <P
             style={{
@@ -39,9 +39,8 @@ export default class MainWrapper extends React.Component {
               lineHeight: '1.5em',
             }}
           >
-            Join a decentralized music market for beatmakers. Upload exclusive
-            beats for sale and buy fresh songwriting ideas from other producers.
-            Connect with a worldwide community of music creators.
+            Upload exclusive beats for sale and buy fresh songwriting ideas from
+            other music producers. Join a music community of beatmakers.
           </P>
           <ScreenShots />
         </View>
