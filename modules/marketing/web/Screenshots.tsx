@@ -5,7 +5,7 @@ import React from 'react';
 let data = [
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-1.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-4.png',
   },
   {
     src:
@@ -17,7 +17,7 @@ let data = [
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-4.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-8.png',
   },
   {
     src:
@@ -33,7 +33,7 @@ let data = [
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-8.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-1.png',
   },
 ];
 

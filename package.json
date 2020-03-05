@@ -33,6 +33,7 @@
     "expo-asset": "~8.0.0",
     "expo-av": "~8.0.0",
     "expo-constants": "~8.0.0",
+    "expo-device": "~2.0.0",
     "expo-image-picker": "~8.0.2",
     "expo-permissions": "~8.0.0",
     "expo-web-browser": "~8.0.0",
