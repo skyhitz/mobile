@@ -2,13 +2,13 @@ import React from 'react';
 import NavBar from './NavBar';
 import BackgroundImage from './BackgroundImage';
 import MainWrapper from './MainWrapper';
-// import Footer from 'app/components/footer/footer';
+import LandingFooter from './Footer';
 
 const Home = () => (
   <BackgroundImage>
     <NavBar />
     <MainWrapper />
-    {/* <Footer /> */}
+    <LandingFooter />
   </BackgroundImage>
 );
 
