@@ -4,11 +4,9 @@ import { View, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
 import ScreenShots from './Screenshots';
 import * as Device from 'expo-device';
-
 let Anchor: React.ComponentType<any> = A;
 
 export default class MainWrapper extends React.Component {
-  handleLink = () => {};
   render() {
     return (
       <Main
