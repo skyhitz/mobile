@@ -6,8 +6,8 @@ import { SignUpForm, SignInForm } from '../types';
 import LocalStorage from '../async-storage';
 
 export class SessionStore {
-  public session: { user: User } & IObservableObject = observable({
-    user: null
+  public session: { user: any } & IObservableObject = observable({
+    user: null,
   });
   @computed
   get user() {
@@ -97,7 +97,7 @@ export class SessionStore {
     if (!user.id) {
       return {
         username: user.username,
-        email: user.email
+        email: user.email,
       };
     }
     await this.setUser(user);

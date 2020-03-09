@@ -30,7 +30,10 @@ const API: TAsyncStorage = {
   multiGet: keys => {
     return new Promise(resolve => {
       const keyValues = keys.reduce(
-        (acc, key) => acc.concat([[key, localStorage.getItem(key)]]),
+        (acc, key) =>
+          acc.concat([
+            [key as never, localStorage.getItem(key) as never] as never,
+          ]),
         []
       );
       resolve(keyValues);
@@ -83,7 +86,7 @@ const API: TAsyncStorage = {
   },
   flushGetRequests: () => {
     console.warn('AsyncStorage.flushGetRequests: Not supported');
-  }
+  },
 };
 
 export default API;

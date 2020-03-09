@@ -7,12 +7,12 @@ export class LikesStore {
   @observable ids: Set<string> = Set([]);
   @observable loading: boolean = false;
   @observable loadingEntryLikes: boolean = false;
-  @observable entry: Entry;
+  @observable entry!: Entry;
   @observable entryLikes: List<User> = List([]);
-  @observable entryLikesCount: number;
+  @observable entryLikesCount!: number;
   @observable userLikes: List<Entry> = List([]);
-  @observable userLikesCount: number;
-  @observable user: User;
+  @observable userLikesCount!: number;
+  @observable user!: User;
 
   public viewLimit: number = 8;
 
@@ -79,7 +79,12 @@ export class LikesStore {
 
   async unlike(entry: Entry) {
     this.ids = this.ids.delete(entry.id);
-    let index = this.userLikes.findIndex(like => like.id === entry.id);
+    let index = this.userLikes.findIndex(like => {
+      if (like) {
+        return like.id === entry.id;
+      }
+      return false;
+    });
     this.userLikes = this.userLikes.delete(index);
     let unliked = await likesBackend.like(entry.id, false);
     if (!unliked) {
@@ -88,7 +93,12 @@ export class LikesStore {
     }
     this.userLikesCount = this.userLikes.size;
 
-    let userIndex = this.entryLikes.findIndex(like => like.id === this.user.id);
+    let userIndex = this.entryLikes.findIndex(like => {
+      if (like) {
+        return like.id === this.user.id;
+      }
+      return false;
+    });
     this.entryLikes = this.entryLikes.delete(userIndex);
   }
 
@@ -98,7 +108,12 @@ export class LikesStore {
     let liked = await likesBackend.like(entry.id);
     if (!liked) {
       this.ids = this.ids.remove(entry.id);
-      let index = this.userLikes.findIndex(like => like.id === entry.id);
+      let index = this.userLikes.findIndex(like => {
+        if (like) {
+          return like.id === entry.id;
+        }
+        return false;
+      });
       this.userLikes = this.userLikes.delete(index);
     }
     this.userLikesCount = this.userLikes.size;

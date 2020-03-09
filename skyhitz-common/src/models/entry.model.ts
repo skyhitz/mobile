@@ -12,7 +12,7 @@ export class EntryPayload extends Payload {
   ranking?: number;
   shareCount?: number;
   title?: string;
-  id?: string;
+  id!: string;
   videoUrl?: string;
   forSale?: boolean;
   price?: number;
@@ -25,10 +25,10 @@ export class Entry extends EntryPayload {
 
   get cloudinaryPublicId() {
     let prefix = 'app';
-    let lastSection = this.videoUrl
-      .split(`/${prefix}`)
-      .pop()
-      .split('.')[0];
+    let popSection = this.videoUrl
+      ? this.videoUrl.split(`/${prefix}`).pop()
+      : '';
+    let lastSection = popSection ? popSection.split('.')[0] : '';
     return `${prefix}${lastSection}`;
   }
 }

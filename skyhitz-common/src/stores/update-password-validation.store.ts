@@ -1,15 +1,13 @@
 import { observable, computed } from 'mobx';
 
 export class UpdatePasswordValidationStore {
-  @observable passwordError: string;
-  @observable passwordValid: boolean;
-  @observable passwordConfirmationError: string;
-  @observable passwordConfirmationValid: boolean;
-  @observable backendError: string;
+  @observable passwordError: string = '';
+  @observable passwordValid: boolean = true;
+  @observable passwordConfirmationError: string = '';
+  @observable passwordConfirmationValid: boolean = true;
+  @observable backendError: string = '';
 
-  constructor (
-  ) {
-  }
+  constructor() {}
 
   validatePassword(password: string) {
     if (!password) {
@@ -24,8 +22,8 @@ export class UpdatePasswordValidationStore {
       return;
     }
 
-    this.passwordError = null;
-    return this.passwordValid = true;
+    this.passwordError = '';
+    return (this.passwordValid = true);
   }
 
   validatePasswordConfirmation(confirmationPassword: string, password: string) {
@@ -37,7 +35,8 @@ export class UpdatePasswordValidationStore {
 
     if (confirmationPassword.length < 7) {
       this.passwordConfirmationValid = false;
-      this.passwordConfirmationError = 'Confirmation password is minimum 8 characters.';
+      this.passwordConfirmationError =
+        'Confirmation password is minimum 8 characters.';
       return;
     }
 
@@ -47,10 +46,9 @@ export class UpdatePasswordValidationStore {
       return;
     }
 
-    this.passwordConfirmationError = null;
-    return this.passwordConfirmationValid = true;
+    this.passwordConfirmationError = '';
+    return (this.passwordConfirmationValid = true);
   }
-
 
   @computed
   get error() {
@@ -77,5 +75,4 @@ export class UpdatePasswordValidationStore {
   setBackendError(error: string) {
     this.backendError = error;
   }
-
 }

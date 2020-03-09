@@ -1,15 +1,13 @@
 import { observable, computed } from 'mobx';
 
 export class UsernameAndEmailValidationStore {
-  @observable usernameError: string;
-  @observable usernameValid: boolean;
-  @observable emailError: string;
-  @observable emailValid: boolean;
-  @observable backendError: string;
+  @observable usernameError: string = '';
+  @observable usernameValid: boolean = true;
+  @observable emailError: string = '';
+  @observable emailValid: boolean = true;
+  @observable backendError: string = '';
 
-  constructor (
-  ) {
-  }
+  constructor() {}
 
   validateUsername(username: string) {
     if (!username) {
@@ -27,12 +25,13 @@ export class UsernameAndEmailValidationStore {
     let validRegex = /^[a-zA-Z0-9_-]+$/.test(username);
     if (!validRegex) {
       this.usernameValid = false;
-      this.usernameError = 'Usernames cannot have spaces or special characters.';
+      this.usernameError =
+        'Usernames cannot have spaces or special characters.';
       return;
     }
 
-    this.usernameError = null;
-    return this.usernameValid = true;
+    this.usernameError = '';
+    return (this.usernameValid = true);
   }
 
   validateEmail(email: string) {
@@ -49,8 +48,8 @@ export class UsernameAndEmailValidationStore {
       return;
     }
 
-    this.emailError = null;
-    return this.emailValid = true;
+    this.emailError = '';
+    return (this.emailValid = true);
   }
 
   @computed
@@ -78,5 +77,4 @@ export class UsernameAndEmailValidationStore {
   setBackendError(error: string) {
     this.backendError = error;
   }
-
 }

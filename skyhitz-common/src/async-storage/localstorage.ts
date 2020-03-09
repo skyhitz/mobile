@@ -1,4 +1,4 @@
-(function() {
+export default (function() {
   var db;
 
   function LocalStorage() {}
@@ -32,14 +32,14 @@
     return Object.keys(this)[i];
   };
 
-  db.prototype.__defineGetter__('length', function() {
+  db.prototype.length = function() {
     return Object.keys(this).length;
-  });
+  };
 
   const g: any = global;
 
   if (g.localStorage) {
-    module.exports = localStorage;
+    module.exports = g.localStorage;
   } else {
     module.exports = new (LocalStorage as any)();
   }

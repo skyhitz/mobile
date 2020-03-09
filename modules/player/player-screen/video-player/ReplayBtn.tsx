@@ -7,14 +7,14 @@ import Control from 'app/modules/player/player-screen/video-player/Control';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-const ReplayBtn = inject((stores:Stores) => ({
+const ReplayBtn = inject((stores: Stores) => ({
   playbackState: stores.playerStore.playbackState,
   replay: stores.playerStore.replay.bind(stores.playerStore),
 }))(({ playbackState, replay }: any) => {
   if (playbackState == PLAYBACK_STATES.ENDED) {
     return (
       <CenteredView>
-        <Control center={true} callback={replay.bind(this)}>
+        <Control center={true} callback={() => replay()}>
           <ReplayIcon />
         </Control>
       </CenteredView>

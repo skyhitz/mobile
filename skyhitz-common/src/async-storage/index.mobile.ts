@@ -1,5 +1,5 @@
 import { TAsyncStorage } from './types';
-let AsyncStorage: TAsyncStorage;
+let AsyncStorage: TAsyncStorage | null;
 try {
   AsyncStorage = require('react-native').AsyncStorage;
 } catch (e) {
@@ -7,49 +7,66 @@ try {
 }
 
 const API: TAsyncStorage = {
-  getItem: key => {
+  getItem: async key => {
+    if (!AsyncStorage) return '';
     return AsyncStorage.getItem(key);
   },
-  setItem: (key, value) => {
+  setItem: async (key, value) => {
+    if (!AsyncStorage) return;
     return AsyncStorage.setItem(key, value);
   },
-  clear: () => {
+  clear: async () => {
+    if (!AsyncStorage) return;
     return AsyncStorage.clear();
   },
-  getAllKeys: () => {
+  getAllKeys: async () => {
+    if (!AsyncStorage) return [];
+
     return AsyncStorage.getAllKeys();
   },
-  multiGet: keys => {
+  multiGet: async keys => {
+    if (!AsyncStorage) return [];
     return AsyncStorage.multiGet(keys);
   },
-  removeItem: key => {
+  removeItem: async key => {
+    if (!AsyncStorage) return;
     return AsyncStorage.removeItem(key);
   },
-  mergeItem: (key, value) => {
+  mergeItem: async (key, value) => {
+    if (!AsyncStorage) return;
+
     return AsyncStorage.mergeItem(key, value);
   },
   flushGetRequests: () => {
     let asyncStorage: any = AsyncStorage;
     return asyncStorage.flushGetRequests();
   },
-  multiSet: kvPairs => {
+  multiSet: async kvPairs => {
+    if (!AsyncStorage) return;
+
     return AsyncStorage.multiSet(kvPairs);
   },
-  multiRemove: keys => {
+  multiRemove: async keys => {
+    if (!AsyncStorage) return;
+
     return AsyncStorage.multiRemove(keys);
   },
-  multiMerge: kvPairs => {
+  multiMerge: async kvPairs => {
+    if (!AsyncStorage) return;
+
     return AsyncStorage.multiMerge(kvPairs);
   },
   isAvailable: () => {
     let available = true;
     try {
+      if (!AsyncStorage) return false;
+
       let keys = AsyncStorage.getAllKeys();
     } catch (e) {
       available = false;
     }
     return available;
-  }
+  },
 };
 
 export default API;
