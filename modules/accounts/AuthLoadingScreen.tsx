@@ -29,7 +29,7 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
   async componentDidMount() {
     await this.loadResourcesAsync();
     if (Platform.OS === 'web') {
-      navigate('WebApp');
+      // navigate('WebApp');
     } else {
       navigate(this.props.user ? 'ProfileSettings' : 'Auth');
     }

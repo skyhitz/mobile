@@ -1,10 +1,4 @@
 {
-  "name": "app",
-  "version": "0.3.5",
-  "description": "Skyhitz is an app made for beatmakers",
-  "author": "Alejo Mendoza",
-  "license": "MIT",
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "dev": "NODE_ENV=development expo start",
     "start:prod": "expo start --no-dev",
@@ -18,8 +12,15 @@
     "upload:android": "expo upload:android",
     "upload:ios": "expo upload:ios",
     "expo:install": "expo install",
-    "build:ios-simulator": "expo build:ios -t simulator"
+    "build:ios-simulator": "expo build:ios -t simulator",
+    "build": "next build"
   },
+  "name": "app",
+  "version": "0.3.5",
+  "description": "Skyhitz is an app made for beatmakers",
+  "author": "Alejo Mendoza",
+  "license": "MIT",
+  "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
     "@expo/html-elements": "^0.0.0-alpha.4",
     "@expo/match-media": "^0.0.0-alpha.5",
@@ -43,6 +44,8 @@
     "lodash.merge": "4.6.2",
     "mobx": "5.10.0",
     "mobx-react": "5.4.4",
+    "next": "^9.2.2",
+    "next-fonts": "^1.0.3",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
@@ -59,6 +62,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@expo/next-adapter": "^2.0.6",
     "@types/algoliasearch": "^3.30.1",
     "@types/expo": "^32.0.0",
     "@types/node": "^8.0.31",

@@ -1,6 +1,6 @@
 /// <reference path="./CreateBrowserApp.d.ts"/>
 import React from 'react';
-import { StyleSheet, StatusBar, View, Platform } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import { inject } from 'mobx-react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -19,7 +19,7 @@ import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import * as stores from 'app/skyhitz-common';
-import WebApp from '../marketing/web/Home';
+// import WebApp from '../marketing/web/Home';
 
 type Stores = typeof stores;
 
@@ -141,10 +141,10 @@ const RootStackNavigator = createSwitchNavigator(
       screen: AuthStack,
       path: `auth`,
     },
-    WebApp: {
-      screen: WebApp,
-      path: ``,
-    },
+    // WebApp: {
+    //   screen: WebApp,
+    //   path: ``,
+    // },
   },
   {
     initialRouteName: 'AuthLoading',

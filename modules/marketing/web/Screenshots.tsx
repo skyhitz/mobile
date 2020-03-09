@@ -1,4 +1,4 @@
-import { Dimensions, View, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import SideSwipe from './Carousel';
 import React from 'react';
 
@@ -59,7 +59,7 @@ export default class ScreenShots extends React.Component {
           this.setState(() => ({ currentIndex: index }))
         }
         useNativeDriver={false}
-        renderItem={({ itemIndex, currentIndex, item, animatedValue }) => (
+        renderItem={({ itemIndex, currentIndex, item, animatedValue }: any) => (
           <View style={{ paddingHorizontal: 16.5 }}>
             <Image
               source={{

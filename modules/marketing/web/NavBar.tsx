@@ -1,7 +1,8 @@
 import React from 'react';
-import { Nav } from '@expo/html-elements';
+import { Nav, A } from '@expo/html-elements';
 import SkyhitzLogo from './SkyhitzLogo';
 import { View, Text, StyleSheet } from 'react-native';
+let Anchor: React.ComponentType<any> = A;
 
 const Navbar = () => (
   <Nav
@@ -14,17 +15,28 @@ const Navbar = () => (
       justifyContent: 'flex-start',
     }}
   >
-    <View
+    <Anchor
+      href="/"
+      target="_self"
       style={{
+        height: 56,
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
-        paddingLeft: 15,
+        justifyContent: 'flex-start',
       }}
     >
-      <SkyhitzLogo />
-      <Text style={styles.logo}>SKYHITZ</Text>
-    </View>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingLeft: 15,
+        }}
+      >
+        <SkyhitzLogo />
+        <Text style={styles.logo}>SKYHITZ</Text>
+      </View>
+    </Anchor>
   </Nav>
 );
 
