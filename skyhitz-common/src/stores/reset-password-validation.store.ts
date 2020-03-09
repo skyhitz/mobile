@@ -1,9 +1,9 @@
 import { observable, computed } from 'mobx';
 
 export class ResetPasswordValidationStore {
-  @observable emailError: string | undefined;
-  @observable emailValid: boolean | undefined;
-  @observable backendError: string | undefined;
+  @observable emailError: string = '';
+  @observable emailValid: boolean = true;
+  @observable backendError: string = '';
 
   constructor() {}
 

@@ -15,7 +15,7 @@ if (
 ) {
   LocalStorage = WebLocalStorage;
 } else {
-  let isMobileStorageAvailable = MobileLocalStorage.isAvailable!();
+  let isMobileStorageAvailable = MobileLocalStorage.isAvailable();
   if (isMobileStorageAvailable) {
     LocalStorage = MobileLocalStorage;
   } else {
