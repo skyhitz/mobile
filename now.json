@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": ["skyhitz.io", "www.skyhitz.io"],
   "routes": [
     {
       "src": "^/service-worker.js$",

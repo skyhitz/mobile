@@ -11907,7 +11907,7 @@ next-fonts@^1.0.3:
     file-loader "^2.0.0"
     url-loader "^1.1.1"
 
-next-offline@^5.0.0:
+next-offline@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/next-offline/-/next-offline-5.0.0.tgz#bd47a795965aceace38cdb60709c8ef980c49559"
   integrity sha512-u3w+OCtWX0B1gES8L+mWhf1aPk3t81eGqaeukswnzLgdCVjSrbrMB3YcdoWMf80Vf5k6IcgGNVU2sGZVdqjnUQ==
