@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "NODE_ENV=development expo start",
     "start:prod": "expo start --no-dev",
-    "start:web": "expo start --web",
+    "start:web": "yarn next dev",
     "expo:publish": "expo publish",
     "eject": "expo eject",
     "android": "expo start --android --no-dev",
