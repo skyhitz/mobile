@@ -111,5 +111,4 @@ const API: TAsyncStorage = {
     return available;
   },
 };
-
 export default API;
