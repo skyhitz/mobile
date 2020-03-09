@@ -3,9 +3,12 @@
 
 const { withExpo } = require('@expo/next-adapter');
 const withFonts = require('next-fonts');
+const withOffline = require('next-offline');
 
 module.exports = withExpo(
-  withFonts({
-    projectRoot: __dirname,
-  })
+  withFonts(
+    withOffline({
+      projectRoot: __dirname,
+    })
+  )
 );
