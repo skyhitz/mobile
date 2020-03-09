@@ -5,35 +5,35 @@ import React from 'react';
 let data = [
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-4.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/c_scale,h_599,q_auto/v1583267403/web/screen-4.png',
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-2.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/c_scale,h_599,q_auto/v1583267403/web/screen-2.png',
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-3.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/c_scale,h_599,q_auto/v1583267403/web/screen-3.png',
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-8.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/c_scale,h_599,q_auto/v1583267403/web/screen-8.png',
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-5.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/c_scale,h_599,q_auto/v1583267403/web/screen-5.png',
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-6.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/c_scale,h_599,q_auto/v1583267403/web/screen-6.png',
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-7.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/c_scale,h_599,q_auto/v1583267403/web/screen-7.png',
   },
   {
     src:
-      'https://res.cloudinary.com/skyhitz/image/upload/v1583267403/web/screen-1.png',
+      'https://res.cloudinary.com/skyhitz/image/upload/c_scale,h_599,q_auto/v1583267403/web/screen-1.png',
   },
 ];
 
