@@ -87,6 +87,17 @@ const API: TAsyncStorage = {
   flushGetRequests: () => {
     console.warn('AsyncStorage.flushGetRequests: Not supported');
   },
+  isAvailable: () => {
+    let available = true;
+    try {
+      if (!API) return false;
+
+      let keys = API.getAllKeys();
+    } catch (e) {
+      available = false;
+    }
+    return available;
+  },
 };
 
 export default API;
