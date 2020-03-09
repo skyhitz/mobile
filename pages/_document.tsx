@@ -3,8 +3,12 @@
 import { getInitialProps } from '@expo/next-adapter/document';
 import Document, { Head, Html, NextScript, Main } from 'next/document';
 import React from 'react';
+import { initializeGoogleTagManager } from 'app/modules/marketing/web/GoogleTagManager';
 
 class CustomDocument extends Document {
+  componentDidMount() {
+    initializeGoogleTagManager();
+  }
   render() {
     return (
       <Html>
