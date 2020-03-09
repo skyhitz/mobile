@@ -45,7 +45,7 @@ export default () => {
       <View style={{ marginRight: 10 }}>
         <Anchor
           target="_blank"
-          href="https://www.instagram.com/skyhitz"
+          href="https://instagram.com/skyhitz"
           aria-label="Read more about Skyhitz on instagram"
           style={[{ fontSize: 16, color: Colors.white }]}
         >
