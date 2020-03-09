@@ -46,4 +46,5 @@ export default {
   facebookBtnBackground: '#44619D',
   joinBtnBackground: '#00aeef',
   loginTextColor: '#000000',
+  black: 'black',
 };

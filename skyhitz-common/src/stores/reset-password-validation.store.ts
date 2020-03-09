@@ -1,13 +1,11 @@
 import { observable, computed } from 'mobx';
 
 export class ResetPasswordValidationStore {
-  @observable emailError: string;
-  @observable emailValid: boolean;
-  @observable backendError: string;
+  @observable emailError: string = '';
+  @observable emailValid: boolean = true;
+  @observable backendError: string = '';
 
-  constructor (
-  ) {
-  }
+  constructor() {}
 
   validateEmail(email: string) {
     if (!email) {
@@ -23,8 +21,8 @@ export class ResetPasswordValidationStore {
       return;
     }
 
-    this.emailError = null;
-    return this.emailValid = true;
+    delete this.emailError;
+    return (this.emailValid = true);
   }
 
   @computed
@@ -48,5 +46,4 @@ export class ResetPasswordValidationStore {
   setBackendError(error: string) {
     this.backendError = error;
   }
-
 }

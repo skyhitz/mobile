@@ -17,7 +17,7 @@ export class PlaylistsStore {
   @observable modalPlaylistName: string = '';
   @observable modalPlaylistDescription: string = '';
   @observable showPlaylistsModal: boolean = false;
-  @observable entryToBeAdded: Entry;
+  @observable entryToBeAdded!: Entry;
 
   constructor(private sessionStore: SessionStore) {}
 
@@ -125,7 +125,8 @@ export class PlaylistsStore {
   };
 
   async remove() {
-    await playlistsBackend.removePlaylist(this.playlistToBeRemoved.id);
+    await playlistsBackend.removePlaylist(this.playlistToBeRemoved
+      .id as string);
     await this.refreshPlaylists();
   }
 
@@ -134,7 +135,7 @@ export class PlaylistsStore {
   }
 
   diselectEntryToBeAdded() {
-    this.entryToBeAdded = null;
+    delete this.entryToBeAdded;
   }
 
   async addToPlaylist(playlistId: string) {

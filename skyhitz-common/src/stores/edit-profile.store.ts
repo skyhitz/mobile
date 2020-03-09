@@ -5,17 +5,17 @@ import { SessionStore } from './session.store';
 import { preBase64String, cloudinaryApiPath } from '../constants/constants';
 
 export class EditProfileStore {
-  @observable error: string;
-  @observable avatarUrl: string;
-  @observable displayName: string;
-  @observable description: string;
-  @observable username: string;
-  @observable email: string;
-  @observable phone: string;
-  @observable profile: User;
-  @observable loadingAvatar: boolean;
+  @observable error: string | undefined;
+  @observable avatarUrl: string | undefined;
+  @observable displayName: string | undefined;
+  @observable description: string | undefined;
+  @observable username: string | undefined;
+  @observable email: string | undefined;
+  @observable phone: string | undefined;
+  @observable profile: User | undefined;
+  @observable loadingAvatar: boolean | undefined;
 
-  constructor(public sessionStore: SessionStore) { }
+  constructor(public sessionStore: SessionStore) {}
 
   public disposer = observe(this.sessionStore.session, ({ object }) => {
     this.profile = object.user;
@@ -28,7 +28,7 @@ export class EditProfileStore {
       description,
       username,
       email,
-      phone
+      phone,
     } = this.profile;
     this.avatarUrl = avatarUrl;
     this.displayName = displayName;
@@ -52,32 +52,32 @@ export class EditProfileStore {
   @action
   updateAvatarUrl = (text: string) => {
     this.avatarUrl = text;
-  }
+  };
 
   @action
   updateDisplayName = (text: string) => {
     this.displayName = text;
-  }
+  };
 
   @action
   updateDescription = (text: string) => {
     this.description = text;
-  }
+  };
 
   @action
   updateUsername = (text: string) => {
     this.username = text;
-  }
+  };
 
   @action
   updateEmail = (text: string) => {
     this.email = text;
-  }
+  };
 
   @action
   updatePhone = (text: string) => {
     this.phone = text;
-  }
+  };
 
   get validationError() {
     if (!this.avatarUrl) {
@@ -117,12 +117,12 @@ export class EditProfileStore {
     let user;
     try {
       user = await userBackend.updateUser(
-        this.avatarUrl,
-        this.displayName,
-        this.description,
-        this.username,
-        this.email,
-        this.phone
+        this.avatarUrl as string,
+        this.displayName as string,
+        this.description as string,
+        this.username as string,
+        this.email as string,
+        this.phone as string
       );
       await userBackend.updateAlgoliaEntriesWithUser();
     } catch (e) {

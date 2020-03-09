@@ -6,7 +6,7 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "jsx": "react-native",
+    "jsx": "preserve",
     "lib": ["es6"],
     "moduleResolution": "node",
     "noEmit": true,
@@ -15,7 +15,13 @@
     "baseUrl": ".",
     "paths": {
       "app/*": ["./*"]
-    }
+    },
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "noImplicitAny": false
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

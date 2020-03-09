@@ -20,24 +20,33 @@ type Stores = typeof stores;
 }))
 export default class SeekBar extends React.Component<any, any> {
   render() {
-    return <TouchableWithoutFeedback
-      onLayout={(evt) => this.props.onSliderLayout(evt)}
-      onPress={(evt) => this.props.onSeekBarTap(evt)}
-    >
-      <Slider
-        style={{ marginRight: 10, marginLeft: 10, flex: 1 }}
-        value={this.props.seekSliderPosition ? this.props.seekSliderPosition : 0}
-        onValueChange={(value) => this.props.onSeekSliderValueChange(value)}
-        onSlidingComplete={(value) => this.props.onSeekSliderSlidingComplete(value)}
-        disabled={
-          this.props.playbackState === PLAYBACK_STATES.LOADING ||
-          this.props.playbackState === PLAYBACK_STATES.ENDED ||
-          this.props.playbackState === PLAYBACK_STATES.ERROR
-        }
-        minimumTrackTintColor={Colors.brandBlue}
-        maximumTrackTintColor={Colors.backgroundTrackColor}
-        thumbTintColor={Colors.brandBlue}
-      />
-    </TouchableWithoutFeedback>
+    return (
+      <TouchableWithoutFeedback
+        onLayout={evt => this.props.onSliderLayout(evt)}
+        onPress={evt => this.props.onSeekBarTap(evt)}
+        style={{
+          zIndex: 15,
+        }}
+      >
+        <Slider
+          style={{ marginRight: 10, marginLeft: 10, flex: 1 }}
+          value={
+            this.props.seekSliderPosition ? this.props.seekSliderPosition : 0
+          }
+          onValueChange={value => this.props.onSeekSliderValueChange(value)}
+          onSlidingComplete={value =>
+            this.props.onSeekSliderSlidingComplete(value)
+          }
+          disabled={
+            this.props.playbackState === PLAYBACK_STATES.LOADING ||
+            this.props.playbackState === PLAYBACK_STATES.ENDED ||
+            this.props.playbackState === PLAYBACK_STATES.ERROR
+          }
+          minimumTrackTintColor={Colors.brandBlue}
+          maximumTrackTintColor={Colors.backgroundTrackColor}
+          thumbTintColor={Colors.brandBlue}
+        />
+      </TouchableWithoutFeedback>
+    );
   }
 }

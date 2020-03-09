@@ -1,18 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-// import NavBar from './NavBar';
-// import BackgroundImage from './BackgroundImage';
-// import MainWrapper from 'app/components/main-wrapper/main-wrapper';
-// import Footer from 'app/components/footer/footer';
+import NavBar from './NavBar';
+import BackgroundImage from './BackgroundImage';
+import MainWrapper from './MainWrapper';
+import LandingFooter from './Footer';
 
 const Home = () => (
-  <View>
-    <Text>Hello web</Text>
-    {/* <NavBar />
-        <BackgroundImage /> */}
-    {/* <MainWrapper /> */}
-    {/* <Footer /> */}
-  </View>
+  <BackgroundImage>
+    <NavBar />
+    <MainWrapper />
+    <LandingFooter />
+  </BackgroundImage>
 );
 
 export default Home;

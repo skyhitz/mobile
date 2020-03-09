@@ -12,7 +12,7 @@ import {
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-const PlayPauseInvisibleArea = inject((stores:Stores) => ({
+const PlayPauseInvisibleArea = inject((stores: Stores) => ({
   playbackState: stores.playerStore.playbackState,
   seekState: stores.playerStore.seekState,
   togglePlay: stores.playerStore.togglePlay.bind(stores.playerStore),
@@ -23,7 +23,7 @@ const PlayPauseInvisibleArea = inject((stores:Stores) => ({
       playbackState == PLAYBACK_STATES.PAUSED)
   ) {
     return (
-      <TouchableWithoutFeedback onPress={togglePlay.bind(this)}>
+      <TouchableWithoutFeedback onPress={() => togglePlay()}>
         <View
           style={{
             width: videoWidth,

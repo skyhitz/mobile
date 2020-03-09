@@ -1,6 +1,6 @@
 /// <reference path="./CreateBrowserApp.d.ts"/>
 import React from 'react';
-import { StyleSheet, StatusBar, View, Platform } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import { inject } from 'mobx-react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -19,7 +19,7 @@ import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import * as stores from 'app/skyhitz-common';
-import WebApp from '../marketing/web/Home';
+// import WebApp from '../marketing/web/Home';
 
 type Stores = typeof stores;
 
@@ -123,7 +123,7 @@ const AppStack = createStackNavigator(
 );
 
 const createApp = Platform.select({
-  web: (config: any) => createBrowserApp(config, { history: 'hash' }),
+  web: (config: any) => createBrowserApp(config, { history: 'browser' }),
   default: (config: any) => createAppContainer(config),
 });
 
@@ -131,7 +131,7 @@ const RootStackNavigator = createSwitchNavigator(
   {
     AuthLoading: {
       screen: AuthLoadingScreen,
-      path: `auth-loading`,
+      path: ``,
     },
     App: {
       screen: AppStack,
@@ -141,10 +141,10 @@ const RootStackNavigator = createSwitchNavigator(
       screen: AuthStack,
       path: `auth`,
     },
-    WebApp: {
-      screen: WebApp,
-      path: ``,
-    },
+    // WebApp: {
+    //   screen: WebApp,
+    //   path: ``,
+    // },
   },
   {
     initialRouteName: 'AuthLoading',
@@ -171,9 +171,6 @@ export default class RootNavigator extends React.Component<any, any> {
   static async getDerivedStateFromProps(props: any) {
     StatusBar.setBarStyle('light-content');
 
-    // Kicks user out in case there is an authentication error and the user is set to null.
-    // This could happen if a non authorized request is made to a protected endpoint.
-    // Automatically redirects to accounts if the user logs out.
     if (!props.user) {
       navigate('Auth');
     } else {
