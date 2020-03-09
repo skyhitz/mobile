@@ -1,0 +1,21 @@
+{
+  "short_name": "Skyhitz",
+  "name": "Skyhitz",
+  "icons": [
+    {
+      "src": "/img/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?utm_source=a2hs",
+  "background_color": "#1A1B1F",
+  "display": "minimal-ui",
+  "orientation": "landscape",
+  "theme_color": "#cccccc"
+}
