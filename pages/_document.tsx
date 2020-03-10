@@ -3,16 +3,22 @@
 import { getInitialProps } from '@expo/next-adapter/document';
 import Document, { Head, Html, NextScript, Main } from 'next/document';
 import React from 'react';
-import { initializeGoogleTagManager } from 'app/modules/marketing/web/GoogleTagManager';
+const GoogleTagManagerId = 'GTM-5HR7H3L';
 
 class CustomDocument extends Document {
-  componentDidMount() {
-    initializeGoogleTagManager();
-  }
   render() {
     return (
       <Html lang="en">
         <Head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','${GoogleTagManagerId}');`,
+            }}
+          ></script>
           <meta
             name="title"
             content="Skyhitz - Beats market for music creators"
@@ -86,6 +92,14 @@ class CustomDocument extends Document {
           />
         </Head>
         <body>
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GoogleTagManagerId}`}
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            ></iframe>
+          </noscript>
           <Main />
           <NextScript />
         </body>

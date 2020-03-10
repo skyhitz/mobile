@@ -48,7 +48,6 @@
     "next-fonts": "^1.0.3",
     "react": "16.9.0",
     "react-dom": "16.9.0",
-    "react-gtm-module": "^2.0.8",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-gesture-handler": "~1.5.0",
     "react-native-iphone-x-helper": "^1.2.1",
@@ -82,8 +81,8 @@
     "eslint-plugin-prettier": "^2.1.1",
     "eslint-plugin-react": "^7.0.1",
     "expo-cli": "^3.13.1",
-    "now": "^17.0.4",
     "next-offline": "5.0.0",
+    "now": "^17.0.4",
     "prettier": "^1.4.0",
     "typescript": "^3.4.5"
   }
