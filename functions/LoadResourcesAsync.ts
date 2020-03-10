@@ -6,10 +6,22 @@ import {
   MaterialIcons,
 } from '@expo/vector-icons';
 
+enum FontDisplay {
+  AUTO = 'auto',
+  BLOCK = 'block',
+  SWAP = 'swap',
+  FALLBACK = 'fallback',
+  OPTIONAL = 'optional',
+}
+
 export async function loadResourcesAsync() {
   return Promise.all([
     Font.loadAsync({
-      'Raleway-Light': require('app/assets/fonts/Raleway-Light.ttf'),
+      'Raleway-Light': {
+        uri: require('app/assets/fonts/Raleway-Light.ttf'),
+        fontDisplay: FontDisplay.SWAP,
+        name: 'Raleway-Light',
+      },
     }),
     Font.loadAsync(Ionicons.font),
     Font.loadAsync(FontAwesome.font),
