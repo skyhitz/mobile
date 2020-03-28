@@ -73,8 +73,8 @@ class HeadComponent extends React.Component {
           rel="preconnect"
           crossOrigin="true"
         />
-        <link rel="alternate" href="https://skyhitz.io" hreflang="x-default" />
-        <link rel="alternate" href="https://skyhitz.io" hreflang="en" />
+        <link rel="alternate" href="https://skyhitz.io" hrefLang="x-default" />
+        <link rel="alternate" href="https://skyhitz.io" hrefLang="en" />
       </Head>
     );
   }
