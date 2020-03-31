@@ -7,6 +7,8 @@ import * as Device from 'expo-device';
 let Anchor: React.ComponentType<any> = A;
 import { useMediaQuery } from 'react-responsive';
 
+// https://apps.apple.com/us/app/skyhitz/id1105406020
+
 export default function MainWrapper() {
   const isTablet = useMediaQuery({ query: '(max-width: 800px)' });
 
@@ -34,7 +36,7 @@ export default function MainWrapper() {
           href={
             Device.osName == 'Android' || Device.osName == 'Windows'
               ? 'https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz'
-              : 'https://apps.apple.com/us/app/skyhitz/id1105406020'
+              : 'https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz'
           }
           target="_blank"
         >
