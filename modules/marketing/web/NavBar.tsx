@@ -12,7 +12,7 @@ const Navbar = () => (
       height: 56,
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
     }}
   >
     <Anchor
@@ -37,6 +37,36 @@ const Navbar = () => (
         <Text style={styles.logo}>SKYHITZ</Text>
       </View>
     </Anchor>
+    <View
+      style={{
+        height: 56,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingRight: 20,
+      }}
+    >
+      <Anchor href="/sign-in" target="_self">
+        <Text style={styles.defaultText}>Log in</Text>
+      </Anchor>
+      <Anchor
+        href="/sign-up"
+        target="_self"
+        style={{
+          background: '#fff',
+          height: 36,
+          width: 98,
+          borderRadius: 98,
+          justifyContent: 'center',
+          alignItems: 'center',
+          display: 'flex',
+          marginLeft: 15,
+        }}
+      >
+        <Text style={styles.signUpText}>Sign Up</Text>
+      </Anchor>
+    </View>
   </Nav>
 );
 
@@ -48,6 +78,20 @@ let styles = StyleSheet.create({
     paddingLeft: 8,
     fontFamily: 'Raleway-Light',
     fontWeight: '200',
+  },
+  defaultText: {
+    color: 'rgb(255,255,255)',
+    fontSize: 14,
+    letterSpacing: 2,
+    fontFamily: 'Raleway-Light',
+    fontWeight: 'bold',
+  },
+  signUpText: {
+    color: 'rgb(0, 0, 0)',
+    fontSize: 14,
+    letterSpacing: 2,
+    fontFamily: 'Raleway-Light',
+    fontWeight: 'bold',
   },
 });
 
