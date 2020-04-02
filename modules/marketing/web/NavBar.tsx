@@ -54,7 +54,7 @@ const Navbar = () => (
         href="/sign-up"
         target="_self"
         style={{
-          background: '#fff',
+          backgroundColor: '#fff',
           height: 36,
           width: 98,
           borderRadius: 98,

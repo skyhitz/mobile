@@ -2,17 +2,11 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, View, Platform } from 'react-native';
 import { inject } from 'mobx-react';
 import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
-import {
-  Ionicons,
-  FontAwesome,
-  EvilIcons,
-  MaterialIcons,
-} from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { Images } from 'app/assets/images/Images';
 import { setNavigator, navigate } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
+import { loadResourcesAsync } from 'app/functions/LoadResourcesAsync';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -27,9 +21,9 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
   }
 
   async componentDidMount() {
-    await this.loadResourcesAsync();
+    await this.loadResources();
     if (Platform.OS === 'web') {
-      // navigate('WebApp');
+      navigate('WebApp');
     } else {
       navigate(this.props.user ? 'ProfileSettings' : 'Auth');
     }
@@ -43,16 +37,10 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
     return;
   }
 
-  loadResourcesAsync = async () => {
+  loadResources = async () => {
     return Promise.all([
       Asset.loadAsync(Images),
-      Font.loadAsync({
-        'Raleway-Light': require('../../assets/fonts/Raleway-Light.ttf'),
-      }),
-      Font.loadAsync(Ionicons.font),
-      Font.loadAsync(FontAwesome.font),
-      Font.loadAsync(MaterialIcons.font),
-      Font.loadAsync(EvilIcons.font),
+      loadResourcesAsync(),
       this.loadSessionAndIdentifyUser(),
     ]);
   };

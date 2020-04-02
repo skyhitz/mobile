@@ -6,6 +6,8 @@ import {
   MaterialIcons,
 } from '@expo/vector-icons';
 
+const f: any = Font;
+
 enum FontDisplay {
   AUTO = 'auto',
   BLOCK = 'block',
@@ -16,16 +18,16 @@ enum FontDisplay {
 
 export async function loadResourcesAsync() {
   return Promise.all([
-    Font.loadAsync({
+    f.loadAsync({
       'Raleway-Light': {
         uri: require('app/assets/fonts/Raleway-Light.ttf'),
         fontDisplay: FontDisplay.SWAP,
         name: 'Raleway-Light',
       },
     }),
-    Font.loadAsync(Ionicons.font),
-    Font.loadAsync(FontAwesome.font),
-    Font.loadAsync(MaterialIcons.font),
-    Font.loadAsync(EvilIcons.font),
+    f.loadAsync(Ionicons.font),
+    f.loadAsync(FontAwesome.font),
+    f.loadAsync(MaterialIcons.font),
+    f.loadAsync(EvilIcons.font),
   ]);
 }

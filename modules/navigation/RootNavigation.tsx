@@ -19,7 +19,7 @@ import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import * as stores from 'app/skyhitz-common';
-// import WebApp from '../marketing/web/Home';
+import WebApp from '../marketing/web/Home';
 
 type Stores = typeof stores;
 
@@ -123,7 +123,7 @@ const AppStack = createStackNavigator(
 );
 
 const createApp = Platform.select({
-  web: (config: any) => createBrowserApp(config, { history: 'browser' }),
+  web: (config: any) => createAppContainer(config),
   default: (config: any) => createAppContainer(config),
 });
 
@@ -141,10 +141,10 @@ const RootStackNavigator = createSwitchNavigator(
       screen: AuthStack,
       path: `auth`,
     },
-    // WebApp: {
-    //   screen: WebApp,
-    //   path: ``,
-    // },
+    WebApp: {
+      screen: WebApp,
+      path: ``,
+    },
   },
   {
     initialRouteName: 'AuthLoading',
