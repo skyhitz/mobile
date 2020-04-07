@@ -3763,10 +3763,9 @@
     react-native-safe-area-view "^0.14.1"
     react-native-screens "^1.0.0 || ^1.0.0-alpha"
 
-"@react-navigation/web@~1.0.0-alpha.9":
-  version "1.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@react-navigation/web/-/web-1.0.0-alpha.9.tgz#bb960fe7040a0cd1359b84b9921212a9468bace3"
-  integrity sha512-1UugAcTbJ/yJNLVvEIJ+hAp/KcwBiRU76vPvNXD1NLrU0ZzK1+GrxvzR7p4effMTJgPRkRzvz8tRNklv8YLLHQ==
+"@react-navigation/web@https://github.com/skyhitz/react-navigation-web.git":
+  version "2.0.0-alpha.0"
+  resolved "https://github.com/skyhitz/react-navigation-web.git#9b8d6528f623bcbe4f0268d138ac6fc2836edcb5"
   dependencies:
     history "^4.7.2"
     query-string "^6.2.0"

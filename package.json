@@ -26,7 +26,7 @@
     "@expo/match-media": "^0.0.0-alpha.5",
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/masked-view": "0.1.5",
-    "@react-navigation/web": "~1.0.0-alpha.9",
+    "@react-navigation/web": "https://github.com/skyhitz/react-navigation-web.git",
     "algoliasearch": "^3.32.0",
     "apollo-client": "^1.9.3",
     "babel-preset-expo": "^7.0.0",

@@ -14,9 +14,6 @@ module.exports = withExpo(
         target: 'serverless',
         workboxOpts: {
           swDest: 'static/service-worker.js',
-          clientsClaim: true,
-          skipWaiting: true,
-          exclude: [/swagger-ui/],
           runtimeCaching: [
             {
               urlPattern: /^https?.*/,

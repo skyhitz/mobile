@@ -123,7 +123,11 @@ const AppStack = createStackNavigator(
 );
 
 const createApp = Platform.select({
-  web: (config: any) => createAppContainer(config),
+  web: (config: any) =>
+    createBrowserApp(config, {
+      history:
+        typeof (global as any).window !== 'undefined' ? 'browser' : 'memory',
+    }),
   default: (config: any) => createAppContainer(config),
 });
 
@@ -143,7 +147,7 @@ const RootStackNavigator = createSwitchNavigator(
     },
     WebApp: {
       screen: WebApp,
-      path: ``,
+      path: `web`,
     },
   },
   {
