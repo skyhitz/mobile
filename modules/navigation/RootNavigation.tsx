@@ -147,7 +147,7 @@ const RootStackNavigator = createSwitchNavigator(
     },
     WebApp: {
       screen: WebApp,
-      path: `web`,
+      path: ``,
     },
   },
   {
