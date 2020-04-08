@@ -2,6 +2,8 @@ import React from 'react';
 import { Nav, A } from '@expo/html-elements';
 import SkyhitzLogo from './SkyhitzLogo';
 import { View, Text, StyleSheet } from 'react-native';
+import { Link } from 'expo-next-react-navigation';
+
 let Anchor: React.ComponentType<any> = A;
 
 const Navbar = () => (
@@ -47,9 +49,14 @@ const Navbar = () => (
         paddingRight: 20,
       }}
     >
-      <Anchor href="/accounts/sign-in" target="_self">
+      <Link
+        routeName="SignIn"
+        web={{
+          path: `/accounts/sign-in`,
+        }}
+      >
         <Text style={styles.defaultText}>Log in</Text>
-      </Anchor>
+      </Link>
       <Anchor
         href="/accounts/sign-up"
         target="_self"
