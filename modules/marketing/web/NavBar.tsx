@@ -47,11 +47,11 @@ const Navbar = () => (
         paddingRight: 20,
       }}
     >
-      <Anchor href="/sign-in" target="_self">
+      <Anchor href="/accounts/sign-in" target="_self">
         <Text style={styles.defaultText}>Log in</Text>
       </Anchor>
       <Anchor
-        href="/sign-up"
+        href="/accounts/sign-up"
         target="_self"
         style={{
           backgroundColor: '#fff',
