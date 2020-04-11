@@ -2,6 +2,7 @@ import React from 'react';
 import RootNavigation from 'app/modules/navigation/RootNavigation';
 import Providers from 'app/modules/providers/Providers';
 import { View, Text } from 'react-native';
+import '@expo/match-media';
 
 const App = () => (
   <Providers>

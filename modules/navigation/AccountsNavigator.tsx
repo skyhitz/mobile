@@ -13,14 +13,14 @@ const AccountsNavigator = createStackNavigator({
       headerShown: false,
       gestureEnabled: false,
     },
-    path: `home`,
+    path: ``,
   },
   SignUp: {
     screen: SignUpScreen as any,
     path: `sign-up`,
   },
   SignIn: {
-    screen: SignInScreen as any,
+    screen: SignInScreen,
     path: `sign-in`,
   },
   ResetPassword: {
