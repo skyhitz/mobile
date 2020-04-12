@@ -50,6 +50,11 @@ const SignIn: NavStatelessComponent = observer(props => {
     return setLoading(false);
   };
 
+  const updateUsernameOrEmail = (text: any) => {
+    setUsernameOrEmail(text);
+    signInValidationStore.validateUsernameOrEmail(text);
+  };
+
   const updatePassword = (text: any) => {
     setPassword(text);
     signInValidationStore.validatePassword(password);
@@ -64,44 +69,21 @@ const SignIn: NavStatelessComponent = observer(props => {
       resizeMode="cover"
       source={AuthBackground2}
     >
-      <View
-        style={[
-          styles.errorContainer,
-          { opacity: signInValidationStore.error ? 1 : 0 },
-        ]}
-      >
-        <Text style={styles.error}>{signInValidationStore.error}</Text>
-      </View>
       <View style={styles.inputContainer}>
         <View style={styles.field}>
-          <MaterialIcons
-            name="person-outline"
-            size={24}
-            color={Colors.white}
-            style={styles.placeholderIcon}
-          />
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
-            placeholder="Username or email"
+            placeholder="Username or email address"
             autoCorrect={false}
             style={styles.input}
             autoFocus={true}
             placeholderTextColor="white"
             value={usernameOrEmail}
-            onChangeText={setUsernameOrEmail}
-            onBlur={() =>
-              signInValidationStore.validateUsernameOrEmail(usernameOrEmail)
-            }
+            onChangeText={updateUsernameOrEmail}
           />
         </View>
         <View style={styles.field}>
-          <MaterialIcons
-            name="lock-outline"
-            size={22}
-            color={Colors.white}
-            style={styles.placeholderIcon}
-          />
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -112,8 +94,17 @@ const SignIn: NavStatelessComponent = observer(props => {
             placeholderTextColor="white"
             value={password}
             onChangeText={updatePassword}
-            onBlur={() => signInValidationStore.validatePassword(password)}
           />
+        </View>
+        <View style={styles.errorContainer}>
+          <Text
+            style={[
+              styles.error,
+              { opacity: signInValidationStore.error ? 1 : 0 },
+            ]}
+          >
+            {signInValidationStore.error}
+          </Text>
         </View>
         <TouchableHighlight
           style={[
@@ -131,7 +122,7 @@ const SignIn: NavStatelessComponent = observer(props => {
               color={Colors.white}
             />
           ) : (
-            <Text style={styles.joinTextBtn}>LOG IN</Text>
+            <Text style={styles.joinTextBtn}>Log In</Text>
           )}
         </TouchableHighlight>
         <TouchableOpacity
@@ -177,19 +168,22 @@ let styles = StyleSheet.create({
   field: {
     maxHeight: 50,
     flex: 1,
-    borderBottomColor: Colors.dividerBackground,
-    borderBottomWidth: 1,
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: Colors.darkBlueFieldTransparent,
+    borderRadius: 10,
+    marginVertical: 10,
   },
   inputContainer: {
-    marginLeft: formPadding,
-    marginRight: formPadding,
+    alignSelf: 'center',
     marginTop: 40,
     flex: 1,
+    maxWidth: 380,
+    width: '100%',
   },
   placeholderIcon: {
     position: 'absolute',
-    bottom: 8,
     left: 0,
     backgroundColor: Colors.transparent,
   },
@@ -197,14 +191,14 @@ let styles = StyleSheet.create({
     backgroundColor: Colors.transparent,
     color: Colors.white,
     fontSize: 14,
-    paddingLeft: 36,
-    bottom: 8,
+    padding: 10,
+    outlineWidth: 0,
+    width: '100%',
   },
   joinBtn: {
     height: 48,
     backgroundColor: Colors.lightBlueBtn,
-    borderRadius: 3,
-    marginTop: 40,
+    borderRadius: 24,
   },
   joinTextBtn: {
     textAlign: 'center',
@@ -215,15 +209,13 @@ let styles = StyleSheet.create({
   },
   errorContainer: {
     maxHeight: 40,
-    backgroundColor: Colors.errorBackground,
-    paddingLeft: formPadding,
-    paddingRight: formPadding,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   error: {
-    color: Colors.white,
+    color: Colors.errorBackground,
   },
   forgotPass: {
     backgroundColor: 'transparent',
