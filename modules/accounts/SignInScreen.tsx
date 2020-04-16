@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { HeaderBackButton } from 'react-navigation-stack';
 import { goBack, navigate } from 'app/modules/navigation/Navigator';
 import { observer } from 'mobx-react';
-import { MaterialIcons } from '@expo/vector-icons';
-import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import { AuthBackground2 } from 'app/assets/images/Images';
 import {
@@ -16,11 +14,9 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import * as stores from 'app/skyhitz-common';
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { useMediaQuery } from 'react-responsive';
-type Stores = typeof stores;
 
 const SignIn: NavStatelessComponent = observer(props => {
   const { signInValidationStore, sessionStore } = Stores();
@@ -62,10 +58,7 @@ const SignIn: NavStatelessComponent = observer(props => {
 
   return (
     <ImageBackground
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
+      style={styles.background}
       resizeMode="cover"
       source={AuthBackground2}
     >
@@ -152,40 +145,29 @@ SignIn.navigationOptions = ({ navigation }) => ({
 
 export default SignIn;
 
-const formPadding = 20;
-
 let styles = StyleSheet.create({
-  blur: {
-    height: Layout.window.height,
+  background: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  bg: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: Layout.window.width,
-    height: Layout.window.height,
+  inputContainer: {
+    alignSelf: 'center',
+    marginTop: 0,
+    maxWidth: 380,
+    width: '100%',
   },
   field: {
-    maxHeight: 50,
-    flex: 1,
+    height: 50,
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: Colors.darkBlueFieldTransparent,
     borderRadius: 10,
     marginVertical: 10,
-  },
-  inputContainer: {
-    alignSelf: 'center',
-    marginTop: 40,
-    flex: 1,
-    maxWidth: 380,
-    width: '100%',
-  },
-  placeholderIcon: {
-    position: 'absolute',
-    left: 0,
-    backgroundColor: Colors.transparent,
   },
   input: {
     backgroundColor: Colors.transparent,
@@ -208,8 +190,7 @@ let styles = StyleSheet.create({
     fontSize: 16,
   },
   errorContainer: {
-    maxHeight: 40,
-    flex: 1,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
