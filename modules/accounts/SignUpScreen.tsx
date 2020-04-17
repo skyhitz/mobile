@@ -12,7 +12,8 @@ import { observer } from 'mobx-react';
 import { HeaderBackButton } from 'react-navigation-stack';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
-import { goBack, navigate } from 'app/modules/navigation/Navigator';
+import { useNavigation } from 'react-navigation-hooks';
+import { goBack } from 'app/modules/navigation/Navigator';
 import { AuthBackground2 } from 'app/assets/images/Images';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
@@ -27,6 +28,7 @@ const SignUp: NavStatelessComponent = observer(props => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const isDesktop = useMediaQuery({ minWidth: 768 });
+  const { navigate } = useNavigation();
 
   useEffect(() => {
     if (isDesktop && !props.navigation.getParam('web')) {

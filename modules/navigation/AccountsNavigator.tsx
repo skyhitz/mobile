@@ -4,7 +4,6 @@ import SignUpScreen from 'app/modules/accounts/SignUpScreen';
 import SignInScreen from 'app/modules/accounts/SignInScreen';
 import ResetPasswordScreen from 'app/modules/accounts/ResetPasswordScreen';
 import UpdatePasswordScreen from 'app/modules/accounts/UpdatePasswordScreen';
-import ConfirmUsernameAndEmailScreen from 'app/modules/accounts/ConfirmUsernameAndEmailScreen';
 
 const AccountsNavigator = createStackNavigator({
   AuthScreen: {
@@ -29,11 +28,7 @@ const AccountsNavigator = createStackNavigator({
   },
   UpdatePassword: {
     screen: UpdatePasswordScreen as any,
-    path: `update-password/:token`,
-  },
-  ConfirmUsernameAndEmail: {
-    screen: ConfirmUsernameAndEmailScreen as any,
-    path: `confirm-username-and-email`,
+    path: `update-password`,
   },
 });
 

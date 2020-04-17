@@ -2,9 +2,9 @@ import { observable, computed } from 'mobx';
 
 export class UpdatePasswordValidationStore {
   @observable passwordError: string = '';
-  @observable passwordValid: boolean = true;
+  @observable passwordValid;
   @observable passwordConfirmationError: string = '';
-  @observable passwordConfirmationValid: boolean = true;
+  @observable passwordConfirmationValid;
   @observable backendError: string = '';
 
   constructor() {}

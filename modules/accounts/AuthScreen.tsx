@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,87 +6,70 @@ import {
   Image,
   ImageBackground,
   TouchableHighlight,
-  ActivityIndicator,
 } from 'react-native';
-import { inject } from 'mobx-react';
 import Layout from 'app/constants/Layout';
 import { navigate } from 'app/modules/navigation/Navigator';
 import { AuthBackground, Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { NavStatelessComponent } from 'app/interfaces/Interfaces';
+import { useMediaQuery } from 'react-responsive';
 
-@inject((stores: Stores) => ({
-  signInWithFacebook: stores.sessionStore.signInWithFacebook.bind(
-    stores.sessionStore
-  ),
-}))
-export default class AuthScreen extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      loading: false,
-    };
-  }
-  render() {
-    return (
-      <ImageBackground style={styles.bg} source={AuthBackground}>
-        <View style={styles.contentWrap}>
-          <View style={styles.brand}>
-            <Image style={styles.logo} source={Logo} />
-            <TextWithLetterSpacing
-              spacing={16}
-              viewStyle={styles.titleView}
-              textStyle={styles.titleText}
-            >
-              SKYHITZ
-            </TextWithLetterSpacing>
-          </View>
-          <View>
-            <View style={styles.signInWrap}>
-              {/* <TouchableHighlight
-                style={styles.loginFacebook}
-                onPress={this.handleFacebookSignIn.bind(this)}
+const AuthScreen: NavStatelessComponent = props => {
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+
+  useEffect(() => {
+    if (isDesktop && !props.navigation.getParam('web')) {
+      props.navigation.setParams({ web: true });
+    }
+  });
+
+  return (
+    <ImageBackground style={styles.bg} source={AuthBackground}>
+      <View style={styles.contentWrap}>
+        <View style={styles.brand}>
+          <Image style={styles.logo} source={Logo} />
+          <TextWithLetterSpacing
+            spacing={16}
+            viewStyle={styles.titleView}
+            textStyle={styles.titleText}
+          >
+            SKYHITZ
+          </TextWithLetterSpacing>
+        </View>
+        <View>
+          <View style={styles.signInWrap}>
+            <View style={styles.joinContainer}>
+              <TouchableHighlight
+                style={styles.joinBtn}
+                onPress={() => navigate('SignUp')}
               >
-                {this.renderButtonMessage(this.state.loading)}
-              </TouchableHighlight> */}
-              <View style={styles.joinContainer}>
-                <TouchableHighlight
-                  style={styles.joinBtn}
-                  onPress={() => navigate('SignUp')}
-                >
-                  <Text style={styles.joinText}>JOIN</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
-                  style={styles.loginBtn}
-                  onPress={() => navigate('SignIn')}
-                >
-                  <Text style={styles.loginText}>LOGIN</Text>
-                </TouchableHighlight>
-              </View>
+                <Text style={styles.joinText}>JOIN</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={styles.loginBtn}
+                onPress={() => navigate('SignIn')}
+              >
+                <Text style={styles.loginText}>LOGIN</Text>
+              </TouchableHighlight>
             </View>
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>
-                By using Skyhitz, you agree to the{' '}
-              </Text>
-              <Text style={styles.footerText}>
-                <Text style={styles.link}>Terms of Use</Text> and{' '}
-                <Text style={styles.link}>Privacy Policy.</Text>
-              </Text>
-            </View>
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>
+              By using Skyhitz, you agree to the{' '}
+            </Text>
+            <Text style={styles.footerText}>
+              <Text style={styles.link}>Terms of Use</Text> and{' '}
+              <Text style={styles.link}>Privacy Policy.</Text>
+            </Text>
           </View>
         </View>
-      </ImageBackground>
-    );
-  }
-  renderButtonMessage(loading: any) {
-    if (loading) {
-      return <ActivityIndicator size="small" color={Colors.white} />;
-    }
-    return <Text style={styles.loginFb}>LOGIN WITH FACEBOOK</Text>;
-  }
-}
+      </View>
+    </ImageBackground>
+  );
+};
+
+export default AuthScreen;
 
 const styles = StyleSheet.create({
   blur: {

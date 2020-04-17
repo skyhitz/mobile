@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HeaderBackButton } from 'react-navigation-stack';
-import { goBack, navigate } from 'app/modules/navigation/Navigator';
+import { goBack } from 'app/modules/navigation/Navigator';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { AuthBackground2 } from 'app/assets/images/Images';
@@ -17,6 +17,7 @@ import {
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { useMediaQuery } from 'react-responsive';
+import { useNavigation } from 'react-navigation-hooks';
 
 const SignIn: NavStatelessComponent = observer(props => {
   const { signInValidationStore, sessionStore } = Stores();
@@ -24,6 +25,7 @@ const SignIn: NavStatelessComponent = observer(props => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const isDesktop = useMediaQuery({ minWidth: 768 });
+  const { navigate } = useNavigation();
 
   useEffect(() => {
     if (isDesktop && !props.navigation.getParam('web')) {

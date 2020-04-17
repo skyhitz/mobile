@@ -25,7 +25,7 @@ export class UserBackend {
               phone
             }
           }
-        `
+        `,
       })
       .then((data: any) => data.data)
       .then(({ authenticatedUser }) => authenticatedUser);
@@ -53,7 +53,7 @@ export class UserBackend {
           phone
         }
       }
-      `
+      `,
       })
       .then((data: any) => data.data)
       .then(({ createUserWithEmail }) => createUserWithEmail)
@@ -83,7 +83,7 @@ export class UserBackend {
           phone
         }
       }
-      `
+      `,
       })
       .then((data: any) => data.data)
       .then(({ signIn }) => signIn)
@@ -100,7 +100,7 @@ export class UserBackend {
     mutation {
       sendResetEmail(email: "${email}")
     }
-    `
+    `,
       })
       .then((data: any) => data.data)
       .then(({ sendResetEmail }) => sendResetEmail)
@@ -130,7 +130,7 @@ export class UserBackend {
         phone
       }
     }
-    `
+    `,
       })
       .then((data: any) => data.data)
       .then(({ updatePassword }) => updatePassword)
@@ -167,7 +167,7 @@ export class UserBackend {
       phone
     }
   }
-  `
+  `,
       })
       .then((data: any) => data.data)
       .then(({ updateUser }) => updateUser)
@@ -184,7 +184,7 @@ export class UserBackend {
           mutation {
             updateAlgoliaEntriesWithUser
           }
-        `
+        `,
       })
       .then((data: any) => data.data)
       .then(({ updateAlgoliaEntriesWithUser }) => updateAlgoliaEntriesWithUser)
@@ -222,46 +222,10 @@ export class UserBackend {
           }
         }
       }
-      `
+      `,
       })
       .then((data: any) => data.data)
       .then(({ signInWithFacebook }) => signInWithFacebook)
-      .catch(({ graphQLErrors }) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
-
-  async confirmUsernameAndEmail(
-    username: string,
-    email: string,
-    token: string
-  ) {
-    return client
-      .mutate({
-        mutation: gql`
-      mutation {
-        confirmUsernameAndEmail(username: "${username}", email: "${email}", token: "${token}", testing:${
-          isTesting ? true : false
-        }){
-          avatarUrl
-          bannerUrl
-          displayName
-          reputation
-          username
-          id
-          jwt
-          publishedAt
-          userType
-          email
-          description
-          phone
-        }
-      }
-      `
-      })
-      .then((data: any) => data.data)
-      .then(({ confirmUsernameAndEmail }) => confirmUsernameAndEmail)
       .catch(({ graphQLErrors }) => {
         let [{ message }] = graphQLErrors;
         throw message;
