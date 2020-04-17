@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { HeaderBackButton } from 'react-navigation-stack';
@@ -19,6 +20,11 @@ import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { useMediaQuery } from 'react-responsive';
+import { observable } from 'mobx';
+
+const responsiveUi = observable({
+  isWeb: Platform.OS === 'web',
+});
 
 const SignUp: NavStatelessComponent = observer(props => {
   const { signUpValidationStore, sessionStore } = Stores();
@@ -31,8 +37,8 @@ const SignUp: NavStatelessComponent = observer(props => {
   const { navigate } = useNavigation();
 
   useEffect(() => {
-    if (isDesktop && !props.navigation.getParam('web')) {
-      props.navigation.setParams({ web: true });
+    if (isDesktop) {
+      responsiveUi.isWeb = true;
     }
   });
 
@@ -176,7 +182,7 @@ SignUp.navigationOptions = ({ navigation }) => ({
     backgroundColor: Colors.headerBackground,
     borderBottomWidth: 0,
   },
-  headerShown: navigation.state.params ? !navigation.state.params.web : true,
+  headerShown: !responsiveUi.isWeb,
   headerLeft: () => (
     <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
   ),

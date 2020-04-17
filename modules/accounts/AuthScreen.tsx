@@ -8,21 +8,14 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import Layout from 'app/constants/Layout';
-import { navigate } from 'app/modules/navigation/Navigator';
 import { AuthBackground, Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
-import { useMediaQuery } from 'react-responsive';
+import { useNavigation } from 'react-navigation-hooks';
 
 const AuthScreen: NavStatelessComponent = props => {
-  const isDesktop = useMediaQuery({ minWidth: 768 });
-
-  useEffect(() => {
-    if (isDesktop && !props.navigation.getParam('web')) {
-      props.navigation.setParams({ web: true });
-    }
-  });
+  const { navigate } = useNavigation();
 
   return (
     <ImageBackground style={styles.bg} source={AuthBackground}>
