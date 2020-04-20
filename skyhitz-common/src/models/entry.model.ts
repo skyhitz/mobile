@@ -21,6 +21,21 @@ export class EntryPayload extends Payload {
 export class Entry extends EntryPayload {
   constructor(payload: EntryPayload) {
     super(payload);
+    this.userDisplayName = payload.userDisplayName;
+    this.userUsername = payload.userUsername;
+    this.imageUrl = payload.imageUrl;
+    this.userId = payload.userId;
+    this.commentCount = payload.commentCount;
+    this.description = payload.description;
+    this.likeCount = payload.likeCount;
+    this.publishedAt = payload.publishedAt;
+    this.ranking = payload.ranking;
+    this.shareCount = payload.shareCount;
+    this.title = payload.title;
+    this.id = payload.id;
+    this.videoUrl = payload.videoUrl;
+    this.forSale = payload.forSale;
+    this.price = payload.price;
   }
 
   get cloudinaryPublicId() {

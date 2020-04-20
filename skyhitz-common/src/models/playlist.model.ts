@@ -14,6 +14,11 @@ export class PlaylistPayload extends Payload {
 export class Playlist extends PlaylistPayload {
   constructor(payload: PlaylistPayload) {
     super(payload);
+    this.photoUrl = payload.photoUrl;
+    this.title = payload.title;
+    this.description = payload.description;
+    this.id = payload.id;
+    this.PlaylistEntries = payload.PlaylistEntries;
     this.entries = List(
       this.PlaylistEntries
         ? this.PlaylistEntries.map(entryPayload => new Entry(entryPayload))

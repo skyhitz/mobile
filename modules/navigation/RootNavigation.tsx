@@ -37,7 +37,7 @@ const AppStack = createStackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
-      path: `main`,
+      path: ``,
       navigationOptions: {
         headerShown: false,
         gestureEnabled: false,
@@ -139,7 +139,7 @@ const RootStackNavigator = createSwitchNavigator(
     },
     App: {
       screen: AppStack,
-      path: `app`,
+      path: ``,
     },
     Auth: {
       screen: AuthStack,

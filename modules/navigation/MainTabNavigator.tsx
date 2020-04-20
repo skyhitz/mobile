@@ -21,7 +21,7 @@ export default createBottomTabNavigator(
     },
     ProfileSettings: {
       screen: ProfileSettingsScreen,
-      path: `profile-settings`,
+      path: `profile`,
     },
   },
   {

@@ -23,16 +23,16 @@ const indicatorStyle = {
 
 const TabsView = createMaterialTopTabNavigator(
   {
-    Music: {
+    Beats: {
       screen: SearchEntryView,
       navigationOptions: {
         tabBarLabel: (props: any) => (
-          <Text style={labelStyle(props) as any}> {'Music'} </Text>
+          <Text style={labelStyle(props) as any}> {'Beats'} </Text>
         ),
       },
-      path: `music`,
+      path: `beats`,
     },
-    Influencers: {
+    Beatmakers: {
       screen: SearchUserView,
       navigationOptions: {
         tabBarLabel: (props: any) => (

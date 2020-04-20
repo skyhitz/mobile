@@ -50,7 +50,7 @@ class ProfileSettingsScreen extends React.Component<any, any> {
 export default createStackNavigator({
   ProfileSettingsScreen: {
     screen: ProfileSettingsScreen as any,
-    path: 'profile',
+    path: '',
   },
   LikesScreen: {
     screen: LikesScreen as any,

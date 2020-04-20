@@ -89,7 +89,6 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     width: 60,
     height: 30,
-    textAlign: 'center',
   },
   row: {
     flexDirection: 'row',

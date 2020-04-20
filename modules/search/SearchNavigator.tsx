@@ -25,7 +25,7 @@ export default createStackNavigator({
     navigationOptions: {
       headerShown: false,
     },
-    path: 'search',
+    path: '',
   },
   UserProfile: {
     screen: ProfileScreen,

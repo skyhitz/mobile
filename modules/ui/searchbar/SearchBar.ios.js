@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 6,
     fontSize: 14,
+    outlineWidth: 0,
   },
   inputContainer: {
     marginTop: 0,

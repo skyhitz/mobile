@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: Colors.searchTextColor,
+    outlineWidth: 0,
   },
   inputContainer: {
     backgroundColor: Colors.white,
