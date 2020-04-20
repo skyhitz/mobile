@@ -40,9 +40,9 @@ const ResetPassword: NavStatelessComponent = observer(props => {
     }
   });
 
-  const updateEmail = (text: any) => {
-    setEmail(text);
-    resetPasswordValidationStore.validateEmail(text);
+  const updateEmail = ({ target }: any) => {
+    setEmail(target.value);
+    resetPasswordValidationStore.validateEmail(target.value);
   };
 
   const sendResetEmail = async () => {
@@ -72,7 +72,7 @@ const ResetPassword: NavStatelessComponent = observer(props => {
             style={styles.input}
             placeholderTextColor="white"
             value={email}
-            onChangeText={updateEmail}
+            onChange={updateEmail}
             maxLength={34}
           />
         </View>

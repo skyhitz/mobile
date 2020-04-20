@@ -54,14 +54,14 @@ const SignIn: NavStatelessComponent = observer(props => {
     return setLoading(false);
   };
 
-  const updateUsernameOrEmail = (text: any) => {
-    setUsernameOrEmail(text);
-    signInValidationStore.validateUsernameOrEmail(text);
+  const updateUsernameOrEmail = ({ target }: any) => {
+    setUsernameOrEmail(target.value);
+    signInValidationStore.validateUsernameOrEmail(target.value);
   };
 
-  const updatePassword = (text: any) => {
-    setPassword(text);
-    signInValidationStore.validatePassword(password);
+  const updatePassword = ({ target }: any) => {
+    setPassword(target.value);
+    signInValidationStore.validatePassword(target.value);
   };
 
   return (
@@ -81,7 +81,7 @@ const SignIn: NavStatelessComponent = observer(props => {
             autoFocus={true}
             placeholderTextColor="white"
             value={usernameOrEmail}
-            onChangeText={updateUsernameOrEmail}
+            onChange={updateUsernameOrEmail}
           />
         </View>
         <View style={styles.field}>
@@ -94,7 +94,7 @@ const SignIn: NavStatelessComponent = observer(props => {
             secureTextEntry={true}
             placeholderTextColor="white"
             value={password}
-            onChangeText={updatePassword}
+            onChange={updatePassword}
           />
         </View>
         <View style={styles.errorContainer}>

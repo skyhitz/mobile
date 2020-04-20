@@ -42,24 +42,24 @@ const SignUp: NavStatelessComponent = observer(props => {
     }
   });
 
-  const updateUsername = text => {
-    setUsername(text);
-    signUpValidationStore.validateUsername(text);
+  const updateUsername = ({ target }: any) => {
+    setUsername(target.value);
+    signUpValidationStore.validateUsername(target.value);
   };
 
-  const updatePassword = text => {
-    setPassword(text);
-    signUpValidationStore.validatePassword(text);
+  const updatePassword = ({ target }: any) => {
+    setPassword(target.value);
+    signUpValidationStore.validatePassword(target.value);
   };
 
-  const updateDisplayName = text => {
-    setDisplayName(text);
-    signUpValidationStore.validateDisplayName(text);
+  const updateDisplayName = ({ target }: any) => {
+    setDisplayName(target.value);
+    signUpValidationStore.validateDisplayName(target.value);
   };
 
-  const updateEmail = text => {
-    setEmail(text);
-    signUpValidationStore.validateEmail(text);
+  const updateEmail = ({ target }: any) => {
+    setEmail(target.value);
+    signUpValidationStore.validateEmail(target.value);
   };
 
   const signUp = async () => {
@@ -94,7 +94,7 @@ const SignUp: NavStatelessComponent = observer(props => {
             style={styles.input}
             placeholderTextColor="white"
             value={username}
-            onChangeText={updateUsername}
+            onChange={updateUsername}
             maxLength={30}
           />
           <ValidationIcon isFieldValid={signUpValidationStore.usernameValid} />
@@ -108,7 +108,7 @@ const SignUp: NavStatelessComponent = observer(props => {
             style={styles.input}
             placeholderTextColor="white"
             value={displayName}
-            onChangeText={updateDisplayName}
+            onChange={updateDisplayName}
             maxLength={30}
           />
           <ValidationIcon
@@ -124,7 +124,7 @@ const SignUp: NavStatelessComponent = observer(props => {
             style={styles.input}
             placeholderTextColor="white"
             value={email}
-            onChangeText={updateEmail}
+            onChange={updateEmail}
             maxLength={34}
           />
           <ValidationIcon isFieldValid={signUpValidationStore.emailValid} />
@@ -139,7 +139,7 @@ const SignUp: NavStatelessComponent = observer(props => {
             secureTextEntry={true}
             placeholderTextColor="white"
             value={password}
-            onChangeText={updatePassword}
+            onChange={updatePassword}
           />
           <ValidationIcon isFieldValid={signUpValidationStore.passwordValid} />
         </View>

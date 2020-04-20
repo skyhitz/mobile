@@ -40,14 +40,17 @@ const UpdatePassword: NavStatelessComponent = observer(props => {
     }
   });
 
-  const updatePasswordText = (text: any) => {
-    setPassword(text);
-    updatePasswordValidationStore.validatePassword(password);
+  const updatePasswordText = ({ target }: any) => {
+    setPassword(target.value);
+    updatePasswordValidationStore.validatePassword(target.value);
   };
 
-  const updatePasswordConfirmation = (text: any) => {
-    setPasswordConfirmation(text);
-    updatePasswordValidationStore.validatePasswordConfirmation(text, password);
+  const updatePasswordConfirmation = ({ target }: any) => {
+    setPasswordConfirmation(target.value);
+    updatePasswordValidationStore.validatePasswordConfirmation(
+      target.value,
+      password
+    );
   };
 
   const updatePassword = async () => {
@@ -75,7 +78,7 @@ const UpdatePassword: NavStatelessComponent = observer(props => {
             secureTextEntry={true}
             placeholderTextColor="white"
             value={password}
-            onChangeText={updatePasswordText}
+            onChange={updatePasswordText}
           />
           <ValidationIcon
             isFieldValid={updatePasswordValidationStore.passwordValid}
@@ -91,7 +94,7 @@ const UpdatePassword: NavStatelessComponent = observer(props => {
             secureTextEntry={true}
             placeholderTextColor="white"
             value={passwordConfirmation}
-            onChangeText={updatePasswordConfirmation}
+            onChange={updatePasswordConfirmation}
           />
           <ValidationIcon
             isFieldValid={
