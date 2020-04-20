@@ -46,7 +46,7 @@ export class SessionStore {
 
   async loadSession() {
     await this.loadFromStorage();
-    return await this.refreshUser();
+    return;
   }
 
   async loadFromStorage() {

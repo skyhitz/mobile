@@ -12,6 +12,9 @@ export class UserEntriesStore {
 
   public async refreshEntries() {
     this.loading = true;
+    if (!this.sessionStore.user) {
+      return;
+    }
     const entries = await entriesBackend.getByUserId(this.sessionStore.user.id);
     this.loading = false;
     this.entries = List(entries);
@@ -20,5 +23,4 @@ export class UserEntriesStore {
   get entriesCount() {
     return this.entries.size;
   }
-
 }

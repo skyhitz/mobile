@@ -23,17 +23,14 @@ export default class AuthLoadingScreen extends React.Component<any, any> {
   async componentDidMount() {
     await this.loadResources();
     if (Platform.OS === 'web') {
-      navigate('WebApp');
+      navigate(this.props.user ? 'ProfileSettings' : 'WebApp');
     } else {
       navigate(this.props.user ? 'ProfileSettings' : 'Auth');
     }
   }
 
   async loadSessionAndIdentifyUser() {
-    let user = await this.props.loadSession();
-    if (user) {
-      // identifyUser(user);
-    }
+    await this.props.loadSession();
     return;
   }
 
