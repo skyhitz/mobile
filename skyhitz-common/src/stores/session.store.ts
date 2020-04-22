@@ -6,7 +6,7 @@ import { SignUpForm, SignInForm } from '../types';
 import LocalStorage from '../async-storage';
 
 export class SessionStore {
-  public session: { user: any } & IObservableObject = observable({
+  public session: { user: User | null } & IObservableObject = observable({
     user: null,
   });
   @computed
@@ -45,8 +45,7 @@ export class SessionStore {
   }
 
   async loadSession() {
-    await this.loadFromStorage();
-    return;
+    return await this.loadFromStorage();
   }
 
   async loadFromStorage() {

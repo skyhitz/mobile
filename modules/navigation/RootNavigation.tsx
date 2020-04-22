@@ -1,13 +1,13 @@
 /// <reference path="./CreateBrowserApp.d.ts"/>
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar, Platform } from 'react-native';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBrowserApp } from '@react-navigation/web';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
-import { navigate } from 'app/modules/navigation/Navigator';
+import { navigate, setNavigator } from 'app/modules/navigation/Navigator';
 import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
 import EditPlaylistModal from 'app/modules/playlists/EditPlaylistModal';
 import RemovePlaylistModal from 'app/modules/playlists/RemovePlaylistModal';
@@ -20,6 +20,11 @@ import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import * as stores from 'app/skyhitz-common';
 import WebApp from '../marketing/web/Home';
+import { NavStatelessComponent } from 'app/interfaces/Interfaces';
+import { Stores } from 'app/functions/Stores';
+import { loadResourcesAsync } from 'app/functions/LoadResourcesAsync';
+import { Asset } from 'expo-asset';
+import { Images } from 'app/assets/images/Images';
 
 type Stores = typeof stores;
 
@@ -131,63 +136,72 @@ const createApp = Platform.select({
   default: (config: any) => createAppContainer(config),
 });
 
-const RootStackNavigator = createSwitchNavigator(
-  {
-    AuthLoading: {
-      screen: AuthLoadingScreen,
-      path: ``,
-    },
-    App: {
-      screen: AppStack,
-      path: ``,
-    },
-    Auth: {
-      screen: AuthStack,
-      path: `accounts`,
-    },
-    WebApp: {
-      screen: WebApp,
-      path: ``,
-    },
+const RootStackNavigator = createSwitchNavigator({
+  App: {
+    screen: AppStack,
+    path: ``,
   },
-  {
-    initialRouteName: 'AuthLoading',
-  }
-);
+  Auth: {
+    screen: AuthStack,
+    path: `accounts`,
+  },
+  WebApp: {
+    screen: WebApp,
+    path: ``,
+  },
+});
 
 const AppContainer = createApp(RootStackNavigator);
 
-@inject((stores: Stores) => ({
-  user: stores.sessionStore.user,
-  loadUserLikes: stores.likesStore.refreshLikes.bind(stores.likesStore),
-  loadPlaylists: stores.playlistsStore.refreshPlaylists.bind(
-    stores.playlistsStore
-  ),
-  loadUserEntries: stores.userEntriesStore.refreshEntries.bind(
-    stores.userEntriesStore
-  ),
-  loadPayments: stores.paymentsStore.refreshSubscription.bind(
-    stores.paymentsStore
-  ),
-}))
-export default class RootNavigator extends React.Component<any, any> {
-  state = {};
-  static async getDerivedStateFromProps(props: any) {
-    StatusBar.setBarStyle('light-content');
+const Root: NavStatelessComponent = observer(props => {
+  setNavigator(props.navigation);
 
-    if (!props.user) {
-      navigate('Auth');
-    } else {
-      [
-        await props.loadUserLikes(),
-        await props.loadPlaylists(),
-        await props.loadUserEntries(),
-        await props.loadPayments(),
-      ];
+  const [loaded, setLoaded] = useState(false);
+  const {
+    sessionStore,
+    paymentsStore,
+    userEntriesStore,
+    playlistsStore,
+    likesStore,
+  } = Stores();
+
+  StatusBar.setBarStyle('light-content');
+
+  const loadResources = async () => {
+    const [user] = [
+      await sessionStore.loadSession(),
+      await Asset.loadAsync(Images),
+      await loadResourcesAsync(),
+    ];
+    return user;
+  };
+
+  const loadUserData = async () => {
+    [
+      await likesStore.refreshLikes(),
+      await playlistsStore.refreshPlaylists(),
+      await userEntriesStore.refreshEntries(),
+      await paymentsStore.refreshSubscription(),
+    ];
+  };
+
+  const loadAll = async () => {
+    const user = await loadResources();
+    if (user) {
+      console.log('loading user data');
+      await loadUserData();
     }
-  }
+    setLoaded(true);
+  };
 
-  render() {
+  useEffect(() => {
+    loadAll();
+  }, []);
+
+  if (loaded) {
     return <AppContainer />;
   }
-}
+  return <AuthLoadingScreen />;
+});
+
+export default Root;

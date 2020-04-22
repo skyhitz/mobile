@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, View, Image } from 'react-native';
-import { Ionicons, EvilIcons, Feather } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';

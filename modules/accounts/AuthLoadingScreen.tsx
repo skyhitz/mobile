@@ -1,56 +1,16 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, View, Platform } from 'react-native';
-import { inject } from 'mobx-react';
-import { Asset } from 'expo-asset';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { Images } from 'app/assets/images/Images';
-import { setNavigator, navigate } from 'app/modules/navigation/Navigator';
-import * as stores from 'app/skyhitz-common';
-import { loadResourcesAsync } from 'app/functions/LoadResourcesAsync';
-type Stores = typeof stores;
 
-@inject((stores: Stores) => ({
-  hideTopPadding: stores.playerStore.show,
-  loadSession: stores.sessionStore.loadSession.bind(stores.sessionStore),
-  user: stores.sessionStore.user,
-}))
-export default class AuthLoadingScreen extends React.Component<any, any> {
-  constructor(props: { navigation: any }) {
-    super(props);
-    setNavigator(props.navigation);
-  }
+const AuthLoadingScreen = () => {
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color={Colors.brandBlue} />
+    </View>
+  );
+};
 
-  async componentDidMount() {
-    await this.loadResources();
-    if (Platform.OS === 'web') {
-      navigate(this.props.user ? 'ProfileSettings' : 'WebApp');
-    } else {
-      navigate(this.props.user ? 'ProfileSettings' : 'Auth');
-    }
-  }
-
-  async loadSessionAndIdentifyUser() {
-    await this.props.loadSession();
-    return;
-  }
-
-  loadResources = async () => {
-    return Promise.all([
-      Asset.loadAsync(Images),
-      loadResourcesAsync(),
-      this.loadSessionAndIdentifyUser(),
-    ]);
-  };
-
-  // Render any loading content that you like here
-  render() {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color={Colors.brandBlue} />
-      </View>
-    );
-  }
-}
+export default AuthLoadingScreen;
 
 const styles = StyleSheet.create({
   container: {

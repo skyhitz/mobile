@@ -34,7 +34,7 @@ export class EntryStore {
   @observable
   price: number | undefined;
 
-  constructor(private sessionStore: SessionStore) { }
+  constructor(private sessionStore: SessionStore) {}
 
   @computed
   get currentView() {
@@ -45,6 +45,8 @@ export class EntryStore {
   }
 
   async uploadVideo(video: any) {
+    if (!this.sessionStore.user) return;
+
     this.updateUploadingVideo(true);
     let id = UniqueIdGenerator.generate();
     let data: any = new FormData();
@@ -74,6 +76,8 @@ export class EntryStore {
   }
 
   async uploadArtwork(image: any) {
+    if (!this.sessionStore.user) return;
+
     this.updateLoadingArtwork(true);
     let data = new FormData();
     data.append('file', `${preBase64String}${image.base64}`);
