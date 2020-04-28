@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import ProfileSettingsTopContainer from 'app/modules/profile/ProfileSettingsTopContainer';
@@ -47,28 +47,33 @@ class ProfileSettingsScreen extends React.Component<any, any> {
   }
 }
 
-export default createStackNavigator({
-  ProfileSettingsScreen: {
-    screen: ProfileSettingsScreen as any,
-    path: '',
-  },
-  LikesScreen: {
-    screen: LikesScreen as any,
-    path: 'likes',
-  },
-  PlaylistsScreen: {
-    screen: PlaylistsScreen as any,
-    path: 'playlists',
-  },
-  PlaylistScreen: {
-    screen: PlaylistScreen,
-    path: 'playlist',
-  },
-  MyMusicScreen: {
-    screen: MyMusicScreen,
-    path: 'my-music',
-  },
-});
+const ProfileSettingsStack = createStackNavigator();
+
+const ProfileSettingsNavigator = () => {
+  return (
+    <ProfileSettingsStack.Navigator>
+      <ProfileSettingsStack.Screen
+        name="ProfileSettingsScreen"
+        component={ProfileSettingsScreen}
+      />
+      <ProfileSettingsStack.Screen name="LikesScreen" component={LikesScreen} />
+      <ProfileSettingsStack.Screen
+        name="PlaylistsScreen"
+        component={PlaylistsScreen}
+      />
+      <ProfileSettingsStack.Screen
+        name="PlaylistScreen"
+        component={PlaylistScreen}
+      />
+      <ProfileSettingsStack.Screen
+        name="MyMusicScreen"
+        component={MyMusicScreen}
+      />
+    </ProfileSettingsStack.Navigator>
+  );
+};
+
+export default ProfileSettingsNavigator;
 
 const styles = StyleSheet.create({
   container: {

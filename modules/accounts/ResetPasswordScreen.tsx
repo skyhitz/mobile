@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HeaderBackButton } from 'react-navigation-stack';
+import { HeaderBackButton } from '@react-navigation/stack';
 import { goBack } from 'app/modules/navigation/Navigator';
 import Colors from 'app/constants/Colors';
 import { AuthBackground2 } from 'app/assets/images/Images';

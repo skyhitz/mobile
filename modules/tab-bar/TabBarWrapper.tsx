@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { BottomTabBar } from 'react-navigation-tabs';
+import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { inject } from 'mobx-react';
 import PlayerBar from 'app/modules/player/player-bar/PlayerBar';
 import Colors from 'app/constants/Colors';

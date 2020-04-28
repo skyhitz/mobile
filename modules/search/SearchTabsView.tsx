@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { MaterialTopTabBar } from 'react-navigation-tabs';
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBar,
+} from '@react-navigation/material-top-tabs';
 import SearchEntryView from 'app/modules/search/SearchEntryView';
 import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
@@ -21,42 +23,45 @@ const indicatorStyle = {
   backgroundColor: 'transparent',
 };
 
-const TabsView = createMaterialTopTabNavigator(
-  {
-    Beats: {
-      screen: SearchEntryView,
-      navigationOptions: {
-        tabBarLabel: (props: any) => (
-          <Text style={labelStyle(props) as any}> {'Beats'} </Text>
-        ),
-      },
-      path: `beats`,
-    },
-    Beatmakers: {
-      screen: SearchUserView,
-      navigationOptions: {
-        tabBarLabel: (props: any) => (
-          <Text style={labelStyle(props) as any}> {'Beatmakers'} </Text>
-        ),
-      },
-      path: `beatmakers`,
-    },
-  },
-  {
-    tabBarComponent: props => (
-      <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
-    ),
-    tabBarPosition: 'top',
-    swipeEnabled: true,
-    tabBarOptions: {
-      activeTintColor: Colors.white,
-      showIcon: false,
-      style: {
-        height: 38,
-        backgroundColor: Colors.tabsBackground,
-      },
-    },
-  }
-);
+const Tab = createMaterialTopTabNavigator();
+
+const TabsView = () => {
+  return (
+    <Tab.Navigator
+      swipeEnabled={true}
+      tabBarPosition={'top'}
+      tabBarOptions={{
+        activeTintColor: Colors.white,
+        showIcon: false,
+        style: {
+          height: 38,
+          backgroundColor: Colors.tabsBackground,
+        },
+      }}
+      tabBar={props => (
+        <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
+      )}
+    >
+      <Tab.Screen
+        name="Beats"
+        component={SearchEntryView as any}
+        options={{
+          tabBarLabel: (props: any) => (
+            <Text style={labelStyle(props) as any}> {'Beats'} </Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Beatmakers"
+        component={SearchUserView as any}
+        options={{
+          tabBarLabel: (props: any) => (
+            <Text style={labelStyle(props) as any}> {'Beatmakers'} </Text>
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default TabsView;

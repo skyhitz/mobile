@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HeaderBackButton } from 'react-navigation-stack';
+import { HeaderBackButton } from '@react-navigation/stack';
 import { goBack } from 'app/modules/navigation/Navigator';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';

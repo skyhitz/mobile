@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { HeaderBackButton } from 'react-navigation-stack';
+import { HeaderBackButton } from '@react-navigation/stack';
 import { navigate, goBack } from 'app/modules/navigation/Navigator';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';

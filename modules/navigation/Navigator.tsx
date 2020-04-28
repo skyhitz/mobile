@@ -1,4 +1,4 @@
-import { NavigationActions, StackActions } from 'react-navigation';
+import { NavigationActions, StackActions } from '@react-navigation/compat';
 
 export const instance: any = {};
 

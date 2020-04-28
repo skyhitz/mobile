@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNavigationFocus } from 'react-navigation';
+import { withNavigationFocus } from '@react-navigation/compat';
 import { inject } from 'mobx-react';
 import SearchEntryList from 'app/modules/search/SearchEntryList';
 import TopRecentEntryView from 'app/modules/search/TopRecentEntryView';
