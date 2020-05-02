@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { HeaderBackButton } from '@react-navigation/stack';
-import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { goBack } from 'app/modules/navigation/Navigator';
@@ -186,8 +185,8 @@ var styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    width: Layout.window.width,
-    height: Layout.window.height,
+    width: '100%',
+    height: '100%',
     opacity: 0.4,
     backgroundColor: Colors.overlayBackground,
   },
