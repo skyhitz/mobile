@@ -18,7 +18,7 @@ import {
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
 import { useMediaQuery } from 'react-responsive';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 import { observable } from 'mobx';
 
 const responsiveUi = observable({

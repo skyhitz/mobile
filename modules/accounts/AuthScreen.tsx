@@ -12,7 +12,7 @@ import { AuthBackground, Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 
 const AuthScreen: NavStatelessComponent = props => {
   const { navigate } = useNavigation();

@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav } from '@expo/html-elements';
 import SkyhitzLogo from './SkyhitzLogo';
 import { View, Text, StyleSheet } from 'react-native';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Navbar = () => {

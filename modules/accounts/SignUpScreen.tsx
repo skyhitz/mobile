@@ -13,7 +13,7 @@ import { observer } from 'mobx-react';
 import { HeaderBackButton } from '@react-navigation/stack';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 import { goBack } from 'app/modules/navigation/Navigator';
 import { AuthBackground2 } from 'app/assets/images/Images';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';

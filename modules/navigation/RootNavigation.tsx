@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import { observer } from 'mobx-react';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
@@ -14,7 +14,6 @@ import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
-import WebApp from '../marketing/web/Home';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
 import { loadResourcesAsync } from 'app/functions/LoadResourcesAsync';
@@ -32,11 +31,6 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name="Accounts"
         component={AccountsNavigator}
-        options={{ headerShown: false }}
-      />
-      <AuthStack.Screen
-        name="WebApp"
-        component={WebApp}
         options={{ headerShown: false }}
       />
     </AuthStack.Navigator>
