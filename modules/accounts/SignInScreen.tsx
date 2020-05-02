@@ -13,31 +13,17 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Platform,
 } from 'react-native';
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
-import { useMediaQuery } from 'react-responsive';
 import { useNavigation } from '@react-navigation/native';
-import { observable } from 'mobx';
-
-const responsiveUi = observable({
-  isWeb: Platform.OS === 'web',
-});
 
 const SignIn: NavStatelessComponent = observer(props => {
   const { signInValidationStore, sessionStore } = Stores();
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 768 });
   const { navigate } = useNavigation();
-
-  useEffect(() => {
-    if (isDesktop) {
-      responsiveUi.isWeb = true;
-    }
-  });
 
   const signIn = async () => {
     setLoading(true);
@@ -145,7 +131,6 @@ SignIn.navigationOptions = ({ navigation }) => ({
     backgroundColor: Colors.headerBackground,
     borderBottomWidth: 0,
   },
-  headerShown: !responsiveUi.isWeb,
   headerLeft: () => (
     <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
   ),

@@ -13,32 +13,18 @@ import {
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
-  Platform,
 } from 'react-native';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
-import { useMediaQuery } from 'react-responsive';
 import { useNavigation } from '@react-navigation/native';
-import { observable } from 'mobx';
-
-const responsiveUi = observable({
-  isWeb: Platform.OS === 'web',
-});
 
 const UpdatePassword: NavStatelessComponent = observer(props => {
   const { updatePasswordValidationStore, sessionStore } = Stores();
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [loading, setLoading] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 768 });
   const { token } = props.navigation.state.params;
   const { navigate } = useNavigation();
-
-  useEffect(() => {
-    if (isDesktop) {
-      responsiveUi.isWeb = true;
-    }
-  });
 
   const updatePasswordText = ({ target }: any) => {
     setPassword(target.value);
@@ -143,7 +129,6 @@ UpdatePassword.navigationOptions = ({ navigation }) => ({
     backgroundColor: Colors.headerBackground,
     borderBottomWidth: 0,
   },
-  headerShown: !responsiveUi.isWeb,
   headerLeft: () => (
     <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
   ),

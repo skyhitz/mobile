@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,7 +7,6 @@ import {
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
-  Platform,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { HeaderBackButton } from '@react-navigation/stack';
@@ -19,28 +18,15 @@ import { AuthBackground2 } from 'app/assets/images/Images';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
-import { useMediaQuery } from 'react-responsive';
-import { observable } from 'mobx';
 
-const responsiveUi = observable({
-  isWeb: Platform.OS === 'web',
-});
-
-const SignUp: NavStatelessComponent = observer(props => {
+const SignUp: NavStatelessComponent = observer(({ navigation }) => {
   const { signUpValidationStore, sessionStore } = Stores();
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 768 });
   const { navigate } = useNavigation();
-
-  useEffect(() => {
-    if (isDesktop) {
-      responsiveUi.isWeb = true;
-    }
-  });
 
   const updateUsername = ({ target }: any) => {
     setUsername(target.value);
@@ -82,7 +68,6 @@ const SignUp: NavStatelessComponent = observer(props => {
   return (
     <ImageBackground style={styles.background} source={AuthBackground2}>
       <View style={styles.overlay} />
-
       <View style={styles.inputContainer}>
         <View style={styles.field}>
           <TextInput
@@ -182,7 +167,6 @@ SignUp.navigationOptions = ({ navigation }) => ({
     backgroundColor: Colors.headerBackground,
     borderBottomWidth: 0,
   },
-  headerShown: !responsiveUi.isWeb,
   headerLeft: () => (
     <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
   ),

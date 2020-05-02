@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { HeaderBackButton } from '@react-navigation/stack';
 import { goBack } from 'app/modules/navigation/Navigator';
 import Colors from 'app/constants/Colors';
@@ -16,12 +16,6 @@ import {
 } from 'react-native';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
-import { useMediaQuery } from 'react-responsive';
-import { observable } from 'mobx';
-
-const responsiveUi = observable({
-  isWeb: Platform.OS === 'web',
-});
 
 const ResetPassword: NavStatelessComponent = observer(props => {
   const { resetPasswordValidationStore, sessionStore } = Stores();
@@ -32,13 +26,6 @@ const ResetPassword: NavStatelessComponent = observer(props => {
   );
   const [buttonColor, setButtonColor] = useState(Colors.lightBlueBtn);
   const [loading, setLoading] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 768 });
-
-  useEffect(() => {
-    if (isDesktop) {
-      responsiveUi.isWeb = true;
-    }
-  });
 
   const updateEmail = ({ target }: any) => {
     setEmail(target.value);
@@ -117,7 +104,6 @@ ResetPassword.navigationOptions = ({ navigation }) => ({
     backgroundColor: Colors.headerBackground,
     borderBottomWidth: 0,
   },
-  headerShown: !responsiveUi.isWeb,
   headerLeft: () => (
     <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
   ),

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StatusBar, Platform } from 'react-native';
+import { StatusBar } from 'react-native';
 import { observer } from 'mobx-react';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
-import { setNavigator } from 'app/modules/navigation/Navigator';
 import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
 import EditPlaylistModal from 'app/modules/playlists/EditPlaylistModal';
 import RemovePlaylistModal from 'app/modules/playlists/RemovePlaylistModal';
@@ -123,132 +122,7 @@ const AppStackNavigator = () => {
   );
 };
 
-// const AuthStack = createStackNavigator({
-//   Accounts: {
-//     screen: AccountsNavigator,
-//     navigationOptions: {
-//       headerShown: false,
-//     },
-//     path: ``,
-//   },
-// });
-
-// const AppStack = createStackNavigator(
-//   {
-//     Main: {
-//       screen: MainTabNavigator,
-//       path: ``,
-//       navigationOptions: {
-//         headerShown: false,
-//         gestureEnabled: false,
-//       },
-//     },
-//     EditProfileModal: {
-//       screen: EditProfileScreen as any,
-//       path: `edit-profile`,
-//     },
-//     EditPlaylistModal: {
-//       screen: EditPlaylistModal,
-//       path: `edit-playlist-modal`,
-//       navigationOptions: {
-//         headerShown: false,
-//         gestureEnabled: false,
-//         cardStyle: { backgroundColor: 'transparent' },
-//       },
-//     },
-//     UploadMusicModal: {
-//       screen: UploadMusicModal,
-//       path: `upload-music-modal`,
-//       navigationOptions: {
-//         headerShown: false,
-//         gestureEnabled: false,
-//         cardStyle: { backgroundColor: 'transparent' },
-//       },
-//     },
-//     WithdrawalModal: {
-//       screen: WithdrawalModal,
-//       path: `withdrawal-modal`,
-//       navigationOptions: {
-//         headerShown: false,
-//         gestureEnabled: false,
-//         cardStyle: { backgroundColor: 'transparent' },
-//       },
-//     },
-//     BuyOptionsModal: {
-//       screen: BuyOptionsModal,
-//       path: `buy-options-modal`,
-//       navigationOptions: {
-//         headerShown: false,
-//         gestureEnabled: false,
-//         cardStyle: { backgroundColor: 'transparent' },
-//       },
-//     },
-//     RemovePlaylistModal: {
-//       screen: RemovePlaylistModal,
-//       path: 'remove-playlist',
-//       navigationOptions: {
-//         headerShown: false,
-//         gestureEnabled: false,
-//         cardStyle: { backgroundColor: 'transparent' },
-//       },
-//     },
-//     EntryOptionsModal: {
-//       screen: EntryOptionsModal,
-//       path: `entry-options-modal`,
-//       navigationOptions: {
-//         headerShown: false,
-//         cardStyle: { backgroundColor: 'transparent' },
-//       },
-//     },
-//     PricingOptionsModal: {
-//       screen: PricingOptionsModal,
-//       path: `pricing-options-modal`,
-//       navigationOptions: {
-//         headerShown: false,
-//         cardStyle: { backgroundColor: 'transparent' },
-//       },
-//     },
-//     SelectPlaylistModal: {
-//       screen: SelectPlaylistModal as any,
-//       path: `select-playlist-modal`,
-//       navigationOptions: {
-//         gestureEnabled: false,
-//         cardStyle: { backgroundColor: 'transparent' },
-//       },
-//     },
-//   },
-//   {
-//     mode: 'modal',
-//   }
-// );
-
-// const createApp = Platform.select({
-//   web: (config: any) =>
-//     createBrowserApp(config, {
-//       history:
-//         typeof (global as any).window !== 'undefined' ? 'browser' : 'memory',
-//     }),
-//   default: (config: any) => createAppContainer(config),
-// });
-
-// const RootStackNavigator = createSwitchNavigator({
-//   App: {
-//     screen: AppStack,
-//     path: ``,
-//   },
-//   Auth: {
-//     screen: AuthStack,
-//     path: `accounts`,
-//   },
-//   WebApp: {
-//     screen: WebApp,
-//     path: ``,
-//   },
-// });
-
 const Root: NavStatelessComponent = observer(props => {
-  setNavigator(props.navigation);
-
   const [loaded, setLoaded] = useState(false);
   const {
     sessionStore,
