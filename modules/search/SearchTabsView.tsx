@@ -8,9 +8,9 @@ import SearchEntryView from 'app/modules/search/SearchEntryView';
 import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
 
-const labelStyle = (props: { focused: any; tintColor: any }) => ({
+const labelStyle = _ => ({
   fontSize: 14,
-  color: props.focused ? props.tintColor : Colors.defaultTextLight,
+  color: Colors.defaultTextLight,
   textAlign: 'center',
   alignSelf: 'center',
   paddingTop: 0,

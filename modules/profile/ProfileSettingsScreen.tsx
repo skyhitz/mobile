@@ -20,15 +20,6 @@ type Stores = typeof stores;
   user: stores.sessionStore.user,
 }))
 class ProfileSettingsScreen extends React.Component<any, any> {
-  static navigationOptions = {
-    title: 'Profile',
-    headerTintColor: Colors.tabIconSelected,
-    headerStyle: {
-      backgroundColor: Colors.headerBackground,
-      borderBottomWidth: 0,
-    },
-    headerRight: () => <EditBtn />,
-  };
   render() {
     if (!this.props.user) {
       return null;
@@ -55,6 +46,15 @@ const ProfileSettingsNavigator = () => {
       <ProfileSettingsStack.Screen
         name="ProfileSettingsScreen"
         component={ProfileSettingsScreen}
+        options={{
+          title: 'Profile',
+          headerTintColor: Colors.tabIconSelected,
+          headerStyle: {
+            backgroundColor: Colors.headerBackground,
+            borderBottomWidth: 0,
+          },
+          headerRight: () => <EditBtn />,
+        }}
       />
       <ProfileSettingsStack.Screen name="LikesScreen" component={LikesScreen} />
       <ProfileSettingsStack.Screen

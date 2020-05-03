@@ -183,12 +183,20 @@ const Root: NavStatelessComponent = observer(props => {
         screens: {
           SearchNavigator: {
             screens: {
-              Search: 'search',
-              UserProfile: 'profile',
+              Search: {
+                screens: {
+                  Beats: 'beats',
+                  Beatmakers: 'beatmakers',
+                },
+              },
             },
           },
           ChartsView: 'charts',
-          ProfileSettings: 'profile',
+          ProfileSettings: {
+            screens: {
+              ProfileSettingsScreen: 'profile',
+            },
+          },
         },
       },
     },
