@@ -175,6 +175,20 @@ const Root: NavStatelessComponent = observer(props => {
           WebApp: '',
           SignUp: 'accounts/sign-up',
           SignIn: 'accounts/sign-in',
+          ResetPassword: 'accounts/reset-password',
+          UpdatePassword: 'accounts/update-password',
+        },
+      },
+      Main: {
+        screens: {
+          SearchNavigator: {
+            screens: {
+              Search: 'search',
+              UserProfile: 'profile',
+            },
+          },
+          ChartsView: 'charts',
+          ProfileSettings: 'profile',
         },
       },
     },
