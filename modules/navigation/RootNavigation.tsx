@@ -169,6 +169,15 @@ const Root: NavStatelessComponent = observer(props => {
 
   const { getInitialState } = useLinking(ref, {
     prefixes: ['https://skyhitz.io', 'skyhitz://'],
+    config: {
+      Accounts: {
+        screens: {
+          WebApp: '',
+          SignUp: 'accounts/sign-up',
+          SignIn: 'accounts/sign-in',
+        },
+      },
+    },
   });
 
   const [isReady, setIsReady] = useState(false);
