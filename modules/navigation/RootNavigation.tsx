@@ -216,6 +216,7 @@ const Root: NavStatelessComponent = observer(props => {
         },
       },
       EditProfileModal: 'edit-profile',
+      UploadMusicModal: 'upload',
     },
   });
 
