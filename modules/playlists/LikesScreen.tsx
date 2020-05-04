@@ -14,15 +14,6 @@ type Stores = typeof stores;
   loading: stores.likesStore.loading,
 }))
 export default class LikesScreen extends React.Component<any, any> {
-  static navigationOptions = {
-    title: 'Likes',
-    headerTitleStyle: { color: Colors.white },
-    headerStyle: {
-      backgroundColor: Colors.headerBackground,
-      borderBottomWidth: 0,
-    },
-    headerTintColor: Colors.tabIconSelected,
-  };
   render() {
     return (
       <ScrollView

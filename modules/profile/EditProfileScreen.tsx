@@ -13,15 +13,12 @@ import {
   FontAwesome,
 } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-import CancelEditBtn from 'app/modules/ui/CancelEditBtn';
-import DoneEditBtn from 'app/modules/ui/DoneEditBtn';
 import {
   UserAvatarMedium,
   UserAvatarMediumWithUrlOnly,
   LoadingUserAvatar,
 } from 'app/modules/ui/UserAvatar';
 import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
-import { navigate } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 import LargeBtn from '../ui/LargeBtn';
 type Stores = typeof stores;
@@ -55,21 +52,11 @@ type Stores = typeof stores;
   validationError: stores.editProfileStore.validationError,
 }))
 export default class EditProfileScreen extends React.Component<any, any> {
-  static navigationOptions = {
-    title: 'Edit Profile',
-    headerTitleStyle: { color: Colors.white },
-    headerStyle: {
-      backgroundColor: Colors.headerBackground,
-      shadowColor: 'transparent',
-    },
-    headerLeft: () => <CancelEditBtn />,
-    headerRight: () => <DoneEditBtn />,
-  };
   async handleLogOut() {
     await this.props.logOut();
   }
   async handleWithdrawal() {
-    navigate('WithdrawalModal');
+    this.props.navigation.navigate('WithdrawalModal');
   }
   renderAvatar() {
     if (this.props.loadingAvatar) {

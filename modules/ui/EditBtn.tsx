@@ -1,23 +1,22 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { navigate } from 'app/modules/navigation/Navigator';
 import Colors from 'app/constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
-export default class EditBtn extends React.Component<any, any> {
-  async openProfileModal() {
+const EditBtn = () => {
+  const { navigate } = useNavigation();
+
+  const handleOnPress = () => {
     navigate('EditProfileModal');
-  }
-  render() {
-    return (
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={this.openProfileModal.bind(this)}
-      >
-        <Text style={styles.white}>Edit</Text>
-      </TouchableOpacity>
-    );
-  }
-}
+  };
+  return (
+    <TouchableOpacity style={styles.btn} onPress={handleOnPress}>
+      <Text style={styles.white}>Edit</Text>
+    </TouchableOpacity>
+  );
+};
+
+export default EditBtn;
 
 const styles = StyleSheet.create({
   btn: {

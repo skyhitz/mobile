@@ -2,11 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
-import { navigate } from 'app/modules/navigation/Navigator';
 
 export default class ShareAppBanner extends React.Component<any, any> {
   onUpload = async () => {
-    navigate('UploadMusicModal');
+    this.props.navigation.navigate('UploadMusicModal');
   };
 
   render() {

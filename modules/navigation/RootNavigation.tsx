@@ -20,6 +20,9 @@ import { Asset } from 'expo-asset';
 import { Images } from 'app/assets/images/Images';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useLinking } from '@react-navigation/native';
+import CancelEditBtn from 'app/modules/ui/CancelEditBtn';
+import DoneEditBtn from 'app/modules/ui/DoneEditBtn';
+import Colors from 'app/constants/Colors';
 
 const AuthStack = createStackNavigator();
 const AppStack = createStackNavigator();
@@ -47,7 +50,17 @@ const AppStackNavigator = () => {
       <AppStack.Screen
         name="EditProfileModal"
         component={EditProfileScreen}
-        options={{ headerShown: false, gestureEnabled: false }}
+        options={{
+          gestureEnabled: false,
+          title: 'Edit Profile',
+          headerTitleStyle: { color: Colors.white },
+          headerStyle: {
+            backgroundColor: Colors.headerBackground,
+            shadowColor: 'transparent',
+          },
+          headerLeft: () => <CancelEditBtn />,
+          headerRight: () => <DoneEditBtn />,
+        }}
       />
       <AppStack.Screen
         name="EditPlaylistModal"
@@ -155,9 +168,10 @@ const Root: NavStatelessComponent = observer(props => {
   const loadAll = async () => {
     const user = await loadResources();
     if (user) {
-      console.log('loading user data');
+      console.time('loading user data');
       await loadUserData();
     }
+    console.timeEnd('loading user data');
     setLoaded(true);
   };
 
@@ -195,10 +209,13 @@ const Root: NavStatelessComponent = observer(props => {
           ProfileSettings: {
             screens: {
               ProfileSettingsScreen: 'profile',
+              LikesScreen: 'likes',
+              MyMusicScreen: 'my-music',
             },
           },
         },
       },
+      EditProfileModal: 'edit-profile',
     },
   });
 

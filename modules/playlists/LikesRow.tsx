@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { navigate } from 'app/modules/navigation/Navigator';
 import { EvilIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
@@ -23,7 +22,7 @@ export default class LikesRow extends React.Component<any, any> {
     return `${this.props.count} Videos`;
   }
   handleLikesNavigation() {
-    navigate('LikesScreen');
+    this.props.navigation.navigate('LikesScreen');
     this.props.setPlaylistMode(this.props.likes);
   }
   render() {

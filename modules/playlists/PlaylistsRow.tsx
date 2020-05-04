@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { EvilIcons, Ionicons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { navigate } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -22,7 +21,7 @@ export default class PlaylistsRow extends React.Component<any, any> {
     return `${this.props.count} Playlists`;
   }
   handleNavigation() {
-    navigate('PlaylistsScreen');
+    this.props.navigation.navigate('PlaylistsScreen');
   }
   render() {
     return (

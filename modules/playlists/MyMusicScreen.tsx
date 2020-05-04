@@ -14,15 +14,6 @@ type Stores = typeof stores;
   loading: stores.userEntriesStore.loading,
 }))
 export default class MyMusicScreen extends React.Component<any, any> {
-  static navigationOptions = {
-    title: 'My Music',
-    headerTitleStyle: { color: Colors.white },
-    headerStyle: {
-      backgroundColor: Colors.headerBackground,
-      borderBottomWidth: 0,
-    },
-    headerTintColor: Colors.tabIconSelected,
-  };
   render() {
     return (
       <ScrollView
@@ -39,7 +30,7 @@ export default class MyMusicScreen extends React.Component<any, any> {
             null,
             null,
             null,
-            this.props.navigation.state.routeName
+            'MyMusicScreen'
           )
         )}
         <BottomPlaceholder />

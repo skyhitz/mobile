@@ -7,11 +7,8 @@ import ProfileSettingsTopContainer from 'app/modules/profile/ProfileSettingsTopC
 import EditBtn from 'app/modules/ui/EditBtn';
 import ShareAppBanner from 'app/modules/marketing/ShareAppBanner';
 import LikesScreen from 'app/modules/playlists/LikesScreen';
-import PlaylistsScreen from 'app/modules/playlists/PlaylistsScreen';
 import MyMusicScreen from 'app/modules/playlists/MyMusicScreen';
 import LikesRow from 'app/modules/playlists/LikesRow';
-import PlaylistsRow from 'app/modules/playlists/PlaylistsRow';
-import PlaylistScreen from 'app/modules/playlists/PlaylistScreen';
 import MyMusicRow from 'app/modules/playlists/MyMusicRow';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
@@ -28,10 +25,9 @@ class ProfileSettingsScreen extends React.Component<any, any> {
       <View style={styles.container}>
         <ProfileSettingsTopContainer />
         <View style={styles.settingsContainer}>
-          <LikesRow />
-          <PlaylistsRow />
-          <MyMusicRow />
-          <ShareAppBanner />
+          <LikesRow navigation={this.props.navigation} />
+          <MyMusicRow navigation={this.props.navigation} />
+          <ShareAppBanner navigation={this.props.navigation} />
         </View>
       </View>
     );
@@ -56,18 +52,31 @@ const ProfileSettingsNavigator = () => {
           headerRight: () => <EditBtn />,
         }}
       />
-      <ProfileSettingsStack.Screen name="LikesScreen" component={LikesScreen} />
       <ProfileSettingsStack.Screen
-        name="PlaylistsScreen"
-        component={PlaylistsScreen}
-      />
-      <ProfileSettingsStack.Screen
-        name="PlaylistScreen"
-        component={PlaylistScreen}
+        name="LikesScreen"
+        component={LikesScreen}
+        options={{
+          title: 'Likes',
+          headerTitleStyle: { color: Colors.white },
+          headerStyle: {
+            backgroundColor: Colors.headerBackground,
+            borderBottomWidth: 0,
+          },
+          headerTintColor: Colors.tabIconSelected,
+        }}
       />
       <ProfileSettingsStack.Screen
         name="MyMusicScreen"
         component={MyMusicScreen}
+        options={{
+          title: 'My Music',
+          headerTitleStyle: { color: Colors.white },
+          headerStyle: {
+            backgroundColor: Colors.headerBackground,
+            borderBottomWidth: 0,
+          },
+          headerTintColor: Colors.tabIconSelected,
+        }}
       />
     </ProfileSettingsStack.Navigator>
   );
