@@ -12,11 +12,10 @@ import Colors from 'app/constants/Colors';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Input extends Component<any, any> {
-  shakeAnimationValue: any;
+  shakeAnimationValue = new Animated.Value(0);
   input: any;
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.shake = this.shake.bind(this);
-    this.shakeAnimationValue = new Animated.Value(0);
     this.props.shake && this.shake();
   }
 

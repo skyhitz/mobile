@@ -159,7 +159,7 @@ const Root: NavStatelessComponent = observer(props => {
   const loadUserData = async () => {
     [
       await likesStore.refreshLikes(),
-      await playlistsStore.refreshPlaylists(),
+      // await playlistsStore.refreshPlaylists(),
       await userEntriesStore.refreshEntries(),
       await paymentsStore.refreshSubscription(),
     ];
