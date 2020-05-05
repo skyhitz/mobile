@@ -142,7 +142,6 @@ const Root: NavStatelessComponent = observer(props => {
     sessionStore,
     paymentsStore,
     userEntriesStore,
-    playlistsStore,
     likesStore,
   } = Stores();
 
