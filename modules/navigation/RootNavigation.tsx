@@ -56,6 +56,7 @@ const AppStackNavigator = () => {
           headerTitleStyle: { color: Colors.white },
           headerStyle: {
             backgroundColor: Colors.headerBackground,
+            borderBottomWidth: 0,
             shadowColor: 'transparent',
           },
           headerLeft: () => <CancelEditBtn />,
