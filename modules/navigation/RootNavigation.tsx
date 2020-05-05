@@ -194,6 +194,8 @@ const Root: NavStatelessComponent = observer(props => {
           UpdatePassword: 'accounts/update-password',
         },
       },
+      EditProfileModal: 'edit-profile',
+      UploadMusicModal: 'upload',
       Main: {
         screens: {
           SearchNavigator: {
@@ -216,8 +218,6 @@ const Root: NavStatelessComponent = observer(props => {
           },
         },
       },
-      EditProfileModal: 'edit-profile',
-      UploadMusicModal: 'upload',
     },
   });
 
