@@ -158,12 +158,11 @@ const Root: NavStatelessComponent = observer(props => {
   };
 
   const loadUserData = async () => {
-    [
-      await likesStore.refreshLikes(),
-      // await playlistsStore.refreshPlaylists(),
-      await userEntriesStore.refreshEntries(),
-      await paymentsStore.refreshSubscription(),
-    ];
+    return Promise.all([
+      likesStore.refreshLikes(),
+      userEntriesStore.refreshEntries(),
+      paymentsStore.refreshSubscription(),
+    ]);
   };
 
   const loadAll = async () => {
