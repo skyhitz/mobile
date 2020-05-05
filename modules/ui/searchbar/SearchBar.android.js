@@ -12,7 +12,6 @@ import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
 import Input from 'app/modules/ui/Input';
 import Colors from 'app/constants/Colors';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
 const ANDROID_GRAY = Colors.searchTextColor;
 
 class SearchBar extends Component {
@@ -139,24 +138,23 @@ SearchBar.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
+    width: '100%',
     marginTop: 6,
     marginBottom: 8,
-    marginLeft: 4,
-    marginRight: 4,
+    paddingLeft: 14,
+    paddingRight: 14,
     height: 40,
   },
   input: {
     flex: 1,
+    width: '100%',
     color: Colors.searchTextColor,
     outlineWidth: 0,
   },
   inputContainer: {
     backgroundColor: Colors.white,
     borderBottomWidth: 0,
-    marginLeft: 10,
-    marginRight: 10,
-    width: SCREEN_WIDTH - 30,
+    width: '100%',
     borderRadius: 6,
   },
   rightIconContainerStyle: {
