@@ -32,7 +32,9 @@ const SignIn: NavStatelessComponent = observer(props => {
         password: password,
       });
       setLoading(false);
-      return navigate('ProfileSettings');
+      return navigate('Main', {
+        screen: 'ProfileSettings',
+      });
     } catch (e) {
       signInValidationStore.setBackendError(e);
     }

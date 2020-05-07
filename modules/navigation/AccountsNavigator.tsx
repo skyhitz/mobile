@@ -18,7 +18,7 @@ const AccountsStackNavigator = () => {
     if (isDesktop) {
       setHeaderShown(false);
     }
-  });
+  }, []);
   return (
     <AccountsStack.Navigator>
       {Platform.OS === 'web' ? (

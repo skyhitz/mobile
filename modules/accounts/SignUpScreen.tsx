@@ -56,7 +56,9 @@ const SignUp: NavStatelessComponent = observer(({ navigation }) => {
         password: password,
       });
       setLoading(false);
-      return navigate('ProfileSettings');
+      return navigate('Main', {
+        screen: 'ProfileSettings',
+      });
     } catch (e) {
       signUpValidationStore.setBackendError(e);
     }

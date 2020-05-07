@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { HeaderBackButton } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
@@ -43,7 +43,9 @@ const UpdatePassword: NavStatelessComponent = observer(props => {
     try {
       await sessionStore.updatePassword(token, password);
       setLoading(false);
-      return navigate('ProfileSettings');
+      return navigate('Main', {
+        screen: 'ProfileSettings',
+      });
     } catch (e) {
       updatePasswordValidationStore.setBackendError(e);
     }
