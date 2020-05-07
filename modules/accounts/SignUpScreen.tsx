@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  ImageBackground,
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
@@ -13,10 +12,10 @@ import { HeaderBackButton } from '@react-navigation/stack';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { goBack } from 'app/modules/navigation/Navigator';
-import { AuthBackground2 } from 'app/assets/images/Images';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
+import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
 const SignUp: NavStatelessComponent = observer(({ navigation }) => {
   const { signUpValidationStore, sessionStore } = Stores();
@@ -65,7 +64,7 @@ const SignUp: NavStatelessComponent = observer(({ navigation }) => {
   };
 
   return (
-    <ImageBackground style={styles.background} source={AuthBackground2}>
+    <BackgroundImage authBackground={true}>
       <View style={styles.overlay} />
       <View style={styles.inputContainer}>
         <View style={styles.field}>
@@ -155,7 +154,7 @@ const SignUp: NavStatelessComponent = observer(({ navigation }) => {
           )}
         </TouchableHighlight>
       </View>
-    </ImageBackground>
+    </BackgroundImage>
   );
 });
 

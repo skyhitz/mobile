@@ -147,13 +147,8 @@ const Root: NavStatelessComponent = observer(props => {
 
   StatusBar.setBarStyle('light-content');
 
-  const loadResources = async () => {
-    const [user] = [
-      await sessionStore.loadSession(),
-      await Asset.loadAsync(Images),
-      await loadResourcesAsync(),
-    ];
-    return user;
+  const loadAssets = async () => {
+    return Promise.all([Asset.loadAsync(Images), loadResourcesAsync()]);
   };
 
   const loadUserData = async () => {
@@ -165,12 +160,15 @@ const Root: NavStatelessComponent = observer(props => {
   };
 
   const loadAll = async () => {
-    const user = await loadResources();
+    loadAssets();
+    console.time('loading session');
+    const user = await sessionStore.loadSession();
+    console.timeEnd('loading session');
     if (user) {
       console.time('loading user data');
       await loadUserData();
+      console.timeEnd('loading user data');
     }
-    console.timeEnd('loading user data');
     setLoaded(true);
   };
 
@@ -228,7 +226,7 @@ const Root: NavStatelessComponent = observer(props => {
       new Promise(resolve =>
         // Timeout in 150ms if `getInitialState` doesn't resolve
         // Workaround for https://github.com/facebook/react-native/issues/25675
-        setTimeout(resolve, 150)
+        setTimeout(resolve, 50)
       ),
     ])
       .catch(e => {

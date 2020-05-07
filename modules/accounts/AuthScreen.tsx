@@ -1,24 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
   Text,
   Image,
-  ImageBackground,
   TouchableHighlight,
 } from 'react-native';
 import Layout from 'app/constants/Layout';
-import { AuthBackground, Logo } from 'app/assets/images/Images';
+import { Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { useNavigation } from '@react-navigation/native';
+import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
 const AuthScreen: NavStatelessComponent = props => {
   const { navigate } = useNavigation();
 
   return (
-    <ImageBackground style={styles.bg} source={AuthBackground}>
+    <BackgroundImage authBackground={true}>
       <View style={styles.contentWrap}>
         <View style={styles.brand}>
           <Image style={styles.logo} source={Logo} />
@@ -58,7 +58,7 @@ const AuthScreen: NavStatelessComponent = props => {
           </View>
         </View>
       </View>
-    </ImageBackground>
+    </BackgroundImage>
   );
 };
 

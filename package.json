@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "NODE_ENV=development expo start",
     "start:prod": "expo start --no-dev",
-    "start:web": "yarn next dev",
+    "start:web": "NODE_ENV=development yarn next dev",
     "expo:publish": "expo publish",
     "eject": "expo eject",
     "android": "expo start --android --no-dev",
@@ -89,8 +89,5 @@
     "now": "^17.0.4",
     "prettier": "^1.4.0",
     "typescript": "^3.8.3"
-  },
-  "resolutions": {
-    "react-navigation-tabs/react-native-tab-view": "2.11.0"
   }
 }

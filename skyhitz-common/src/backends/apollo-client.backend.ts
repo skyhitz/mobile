@@ -39,6 +39,8 @@ networkInterface.use([
 networkInterface.useAfter([
   {
     applyAfterware({ response }: any, next: any) {
+      let isUnauthorized = false;
+
       if (!response.ok) {
         response
           .clone()
@@ -47,10 +49,14 @@ networkInterface.useAfter([
             console.info(
               `Network Error: ${response.status} (${response.statusText}) - ${bodyText}`
             );
+            if (response.statusText === 'Unauthorized') {
+              forceSignOut.set(true);
+              return;
+            }
+
             next();
           });
       } else {
-        let isUnauthorized = false;
         response
           .clone()
           .json()

@@ -18,10 +18,19 @@ const BackgroundImage = (props: any) => (
         uri:
           'https://res.cloudinary.com/skyhitz/image/upload/v1512424999/web/slider-overlay_jojxwg.png',
       }}
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
+      style={[
+        {
+          width: '100%',
+          height: '100%',
+        },
+        props.authBackground
+          ? {
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }
+          : {},
+      ]}
       imageStyle={{ opacity: 0.9 }}
       resizeMode="repeat"
     >

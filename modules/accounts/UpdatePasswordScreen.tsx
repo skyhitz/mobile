@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { HeaderBackButton } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { AuthBackground2 } from 'app/assets/images/Images';
 import { goBack } from 'app/modules/navigation/Navigator';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import {
   StyleSheet,
   View,
   Text,
-  ImageBackground,
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
@@ -17,6 +15,7 @@ import {
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
 const UpdatePassword: NavStatelessComponent = observer(props => {
   const { updatePasswordValidationStore, sessionStore } = Stores();
@@ -52,7 +51,7 @@ const UpdatePassword: NavStatelessComponent = observer(props => {
   };
 
   return (
-    <ImageBackground style={styles.background} source={AuthBackground2}>
+    <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
         <View style={styles.field}>
           <TextInput
@@ -118,7 +117,7 @@ const UpdatePassword: NavStatelessComponent = observer(props => {
           )}
         </TouchableHighlight>
       </View>
-    </ImageBackground>
+    </BackgroundImage>
   );
 });
 

@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { HeaderBackButton } from '@react-navigation/stack';
 import { goBack } from 'app/modules/navigation/Navigator';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { AuthBackground2 } from 'app/assets/images/Images';
 import {
   StyleSheet,
   View,
   Text,
-  ImageBackground,
   TouchableHighlight,
   TouchableOpacity,
   TextInput,
@@ -17,6 +15,7 @@ import {
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { useNavigation } from '@react-navigation/native';
+import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
 const SignIn: NavStatelessComponent = observer(props => {
   const { signInValidationStore, sessionStore } = Stores();
@@ -51,11 +50,7 @@ const SignIn: NavStatelessComponent = observer(props => {
   };
 
   return (
-    <ImageBackground
-      style={styles.background}
-      resizeMode="cover"
-      source={AuthBackground2}
-    >
+    <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
         <View style={styles.field}>
           <TextInput
@@ -120,7 +115,7 @@ const SignIn: NavStatelessComponent = observer(props => {
           <Text style={styles.forgotPassText}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-    </ImageBackground>
+    </BackgroundImage>
   );
 });
 

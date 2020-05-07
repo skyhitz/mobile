@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from './NavBar';
-import BackgroundImage from './BackgroundImage';
+import BackgroundImage from 'app/modules/ui/BackgroundImage';
 import MainWrapper from './MainWrapper';
 import LandingFooter from './Footer';
 
