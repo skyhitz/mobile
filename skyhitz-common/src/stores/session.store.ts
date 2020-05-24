@@ -90,16 +90,4 @@ export class SessionStore {
     await this.setUser(userPayload);
     return (this.session.user = new User(userPayload));
   }
-
-  async signInWithFacebook(token: string) {
-    let user = await userBackend.signInWithFacebook(token);
-    if (!user.id) {
-      return {
-        username: user.username,
-        email: user.email,
-      };
-    }
-    await this.setUser(user);
-    return (this.session.user = new User(user));
-  }
 }

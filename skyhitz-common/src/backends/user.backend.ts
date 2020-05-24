@@ -12,14 +12,11 @@ export class UserBackend {
           {
             authenticatedUser {
               avatarUrl
-              bannerUrl
               displayName
-              reputation
               username
               id
               jwt
               publishedAt
-              userType
               email
               description
               phone
@@ -40,14 +37,11 @@ export class UserBackend {
           isTesting ? true : false
         }){
           avatarUrl
-          bannerUrl
           displayName
-          reputation
           username
           id
           jwt
           publishedAt
-          userType
           email
           description
           phone
@@ -70,14 +64,11 @@ export class UserBackend {
       mutation {
         signIn(usernameOrEmail: "${usernameOrEmail}", password: "${password}"){
           avatarUrl
-          bannerUrl
           displayName
-          reputation
           username
           id
           jwt
           publishedAt
-          userType
           email
           description
           phone
@@ -117,14 +108,11 @@ export class UserBackend {
     mutation {
       updatePassword(token: "${token}", password: "${password}"){
         avatarUrl
-        bannerUrl
         displayName
-        reputation
         username
         id
         jwt
         publishedAt
-        userType
         email
         description
         phone
@@ -154,14 +142,11 @@ export class UserBackend {
   mutation {
     updateUser(avatarUrl: "${avatarUrl}", displayName: "${displayName}", description: "${description}", username: "${username}", email: "${email}", phone: "${phone}"){
       avatarUrl
-      bannerUrl
       displayName
-      reputation
       username
       id
       jwt
       publishedAt
-      userType
       email
       description
       phone
@@ -188,44 +173,6 @@ export class UserBackend {
       })
       .then((data: any) => data.data)
       .then(({ updateAlgoliaEntriesWithUser }) => updateAlgoliaEntriesWithUser)
-      .catch(({ graphQLErrors }) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
-
-  async signInWithFacebook(token: string) {
-    return client
-      .mutate({
-        mutation: gql`
-      mutation {
-        signInWithFacebook(token: "${token}", testing:${
-          isTesting ? true : false
-        }){
-          ... on User {
-            avatarUrl
-            bannerUrl
-            displayName
-            reputation
-            username
-            id
-            jwt
-            publishedAt
-            userType
-            email
-            description
-            phone
-          }
-          ... on UsernameAndEmail {
-            username
-            email
-          }
-        }
-      }
-      `,
-      })
-      .then((data: any) => data.data)
-      .then(({ signInWithFacebook }) => signInWithFacebook)
       .catch(({ graphQLErrors }) => {
         let [{ message }] = graphQLErrors;
         throw message;
