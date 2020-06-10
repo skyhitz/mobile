@@ -28,7 +28,7 @@ const PlayerNav = inject((stores: Stores) => ({
           style={styles.arrowDown}
         />
       </TouchableOpacity>
-      <Text style={styles.header}>{entry.userUsername}</Text>
+      <Text style={styles.header}>{entry.artist}</Text>
       <View style={styles.rightOptions} />
     </View>
   );

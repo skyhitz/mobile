@@ -15,7 +15,6 @@ export class PlaylistsBackend {
               description
               PlaylistEntries {
                 imageUrl
-                userDisplayName
                 description
                 title
                 id
@@ -23,7 +22,7 @@ export class PlaylistsBackend {
             }
           }
         `,
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
       })
       .then((data: any) => data.data)
       .then(({ userPlaylists }: any) => userPlaylists)
@@ -41,7 +40,7 @@ export class PlaylistsBackend {
         mutation {
           updatePlaylist(photoUrl: "${photoUrl}", title: "${title}", description: "${description}")
       }
-      `
+      `,
       })
       .then((data: any) => data.data)
       .then(({ updatePlaylist }: any) => updatePlaylist)
@@ -55,7 +54,7 @@ export class PlaylistsBackend {
         mutation {
           removePlaylist(id: "${id}")
       }
-      `
+      `,
       })
       .then((data: any) => data.data)
       .then(({ removePlaylist }: any) => removePlaylist)
@@ -72,7 +71,7 @@ export class PlaylistsBackend {
         mutation {
           updatePlaylist(action: "add", id: "${playlistId}", ids: "${entryId}")
       }
-      `
+      `,
       })
       .then((data: any) => data.data)
       .then(({ updatePlaylist }: any) => updatePlaylist)
@@ -89,7 +88,7 @@ export class PlaylistsBackend {
         mutation {
           updatePlaylist(action: "remove", id: "${playlistId}", ids: "${entryId}")
       }
-      `
+      `,
       })
       .then((data: any) => data.data)
       .then(({ updatePlaylist }: any) => updatePlaylist)

@@ -57,7 +57,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
             ellipsizeMode="tail"
             numberOfLines={1}
           >
-            {`Owner:   ${entry.userDisplayName}`}
+            {`Owner:   ${entry.artist}`}
           </Text>
         </View>
         <View style={styles.field}>

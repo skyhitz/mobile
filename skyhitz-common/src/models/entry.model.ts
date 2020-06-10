@@ -1,8 +1,6 @@
 import { Payload } from './payload.model';
 
 export class EntryPayload extends Payload {
-  userDisplayName?: string;
-  userUsername?: string;
   imageUrl?: string;
   userId?: number;
   commentCount?: number;
@@ -21,8 +19,6 @@ export class EntryPayload extends Payload {
 export class Entry extends EntryPayload {
   constructor(payload: EntryPayload) {
     super(payload);
-    this.userDisplayName = payload.userDisplayName;
-    this.userUsername = payload.userUsername;
     this.imageUrl = payload.imageUrl;
     this.userId = payload.userId;
     this.commentCount = payload.commentCount;

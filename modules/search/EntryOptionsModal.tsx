@@ -36,18 +36,15 @@ export default class EntryOptionsModal extends React.Component<any, any> {
     );
   }
   // Allow admin to remove music in case of copyright issues or not related content uploaded
-  renderRemoveFromMyMusic(entry: { userUsername: any }) {
-    if (
-      this.props.user.username === entry.userUsername ||
-      this.props.user.id === adminId
-    ) {
+  renderRemoveFromMyMusic(entry) {
+    if (this.props.user.id === adminId) {
       return <RemoveFromMyMusicRow entry={entry} />;
     }
     return null;
   }
   renderSetPrice(entry: any) {
     if (
-      this.props.user.username === entry.userUsername ||
+      this.props.user.displayName === entry.artist ||
       this.props.user.id === adminId
     ) {
       return <SetPrice entry={entry} />;

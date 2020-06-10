@@ -2,7 +2,6 @@ import { Payload } from './payload.model';
 
 class UserPayload extends Payload {
   avatarUrl?: string;
-  bannerUrl?: string;
   displayName?: string;
   email?: string;
   reputation?: number;
@@ -19,7 +18,6 @@ export class User extends UserPayload {
   constructor(payload: UserPayload) {
     super(payload);
     this.avatarUrl = payload.avatarUrl;
-    this.bannerUrl = payload.bannerUrl;
     this.displayName = payload.displayName;
     this.email = payload.email;
     this.reputation = payload.reputation;

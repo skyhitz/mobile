@@ -15,8 +15,6 @@ export class EntriesBackend {
       filters: `testing = ${isTesting}`,
       attributesToRetrieve: [
         'imageUrl',
-        'userDisplayName',
-        'userUsername',
         'description',
         'title',
         'artist',
@@ -37,7 +35,6 @@ export class EntriesBackend {
       {
         entries(id: "${id}"){
           imageUrl
-          userDisplayName
           description
           title
           artist
@@ -69,8 +66,6 @@ export class EntriesBackend {
       {
         entries(userId: "${userId}"){
           imageUrl
-          userDisplayName
-          userUsername
           description
           title
           artist
@@ -129,7 +124,6 @@ export class EntriesBackend {
       mutation {
         createEntry(id: "${id}"){
           imageUrl
-          userDisplayName
           description
           title
           artist
@@ -187,8 +181,6 @@ export class EntriesBackend {
           {
             topChart {
               imageUrl
-              userDisplayName
-              userUsername
               description
               title
               artist
@@ -214,36 +206,7 @@ export class EntriesBackend {
   }
 
   async getRecentSearches(): Promise<Entry[]> {
-    return client
-      .query({
-        query: gql`
-          {
-            recentEntrySearches {
-              imageUrl
-              userDisplayName
-              userUsername
-              description
-              title
-              artist
-              id
-              videoUrl
-              price
-              forSale
-            }
-          }
-        `,
-      })
-      .then((data: any) => data.data)
-      .then(({ recentEntrySearches }: any) => {
-        if (!recentEntrySearches) {
-          return [];
-        }
-        return recentEntrySearches.map((entry: any) => new Entry(entry));
-      })
-      .catch(e => {
-        console.info(e);
-        return [];
-      });
+    return [];
   }
 
   async getRecentlyAdded(): Promise<Entry[]> {
@@ -253,8 +216,6 @@ export class EntriesBackend {
           {
             recentlyAdded {
               imageUrl
-              userDisplayName
-              userUsername
               description
               title
               artist
@@ -280,33 +241,7 @@ export class EntriesBackend {
   }
 
   async getTopSearches(): Promise<Entry[]> {
-    return client
-      .query({
-        query: gql`
-          {
-            topEntrySearches {
-              imageUrl
-              userDisplayName
-              userUsername
-              description
-              title
-              artist
-              id
-              videoUrl
-              price
-              forSale
-            }
-          }
-        `,
-      })
-      .then((data: any) => data.data)
-      .then(({ topEntrySearches }: any) =>
-        topEntrySearches.map((entry: any) => new Entry(entry))
-      )
-      .catch(e => {
-        console.info(e);
-        return [];
-      });
+    return [];
   }
 
   remove(id: string, cloudinaryPublicId: string) {

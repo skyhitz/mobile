@@ -25,9 +25,6 @@ export default class ProfileSettingsTopContainer extends React.Component<
     if (this.props.user.avatarUrl) {
       source = { uri: this.props.user.avatarUrl };
     }
-    if (this.props.user.bannerUrl) {
-      source = { uri: this.props.user.bannerUrl };
-    }
     if (source) {
       return <View style={styles.container}>{this.renderBlurSection()}</View>;
     }
