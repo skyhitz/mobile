@@ -3,18 +3,35 @@ import { Platform, View, Image } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
-import TabBarWrapper from 'app/modules/tab-bar/TabBarWrapper';
+import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
 import Colors from 'app/constants/Colors';
 import ChartsView from 'app/modules/search/ChartsView';
 import { Logo } from 'app/assets/images/Images';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  createBottomTabNavigator,
+  BottomTabBar,
+} from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+export default () => {
   return (
     <Tab.Navigator
-      tabBar={props => <TabBarWrapper {...props} />}
+      initialRouteName="SearchNavigator"
+      tabBar={props => {
+        return (
+          <PlayerDrawer>
+            <BottomTabBar
+              {...props}
+              style={{
+                backgroundColor: Colors.tabsBackground,
+                borderTopColor: Colors.lightBrandBlue,
+                borderTopWidth: 1,
+              }}
+            />
+          </PlayerDrawer>
+        );
+      }}
       tabBarOptions={{
         showLabel: false,
         activeBackgroundColor: 'transparent',
@@ -22,6 +39,7 @@ const TabNavigator = () => {
         activeTintColor: Colors.tabIconSelected,
         inactiveTintColor: Colors.tabIconDefault,
       }}
+      lazy={true}
     >
       <Tab.Screen
         name="SearchNavigator"
@@ -76,5 +94,3 @@ const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
-
-export default TabNavigator;

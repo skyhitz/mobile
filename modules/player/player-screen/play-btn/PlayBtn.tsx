@@ -1,26 +1,23 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { Ionicons } from '@expo/vector-icons';
 import {
   ReplayIcon,
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
 import Colors from 'app/constants/Colors';
-import * as stores from 'app/skyhitz-common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
 
-const PlayBtn = inject((stores: Stores) => ({
-  togglePlay: stores.playerStore.togglePlay.bind(stores.playerStore),
-  replay: stores.playerStore.replay.bind(stores.playerStore),
-  playbackState: stores.playerStore.playbackState,
-}))(({ togglePlay, replay, playbackState }: any) => {
-  if (playbackState === 'PAUSED') {
+export default observer(() => {
+  let { playerStore } = Stores();
+
+  if (playerStore.playbackState === 'PAUSED') {
     return (
       <TouchableOpacity
         style={styles.controlTouch}
-        onPress={() => togglePlay()}
+        onPress={() => playerStore.togglePlay()}
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
@@ -35,11 +32,11 @@ const PlayBtn = inject((stores: Stores) => ({
       </TouchableOpacity>
     );
   }
-  if (playbackState === 'PLAYING') {
+  if (playerStore.playbackState === 'PLAYING') {
     return (
       <TouchableOpacity
         style={styles.controlTouch}
-        onPress={() => togglePlay()}
+        onPress={() => playerStore.togglePlay()}
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
@@ -49,9 +46,12 @@ const PlayBtn = inject((stores: Stores) => ({
       </TouchableOpacity>
     );
   }
-  if (playbackState === 'ENDED') {
+  if (playerStore.playbackState === 'ENDED') {
     return (
-      <TouchableOpacity style={styles.controlTouch} onPress={() => replay()}>
+      <TouchableOpacity
+        style={styles.controlTouch}
+        onPress={() => playerStore.replay()}
+      >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
             <ReplayIcon />
@@ -68,8 +68,6 @@ const PlayBtn = inject((stores: Stores) => ({
     </View>
   );
 });
-
-export default PlayBtn;
 
 var styles = StyleSheet.create({
   controlTouch: {
@@ -95,12 +93,8 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loadingSpinner: {
-    width: 87,
-    height: 87,
-    paddingRight: 10,
-    paddingLeft: 13,
-    paddingTop: 12,
-    paddingBottom: 10,
+    width: 86,
+    height: 86,
     borderWidth: 1.5,
     borderColor: 'white',
     borderRadius: 60,

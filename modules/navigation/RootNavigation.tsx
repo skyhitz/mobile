@@ -4,11 +4,8 @@ import { observer } from 'mobx-react';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
 import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
-import EditPlaylistModal from 'app/modules/playlists/EditPlaylistModal';
-import RemovePlaylistModal from 'app/modules/playlists/RemovePlaylistModal';
 import EntryOptionsModal from 'app/modules/search/EntryOptionsModal';
 import PricingOptionsModal from 'app/modules/search/PricingOptionsModal';
-import SelectPlaylistModal from 'app/modules/playlists/SelectPlaylistModal';
 import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
@@ -41,11 +38,11 @@ const AuthStackNavigator = () => {
 
 const AppStackNavigator = () => {
   return (
-    <AppStack.Navigator mode="modal">
+    <AppStack.Navigator mode="modal" initialRouteName="Main">
       <AppStack.Screen
         name="Main"
         component={MainTabNavigator}
-        options={{ headerShown: false, gestureEnabled: false }}
+        options={{ headerShown: false }}
       />
       <AppStack.Screen
         name="EditProfileModal"
@@ -61,15 +58,6 @@ const AppStackNavigator = () => {
           },
           headerLeft: () => <CancelEditBtn />,
           headerRight: () => <DoneEditBtn />,
-        }}
-      />
-      <AppStack.Screen
-        name="EditPlaylistModal"
-        component={EditPlaylistModal}
-        options={{
-          headerShown: false,
-          gestureEnabled: false,
-          cardStyle: { backgroundColor: 'transparent' },
         }}
       />
       <AppStack.Screen
@@ -100,15 +88,6 @@ const AppStackNavigator = () => {
         }}
       />
       <AppStack.Screen
-        name="RemovePlaylistModal"
-        component={RemovePlaylistModal}
-        options={{
-          headerShown: false,
-          gestureEnabled: false,
-          cardStyle: { backgroundColor: 'transparent' },
-        }}
-      />
-      <AppStack.Screen
         name="EntryOptionsModal"
         component={EntryOptionsModal}
         options={{
@@ -119,14 +98,6 @@ const AppStackNavigator = () => {
       <AppStack.Screen
         name="PricingOptionsModal"
         component={PricingOptionsModal}
-        options={{
-          headerShown: false,
-          cardStyle: { backgroundColor: 'transparent' },
-        }}
-      />
-      <AppStack.Screen
-        name="SelectPlaylistModal"
-        component={SelectPlaylistModal}
         options={{
           headerShown: false,
           cardStyle: { backgroundColor: 'transparent' },
@@ -190,8 +161,6 @@ const Root: NavStatelessComponent = observer(props => {
           UpdatePassword: 'accounts/update-password',
         },
       },
-      EditProfileModal: 'edit-profile',
-      UploadMusicModal: 'upload',
       Main: {
         screens: {
           SearchNavigator: {
@@ -214,6 +183,8 @@ const Root: NavStatelessComponent = observer(props => {
           },
         },
       },
+      EditProfileModal: 'edit-profile',
+      UploadMusicModal: 'upload',
     },
   });
 

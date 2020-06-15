@@ -3,6 +3,9 @@ import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
+import Animated from 'react-native-reanimated';
+
+const { Value } = Animated;
 
 export class PlayerStore {
   constructor() {}
@@ -13,6 +16,11 @@ export class PlayerStore {
   get entry(): any {
     return this.observables.entry;
   }
+
+  @observable
+  goUp: Animated.Value<0 | 1> = new Value(0);
+  @observable
+  goDown: Animated.Value<0 | 1> = new Value(0);
   @observable
   show: boolean = false;
   @observable
@@ -249,11 +257,13 @@ export class PlayerStore {
   @action
   hidePlayer() {
     this.show = false;
+    this.goDown.setValue(1);
   }
 
   @action
   showPlayer() {
     this.show = true;
+    this.goUp.setValue(1);
   }
 
   @computed

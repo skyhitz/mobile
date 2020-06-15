@@ -12,8 +12,8 @@ const CenteredView = ({ children, ...otherProps }: any) => (
     style={[
       {
         position: 'absolute',
-        left: (videoWidth - centeredContentWidth) / 2,
-        top: (videoHeight - centeredContentWidth) / 2,
+        // left: (videoWidth - centeredContentWidth) / 2,
+        // top: (videoHeight - centeredContentWidth) / 2,
         width: centeredContentWidth,
         height: centeredContentWidth,
         flexDirection: 'column',

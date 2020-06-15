@@ -60,7 +60,7 @@ export default class LikersSection extends React.Component<any, any> {
 let styles = StyleSheet.create({
   bottomSection: {
     height: 110,
-    width: Layout.window.width,
+    width: '100%',
     paddingLeft: 20,
     paddingRight: 20,
   },

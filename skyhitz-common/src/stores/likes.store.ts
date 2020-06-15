@@ -68,11 +68,16 @@ export class LikesStore {
   public refreshLikes() {
     this.loading = true;
     likesBackend.userLikes().then(userLikes => {
-      let ids = userLikes.map((like: any) => like.id);
-      let entries = userLikes.map((like: any) => new Entry(like));
-      this.ids = Set(ids);
-      this.userLikes = List(entries);
-      this.userLikesCount = this.userLikes.size;
+      if (!userLikes) {
+        return;
+      } else {
+        let ids = userLikes.map((like: any) => like.id);
+        let entries = userLikes.map((like: any) => new Entry(like));
+        this.ids = Set(ids);
+        this.userLikes = List(entries);
+        this.userLikesCount = this.userLikes.size;
+      }
+
       this.loading = false;
     });
   }

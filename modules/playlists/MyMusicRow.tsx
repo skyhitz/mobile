@@ -88,6 +88,7 @@ let styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.defaultTextDark,
     paddingLeft: 10,
+    minWidth: 100,
   },
   videosText: {
     color: Colors.defaultTextDark,

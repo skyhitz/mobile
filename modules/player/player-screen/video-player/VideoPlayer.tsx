@@ -10,7 +10,6 @@ import {
   videoHeight,
   videoWidth,
 } from 'app/modules/player/player-screen/video-player/VideoConstants';
-import SpinnerView from 'app/modules/player/player-screen/video-player/SpinnerView';
 import FullscreenControl from 'app/modules/player/player-screen/video-player/FullscreenControl';
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
 import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
@@ -51,8 +50,6 @@ export default class VideoPlayer extends React.Component<any, any> {
   }
 
   async componentDidMount() {
-    // this._setupNetInfoListener();
-
     Audio.setAudioModeAsync({
       playsInSilentModeIOS: true,
       allowsRecordingIOS: false,
@@ -64,87 +61,8 @@ export default class VideoPlayer extends React.Component<any, any> {
     });
   }
 
-  // componentWillUnmount() {
-  // this.disposer();
-  // }
-
-  // disposer = observe(musicControlEvents, ({ object }) => {
-  //   if (object.action === 'play') {
-  //     return this.props.play();
-  //   }
-  //   if (object.action === 'pause') {
-  //     return this.props.pause();
-  //   }
-  //   if (object.action === 'nextTrack') {
-  //     return this.props.playNext();
-  //   }
-  //   if (object.action === 'previousTrack') {
-  //     return this.props.playPrev();
-  //   }
-  // });
-
-  componentWillUnmount() {
-    // NetInfo.removeEventListener(
-    //   'connectionChange',
-    //   this._onConnectionChange.bind(this)
-    // );
-  }
-
-  _onConnectionChange(connectionInfo: any) {
-    // this.props.debug && console.info('[networkState]', connectionInfo.type);
-    // this.props.setNetworkState(connectionInfo.type);
-  }
-
-  _setupNetInfoListener() {
-    // NetInfo.getConnectionInfo().then(connectionInfo => {
-    //   this.props.debug && console.info('[networkState]', connectionInfo.type);
-    //   this.props.setNetworkState(connectionInfo.type);
-    // });
-    // NetInfo.addEventListener(
-    //   'connectionChange',
-    //   this._onConnectionChange.bind(this)
-    // );
-  }
-
   handleOnPlaybackStatusUpdate(status: any) {
     this.props.onPlaybackStatusUpdate(status);
-    this.updateLockedScreenMusicControls(status);
-  }
-
-  // get hasntSetNowPlaying() {
-  //   return this.props.entry.id !== this.state.playingNowEntryId;
-  // }
-
-  updateLockedScreenMusicControls(status: any) {
-    // if (!this.props.entry) {
-    //   return;
-    // }
-    // const {
-    //   titleOnly,
-    //   artistName,
-    //   avatarUrlMedium,
-    //   description,
-    //   id,
-    // } = this.props.entry;
-    // if (!status.isLoaded) {
-    //   return;
-    // }
-    // if (
-    //   status.isPlaying &&
-    //   !status.isBuffering &&
-    //   status.positionMillis === 0 &&
-    //   this.hasntSetNowPlaying
-    // ) {
-    //   this.setState({ playingNowEntryId: id });
-    //   return setNowPlaying({
-    //     title: titleOnly,
-    //     artist: artistName,
-    //     artwork: avatarUrlMedium,
-    //     description: description.substring(0, 140),
-    //     duration: Math.floor(status.durationMillis / 1000),
-    //   });
-    // }
-    // updatePlayback(status);
   }
 
   render() {
@@ -161,7 +79,6 @@ export default class VideoPlayer extends React.Component<any, any> {
             onError={this.props.onError.bind(this)}
             onFullscreenUpdate={this.props.onFullscreenUpdate.bind(this)}
           />
-          <SpinnerView />
           <PlayPauseInvisibleArea />
           <VideoErrorText />
         </View>
