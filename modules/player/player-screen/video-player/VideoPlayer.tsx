@@ -6,10 +6,7 @@ import {
   CurrentTimeDisplay,
   DurationDisplay,
 } from 'app/modules/player/player-screen/video-player/VideoTimeDisplay';
-import {
-  videoHeight,
-  videoWidth,
-} from 'app/modules/player/player-screen/video-player/VideoConstants';
+import { videoWidth } from 'app/modules/player/player-screen/video-player/VideoConstants';
 import FullscreenControl from 'app/modules/player/player-screen/video-player/FullscreenControl';
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
 import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
@@ -110,11 +107,9 @@ let styles = StyleSheet.create({
   },
   videoPlayer: {
     width: videoWidth,
-    height: videoHeight,
   },
   container: {
     backgroundColor: 'black',
     width: videoWidth,
-    height: videoHeight,
   },
 });
