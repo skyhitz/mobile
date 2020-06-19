@@ -25,7 +25,7 @@ export default class MyMusicScreen extends React.Component<any, any> {
         {SearchingLoader(this.props.loading)}
         {this.props.entries.map((entry: any) => (
           <EntryRow
-            key={entry.key}
+            key={entry.id}
             play={this.props.loadAndPlay}
             entry={entry}
             addRecentEntrySearch={null}

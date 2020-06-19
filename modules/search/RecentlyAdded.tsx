@@ -38,7 +38,7 @@ export default class RecentlyAdded extends React.Component<any, any> {
             entry={entry}
             addRecentEntrySearch={null}
             options={null}
-            disablePlaylistMode={this.setRecentlyAdded}
+            disablePlaylistMode={() => this.setRecentlyAdded()}
             previousScreen={null}
           />
         ))}

@@ -107,7 +107,7 @@ const AppStackNavigator = () => {
   );
 };
 
-const Root: NavStatelessComponent = observer(props => {
+const Root: NavStatelessComponent = observer((props) => {
   const [loaded, setLoaded] = useState(false);
   const {
     sessionStore,
@@ -185,6 +185,7 @@ const Root: NavStatelessComponent = observer(props => {
       },
       EditProfileModal: 'edit-profile',
       UploadMusicModal: 'upload',
+      EntryOptionsModal: 'options',
     },
   });
 
@@ -194,13 +195,13 @@ const Root: NavStatelessComponent = observer(props => {
   useEffect(() => {
     Promise.race([
       getInitialState(),
-      new Promise(resolve =>
+      new Promise((resolve) =>
         // Timeout in 150ms if `getInitialState` doesn't resolve
         // Workaround for https://github.com/facebook/react-native/issues/25675
         setTimeout(resolve, 50)
       ),
     ])
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
       })
       .then((state: any) => {
