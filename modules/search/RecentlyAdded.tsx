@@ -31,11 +31,17 @@ export default class RecentlyAdded extends React.Component<any, any> {
       <View>
         <Text style={styles.recentText}>Recently Added</Text>
         {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentlyAdded.map((entry: any) =>
-          EntryRow(this.props.loadAndPlay, entry, null, null, () => {
-            this.setRecentlyAdded();
-          })
-        )}
+        {this.props.recentlyAdded.map((entry: any) => (
+          <EntryRow
+            key={entry.id}
+            play={this.props.loadAndPlay}
+            entry={entry}
+            addRecentEntrySearch={null}
+            options={null}
+            disablePlaylistMode={this.setRecentlyAdded}
+            previousScreen={null}
+          />
+        ))}
       </View>
     );
   }

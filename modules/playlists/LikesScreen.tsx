@@ -23,9 +23,17 @@ export default class LikesScreen extends React.Component<any, any> {
         }}
       >
         {SearchingLoader(this.props.loading)}
-        {this.props.entries.map((entry: any) =>
-          EntryRow(this.props.loadAndPlay, entry)
-        )}
+        {this.props.entries.map((entry: any) => (
+          <EntryRow
+            key={entry.id}
+            play={this.props.loadAndPlay}
+            entry={entry}
+            addRecentEntrySearch={null}
+            disablePlaylistMode={null}
+            options={null}
+            previousScreen={null}
+          />
+        ))}
         <BottomPlaceholder />
       </ScrollView>
     );

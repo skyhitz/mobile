@@ -23,16 +23,17 @@ export default class MyMusicScreen extends React.Component<any, any> {
         }}
       >
         {SearchingLoader(this.props.loading)}
-        {this.props.entries.map((entry: any) =>
-          EntryRow(
-            this.props.loadAndPlay,
-            entry,
-            null,
-            null,
-            null,
-            'MyMusicScreen'
-          )
-        )}
+        {this.props.entries.map((entry: any) => (
+          <EntryRow
+            key={entry.key}
+            play={this.props.loadAndPlay}
+            entry={entry}
+            addRecentEntrySearch={null}
+            options={null}
+            disablePlaylistMode={null}
+            previousScreen={'MyMusicScreen'}
+          />
+        ))}
         <BottomPlaceholder />
       </ScrollView>
     );

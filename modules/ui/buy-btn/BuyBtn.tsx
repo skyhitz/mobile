@@ -4,6 +4,7 @@ import Colors from 'app/constants/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 
 const Placeholder = () => <View style={styles.placeholder} />;
 

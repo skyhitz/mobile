@@ -25,16 +25,17 @@ class TopEntries extends React.Component<any, any> {
     this.props.getTopChart();
   }
   renderEntryRow(entry: any, index: number) {
-    return EntryChartRow(
-      this.props.loadAndPlay,
-      entry,
-      null,
-      null,
-      () => {
-        this.setRecentlyAdded();
-      },
-      null,
-      index + 1
+    return (
+      <EntryChartRow
+        key={entry.id}
+        play={this.props.loadAndPlay}
+        entry={entry}
+        addRecentEntrySearch={null}
+        options={null}
+        disablePlaylistMode={() => this.setRecentlyAdded()}
+        previousScreen={null}
+        position={index + 1}
+      />
     );
   }
   render() {

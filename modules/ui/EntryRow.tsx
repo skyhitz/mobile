@@ -6,14 +6,14 @@ import ThreeDots from 'app/modules/ui/ThreeDots';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
-const EntryRow = (
-  play: any,
-  entry: any,
-  addRecentEntrySearch?: any,
-  options?: any,
-  disablePlaylistMode?: any,
-  previousScreen?: any
-) => {
+export default ({
+  play,
+  entry,
+  addRecentEntrySearch,
+  options,
+  disablePlaylistMode,
+  previousScreen,
+}) => {
   const { navigate } = useNavigation();
   return (
     <View key={entry.id} style={styles.rowWrap}>
@@ -101,5 +101,3 @@ let styles = StyleSheet.create({
     color: Colors.defaultTextLight,
   },
 });
-
-export default EntryRow;
