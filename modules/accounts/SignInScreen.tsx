@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { HeaderBackButton } from '@react-navigation/stack';
-import { goBack } from 'app/modules/navigation/Navigator';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import {
@@ -17,7 +16,7 @@ import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { useNavigation } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-const SignIn: NavStatelessComponent = observer(props => {
+const SignIn: NavStatelessComponent = observer((props) => {
   const { signInValidationStore, sessionStore } = Stores();
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -129,7 +128,10 @@ SignIn.navigationOptions = ({ navigation }) => ({
     borderBottomWidth: 0,
   },
   headerLeft: () => (
-    <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
+    <HeaderBackButton
+      tintColor={Colors.white}
+      onPress={() => navigation.goBack()}
+    />
   ),
 });
 

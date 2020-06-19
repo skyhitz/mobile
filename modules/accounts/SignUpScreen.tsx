@@ -11,7 +11,6 @@ import { observer } from 'mobx-react';
 import { HeaderBackButton } from '@react-navigation/stack';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
-import { goBack } from 'app/modules/navigation/Navigator';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
@@ -168,7 +167,10 @@ SignUp.navigationOptions = ({ navigation }) => ({
     borderBottomWidth: 0,
   },
   headerLeft: () => (
-    <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
+    <HeaderBackButton
+      tintColor={Colors.white}
+      onPress={() => navigation.goBack()}
+    />
   ),
 });
 

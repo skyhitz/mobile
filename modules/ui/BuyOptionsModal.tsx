@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { goBack } from 'app/modules/navigation/Navigator';
 import LargeBtn from './LargeBtn';
 import { inject } from 'mobx-react';
 import { Stores } from 'skyhitz-common';
@@ -31,7 +30,7 @@ export default class BuyOptionsModal extends React.Component<any, any> {
     ];
     this.props.refreshEntry();
 
-    goBack();
+    this.props.navigation.goBack();
   }
   render() {
     const { entry } = this.props.navigation.state.params;
@@ -45,7 +44,11 @@ export default class BuyOptionsModal extends React.Component<any, any> {
             </Text>
           </View>
           <View style={styles.bottomWrap}>
-            <LargeBtn text="Done" secondary={true} onPress={() => goBack()} />
+            <LargeBtn
+              text="Done"
+              secondary={true}
+              onPress={() => this.props.navigation.goBack()}
+            />
           </View>
         </View>
       );
@@ -59,7 +62,11 @@ export default class BuyOptionsModal extends React.Component<any, any> {
           <Text style={styles.title}>{entry.title}</Text>
         </View>
         <View style={styles.bottomWrap}>
-          <LargeBtn text="Cancel" secondary={true} onPress={() => goBack()} />
+          <LargeBtn
+            text="Cancel"
+            secondary={true}
+            onPress={() => this.props.navigation.goBack()}
+          />
           <LargeBtn text="Confirm" onPress={() => this.buyEntry(entry.id)} />
         </View>
       </View>

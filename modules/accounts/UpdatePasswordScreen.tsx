@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { HeaderBackButton } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { goBack } from 'app/modules/navigation/Navigator';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import {
   StyleSheet,
@@ -17,7 +16,7 @@ import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-const UpdatePassword: NavStatelessComponent = observer(props => {
+const UpdatePassword: NavStatelessComponent = observer((props) => {
   const { updatePasswordValidationStore, sessionStore } = Stores();
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -131,7 +130,10 @@ UpdatePassword.navigationOptions = ({ navigation }) => ({
     borderBottomWidth: 0,
   },
   headerLeft: () => (
-    <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
+    <HeaderBackButton
+      tintColor={Colors.white}
+      onPress={() => navigation.goBack()}
+    />
   ),
 });
 

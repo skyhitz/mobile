@@ -21,7 +21,6 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
-import { goBack } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 
 type Stores = typeof stores;
@@ -197,7 +196,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
     await this.props.create();
     await this.props.refreshUserEntries();
     this.props.clearStore();
-    goBack();
+    this.props.navigation.goBack();
   }
 
   renderArtworkSection() {
@@ -245,7 +244,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.artist}
-              onChangeText={t => this.props.updateArtist(t)}
+              onChangeText={(t) => this.props.updateArtist(t)}
               maxLength={34}
             />
           </View>
@@ -264,7 +263,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.title}
-              onChangeText={t => this.props.updateTitle(t)}
+              onChangeText={(t) => this.props.updateTitle(t)}
               maxLength={34}
             />
           </View>
@@ -283,7 +282,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.description}
-              onChangeText={t => this.props.updateDescription(t)}
+              onChangeText={(t) => this.props.updateDescription(t)}
               maxLength={60}
             />
           </View>
@@ -311,7 +310,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.price}
-              onChangeText={price => this.props.updatePrice(price)}
+              onChangeText={(price) => this.props.updatePrice(price)}
               maxLength={30}
             />
           </View>
@@ -334,7 +333,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               {'Available for Sale: '}
             </Text>
             <Switch
-              onValueChange={forSale =>
+              onValueChange={(forSale) =>
                 this.props.updateAvailableForSale(forSale)
               }
               value={this.props.availableForSale}

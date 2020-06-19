@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { goBack } from 'app/modules/navigation/Navigator';
 import Layout from 'app/constants/Layout';
 import { Stores } from 'skyhitz-common';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
@@ -39,7 +38,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
   async handleUpdatePricing(entry: any) {
     await this.props.updatePricing(entry);
     this.props.refreshEntries();
-    goBack();
+    this.props.navigation.goBack();
   }
   render() {
     const { entry } = this.props.navigation.state.params;
@@ -79,7 +78,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
             {'Available for Sale: '}
           </Text>
           <Switch
-            onValueChange={forSale =>
+            onValueChange={(forSale) =>
               this.props.updateAvailableForSale(forSale)
             }
             value={this.props.availableForSale}
@@ -115,7 +114,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
             style={styles.input}
             placeholderTextColor="white"
             value={this.props.price ? String(this.props.price) : undefined}
-            onChangeText={price => this.props.updatePrice(price)}
+            onChangeText={(price) => this.props.updatePrice(price)}
             maxLength={30}
           />
         </View>
@@ -124,7 +123,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
           <TouchableOpacity onPress={() => this.handleUpdatePricing(entry)}>
             <Text style={styles.btnText}>Done</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => goBack()}>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Text style={styles.btnText}>Cancel</Text>
           </TouchableOpacity>
         </View>

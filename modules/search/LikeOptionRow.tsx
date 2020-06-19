@@ -4,9 +4,9 @@ import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { goBack } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Stores } from 'app/functions/Stores';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -17,7 +17,7 @@ export default class LikeOptionRow extends React.Component<any, any> {
   handleToggle() {
     this.props.toggleLike(this.props.entry);
     this.forceUpdate();
-    goBack();
+    this.props.navigation.goBack();
   }
   get isLiked() {
     return this.props.isEntryLiked(this.props.entry);

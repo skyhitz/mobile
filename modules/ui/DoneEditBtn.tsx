@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Stores } from 'app/functions/Stores';
 import { observer } from 'mobx-react';
 
-const DoneEditBtn = observer(props => {
+const DoneEditBtn = observer((props) => {
   const { goBack } = useNavigation();
   const { editProfileStore } = Stores();
 
