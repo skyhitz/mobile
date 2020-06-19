@@ -62,7 +62,7 @@ export default function MainWrapper() {
                 fontSize: 18,
               }}
             >
-              Get started ->
+              Get started {'->'}
             </Text>
           </View>
         </Anchor>

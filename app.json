@@ -5,20 +5,14 @@
     "slug": "skyhitz",
     "privacy": "public",
     "githubUrl": "https://github.com/skyhitz/mobile",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "0.3.5",
     "orientation": "portrait",
     "primaryColor": "#1A1B1F",
     "icon": "./assets/images/icon.png",
     "scheme": "skyhitz",
     "packagerOpts": {
-      "assetExts": [
-        "ttf"
-      ]
+      "assetExts": ["ttf"]
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -28,15 +22,11 @@
       "buildNumber": "0.3.5",
       "icon": "./assets/images/icon-1024x1024.png",
       "appStoreUrl": "https://itunes.apple.com/us/app/skyhitz/id1105406020",
-      "associatedDomains": [
-        "applinks:v9nr.app.link"
-      ],
+      "associatedDomains": ["applinks:v9nr.app.link"],
       "infoPlist": {
-        "NSCameraUsageDescription": "Allow access to upload pictures to your profile and playlists.",
+        "NSCameraUsageDescription": "Allow access to upload pictures to your profile.",
         "NSPhotoLibraryUsageDescription": "Allow access to your library so you can upload original music videos.",
-        "UIBackgroundModes": [
-          "audio"
-        ]
+        "UIBackgroundModes": ["audio"]
       }
     },
     "android": {
@@ -60,10 +50,7 @@
       "resizeMode": "contain",
       "image": "./assets/images/icon-1024x1024.png"
     },
-    "assetBundlePatterns": [
-      "assets/images/*",
-      "assets/fonts/*"
-    ],
+    "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "extra": {
       "bugsnag": {
         "apiKey": "cf69bb38defd14395a7340170c8e41f6"

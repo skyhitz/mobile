@@ -4,8 +4,6 @@ import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { goBack } from 'app/modules/navigation/Navigator';
 import LikeOptionRow from 'app/modules/search/LikeOptionRow';
-import AddToPlaylistOptionRow from 'app/modules/search/AddToPlaylistOptionRow';
-import RemoveFromPlaylistOptionRow from 'app/modules/search/RemoveFromPlaylistOptionRow';
 import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
 import SetPrice from 'app/modules/search/SetPrice';
 import * as stores from 'app/skyhitz-common';
@@ -17,24 +15,6 @@ const adminId = '-LbM3m6WKdVQAsY3zrAd';
   user: stores.sessionStore.user,
 }))
 export default class EntryOptionsModal extends React.Component<any, any> {
-  renderAddEntryToPlaylist(entry: any) {
-    if (!this.props.playlistsCount) {
-      return null;
-    }
-    return <AddToPlaylistOptionRow entry={entry} />;
-  }
-  renderRemoveFromPlaylist(
-    entry: any,
-    options: { removeFromPlaylist: any; playlistId: any }
-  ) {
-    if (!options) {
-      return null;
-    }
-    const { removeFromPlaylist, playlistId } = options;
-    return (
-      <RemoveFromPlaylistOptionRow entry={entry} playlistId={playlistId} />
-    );
-  }
   // Allow admin to remove music in case of copyright issues or not related content uploaded
   renderRemoveFromMyMusic(entry) {
     if (this.props.user.id === adminId) {
@@ -75,9 +55,6 @@ export default class EntryOptionsModal extends React.Component<any, any> {
         </View>
         <View style={styles.options}>
           <LikeOptionRow entry={entry} />
-          {this.renderAddEntryToPlaylist(entry)}
-          {this.renderRemoveFromPlaylist(entry, options)}
-
           {previousScreen === 'MyMusicScreen'
             ? this.renderRemoveFromMyMusic(entry)
             : null}

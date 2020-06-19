@@ -1,6 +1,5 @@
 import React from 'react';
 import { inject } from 'mobx-react';
-import { withNavigationFocus } from '@react-navigation/compat';
 import SearchUserList from 'app/modules/search/SearchUserList';
 import TopRecentUserView from 'app/modules/search/TopRecentUserView';
 import * as stores from 'app/skyhitz-common';
@@ -30,4 +29,4 @@ class SearchUserView extends React.Component<any, any> {
   }
 }
 
-export default withNavigationFocus(SearchUserView);
+export default SearchUserView;

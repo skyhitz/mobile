@@ -9,7 +9,7 @@ import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
 import SearchHeader from './SearchHeader';
 
-const labelStyle = _ => ({
+const labelStyle = (_) => ({
   fontSize: 14,
   color: Colors.defaultTextLight,
   textAlign: 'center',
@@ -47,7 +47,7 @@ const TabsView = () => {
             backgroundColor: Colors.tabsBackground,
           },
         }}
-        tabBar={props => (
+        tabBar={(props) => (
           <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
         )}
       >

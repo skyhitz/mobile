@@ -1,5 +1,4 @@
 import React from 'react';
-import { withNavigationFocus } from '@react-navigation/compat';
 import { inject } from 'mobx-react';
 import SearchEntryList from 'app/modules/search/SearchEntryList';
 import TopRecentEntryView from 'app/modules/search/TopRecentEntryView';
@@ -29,4 +28,4 @@ class SearchEntryView extends React.Component<any, any> {
   }
 }
 
-export default withNavigationFocus(SearchEntryView);
+export default SearchEntryView;

@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, Image, Platform } from 'react-native';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
-import { navigate } from 'app/modules/navigation/Navigator';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const EntryRow = (
   play: any,
@@ -14,6 +14,7 @@ const EntryRow = (
   disablePlaylistMode?: any,
   previousScreen?: any
 ) => {
+  const { navigate } = useNavigation();
   return (
     <View key={entry.id} style={styles.rowWrap}>
       <TouchableOpacity

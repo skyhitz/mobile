@@ -4,11 +4,14 @@ import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
 import Animated from 'react-native-reanimated';
+import { State } from 'react-native-gesture-handler';
+import { onGestureEvent } from 'react-native-redash';
 
 const { Value } = Animated;
 
 export class PlayerStore {
   constructor() {}
+
   public observables: any = observable({
     entry: null,
   });
@@ -21,6 +24,7 @@ export class PlayerStore {
   goUp: Animated.Value<0 | 1> = new Value(0);
   @observable
   goDown: Animated.Value<0 | 1> = new Value(0);
+
   @observable
   show: boolean = false;
   @observable
@@ -54,7 +58,7 @@ export class PlayerStore {
   @observable
   shouldPlayAtEndOfSeek: boolean = false;
   @observable
-  sliderWidth!: number;
+  sliderWidth: number = 0;
   @observable
   cueList: List<Entry> = List([]);
   @observable
@@ -66,6 +70,40 @@ export class PlayerStore {
   @observable
   playbackInstance: any;
   seekPosition!: number;
+
+  @observable
+  streamUrl: string =
+    'https://res.cloudinary.com/skyhitz/video/upload/v1554330926/app/-LbM3m6WKdVQAsY3zrAd/videos/-Lb_KsQ7hbr0nquOTZee.mov';
+
+  video: any;
+
+  translationX: Animated.Value<number> = new Value(0);
+  offsetX: Animated.Value<number> = new Value(0);
+  sliderState: Animated.Value<number> = new Value(State.UNDETERMINED);
+
+  mountVideo = component => {
+    this.video = component;
+    this.loadNewPlaybackInstance(false);
+  };
+
+  async loadNewPlaybackInstance(playing, streamUrl = '') {
+    if (this.playbackInstance != null) {
+      await this.playbackInstance.unloadAsync();
+      this.playbackInstance = null;
+    }
+
+    if (!streamUrl) return;
+    console.log('loading video', streamUrl);
+    await this.video.loadAsync(
+      { uri: streamUrl },
+      {
+        shouldPlay: playing,
+        positionMillis: 0,
+        progressUpdateIntervalMillis: 50,
+      }
+    );
+    this.playbackInstance = this.video;
+  }
 
   @action
   async refreshEntry() {
@@ -176,17 +214,6 @@ export class PlayerStore {
     return false;
   }
 
-  async loadAsync(streamUrl: string) {
-    return await this.playbackInstance.loadAsync(
-      { uri: streamUrl },
-      {
-        shouldPlay: true,
-        positionMillis: 0,
-        progressUpdateIntervalMillis: 50,
-      }
-    );
-  }
-
   async loadAndPlay(entry: Entry) {
     if (!entry) {
       return null;
@@ -209,9 +236,10 @@ export class PlayerStore {
     videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
     let optimizedVideo = '/upload/vc_auto/q_auto:good';
     videoUrl.replace('/upload', optimizedVideo);
-    let loadStream = await this.loadAsync(videoUrl);
+    this.streamUrl = videoUrl;
+    await this.loadNewPlaybackInstance(true, videoUrl);
     this.setPlaybackState('PLAYING');
-    return loadStream;
+    return;
   }
 
   async playNext() {
@@ -353,14 +381,13 @@ export class PlayerStore {
     return 0;
   }
 
-  onSeekSliderValueChange = (value: number) => {
+  onSeekSliderValueChange = () => {
     if (
       this.playbackInstance !== null &&
       this.seekState !== 'SEEKING' &&
       this.seekState !== 'SEEKED'
     ) {
       this.shouldPlayAtEndOfSeek = false;
-      // this.seekPosition = value * this.playbackInstanceDuration;
       this.setSeekState('SEEKING');
 
       if (this.isPlaying) {
@@ -382,9 +409,7 @@ export class PlayerStore {
 
         this.setSeekState('NOT_SEEKING');
         this.setPlaybackState(this.getPlaybackStateFromStatus(status));
-      } catch (message) {
-        console.info('Seek error: ', message);
-      }
+      } catch (message) {}
     }
   };
 
@@ -398,7 +423,6 @@ export class PlayerStore {
       )
     ) {
       const value = evt.nativeEvent.locationX / this.sliderWidth;
-      this.onSeekSliderValueChange(value);
       this.onSeekSliderSlidingComplete(value);
     }
   };
@@ -466,6 +490,9 @@ export class PlayerStore {
     if (status.isPlaying && !status.isBuffering) {
       this.playbackInstancePosition = status.positionMillis;
       this.playbackInstanceDuration = status.durationMillis;
+      this.translationX.setValue(
+        (status.positionMillis / status.durationMillis) * this.sliderWidth
+      );
     }
 
     this.shouldPlay = status.shouldPlay;

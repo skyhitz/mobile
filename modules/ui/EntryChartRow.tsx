@@ -10,7 +10,7 @@ import {
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
-import { navigate } from 'app/modules/navigation/Navigator';
+import { useNavigation } from '@react-navigation/native';
 
 const EntryChartRow = (
   play: any,
@@ -21,6 +21,7 @@ const EntryChartRow = (
   previousScreen?: any,
   position?: number
 ) => {
+  const { navigate } = useNavigation();
   return (
     <View key={entry.id} style={styles.rowWrap}>
       <TouchableOpacity
