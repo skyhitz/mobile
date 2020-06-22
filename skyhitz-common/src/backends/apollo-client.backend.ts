@@ -1,8 +1,8 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { observable } from 'mobx';
-import LocalStorage from '../async-storage';
 import { fragmentMatcher } from '../apollo/fragment-matcher';
 import { Config } from '../config';
+import { AsyncStorage } from 'react-native';
 
 let networkInterface = createNetworkInterface({
   uri: Config.GRAPHQL_URL,
@@ -20,7 +20,7 @@ networkInterface.use([
       if (!req.options.headers) {
         req.options.headers = {};
       }
-      const userData = await LocalStorage.getItem('userData');
+      const userData = await AsyncStorage.getItem('userData');
       if (userData) {
         const { jwt } = JSON.parse(userData);
         if (jwt) {

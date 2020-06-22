@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
@@ -60,7 +61,10 @@ const UpdatePassword: NavStatelessComponent = observer((props) => {
             autoCapitalize="none"
             placeholder="New Password"
             autoCorrect={false}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             secureTextEntry={true}
             placeholderTextColor="white"
             value={password}
@@ -76,7 +80,10 @@ const UpdatePassword: NavStatelessComponent = observer((props) => {
             autoCapitalize="none"
             placeholder="Confirm New Password"
             autoCorrect={false}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             secureTextEntry={true}
             placeholderTextColor="white"
             value={passwordConfirmation}
@@ -169,7 +176,6 @@ let styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 14,
     padding: 10,
-    outlineWidth: 0,
     width: '100%',
   },
   joinBtn: {

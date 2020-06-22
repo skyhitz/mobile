@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { HeaderBackButton } from '@react-navigation/stack';
@@ -75,7 +76,10 @@ const SignUp: NavStatelessComponent = observer(({ navigation }) => {
             placeholder="Username"
             autoCorrect={false}
             autoFocus={true}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             placeholderTextColor="white"
             value={username}
             onChange={updateUsername}
@@ -89,7 +93,10 @@ const SignUp: NavStatelessComponent = observer(({ navigation }) => {
             autoCapitalize="none"
             placeholder="Display Name"
             autoCorrect={false}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             placeholderTextColor="white"
             value={displayName}
             onChange={updateDisplayName}
@@ -215,7 +222,6 @@ var styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 14,
     padding: 10,
-    outlineWidth: 0,
     width: '100%',
   },
   joinBtn: {

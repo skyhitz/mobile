@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { State, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Colors from 'app/constants/Colors';
@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   container: {
     width: KNOB_SIZE,
     height: KNOB_SIZE,
-    cursor: 'pointer',
   },
   image: {
     ...StyleSheet.absoluteFillObject,
@@ -27,7 +26,12 @@ const styles = StyleSheet.create({
 
 export default ({ state }: KnobProps) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        Platform.OS === 'web' ? ({ cursor: 'pointer' } as any) : {},
+      ]}
+    >
       <Animated.View style={[styles.image]}></Animated.View>
     </View>
   );

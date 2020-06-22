@@ -9,6 +9,7 @@ import {
   View,
   ActivityIndicator,
   Text,
+  Platform,
 } from 'react-native';
 import Colors from 'app/constants/Colors';
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -50,7 +51,7 @@ class SearchBar extends Component {
     this.setState({ hasFocus: false });
   };
 
-  onChangeText = text => {
+  onChangeText = (text) => {
     this.props.onChangeText && this.props.onChangeText(text);
     this.setState({ isEmpty: text === '' });
   };
@@ -89,8 +90,12 @@ class SearchBar extends Component {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onChangeText={this.onChangeText}
-          ref={input => (this.input = input)}
-          inputStyle={[styles.input, inputStyle]}
+          ref={(input) => (this.input = input)}
+          inputStyle={[
+            styles.input,
+            inputStyle,
+            Platform.OS === 'web' ? { outlineWidth: 0 } : {},
+          ]}
           containerStyle={[
             styles.inputContainer,
             !hasFocus && { width: SCREEN_WIDTH - 22, marginRight: 10 },
@@ -171,7 +176,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 6,
     fontSize: 14,
-    outlineWidth: 0,
   },
   inputContainer: {
     marginTop: 0,

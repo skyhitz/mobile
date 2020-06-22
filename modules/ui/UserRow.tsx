@@ -6,8 +6,8 @@ import { Stores } from 'app/functions/Stores';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 
-export default observer(({ user, recentSearch }) => {
-  const { profileStore, usersSearchStore, playerStore } = Stores();
+export default observer(({ user }) => {
+  const { profileStore, playerStore } = Stores();
   const { navigate } = useNavigation();
   return (
     <View style={styles.rowWrap}>
@@ -20,9 +20,6 @@ export default observer(({ user, recentSearch }) => {
             navigate('UserProfile', {
               username: user.username,
             });
-            if (recentSearch) {
-              usersSearchStore.addRecentUserSearch(user.id);
-            }
           }}
         >
           <View style={styles.row}>

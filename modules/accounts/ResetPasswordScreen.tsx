@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
@@ -53,7 +54,10 @@ const ResetPassword: NavStatelessComponent = observer((props) => {
             autoCapitalize="none"
             placeholder="Email address"
             autoCorrect={false}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             placeholderTextColor="white"
             value={email}
             onChange={updateEmail}
@@ -140,7 +144,6 @@ let styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 14,
     padding: 10,
-    outlineWidth: 0,
     width: '100%',
   },
   joinBtn: {

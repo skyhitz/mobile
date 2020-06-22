@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { Stores } from 'app/functions/Stores';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
@@ -59,7 +60,10 @@ const SignIn: NavStatelessComponent = observer((props) => {
             autoCapitalize="none"
             placeholder="Username or email address"
             autoCorrect={false}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             autoFocus={true}
             placeholderTextColor="white"
             value={usernameOrEmail}
@@ -72,7 +76,10 @@ const SignIn: NavStatelessComponent = observer((props) => {
             autoCapitalize="none"
             placeholder="Password"
             autoCorrect={false}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             secureTextEntry={true}
             placeholderTextColor="white"
             value={password}
@@ -166,7 +173,6 @@ let styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 14,
     padding: 10,
-    outlineWidth: 0,
     width: '100%',
   },
   joinBtn: {

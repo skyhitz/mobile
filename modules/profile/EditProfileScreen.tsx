@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { inject } from 'mobx-react';
 import {
@@ -111,10 +112,13 @@ export default class EditProfileScreen extends React.Component<any, any> {
               placeholder="Display Name"
               autoCorrect={false}
               autoFocus={true}
-              style={styles.input}
+              style={[
+                styles.input,
+                Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+              ]}
               placeholderTextColor="white"
               value={this.props.displayName}
-              onChangeText={t => this.props.updateDisplayName(t)}
+              onChangeText={(t) => this.props.updateDisplayName(t)}
               maxLength={30}
             />
           </View>
@@ -133,7 +137,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.description}
-              onChangeText={t => this.props.updateDescription(t)}
+              onChangeText={(t) => this.props.updateDescription(t)}
               maxLength={150}
             />
           </View>
@@ -152,7 +156,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.username}
-              onChangeText={t => this.props.updateUsername(t)}
+              onChangeText={(t) => this.props.updateUsername(t)}
               maxLength={30}
             />
           </View>
@@ -174,7 +178,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.email}
-              onChangeText={t => this.props.updateEmail(t)}
+              onChangeText={(t) => this.props.updateEmail(t)}
               maxLength={34}
             />
           </View>
@@ -193,7 +197,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.phone}
-              onChangeText={t => this.props.updatePhone(t)}
+              onChangeText={(t) => this.props.updatePhone(t)}
               maxLength={15}
             />
           </View>
@@ -286,7 +290,6 @@ const styles = StyleSheet.create({
     color: Colors.defaultTextLight,
     fontSize: 14,
     paddingLeft: 36,
-    outlineWidth: 0,
   },
   withdrawInput: {
     backgroundColor: Colors.transparent,

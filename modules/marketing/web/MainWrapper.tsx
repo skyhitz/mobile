@@ -2,7 +2,7 @@ import React from 'react';
 import { H1, Main, P, A } from '@expo/html-elements';
 import { View, Text, StyleSheet } from 'react-native';
 import Colors from 'app/constants/Colors';
-import ScreenShots from './Screenshots';
+// import ScreenShots from './Screenshots';
 import * as Device from 'expo-device';
 let Anchor: React.ComponentType<any> = A;
 import { useMediaQuery } from 'react-responsive';
@@ -62,7 +62,7 @@ export default function MainWrapper() {
             </Text>
           </View>
         </TouchableOpacity>
-        <ScreenShots />
+        {/* <ScreenShots /> */}
       </View>
     </Main>
   );
@@ -95,7 +95,7 @@ let styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 18,
     letterSpacing: 2,
-    lineHeight: '1.5em',
+    lineHeight: 1.5,
     marginBottom: '2.2em',
   },
   descriptionTablet: {
@@ -106,7 +106,7 @@ let styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
     letterSpacing: 2,
-    lineHeight: '1.5em',
+    lineHeight: 1.5,
     marginBottom: '2.2em',
   },
 });

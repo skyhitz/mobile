@@ -6,6 +6,7 @@ import {
   View,
   ActivityIndicator,
   Text,
+  Platform,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
@@ -43,7 +44,7 @@ class SearchBar extends Component {
     this.setState({ hasFocus: false });
   };
 
-  onChangeText = text => {
+  onChangeText = (text) => {
     this.props.onChangeText(text);
     this.setState({ isEmpty: text === '' });
   };
@@ -86,8 +87,11 @@ class SearchBar extends Component {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onChangeText={this.onChangeText}
-          ref={input => (this.input = input)}
-          inputStyle={[styles.input]}
+          ref={(input) => (this.input = input)}
+          inputStyle={[
+            styles.input,
+            Platform.OS === 'web' ? { outlineWidth: 0 } : {},
+          ]}
           containerStyle={[styles.inputContainer, containerStyle]}
           leftIcon={noIcon ? undefined : leftIcon ? leftIcon : searchIcon}
           leftIconContainerStyle={[
@@ -149,7 +153,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     color: Colors.searchTextColor,
-    outlineWidth: 0,
   },
   inputContainer: {
     backgroundColor: Colors.white,
