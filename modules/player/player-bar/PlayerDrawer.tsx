@@ -112,6 +112,7 @@ export default observer(({ children }) => {
         <Animated.View
           style={[
             styles.playerSheet,
+            { opacity: playerStore.entry ? 1 : 0 },
             {
               transform: [{ translateY }],
             },
@@ -140,6 +141,7 @@ export default observer(({ children }) => {
           </Animated.View>
         </Animated.View>
       </PanGestureHandler>
+
       <Animated.View
         style={{ transform: [{ translateY: translateBottomTab }] }}
       >
