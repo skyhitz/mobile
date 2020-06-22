@@ -6,11 +6,14 @@ import ScreenShots from './Screenshots';
 import * as Device from 'expo-device';
 let Anchor: React.ComponentType<any> = A;
 import { useMediaQuery } from 'react-responsive';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 // https://apps.apple.com/us/app/skyhitz/id1105406020
 
 export default function MainWrapper() {
   const isTablet = useMediaQuery({ query: '(max-width: 800px)' });
+  const { navigate } = useNavigation();
 
   return (
     <Main
@@ -32,14 +35,7 @@ export default function MainWrapper() {
           Upload exclusive beats for sale and buy fresh songwriting ideas from
           other music producers. Join a music community of beatmakers!
         </P>
-        <Anchor
-          href={
-            Device.osName == 'Android' || Device.osName == 'Windows'
-              ? 'https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz'
-              : 'https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz'
-          }
-          target="_blank"
-        >
+        <TouchableOpacity onPress={() => navigate('SignUp')}>
           <View
             style={{
               minWidth: 200,
@@ -62,10 +58,10 @@ export default function MainWrapper() {
                 fontSize: 18,
               }}
             >
-              Get started {'->'}
+              Sign up for free
             </Text>
           </View>
-        </Anchor>
+        </TouchableOpacity>
         <ScreenShots />
       </View>
     </Main>

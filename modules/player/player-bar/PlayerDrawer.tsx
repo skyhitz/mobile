@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import { StyleSheet, Dimensions } from 'react-native';
 import Animated from 'react-native-reanimated';
-import PlayerScreen from '../player-screen/PlayerScreen2';
+import PlayerScreen from '../player-screen/PlayerScreen';
 import MiniPlayer from './MiniPlayer';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
