@@ -6,7 +6,7 @@ import ResetPasswordScreen from 'app/modules/accounts/ResetPasswordScreen';
 import UpdatePasswordScreen from 'app/modules/accounts/UpdatePasswordScreen';
 import { Platform } from 'react-native';
 import WebApp from '../marketing/web/Home';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 const AccountsStack = createStackNavigator();

@@ -132,13 +132,9 @@ const Root: NavStatelessComponent = observer((props) => {
 
   const loadAll = async () => {
     loadAssets();
-    console.time('loading session');
     const user = await sessionStore.loadSession();
-    console.timeEnd('loading session');
     if (user) {
-      console.time('loading user data');
       await loadUserData();
-      console.timeEnd('loading user data');
     }
     setLoaded(true);
   };
