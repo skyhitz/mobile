@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { HeaderBackButton } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import {
@@ -13,11 +12,10 @@ import {
   Platform,
 } from 'react-native';
 import { Stores } from 'app/functions/Stores';
-import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { useNavigation } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-const SignIn: NavStatelessComponent = observer((props) => {
+export default observer((props) => {
   const { signInValidationStore, sessionStore } = Stores();
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -126,23 +124,6 @@ const SignIn: NavStatelessComponent = observer((props) => {
     </BackgroundImage>
   );
 });
-
-SignIn.navigationOptions = ({ navigation }) => ({
-  title: 'Log In',
-  headerTitleStyle: { color: Colors.white },
-  headerStyle: {
-    backgroundColor: Colors.headerBackground,
-    borderBottomWidth: 0,
-  },
-  headerLeft: () => (
-    <HeaderBackButton
-      tintColor={Colors.white}
-      onPress={() => navigation.goBack()}
-    />
-  ),
-});
-
-export default SignIn;
 
 let styles = StyleSheet.create({
   background: {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { HeaderBackButton } from '@react-navigation/stack';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
 import {
@@ -11,11 +10,10 @@ import {
   ActivityIndicator,
   Platform,
 } from 'react-native';
-import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-const ResetPassword: NavStatelessComponent = observer((props) => {
+export default observer((props) => {
   const { resetPasswordValidationStore, sessionStore } = Stores();
   const [email, setEmail] = useState('');
   const [buttonMessage, setButtonMessage] = useState('Send reset email');
@@ -97,23 +95,6 @@ const ResetPassword: NavStatelessComponent = observer((props) => {
     </BackgroundImage>
   );
 });
-
-ResetPassword.navigationOptions = ({ navigation }) => ({
-  title: 'Forgot Password',
-  headerTitleStyle: { color: Colors.white },
-  headerStyle: {
-    backgroundColor: Colors.headerBackground,
-    borderBottomWidth: 0,
-  },
-  headerLeft: () => (
-    <HeaderBackButton
-      tintColor={Colors.white}
-      onPress={() => navigation.goBack()}
-    />
-  ),
-});
-
-export default ResetPassword;
 
 let styles = StyleSheet.create({
   background: {

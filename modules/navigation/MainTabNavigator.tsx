@@ -18,7 +18,7 @@ export default () => {
   return (
     <Tab.Navigator
       initialRouteName="SearchNavigator"
-      tabBar={props => {
+      tabBar={(props) => {
         return (
           <PlayerDrawer>
             <BottomTabBar

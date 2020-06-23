@@ -9,15 +9,13 @@ import {
   Platform,
 } from 'react-native';
 import { observer } from 'mobx-react';
-import { HeaderBackButton } from '@react-navigation/stack';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
-import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-const SignUp: NavStatelessComponent = observer(({ navigation }) => {
+export default observer(({ navigation }) => {
   const { signUpValidationStore, sessionStore } = Stores();
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -67,7 +65,6 @@ const SignUp: NavStatelessComponent = observer(({ navigation }) => {
 
   return (
     <BackgroundImage authBackground={true}>
-      <View style={styles.overlay} />
       <View style={styles.inputContainer}>
         <View style={styles.field}>
           <TextInput
@@ -166,23 +163,6 @@ const SignUp: NavStatelessComponent = observer(({ navigation }) => {
   );
 });
 
-SignUp.navigationOptions = ({ navigation }) => ({
-  title: 'Join',
-  headerTitleStyle: { color: Colors.white },
-  headerStyle: {
-    backgroundColor: Colors.headerBackground,
-    borderBottomWidth: 0,
-  },
-  headerLeft: () => (
-    <HeaderBackButton
-      tintColor={Colors.white}
-      onPress={() => navigation.goBack()}
-    />
-  ),
-});
-
-export default SignUp;
-
 var styles = StyleSheet.create({
   background: {
     width: '100%',
@@ -216,6 +196,7 @@ var styles = StyleSheet.create({
     marginTop: 0,
     maxWidth: 380,
     width: '100%',
+    height: 310,
   },
   input: {
     backgroundColor: Colors.transparent,
