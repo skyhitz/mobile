@@ -55,7 +55,7 @@ export class LikesStore {
 
   public refreshEntryLikes(id: string) {
     this.loadingEntryLikes = true;
-    likesBackend.entryLikes(id).then(payload => {
+    likesBackend.entryLikes(id).then((payload) => {
       this.entryLikesCount = payload.count;
       let users = payload.users.map(
         (userPayload: any) => new User(userPayload)
@@ -67,7 +67,7 @@ export class LikesStore {
 
   public refreshLikes() {
     this.loading = true;
-    likesBackend.userLikes().then(userLikes => {
+    likesBackend.userLikes().then((userLikes) => {
       if (!userLikes) {
         return;
       } else {
@@ -84,7 +84,7 @@ export class LikesStore {
 
   async unlike(entry: Entry) {
     this.ids = this.ids.delete(entry.id);
-    let index = this.userLikes.findIndex(like => {
+    let index = this.userLikes.findIndex((like) => {
       if (like) {
         return like.id === entry.id;
       }
@@ -98,7 +98,7 @@ export class LikesStore {
     }
     this.userLikesCount = this.userLikes.size;
 
-    let userIndex = this.entryLikes.findIndex(like => {
+    let userIndex = this.entryLikes.findIndex((like) => {
       if (like) {
         return like.id === this.user.id;
       }
@@ -113,7 +113,7 @@ export class LikesStore {
     let liked = await likesBackend.like(entry.id);
     if (!liked) {
       this.ids = this.ids.remove(entry.id);
-      let index = this.userLikes.findIndex(like => {
+      let index = this.userLikes.findIndex((like) => {
         if (like) {
           return like.id === entry.id;
         }
@@ -130,7 +130,7 @@ export class LikesStore {
     if (this.isEntryLiked(entry)) {
       return this.unlike(entry);
     }
-    this.like(entry);
+    return this.like(entry);
   }
 
   get isLiked() {
