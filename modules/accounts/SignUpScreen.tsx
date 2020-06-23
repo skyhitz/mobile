@@ -109,7 +109,10 @@ export default observer(({ navigation }) => {
             autoCapitalize="none"
             placeholder="Email address"
             autoCorrect={false}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             placeholderTextColor="white"
             value={email}
             onChange={updateEmail}
@@ -123,7 +126,10 @@ export default observer(({ navigation }) => {
             autoCapitalize="none"
             placeholder="Password"
             autoCorrect={false}
-            style={styles.input}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
             secureTextEntry={true}
             placeholderTextColor="white"
             value={password}
