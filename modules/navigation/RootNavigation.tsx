@@ -64,15 +64,11 @@ const Root: NavStatelessComponent = observer((props) => {
   const { getInitialState } = useLinking(ref, {
     prefixes: ['https://skyhitz.io', 'skyhitz://'],
     config: {
-      Accounts: {
-        screens: {
-          WebApp: '',
-          SignUp: 'accounts/sign-up',
-          SignIn: 'accounts/sign-in',
-          ResetPassword: 'accounts/reset-password',
-          UpdatePassword: 'accounts/update-password',
-        },
-      },
+      WebApp: '',
+      SignUp: 'accounts/sign-up',
+      SignIn: 'accounts/sign-in',
+      ResetPassword: 'accounts/reset-password',
+      UpdatePassword: 'accounts/update-password',
       Main: {
         screens: {
           SearchNavigator: {
@@ -129,80 +125,76 @@ const Root: NavStatelessComponent = observer((props) => {
     console.log('rendering main navigator');
     return (
       <NavigationContainer initialState={initialState} ref={ref}>
-        <AppStack.Navigator mode="modal">
-          {sessionStore.user ? (
+        {sessionStore.user ? (
+          <AppStack.Navigator mode="modal">
             <AppStack.Screen
               name="Main"
               component={MainTabNavigator}
               options={{ headerShown: false }}
             />
-          ) : (
             <AppStack.Screen
-              name="Accounts"
-              component={AccountsNavigator}
-              options={{ headerShown: false }}
+              name="EditProfileModal"
+              component={EditProfileScreen}
+              options={{
+                gestureEnabled: false,
+                title: 'Edit Profile',
+                headerTitleStyle: { color: Colors.white },
+                headerStyle: {
+                  backgroundColor: Colors.headerBackground,
+                  borderBottomWidth: 0,
+                  shadowColor: 'transparent',
+                },
+                headerLeft: () => <CancelEditBtn />,
+                headerRight: () => <DoneEditBtn />,
+              }}
             />
-          )}
-          <AppStack.Screen
-            name="EditProfileModal"
-            component={EditProfileScreen}
-            options={{
-              gestureEnabled: false,
-              title: 'Edit Profile',
-              headerTitleStyle: { color: Colors.white },
-              headerStyle: {
-                backgroundColor: Colors.headerBackground,
-                borderBottomWidth: 0,
-                shadowColor: 'transparent',
-              },
-              headerLeft: () => <CancelEditBtn />,
-              headerRight: () => <DoneEditBtn />,
-            }}
-          />
-          <AppStack.Screen
-            name="UploadMusicModal"
-            component={UploadMusicModal}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-          <AppStack.Screen
-            name="WithdrawalModal"
-            component={WithdrawalModal}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-          <AppStack.Screen
-            name="BuyOptionsModal"
-            component={BuyOptionsModal}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-          <AppStack.Screen
-            name="EntryOptionsModal"
-            component={EntryOptionsModal}
-            options={{
-              headerShown: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-          <AppStack.Screen
-            name="PricingOptionsModal"
-            component={PricingOptionsModal}
-            options={{
-              headerShown: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-        </AppStack.Navigator>
+            <AppStack.Screen
+              name="UploadMusicModal"
+              component={UploadMusicModal}
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="WithdrawalModal"
+              component={WithdrawalModal}
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="BuyOptionsModal"
+              component={BuyOptionsModal}
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="EntryOptionsModal"
+              component={EntryOptionsModal}
+              options={{
+                headerShown: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="PricingOptionsModal"
+              component={PricingOptionsModal}
+              options={{
+                headerShown: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+          </AppStack.Navigator>
+        ) : (
+          <AccountsNavigator />
+        )}
       </NavigationContainer>
     );
   }

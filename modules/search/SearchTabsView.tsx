@@ -36,6 +36,7 @@ const TabsView = () => {
       }}
     >
       <SearchHeader />
+
       <Tab.Navigator
         swipeEnabled={true}
         tabBarPosition={'top'}
@@ -51,6 +52,8 @@ const TabsView = () => {
           <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
         )}
       >
+        {/* <SearchHeader /> */}
+
         <Tab.Screen
           name="Beats"
           component={SearchEntryView as any}
