@@ -15,9 +15,9 @@ import {
 const Tab = createBottomTabNavigator();
 
 export default () => {
+  console.log('rendering tabs navigator');
   return (
     <Tab.Navigator
-      initialRouteName="SearchNavigator"
       tabBar={(props) => {
         return (
           <PlayerDrawer>

@@ -15,7 +15,7 @@ import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-export default observer(({ navigation }) => {
+export default observer(() => {
   const { signUpValidationStore, sessionStore } = Stores();
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
