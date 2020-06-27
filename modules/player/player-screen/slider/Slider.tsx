@@ -51,7 +51,6 @@ export default observer(() => {
         cond(
           eq(playerStore.sliderState, State.END),
           call([value], ([v]) => {
-            console.log('on sliding complete', v);
             playerStore.onSeekSliderSlidingComplete(v);
             playerStore.sliderState.setValue(0);
           })
@@ -70,8 +69,8 @@ export default observer(() => {
     <View style={styles.container}>
       <View style={styles.slider}>
         <TouchableWithoutFeedback
-          onLayout={evt => playerStore.onSliderLayout(evt)}
-          onPress={evt => {
+          onLayout={(evt) => playerStore.onSliderLayout(evt)}
+          onPress={(evt) => {
             playerStore.translationX.setValue(evt.nativeEvent.locationX);
             playerStore.offsetX.setValue(0);
             playerStore.onSeekBarTap(evt);

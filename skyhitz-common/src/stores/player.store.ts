@@ -81,7 +81,7 @@ export class PlayerStore {
   offsetX: Animated.Value<number> = new Value(0);
   sliderState: Animated.Value<number> = new Value(State.UNDETERMINED);
 
-  mountVideo = component => {
+  mountVideo = (component) => {
     this.video = component;
     this.loadNewPlaybackInstance(false);
   };
@@ -93,7 +93,6 @@ export class PlayerStore {
     }
 
     if (!streamUrl) return;
-    console.log('loading video', streamUrl);
     await this.video.loadAsync(
       { uri: streamUrl },
       {
@@ -218,9 +217,11 @@ export class PlayerStore {
     if (!entry) {
       return null;
     }
-    if (this.cueList.findIndex(item => !!item && item.id === entry.id) !== -1) {
+    if (
+      this.cueList.findIndex((item) => !!item && item.id === entry.id) !== -1
+    ) {
       this.currentIndex = this.cueList.findIndex(
-        item => !!item && item.id === entry.id
+        (item) => !!item && item.id === entry.id
       );
     }
 

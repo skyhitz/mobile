@@ -23,13 +23,14 @@ import Colors from 'app/constants/Colors';
 
 const AppStack = createStackNavigator();
 
-const Root: NavStatelessComponent = observer((props) => {
+export default observer((props) => {
   const [loaded, setLoaded] = useState(false);
   const {
     sessionStore,
     paymentsStore,
     userEntriesStore,
     likesStore,
+    entriesSearchStore,
   } = Stores();
 
   StatusBar.setBarStyle('light-content');
@@ -43,6 +44,7 @@ const Root: NavStatelessComponent = observer((props) => {
       likesStore.refreshLikes(),
       userEntriesStore.refreshEntries(),
       paymentsStore.refreshSubscription(),
+      entriesSearchStore.getRecentlyAdded(),
     ]);
   };
 
@@ -122,7 +124,6 @@ const Root: NavStatelessComponent = observer((props) => {
   }, [getInitialState]);
 
   if (loaded && isReady) {
-    console.log('rendering main navigator');
     return (
       <NavigationContainer initialState={initialState} ref={ref}>
         {sessionStore.user ? (
@@ -200,5 +201,3 @@ const Root: NavStatelessComponent = observer((props) => {
   }
   return <AuthLoadingScreen />;
 });
-
-export default Root;

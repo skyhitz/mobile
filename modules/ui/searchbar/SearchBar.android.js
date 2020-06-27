@@ -12,8 +12,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
 import Input from 'app/modules/ui/Input';
 import Colors from 'app/constants/Colors';
-
-const ANDROID_GRAY = Colors.searchTextColor;
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
 class SearchBar extends Component {
   focus = () => {
@@ -72,11 +71,12 @@ class SearchBar extends Component {
     } = this.props;
     const { hasFocus, isEmpty } = this.state;
     const { style: loadingStyle, ...otherLoadingProps } = loadingProps;
+
     const searchIcon = (
-      <MaterialIcon
-        size={25}
-        color={ANDROID_GRAY}
-        name={'magnify'}
+      <Ionicon
+        size={20}
+        name={'ios-search'}
+        color={Colors.searchTextColor}
         onPress={hasFocus ? this.cancel : null}
       />
     );
@@ -113,7 +113,7 @@ class SearchBar extends Component {
                 <MaterialIcon
                   name={'close'}
                   size={25}
-                  color={ANDROID_GRAY}
+                  color={Colors.searchTextColor}
                   onPress={() => this.clear()}
                 />
               )}
@@ -143,22 +143,24 @@ SearchBar.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    marginTop: 6,
-    marginBottom: 8,
+    paddingTop: 8,
+    paddingBottom: 8,
     paddingLeft: 14,
     paddingRight: 14,
-    height: 40,
+    backgroundColor: Colors.darkBlue,
   },
   input: {
     flex: 1,
     width: '100%',
     color: Colors.searchTextColor,
+    fontSize: 14,
   },
   inputContainer: {
     backgroundColor: Colors.white,
     borderBottomWidth: 0,
     width: '100%',
     borderRadius: 6,
+    height: 30,
   },
   rightIconContainerStyle: {
     marginRight: 8,

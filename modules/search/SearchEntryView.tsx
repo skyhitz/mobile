@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject } from 'mobx-react';
 import SearchEntryList from 'app/modules/search/SearchEntryList';
-import TopRecentEntryView from 'app/modules/search/TopRecentEntryView';
+import RecentlyAdded from 'app/modules/search/RecentlyAdded';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -24,7 +24,7 @@ class SearchEntryView extends React.Component<any, any> {
     if (this.props.isSearchActive) {
       return <SearchEntryList />;
     }
-    return <TopRecentEntryView />;
+    return <RecentlyAdded />;
   }
 }
 
