@@ -1,32 +1,22 @@
-import React from 'react';
-import { inject } from 'mobx-react';
+import React, { useEffect } from 'react';
+import { observer } from 'mobx-react';
 import SearchUserList from 'app/modules/search/SearchUserList';
 import TopRecentUserView from 'app/modules/search/TopRecentUserView';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { useIsFocused } from '@react-navigation/native';
+import { Stores } from 'app/functions/Stores';
 
-@inject((stores: Stores) => ({
-  isSearchActive: stores.usersSearchStore.active,
-  inputSearchStore: stores.inputSearchStore,
-}))
-class SearchUserView extends React.Component<any, any> {
-  state = {};
-  static navigationOptions = {
-    tabBarLabel: 'Influencers',
-  };
+export default observer(() => {
+  const isFocused = useIsFocused();
+  let { usersSearchStore, inputSearchStore } = Stores();
 
-  static async getDerivedStateFromProps(props: any) {
-    if (props.isFocused) {
-      props.inputSearchStore.updateSearchType('users');
+  useEffect(() => {
+    if (isFocused) {
+      inputSearchStore.updateSearchType('users');
     }
-  }
+  }, []);
 
-  render() {
-    if (this.props.isSearchActive) {
-      return <SearchUserList />;
-    }
-    return <TopRecentUserView />;
+  if (usersSearchStore.active) {
+    return <SearchUserList />;
   }
-}
-
-export default SearchUserView;
+  return <TopRecentUserView />;
+});
