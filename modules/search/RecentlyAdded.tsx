@@ -18,7 +18,7 @@ export default observer(() => {
     return (
       <EntryRow
         key={item.id}
-        play={playerStore.loadAndPlay}
+        play={() => playerStore.loadAndPlay(item)}
         entry={item}
         addRecentEntrySearch={null}
         options={null}

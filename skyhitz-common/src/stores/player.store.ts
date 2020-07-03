@@ -3,9 +3,8 @@ import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
-import Animated from 'react-native-reanimated';
+import Animated, { set, add } from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
-import { onGestureEvent } from 'react-native-redash';
 
 const { Value } = Animated;
 
@@ -78,8 +77,8 @@ export class PlayerStore {
   video: any;
 
   translationX: Animated.Value<number> = new Value(0);
-  offsetX: Animated.Value<number> = new Value(0);
   sliderState: Animated.Value<number> = new Value(State.UNDETERMINED);
+  sliderOffset: Animated.Value<number> = new Value(0);
 
   mountVideo = (component) => {
     this.video = component;
@@ -466,6 +465,11 @@ export class PlayerStore {
     return false;
   }
 
+  setSliderPosition(position: number) {
+    this.sliderOffset.setValue(position);
+    this.translationX.setValue(0);
+  }
+
   @action
   onPlaybackStatusUpdate(status: any) {
     if (this.disablePlaybackStatusUpdate) {
@@ -491,9 +495,9 @@ export class PlayerStore {
     if (status.isPlaying && !status.isBuffering) {
       this.playbackInstancePosition = status.positionMillis;
       this.playbackInstanceDuration = status.durationMillis;
-      this.translationX.setValue(
-        (status.positionMillis / status.durationMillis) * this.sliderWidth
-      );
+      const position =
+        (status.positionMillis / status.durationMillis) * this.sliderWidth;
+      this.setSliderPosition(position);
     }
 
     this.shouldPlay = status.shouldPlay;

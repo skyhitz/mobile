@@ -49,7 +49,7 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     maxHeight: 50,
-    width: Layout.window.width - 60,
+    width: '100%',
   },
   text: {
     fontSize: 14,

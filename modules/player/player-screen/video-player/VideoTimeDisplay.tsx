@@ -29,7 +29,7 @@ let styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginLeft: 15,
     marginRight: 20,
-    width: 34,
+    width: 36,
   },
   text: {
     color: '#FFFFFF',
@@ -37,6 +37,6 @@ let styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginLeft: 20,
     marginRight: 0,
-    width: 34,
+    width: 36,
   },
 });

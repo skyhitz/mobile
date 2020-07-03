@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    maxHeight: 150,
   },
   options: {
     alignItems: 'center',

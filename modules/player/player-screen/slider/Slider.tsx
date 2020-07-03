@@ -10,11 +10,8 @@ import Animated, {
   sub,
   useCode,
   block,
-  not,
-  add,
-  set,
 } from 'react-native-reanimated';
-import { withOffset, onGestureEvent } from 'react-native-redash';
+import { onGestureEvent, withOffset } from 'react-native-redash';
 
 import Knob, { KNOB_SIZE } from './Knob';
 import Colors from 'app/constants/Colors';
@@ -31,13 +28,10 @@ export default observer(() => {
   });
 
   const transX = diffClamp(
-    cond(
-      eq(playerStore.sliderState, State.ACTIVE),
-      add(playerStore.offsetX, playerStore.translationX),
-      set(
-        playerStore.offsetX,
-        add(playerStore.offsetX, playerStore.translationX)
-      )
+    withOffset(
+      playerStore.translationX,
+      playerStore.sliderState,
+      playerStore.sliderOffset
     ),
     0,
     playerStore.sliderWidth
@@ -52,7 +46,7 @@ export default observer(() => {
           eq(playerStore.sliderState, State.END),
           call([value], ([v]) => {
             playerStore.onSeekSliderSlidingComplete(v);
-            playerStore.sliderState.setValue(0);
+            playerStore.sliderState.setValue(State.UNDETERMINED);
           })
         ),
         cond(
@@ -71,8 +65,7 @@ export default observer(() => {
         <TouchableWithoutFeedback
           onLayout={(evt) => playerStore.onSliderLayout(evt)}
           onPress={(evt) => {
-            playerStore.translationX.setValue(evt.nativeEvent.locationX);
-            playerStore.offsetX.setValue(0);
+            playerStore.setSliderPosition(evt.nativeEvent.locationX);
             playerStore.onSeekBarTap(evt);
           }}
           style={{

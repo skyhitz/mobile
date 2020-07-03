@@ -9,15 +9,15 @@ import {
 import { videoWidth } from 'app/modules/player/player-screen/video-player/VideoConstants';
 import FullscreenControl from 'app/modules/player/player-screen/video-player/FullscreenControl';
 import PlayPauseInvisibleArea from 'app/modules/player/player-screen/video-player/PlayPauseInvisibleArea';
-import SeekBar from 'app/modules/player/player-screen/video-player/SeekBar';
 import VideoErrorText from 'app/modules/player/player-screen/video-player/VideoErrorText';
 import { Stores } from 'app/functions/Stores';
+import Slider from '../slider/Slider';
 
 const BottomBar = () => {
   return (
     <View style={styles.bottomBar}>
       <CurrentTimeDisplay />
-      <SeekBar />
+      <Slider />
       <DurationDisplay />
       <FullscreenControl />
     </View>
@@ -43,14 +43,16 @@ export default observer(() => {
           source={{
             uri: playerStore.streamUrl,
           }}
-          ref={ref => playerStore.mountVideo(ref)}
-          onPlaybackStatusUpdate={status =>
+          ref={(ref) => playerStore.mountVideo(ref)}
+          onPlaybackStatusUpdate={(status) =>
             playerStore.onPlaybackStatusUpdate(status)
           }
           resizeMode={Video.RESIZE_MODE_CONTAIN}
           style={styles.videoPlayer}
-          onError={error => playerStore.onError(error)}
-          onFullscreenUpdate={update => playerStore.onFullscreenUpdate(update)}
+          onError={(error) => playerStore.onError(error)}
+          onFullscreenUpdate={(update) =>
+            playerStore.onFullscreenUpdate(update)
+          }
         />
         <PlayPauseInvisibleArea />
         <VideoErrorText />
