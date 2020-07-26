@@ -56,11 +56,14 @@ export class LikesStore {
   public refreshEntryLikes(id: string) {
     this.loadingEntryLikes = true;
     likesBackend.entryLikes(id).then((payload) => {
-      this.entryLikesCount = payload.count;
-      let users = payload.users.map(
-        (userPayload: any) => new User(userPayload)
-      );
-      this.entryLikes = List(users);
+      if (payload) {
+        this.entryLikesCount = payload.count;
+        let users = payload.users.map(
+          (userPayload: any) => new User(userPayload)
+        );
+        this.entryLikes = List(users);
+      }
+
       this.loadingEntryLikes = false;
     });
   }

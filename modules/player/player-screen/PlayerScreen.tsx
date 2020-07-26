@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { RectButton } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    marginTop: 16,
+    marginTop: 0,
   },
   header: {
     flexDirection: 'row',

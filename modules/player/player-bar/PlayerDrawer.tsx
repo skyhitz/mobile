@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import { StyleSheet, Dimensions } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { call } from 'react-native-reanimated';
 import PlayerScreen from '../player-screen/PlayerScreen';
 import MiniPlayer from './MiniPlayer';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
@@ -68,6 +68,12 @@ export default observer(({ children }) => {
     outputRange: [0, 1],
     extrapolate: Extrapolate.CLAMP,
   });
+  const opacityInverted = interpolate(translateY, {
+    inputRange: [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
+    outputRange: [1, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
   const opacity2 = interpolate(translateY, {
     inputRange: [
       SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT * 2,
@@ -118,7 +124,6 @@ export default observer(({ children }) => {
             },
           ]}
         >
-          <PlayerScreen />
           <Animated.View
             pointerEvents="none"
             style={{
@@ -127,6 +132,7 @@ export default observer(({ children }) => {
               ...StyleSheet.absoluteFillObject,
             }}
           />
+
           <Animated.View
             style={{
               opacity,
@@ -134,10 +140,17 @@ export default observer(({ children }) => {
               top: 0,
               left: 0,
               right: 0,
-              height: MINIMIZED_PLAYER_HEIGHT,
+              zIndex: opacity,
             }}
           >
             <MiniPlayer />
+          </Animated.View>
+          <Animated.View
+            style={{
+              opacity: opacityInverted,
+            }}
+          >
+            <PlayerScreen />
           </Animated.View>
         </Animated.View>
       </PanGestureHandler>
@@ -170,9 +183,6 @@ let styles = StyleSheet.create({
     fontSize: 12,
     color: 'white',
     paddingLeft: 4,
-  },
-  modalPlayerIn: {
-    flex: 1,
   },
   tabNav: {
     position: 'absolute',

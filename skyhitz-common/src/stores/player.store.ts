@@ -20,6 +20,8 @@ export class PlayerStore {
   }
 
   @observable
+  showMiniPlayer: boolean = false;
+  @observable
   goUp: Animated.Value<0 | 1> = new Value(0);
   @observable
   goDown: Animated.Value<0 | 1> = new Value(0);
@@ -280,6 +282,16 @@ export class PlayerStore {
   @action
   toggleShuffle() {
     this.shuffle = !this.shuffle;
+  }
+
+  @action
+  unmountMiniPlayer() {
+    this.showMiniPlayer = false;
+  }
+
+  @action
+  mountMiniPlayer() {
+    this.showMiniPlayer = true;
   }
 
   @action

@@ -1,4 +1,3 @@
-import Animated from 'react-native-reanimated';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
@@ -53,7 +52,6 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     maxWidth: '70%',
-    height: 40,
     zIndex: 11,
   },
   entryTitle: {
