@@ -16,9 +16,7 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-  },
-  container: {
-    marginTop: 0,
+    backgroundColor: Colors.darkBlue,
   },
   header: {
     flexDirection: 'row',
@@ -59,34 +57,24 @@ const styles = StyleSheet.create({
   },
 });
 
-interface PlayerProps {
-  onPress: () => void;
-}
-
 export default observer(() => {
   let { playerStore } = Stores();
 
   return (
     <SafeAreaView style={styles.root}>
-      <LinearGradient
-        colors={[Colors.darkBlue, Colors.darkBlue]}
-        style={StyleSheet.absoluteFill}
-      />
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <RectButton
-            style={styles.button}
-            onPress={() => playerStore.hidePlayer()}
-          >
-            <Icon name="chevron-down" color="white" size={24} />
-          </RectButton>
-        </View>
-        <VideoPlayer />
-        <PlayerEntryInfo />
-        <BuyBtn />
-        <PlayerControls />
-        <LikersSection />
+      <View style={styles.header}>
+        <RectButton
+          style={styles.button}
+          onPress={() => playerStore.hidePlayer()}
+        >
+          <Icon name="chevron-down" color="white" size={24} />
+        </RectButton>
       </View>
+      <VideoPlayer />
+      <PlayerEntryInfo />
+      <BuyBtn />
+      <PlayerControls />
+      <LikersSection />
     </SafeAreaView>
   );
 });

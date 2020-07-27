@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Video, Audio } from 'expo-av';
 import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
@@ -25,6 +25,7 @@ const BottomBar = () => {
 };
 
 export default observer(() => {
+  let [dynamicHeight, setDynamicHeight] = useState(0);
   let { playerStore } = Stores();
   Audio.setAudioModeAsync({
     playsInSilentModeIOS: true,
@@ -36,9 +37,15 @@ export default observer(() => {
     playThroughEarpieceAndroid: false,
   });
 
+  const onLayout = ({ nativeEvent }) => {
+    let { layout } = nativeEvent;
+    let { width } = layout;
+    setDynamicHeight(width * (9 / 16));
+  };
+
   return (
-    <View>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.container} onLayout={onLayout}>
         <Video
           source={{
             uri: playerStore.streamUrl,
@@ -48,7 +55,7 @@ export default observer(() => {
             playerStore.onPlaybackStatusUpdate(status)
           }
           resizeMode={Video.RESIZE_MODE_CONTAIN}
-          style={styles.videoPlayer}
+          style={[styles.videoPlayer, { height: dynamicHeight }]}
           onError={(error) => playerStore.onError(error)}
           onFullscreenUpdate={(update) =>
             playerStore.onFullscreenUpdate(update)
@@ -74,7 +81,6 @@ let styles = StyleSheet.create({
     width: videoWidth,
   },
   container: {
-    backgroundColor: 'black',
     width: videoWidth,
   },
 });

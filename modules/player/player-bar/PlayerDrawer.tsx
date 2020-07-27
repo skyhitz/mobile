@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react';
 import { StyleSheet, Dimensions } from 'react-native';
-import Animated, { call } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import PlayerScreen from '../player-screen/PlayerScreen';
 import MiniPlayer from './MiniPlayer';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { clamp, onGestureEvent, timing, withSpring } from 'react-native-redash';
 import { Stores } from 'app/functions/Stores';
+import Colors from 'app/constants/Colors';
 
 let tabNavBottom = 89;
 
@@ -167,7 +168,7 @@ export default observer(({ children }) => {
 let styles = StyleSheet.create({
   playerSheet: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.darkBlue,
   },
   tabPlayer: {
     flexDirection: 'row',
