@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
-import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import {
   ReplayIcon,
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
-import Colors from 'app/constants/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stores } from 'app/functions/Stores';
 
@@ -21,11 +20,11 @@ export default observer(() => {
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <Ionicons
-              name={'ios-play'}
-              size={30}
-              color={Colors.white}
-              style={styles.playBtn}
+            <Feather
+              style={{ paddingLeft: 6 }}
+              name="play"
+              size={24}
+              color="white"
             />
           </View>
         </View>
@@ -40,7 +39,12 @@ export default observer(() => {
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <Ionicons name={'ios-pause'} size={30} color={Colors.white} />
+            <Feather
+              style={{ paddingLeft: 1, textAlign: 'center' }}
+              name="pause"
+              size={24}
+              color="white"
+            />
           </View>
         </View>
       </TouchableOpacity>
@@ -73,24 +77,21 @@ var styles = StyleSheet.create({
   controlTouch: {
     alignSelf: 'center',
   },
-  playBtn: {
-    paddingLeft: 6,
-  },
   containerWrap: {
-    width: 130,
-    height: 113,
+    width: 104,
+    height: 90.4,
     alignItems: 'center',
     justifyContent: 'center',
   },
   playBtnCircle: {
-    width: 87,
-    height: 87,
-    padding: 10,
-    borderWidth: 1.5,
+    width: 65,
+    height: 65,
+    borderWidth: 1,
     borderColor: 'white',
     borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   loadingSpinner: {
     width: 86,

@@ -30,7 +30,7 @@ export default observer(() => {
         onPress={showBuyOptionsModal}
       >
         <Text style={styles.creditsText}>
-          $ {playerStore.entry.price} - Buy Now
+          ${playerStore.entry.price} - Buy Now
         </Text>
       </TouchableOpacity>
     </View>
@@ -48,23 +48,26 @@ var styles = StyleSheet.create({
     borderRadius: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 8,
+    marginTop: 10,
     height: 40,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   controlTouch: {
     backgroundColor: Colors.brandBlue,
     borderRadius: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 8,
+    marginVertical: 30,
     height: 40,
-    marginBottom: 20,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   creditsText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 14,
+    lineHeight: 14,
     fontWeight: 'bold',
   },
   priceTag: {

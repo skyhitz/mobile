@@ -1,6 +1,5 @@
 import React from 'react';
 import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { RectButton } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
 import VideoPlayer from './video-player/VideoPlayer';

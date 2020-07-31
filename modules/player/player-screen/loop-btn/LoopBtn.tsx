@@ -4,6 +4,8 @@ import { inject } from 'mobx-react';
 import { LoopIconBlue, LoopIconGrey } from 'app/assets/images/Images';
 import * as stores from 'app/skyhitz-common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons';
+import Colors from 'app/constants/Colors';
 type Stores = typeof stores;
 
 const LoopBtn = inject((stores: Stores) => ({
@@ -16,13 +18,13 @@ const LoopBtn = inject((stores: Stores) => ({
         style={styles.controlTouch}
         onPress={() => toggleLoop()}
       >
-        <Image style={styles.loopBtn} source={LoopIconBlue} />
+        <Feather name="repeat" size={20} color={Colors.lightBrandBlue} />
       </TouchableOpacity>
     );
   }
   return (
     <TouchableOpacity style={styles.controlTouch} onPress={() => toggleLoop()}>
-      <Image style={styles.loopBtn} source={LoopIconGrey} />
+      <Feather name="repeat" size={20} color={Colors.white} />
     </TouchableOpacity>
   );
 });

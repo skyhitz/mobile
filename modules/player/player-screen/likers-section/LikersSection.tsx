@@ -63,6 +63,8 @@ let styles = StyleSheet.create({
     width: '100%',
     paddingLeft: 20,
     paddingRight: 20,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   likedByWrap: {
     flexDirection: 'row',
@@ -87,7 +89,7 @@ let styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flexWrap: 'nowrap',
-    marginTop: 15,
+    marginTop: 10,
   },
   liker: {
     marginRight: 7,

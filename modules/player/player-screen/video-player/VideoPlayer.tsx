@@ -55,7 +55,10 @@ export default observer(() => {
             playerStore.onPlaybackStatusUpdate(status)
           }
           resizeMode={Video.RESIZE_MODE_CONTAIN}
-          style={[styles.videoPlayer, { height: dynamicHeight }]}
+          style={[
+            styles.videoPlayer,
+            { height: dynamicHeight, maxHeight: 360 },
+          ]}
           onError={(error) => playerStore.onError(error)}
           onFullscreenUpdate={(update) =>
             playerStore.onFullscreenUpdate(update)

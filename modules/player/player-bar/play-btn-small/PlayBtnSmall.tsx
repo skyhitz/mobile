@@ -4,6 +4,7 @@ import { StyleSheet, Image } from 'react-native';
 import { PlayBtnWhite, PauseBtnWhite } from 'app/assets/images/Images';
 import * as stores from 'app/skyhitz-common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -25,7 +26,7 @@ export default class PlayBtnSmall extends React.Component<any, any> {
           style={styles.playBtnWrapper}
           onPress={this.handlePause.bind(this)}
         >
-          <Image style={styles.playBtn} source={PauseBtnWhite} />
+          <Feather name="pause" size={18} color="white" />
         </TouchableOpacity>
       );
     }
@@ -34,7 +35,7 @@ export default class PlayBtnSmall extends React.Component<any, any> {
         style={styles.playBtnWrapper}
         onPress={this.handlePlay.bind(this)}
       >
-        <Image style={styles.playBtn} source={PlayBtnWhite} />
+        <Feather name="play" size={18} color="white" />
       </TouchableOpacity>
     );
   }

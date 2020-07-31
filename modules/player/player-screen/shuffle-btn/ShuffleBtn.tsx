@@ -4,6 +4,8 @@ import { inject } from 'mobx-react';
 import { ShuffleIconBlue, ShuffleIconGrey } from 'app/assets/images/Images';
 import * as stores from 'app/skyhitz-common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons';
+import Colors from 'app/constants/Colors';
 type Stores = typeof stores;
 
 const ShuffleBtn = inject((stores: Stores) => ({
@@ -16,7 +18,7 @@ const ShuffleBtn = inject((stores: Stores) => ({
         style={styles.controlTouch}
         onPress={() => toggleShuffle()}
       >
-        <Image style={styles.shuffleBtn} source={ShuffleIconBlue} />
+        <Feather name="shuffle" size={20} color={Colors.lightBrandBlue} />
       </TouchableOpacity>
     );
   }
@@ -25,7 +27,7 @@ const ShuffleBtn = inject((stores: Stores) => ({
       style={styles.controlTouch}
       onPress={() => toggleShuffle()}
     >
-      <Image style={styles.shuffleBtn} source={ShuffleIconGrey} />
+      <Feather name="shuffle" size={20} color="white" />
     </TouchableOpacity>
   );
 });
