@@ -9,20 +9,20 @@ export default (props) => {
   };
 
   const onBuyCredits = async () => {
-    props.navigation.navigate('UploadMusicModal');
+    props.navigation.navigate('PaymentModal');
   };
   return (
     <View style={styles.wrap}>
       <View style={styles.bannerWrap}>
         <LargeBtn iconName="upload" onPress={onUpload} text="Upload Beat" />
       </View>
-      <View style={styles.bannerWrap}>
+      {/* <View style={styles.bannerWrap}>
         <LargeBtn
           iconName="dollar-sign"
           onPress={onBuyCredits}
           text="Buy Credits"
         />
-      </View>
+      </View> */}
     </View>
   );
 };

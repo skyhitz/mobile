@@ -7,10 +7,10 @@ import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
 import EntryOptionsModal from 'app/modules/search/EntryOptionsModal';
 import PricingOptionsModal from 'app/modules/search/PricingOptionsModal';
 import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
+import PaymentModal from 'app/modules/profile/PaymentModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
-import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { Stores } from 'app/functions/Stores';
 import { loadResourcesAsync } from 'app/functions/LoadResourcesAsync';
 import { Asset } from 'expo-asset';
@@ -96,6 +96,7 @@ export default observer((props) => {
       EditProfileModal: 'edit-profile',
       UploadMusicModal: 'upload',
       EntryOptionsModal: 'options',
+      PaymentModal: 'payment',
     },
   });
 
@@ -152,6 +153,15 @@ export default observer((props) => {
             <AppStack.Screen
               name="UploadMusicModal"
               component={UploadMusicModal}
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="PaymentModal"
+              component={PaymentModal}
               options={{
                 headerShown: false,
                 gestureEnabled: false,
