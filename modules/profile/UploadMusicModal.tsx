@@ -28,7 +28,7 @@ export default class UploadMusicModal extends React.Component<any, any> {
             <MaterialIcons name="close" size={28} color={Colors.white} />
           </TouchableOpacity>
           <View>
-            <Text style={styles.modalTitle}>New Track</Text>
+            <Text style={styles.modalTitle}>New Beat</Text>
           </View>
           <SelectMediaFile />
         </View>

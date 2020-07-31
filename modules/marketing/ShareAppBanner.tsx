@@ -1,24 +1,31 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 
-export default class ShareAppBanner extends React.Component<any, any> {
-  onUpload = async () => {
-    this.props.navigation.navigate('UploadMusicModal');
+export default (props) => {
+  const onUpload = async () => {
+    props.navigation.navigate('UploadMusicModal');
   };
 
-  render() {
-    return (
-      <View style={styles.wrap}>
-        <View style={styles.bannerWrap}>
-          <Text style={styles.adsText}>Upload your beats!</Text>
-          <LargeBtn onPress={this.onUpload.bind(this)} text="Upload" />
-        </View>
+  const onBuyCredits = async () => {
+    props.navigation.navigate('UploadMusicModal');
+  };
+  return (
+    <View style={styles.wrap}>
+      <View style={styles.bannerWrap}>
+        <LargeBtn iconName="upload" onPress={onUpload} text="Upload Beat" />
       </View>
-    );
-  }
-}
+      <View style={styles.bannerWrap}>
+        <LargeBtn
+          iconName="dollar-sign"
+          onPress={onBuyCredits}
+          text="Buy Credits"
+        />
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   adsText: {
@@ -34,6 +41,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.listItemBackground,
     justifyContent: 'center',
     alignItems: 'center',
-    maxHeight: 140,
+    maxHeight: 120,
   },
 });

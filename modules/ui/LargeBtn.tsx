@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
+import { Feather } from '@expo/vector-icons';
 
 export default class LargeBtn extends React.Component<any, any> {
   getStyles() {
@@ -17,6 +18,14 @@ export default class LargeBtn extends React.Component<any, any> {
         disabled={this.props.disabled}
       >
         <Text style={styles.white}>{this.props.text}</Text>
+        {this.props.iconName ? (
+          <Feather
+            name={this.props.iconName}
+            style={{ paddingLeft: 12 }}
+            size={24}
+            color="white"
+          />
+        ) : null}
       </TouchableOpacity>
     );
   }
@@ -38,6 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   btnDisabled: {
     backgroundColor: Colors.brandBlue,
