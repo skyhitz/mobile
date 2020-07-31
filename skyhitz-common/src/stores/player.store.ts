@@ -103,6 +103,9 @@ export class PlayerStore {
       }
     );
     this.playbackInstance = this.video;
+    if (playing && !this.isPlaying) {
+      this.playAsync();
+    }
   }
 
   @action
