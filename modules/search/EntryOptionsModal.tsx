@@ -37,7 +37,7 @@ export default observer(({ route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.infoWrap}>
-        <Image source={{ uri: entry.imageUrl }} style={styles.thumb} />
+        <Image source={{ uri: entry.imageUrlMedium }} style={styles.thumb} />
         <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
           {entry.title}
         </Text>

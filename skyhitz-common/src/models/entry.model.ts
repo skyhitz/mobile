@@ -34,6 +34,14 @@ export class Entry extends EntryPayload {
     this.price = payload.price;
   }
 
+  get imageUrlSmall() {
+    return this.imageUrl?.split('/upload/').join('/upload/w_80/');
+  }
+
+  get imageUrlMedium() {
+    return this.imageUrl?.split('/upload/').join('/upload/w_500/');
+  }
+
   get cloudinaryPublicId() {
     let prefix = 'app';
     let popSection = this.videoUrl

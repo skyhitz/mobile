@@ -30,7 +30,7 @@ export default ({
         }}
       >
         <View style={styles.row}>
-          <Image source={{ uri: entry.imageUrl }} style={styles.thumb} />
+          <Image source={{ uri: entry.imageUrlSmall }} style={styles.thumb} />
           <View style={styles.infoWrap}>
             <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
               {entry.title}

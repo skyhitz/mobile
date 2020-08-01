@@ -149,6 +149,7 @@ export default observer(({ children }) => {
           <Animated.View
             style={{
               opacity: opacityInverted,
+              flex: 1,
             }}
           >
             <PlayerScreen />

@@ -79,6 +79,9 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    alignSelf: 'center',
+    maxWidth: 650,
+    marginTop: 5,
   },
   videoPlayer: {
     width: videoWidth,
