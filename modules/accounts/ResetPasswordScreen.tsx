@@ -59,6 +59,7 @@ export default observer((props) => {
             placeholderTextColor="white"
             value={email}
             onChange={updateEmail}
+            onChangeText={(value) => updateEmail({ target: { value: value } })}
             maxLength={34}
           />
         </View>

@@ -66,6 +66,9 @@ export default observer((props) => {
             placeholderTextColor="white"
             value={usernameOrEmail}
             onChange={updateUsernameOrEmail}
+            onChangeText={(value) =>
+              updateUsernameOrEmail({ target: { value: value } })
+            }
           />
         </View>
         <View style={styles.field}>
@@ -82,6 +85,9 @@ export default observer((props) => {
             placeholderTextColor="white"
             value={password}
             onChange={updatePassword}
+            onChangeText={(value) =>
+              updatePassword({ target: { value: value } })
+            }
           />
         </View>
         <View style={styles.errorContainer}>

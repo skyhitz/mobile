@@ -69,6 +69,9 @@ const UpdatePassword: NavStatelessComponent = observer((props) => {
             placeholderTextColor="white"
             value={password}
             onChange={updatePasswordText}
+            onChangeText={(value) =>
+              updatePasswordText({ target: { value: value } })
+            }
           />
           <ValidationIcon
             isFieldValid={updatePasswordValidationStore.passwordValid}
@@ -88,6 +91,9 @@ const UpdatePassword: NavStatelessComponent = observer((props) => {
             placeholderTextColor="white"
             value={passwordConfirmation}
             onChange={updatePasswordConfirmation}
+            onChangeText={(value) =>
+              updatePasswordConfirmation({ target: { value: value } })
+            }
           />
           <ValidationIcon
             isFieldValid={

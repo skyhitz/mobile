@@ -97,6 +97,9 @@ export default observer(() => {
             placeholderTextColor="white"
             value={displayName}
             onChange={updateDisplayName}
+            onChangeText={(value) =>
+              updateDisplayName({ target: { value: value } })
+            }
             maxLength={30}
           />
           <ValidationIcon
@@ -116,6 +119,7 @@ export default observer(() => {
             placeholderTextColor="white"
             value={email}
             onChange={updateEmail}
+            onChangeText={(value) => updateEmail({ target: { value: value } })}
             maxLength={34}
           />
           <ValidationIcon isFieldValid={signUpValidationStore.emailValid} />
@@ -134,6 +138,9 @@ export default observer(() => {
             placeholderTextColor="white"
             value={password}
             onChange={updatePassword}
+            onChangeText={(value) =>
+              updatePassword({ target: { value: value } })
+            }
           />
           <ValidationIcon isFieldValid={signUpValidationStore.passwordValid} />
         </View>
