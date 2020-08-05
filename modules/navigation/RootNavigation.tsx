@@ -49,7 +49,7 @@ export default observer((props) => {
   };
 
   const loadAll = async () => {
-    loadAssets();
+    await loadAssets();
     const user = await sessionStore.loadSession();
     if (user) {
       await loadUserData();

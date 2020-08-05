@@ -1,3 +1,4 @@
+import React from 'react';
 import { observer } from 'mobx-react';
 import { StyleSheet, Dimensions } from 'react-native';
 import Animated from 'react-native-reanimated';

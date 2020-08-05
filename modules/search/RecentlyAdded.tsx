@@ -1,20 +1,14 @@
 import React from 'react';
-import {
-  Text,
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
+import { Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { observer } from 'mobx-react';
 import EntryRow from 'app/modules/ui/EntryRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 
-export default observer(() => {
+export default observer((props) => {
   const { playerStore, entriesSearchStore } = Stores();
-  const renderItem = ({ item }) => {
+  const renderItem = (item) => {
     return (
       <EntryRow
         key={item.id}
@@ -34,11 +28,11 @@ export default observer(() => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.recentText}>Recently Added</Text>
       {SearchingLoader(entriesSearchStore.loadingRecentSearches)}
-      <FlatList
-        data={entriesSearchStore.recentlyAdded.toArray()}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
+      <ScrollView style={{ flex: 1 }}>
+        {entriesSearchStore.recentlyAdded.map((entry: any) => {
+          return renderItem(entry);
+        })}
+      </ScrollView>
     </SafeAreaView>
   );
 });
@@ -54,6 +48,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.darkBlue,
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
   },
 });
