@@ -16,10 +16,23 @@ import { loadResourcesAsync } from 'app/functions/LoadResourcesAsync';
 import { Asset } from 'expo-asset';
 import { Images } from 'app/assets/images/Images';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, useLinking } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useLinking,
+  DefaultTheme,
+} from '@react-navigation/native';
 import CancelEditBtn from 'app/modules/ui/CancelEditBtn';
 import DoneEditBtn from 'app/modules/ui/DoneEditBtn';
 import Colors from 'app/constants/Colors';
+
+const Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    card: Colors.darkBlue,
+    background: Colors.darkBlue,
+  },
+};
 
 const AppStack = createStackNavigator();
 
@@ -126,7 +139,7 @@ export default observer((props) => {
 
   if (loaded && isReady) {
     return (
-      <NavigationContainer initialState={initialState} ref={ref}>
+      <NavigationContainer initialState={initialState} ref={ref} theme={Theme}>
         {sessionStore.user ? (
           <AppStack.Navigator mode="modal">
             <AppStack.Screen
