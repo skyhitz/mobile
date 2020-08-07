@@ -93,6 +93,7 @@ let styles = StyleSheet.create({
     flexWrap: 'nowrap',
     marginTop: 10,
     marginBottom: 15,
+    minHeight: 30,
   },
   liker: {
     marginRight: 7,
