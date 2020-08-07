@@ -36,7 +36,7 @@ const Theme = {
 
 const AppStack = createStackNavigator();
 
-export default observer((props) => {
+export default observer(() => {
   const [loaded, setLoaded] = useState(false);
   const {
     sessionStore,
