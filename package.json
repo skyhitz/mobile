@@ -31,6 +31,8 @@
     "@react-navigation/material-top-tabs": "5.2.10",
     "@react-navigation/native": "5.5.1",
     "@react-navigation/stack": "5.5.1",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.8.0",
     "algoliasearch": "^3.32.0",
     "apollo-client": "1.9.3",
     "babel-preset-expo": "^8.1.0",

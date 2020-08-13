@@ -1,9 +1,25 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { Config } from 'app/skyhitz-common/src/config/index';
+import PaymentStep from './PaymentStep';
+
+let stripePromise;
+
+if (Platform.OS === 'web') {
+  stripePromise = loadStripe(Config.STRIPE_PUBLISHABLE_KEY);
+}
 
 export default observer((props) => {
   let { entryStore } = Stores();
@@ -21,6 +37,11 @@ export default observer((props) => {
         </TouchableOpacity>
         <View>
           <Text style={styles.modalTitle}>Process payment</Text>
+          {Platform.OS === 'web' ? (
+            <Elements stripe={stripePromise}>
+              <PaymentStep />
+            </Elements>
+          ) : null}
         </View>
       </View>
     </View>

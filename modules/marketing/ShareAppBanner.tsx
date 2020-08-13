@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 
@@ -11,18 +11,22 @@ export default (props) => {
   const onBuyCredits = async () => {
     props.navigation.navigate('PaymentModal');
   };
+
   return (
     <View style={styles.wrap}>
       <View style={styles.bannerWrap}>
         <LargeBtn iconName="upload" onPress={onUpload} text="Upload Beat" />
       </View>
-      {/* <View style={styles.bannerWrap}>
-        <LargeBtn
-          iconName="dollar-sign"
-          onPress={onBuyCredits}
-          text="Buy Credits"
-        />
-      </View> */}
+
+      {Platform.OS === 'web' ? (
+        <View style={styles.bannerWrap}>
+          <LargeBtn
+            iconName="dollar-sign"
+            onPress={onBuyCredits}
+            text="Buy Credits"
+          />
+        </View>
+      ) : null}
     </View>
   );
 };
