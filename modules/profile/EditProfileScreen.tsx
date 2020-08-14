@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { inject } from 'mobx-react';
 import {
@@ -85,141 +86,147 @@ export default class EditProfileScreen extends React.Component<any, any> {
   render() {
     return (
       <View style={styles.container}>
-        <View
-          style={[
-            styles.errorContainer,
-            { opacity: this.props.validationError ? 1 : 0 },
-          ]}
+        <KeyboardAvoidingView
+          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+          enabled={false}
         >
-          <Text style={styles.error}>{this.props.validationError}</Text>
-        </View>
-        <View style={styles.headerWrap}>
-          {this.renderAvatar()}
-          <EditProfilePhotoBtn />
-        </View>
-
-        <View style={styles.inputContainerTop}>
-          <View style={styles.field}>
-            <MaterialCommunityIcons
-              name="account-card-details"
-              size={20}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Display Name"
-              autoCorrect={false}
-              autoFocus={true}
-              style={[
-                styles.input,
-                Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-              ]}
-              placeholderTextColor="white"
-              value={this.props.displayName}
-              onChangeText={(t) => this.props.updateDisplayName(t)}
-              maxLength={30}
-            />
-          </View>
-          <View style={styles.field}>
-            <FontAwesome
-              name="info-circle"
-              size={24}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Description"
-              autoCorrect={false}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.props.description}
-              onChangeText={(t) => this.props.updateDescription(t)}
-              maxLength={150}
-            />
-          </View>
-          <View style={styles.fieldWithoutBorder}>
-            <MaterialIcons
-              name="person-outline"
-              size={24}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Username"
-              autoCorrect={false}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.props.username}
-              onChangeText={(t) => this.props.updateUsername(t)}
-              maxLength={30}
-            />
-          </View>
-        </View>
-        <Text style={styles.privateInfo}>Private Information</Text>
-        <View style={styles.inputContainerMiddle}>
-          <View style={styles.field}>
-            <MaterialIcons
-              name="mail-outline"
-              size={22}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Email address"
-              autoCorrect={false}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.props.email}
-              onChangeText={(t) => this.props.updateEmail(t)}
-              maxLength={34}
-            />
-          </View>
-          <View style={styles.fieldWithoutBorder}>
-            <MaterialIcons
-              name="phone-iphone"
-              size={22}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Phone Number"
-              autoCorrect={false}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.props.phone}
-              onChangeText={(t) => this.props.updatePhone(t)}
-              maxLength={15}
-            />
-          </View>
-        </View>
-        {this.renderWithdrawalXLM()}
-        <Text style={styles.privateInfo}>More</Text>
-        <View style={styles.inputContainerBottom}>
-          <TouchableOpacity
-            style={styles.fieldWithoutBorder}
-            onPress={this.handleLogOut.bind(this)}
+          <View
+            style={[
+              styles.errorContainer,
+              { opacity: this.props.validationError ? 1 : 0 },
+            ]}
           >
-            <View>
+            <Text style={styles.error}>{this.props.validationError}</Text>
+          </View>
+          <View style={styles.headerWrap}>
+            {this.renderAvatar()}
+            <EditProfilePhotoBtn />
+          </View>
+
+          <View style={styles.inputContainerTop}>
+            <View style={styles.field}>
               <MaterialCommunityIcons
-                name="logout"
+                name="account-card-details"
+                size={20}
+                color={Colors.dividerBackground}
+                style={styles.placeholderIcon}
+              />
+              <TextInput
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+                placeholder="Display Name"
+                autoCorrect={false}
+                autoFocus={true}
+                style={[
+                  styles.input,
+                  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+                ]}
+                placeholderTextColor="white"
+                value={this.props.displayName}
+                onChangeText={(t) => this.props.updateDisplayName(t)}
+                maxLength={30}
+              />
+            </View>
+            <View style={styles.field}>
+              <FontAwesome
+                name="info-circle"
+                size={24}
+                color={Colors.dividerBackground}
+                style={styles.placeholderIcon}
+              />
+              <TextInput
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+                placeholder="Description"
+                autoCorrect={false}
+                style={styles.input}
+                placeholderTextColor="white"
+                value={this.props.description}
+                onChangeText={(t) => this.props.updateDescription(t)}
+                maxLength={150}
+              />
+            </View>
+            <View style={styles.fieldWithoutBorder}>
+              <MaterialIcons
+                name="person-outline"
+                size={24}
+                color={Colors.dividerBackground}
+                style={styles.placeholderIcon}
+              />
+              <TextInput
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+                placeholder="Username"
+                autoCorrect={false}
+                style={styles.input}
+                placeholderTextColor="white"
+                value={this.props.username}
+                onChangeText={(t) => this.props.updateUsername(t)}
+                maxLength={30}
+              />
+            </View>
+          </View>
+          <Text style={styles.privateInfo}>Private Information</Text>
+          <View style={styles.inputContainerMiddle}>
+            <View style={styles.field}>
+              <MaterialIcons
+                name="mail-outline"
                 size={22}
                 color={Colors.dividerBackground}
                 style={styles.placeholderIcon}
               />
-              <Text style={styles.input}>Log Out</Text>
+              <TextInput
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+                placeholder="Email address"
+                autoCorrect={false}
+                style={styles.input}
+                placeholderTextColor="white"
+                value={this.props.email}
+                onChangeText={(t) => this.props.updateEmail(t)}
+                maxLength={34}
+              />
             </View>
-          </TouchableOpacity>
-        </View>
+            <View style={styles.fieldWithoutBorder}>
+              <MaterialIcons
+                name="phone-iphone"
+                size={22}
+                color={Colors.dividerBackground}
+                style={styles.placeholderIcon}
+              />
+              <TextInput
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+                placeholder="Phone Number"
+                autoCorrect={false}
+                style={styles.input}
+                placeholderTextColor="white"
+                value={this.props.phone}
+                onChangeText={(t) => this.props.updatePhone(t)}
+                maxLength={15}
+              />
+            </View>
+          </View>
+          {this.renderWithdrawalXLM()}
+          <Text style={styles.privateInfo}>More</Text>
+          <View style={styles.inputContainerBottom}>
+            <TouchableOpacity
+              style={styles.fieldWithoutBorder}
+              onPress={this.handleLogOut.bind(this)}
+            >
+              <View>
+                <MaterialCommunityIcons
+                  name="logout"
+                  size={22}
+                  color={Colors.dividerBackground}
+                  style={styles.placeholderIcon}
+                />
+                <Text style={styles.input}>Log Out</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
       </View>
     );
   }
