@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput, Platform } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { P, A, H3 } from '@expo/html-elements';
 import Colors from 'app/constants/Colors';
@@ -111,7 +111,12 @@ export default observer((props) => {
                 onChangeText={(value) =>
                   handleAmountChange({ target: { value: value } })
                 }
-                style={styles.priceHeaders}
+                style={[
+                  styles.priceHeaders,
+                  Platform.OS === 'web'
+                    ? ({ outlineWidth: 0, backgroundColor: '#e9e9e9' } as any)
+                    : {},
+                ]}
               />
               <P style={styles.description}>Buy credits</P>
               <View style={styles.priceSection}>
@@ -123,9 +128,13 @@ export default observer((props) => {
       </View>
       <CardElement
         options={{
+          hidePostalCode: true,
           style: {
             base: {
               color: Colors.white,
+              '::placeholder': {
+                color: Colors.white,
+              },
             },
             invalid: {
               color: Colors.errorBackground,
@@ -135,11 +144,11 @@ export default observer((props) => {
       />
       {paymentsStore.submittingSubscription ? (
         <RectButton style={styles.submitPayment}>
-          <P>Submitting Transaction...</P>
+          <P style={styles.submitPaymentText}>Submitting Transaction...</P>
         </RectButton>
       ) : (
         <RectButton style={styles.submitPayment} onPress={submit}>
-          <P>Submit Payment</P>
+          <P style={styles.submitPaymentText}>Submit Payment</P>
         </RectButton>
       )}
     </View>
@@ -182,7 +191,7 @@ const styles = StyleSheet.create({
     borderColor: '#e9e9e9',
     padding: 0,
     borderRadius: 4,
-    width: 180,
+    width: 160,
     height: 166,
     margin: 10,
   },
@@ -205,7 +214,7 @@ const styles = StyleSheet.create({
   },
   submitPayment: {
     marginTop: 60,
-    backgroundColor: Colors.grey,
+    backgroundColor: Colors.brandBlue,
     width: 220,
     height: 40,
     borderRadius: 20,
@@ -216,5 +225,9 @@ const styles = StyleSheet.create({
   selected: {
     borderColor: Colors.brandBlue,
     borderWidth: 3,
+  },
+  submitPaymentText: {
+    color: Colors.white,
+    fontWeight: '500',
   },
 });
