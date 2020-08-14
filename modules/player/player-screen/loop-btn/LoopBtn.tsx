@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { inject } from 'mobx-react';
-import { LoopIconBlue, LoopIconGrey } from 'app/assets/images/Images';
 import * as stores from 'app/skyhitz-common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';

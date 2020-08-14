@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { P, A, H3 } from '@expo/html-elements';
+import Colors from 'app/constants/Colors';
 
 export default observer((props) => {
   const [selectedOption, setSelectedOption] = useState('subscription');
@@ -51,10 +52,14 @@ export default observer((props) => {
   };
 
   const handleAmountChange = ({ target }) => {
-    if (target.valueAsNumber > 2000) {
+    let tar = parseInt(target.value);
+    if (tar > 2000) {
       return setAmount(2000);
     }
-    setAmount(target.value);
+    if (tar < 1 || !tar) {
+      return setAmount(1);
+    }
+    setAmount(tar);
   };
 
   const changeToOneTime = () => {
@@ -63,21 +68,6 @@ export default observer((props) => {
 
   const changeToSubscription = () => {
     setSelectedOption('subscription');
-  };
-
-  const renderSubscribeBtn = () => {
-    if (paymentsStore.submittingSubscription) {
-      return (
-        <RectButton style={styles.submitPayment}>
-          <P>Submitting Transaction...</P>
-        </RectButton>
-      );
-    }
-    return (
-      <RectButton style={styles.submitPayment} onPress={submit}>
-        <P>Submit Payment</P>
-      </RectButton>
-    );
   };
 
   if (!paymentsStore.subscriptionLoaded) {
@@ -97,24 +87,13 @@ export default observer((props) => {
               selectedOption === 'subscription' ? styles.selected : {},
             ]}
           >
-            <label>
-              <H3>7</H3>
-              <P>Monthly credit plan</P>
+            <View>
+              <H3 style={styles.priceHeaders}>7</H3>
+              <P style={styles.description}>Monthly credit plan</P>
               <View style={styles.priceSection}>
-                <strong>
-                  <sup>$</sup>7
-                </strong>
-                <P style={styles.perMonth}>per month</P>
+                <P style={styles.perMonth}>$7 per month</P>
               </View>
-              <View style={styles.radioWrapper}>
-                <input
-                  type="radio"
-                  value="subscription"
-                  checked={selectedOption === 'subscription'}
-                  readOnly
-                />
-              </View>
-            </label>
+            </View>
           </View>
         </A>
         <A onPress={changeToOneTime}>
@@ -124,36 +103,45 @@ export default observer((props) => {
               selectedOption === 'one-time' ? styles.selected : {},
             ]}
           >
-            <label>
-              <input
-                id="credits-input"
-                type="number"
-                max={2000}
-                value={amount}
+            <View>
+              <TextInput
+                keyboardType={'numeric'}
+                value={amount ? String(amount) : undefined}
                 onChange={handleAmountChange}
+                onChangeText={(value) =>
+                  handleAmountChange({ target: { value: value } })
+                }
+                style={styles.priceHeaders}
               />
-              <P>Buy credits</P>
+              <P style={styles.description}>Buy credits</P>
               <View style={styles.priceSection}>
-                <strong>
-                  <sup>$</sup>
-                  {amount}
-                </strong>
-                <P style={styles.perMonth}>one time</P>
+                <P style={styles.perMonth}>${amount} one time</P>
               </View>
-              <View style={styles.radioWrapper}>
-                <input
-                  type="radio"
-                  value="one-time"
-                  checked={selectedOption === 'one-time'}
-                  readOnly
-                />
-              </View>
-            </label>
+            </View>
           </View>
         </A>
       </View>
-      <CardElement />
-      {renderSubscribeBtn()}
+      <CardElement
+        options={{
+          style: {
+            base: {
+              color: Colors.white,
+            },
+            invalid: {
+              color: Colors.errorBackground,
+            },
+          },
+        }}
+      />
+      {paymentsStore.submittingSubscription ? (
+        <RectButton style={styles.submitPayment}>
+          <P>Submitting Transaction...</P>
+        </RectButton>
+      ) : (
+        <RectButton style={styles.submitPayment} onPress={submit}>
+          <P>Submit Payment</P>
+        </RectButton>
+      )}
     </View>
   );
 });
@@ -164,32 +152,50 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     margin: 0,
   },
+  description: {
+    textAlign: 'center',
+    fontWeight: '600',
+    marginTop: 5,
+    marginBottom: 0,
+  },
   perMonth: {
     fontSize: 13,
     fontWeight: '500',
+    textAlign: 'center',
+    margin: 0,
+    paddingLeft: 0,
   },
   priceSection: {
     marginBottom: 8,
     marginTop: 5,
   },
+  priceHeaders: {
+    textAlign: 'center',
+    fontSize: 50,
+    fontWeight: '500',
+    marginTop: 15,
+    marginBottom: 0,
+  },
   radio: {
     backgroundColor: '#fff',
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#e9e9e9',
     padding: 0,
     borderRadius: 4,
     width: 180,
     height: 166,
+    margin: 10,
   },
   options: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
     marginBottom: 50,
+    flexDirection: 'row',
   },
   checkoutWrap: {
     marginTop: 0,
-    marginHorizontal: 30,
+    marginHorizontal: 0,
   },
   checkingCopy: {
     textAlign: 'center',
@@ -197,8 +203,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     paddingTop: 30,
   },
-  submitPayment: { marginTop: 60 },
+  submitPayment: {
+    marginTop: 60,
+    backgroundColor: Colors.grey,
+    width: 220,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
   selected: {
-    borderColor: '#777',
+    borderColor: Colors.brandBlue,
+    borderWidth: 3,
   },
 });

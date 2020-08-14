@@ -41,7 +41,7 @@ export default () => {
       }}
       tabBar={(props) => (
         <View
-          style={{ paddingTop: 10, backgroundColor: Colors.tabsBackground }}
+          style={{ paddingTop: 20, backgroundColor: Colors.tabsBackground }}
         >
           <SearchHeader />
           <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />

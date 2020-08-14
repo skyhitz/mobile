@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import { observer } from 'mobx-react';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
@@ -172,6 +172,7 @@ export default observer(() => {
                 cardStyle: { backgroundColor: 'transparent' },
               }}
             />
+
             <AppStack.Screen
               name="PaymentModal"
               component={PaymentModal}
