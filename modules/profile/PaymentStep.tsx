@@ -91,7 +91,7 @@ export default observer((props) => {
               <H3 style={styles.priceHeaders}>7</H3>
               <P style={styles.description}>Monthly credit plan</P>
               <View style={styles.priceSection}>
-                <P style={styles.perMonth}>$7 per month</P>
+                <P style={styles.perMonth}>$7.21 per month</P>
               </View>
             </View>
           </View>
@@ -120,7 +120,7 @@ export default observer((props) => {
               />
               <P style={styles.description}>Buy credits</P>
               <View style={styles.priceSection}>
-                <P style={styles.perMonth}>${amount} one time</P>
+                <P style={styles.perMonth}>${amount * 1.03} one time</P>
               </View>
             </View>
           </View>
