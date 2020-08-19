@@ -120,7 +120,9 @@ export default observer((props) => {
               />
               <P style={styles.description}>Buy credits</P>
               <View style={styles.priceSection}>
-                <P style={styles.perMonth}>${amount * 1.03} one time</P>
+                <P style={styles.perMonth}>
+                  ${(amount * 1.03).toFixed(2)} one time
+                </P>
               </View>
             </View>
           </View>
