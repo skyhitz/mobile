@@ -34,7 +34,7 @@ export default observer((props) => {
     if (!token) return;
     const { id } = token;
     if (selectedOption === 'one-time') {
-      const purchased = await paymentsStore.buyCredits(id, amount);
+      const purchased = await paymentsStore.buyCredits(id, amount * 1.03);
       if (purchased) {
         console.log('Purchase Complete!');
       }
@@ -88,10 +88,10 @@ export default observer((props) => {
             ]}
           >
             <View>
-              <H3 style={styles.priceHeaders}>7</H3>
+              <H3 style={styles.priceHeaders}>7.75</H3>
               <P style={styles.description}>Monthly credit plan</P>
               <View style={styles.priceSection}>
-                <P style={styles.perMonth}>$7.21 per month</P>
+                <P style={styles.perMonth}>$7.99 per month</P>
               </View>
             </View>
           </View>
