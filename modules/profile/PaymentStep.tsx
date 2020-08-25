@@ -6,12 +6,14 @@ import { StyleSheet, View, TextInput, Platform } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { P, A, H3 } from '@expo/html-elements';
 import Colors from 'app/constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 export default observer((props) => {
   const [selectedOption, setSelectedOption] = useState('subscription');
   const [amount, setAmount] = useState(50);
   const stripe = useStripe();
   const elements = useElements();
+  const { goBack } = useNavigation();
 
   const { paymentsStore } = Stores();
 
@@ -37,6 +39,7 @@ export default observer((props) => {
       const purchased = await paymentsStore.buyCredits(id, amount * 1.03);
       if (purchased) {
         console.log('Purchase Complete!');
+        goBack();
       }
       return;
     }
@@ -44,6 +47,7 @@ export default observer((props) => {
     const subscribed = await paymentsStore.subscribeUser(id);
     if (subscribed) {
       console.log('Purchase Complete!');
+      goBack();
     }
   };
 
