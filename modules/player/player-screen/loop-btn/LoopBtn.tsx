@@ -1,34 +1,33 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { inject } from 'mobx-react';
-import * as stores from 'app/skyhitz-common';
+import { observer } from 'mobx-react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
 
-const LoopBtn = inject((stores: Stores) => ({
-  toggleLoop: stores.playerStore.toggleLoop.bind(stores.playerStore),
-  loop: stores.playerStore.loop,
-}))(({ toggleLoop, loop }: any) => {
-  if (loop) {
+export default observer(() => {
+  let { playerStore } = Stores();
+
+  if (playerStore.loop) {
     return (
       <TouchableOpacity
         style={styles.controlTouch}
-        onPress={() => toggleLoop()}
+        onPress={() => playerStore.toggleLoop()}
       >
         <Feather name="repeat" size={20} color={Colors.lightBrandBlue} />
       </TouchableOpacity>
     );
   }
   return (
-    <TouchableOpacity style={styles.controlTouch} onPress={() => toggleLoop()}>
+    <TouchableOpacity
+      style={styles.controlTouch}
+      onPress={() => playerStore.toggleLoop()}
+    >
       <Feather name="repeat" size={20} color={Colors.white} />
     </TouchableOpacity>
   );
 });
-
-export default LoopBtn;
 
 var styles = StyleSheet.create({
   controlTouch: {
