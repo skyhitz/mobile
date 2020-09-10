@@ -84,6 +84,8 @@ export default observer(() => {
       SignIn: 'accounts/sign-in',
       ResetPassword: 'accounts/reset-password',
       UpdatePassword: 'accounts/update-password',
+      Privacy: 'accounts/privacy',
+      Terms: 'accounts/terms',
       Main: {
         screens: {
           SearchNavigator: {

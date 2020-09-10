@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const Navbar = () => {
+export default () => {
   const { navigate } = useNavigation();
 
   return (
@@ -99,5 +99,3 @@ let styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 });
-
-export default Navbar;

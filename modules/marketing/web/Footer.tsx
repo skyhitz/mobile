@@ -2,9 +2,13 @@ import React from 'react';
 import { Footer, A } from '@expo/html-elements';
 import SocialLinks from './SocialLinks';
 import Colors from 'app/constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 let Anchor: React.ComponentType<any> = A;
+import { Text } from 'react-native';
 
-const LandingFooter = () => {
+export default () => {
+  const { navigate } = useNavigation();
+
   return (
     <Footer
       style={{
@@ -19,28 +23,24 @@ const LandingFooter = () => {
         alignSelf: 'center',
       }}
     >
-      <Anchor
-        href="/terms"
-        target="_self"
+      <Text
+        onPress={() => navigate('Terms')}
         style={{
           color: Colors.white,
         }}
       >
         Terms of Use
-      </Anchor>
-      <Anchor
-        href="/privacy"
-        target="_self"
+      </Text>
+      <Text
+        onPress={() => navigate('Privacy')}
         style={{
           color: Colors.white,
           paddingHorizontal: 20,
         }}
       >
         Privacy Policy
-      </Anchor>
+      </Text>
       <SocialLinks />
     </Footer>
   );
 };
-
-export default LandingFooter;

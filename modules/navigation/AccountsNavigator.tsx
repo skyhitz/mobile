@@ -9,6 +9,8 @@ import WebApp from '../marketing/web/Home';
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import Colors from 'app/constants/Colors';
+import Privacy from '../marketing/web/Privacy';
+import Terms from '../marketing/web/Terms';
 
 const AccountsStack = createStackNavigator();
 
@@ -85,6 +87,34 @@ export default () => {
           headerTitleStyle: { color: Colors.white },
           headerTintColor: Colors.white,
           title: 'Update Password',
+          headerTransparent: true,
+          headerStyle: {
+            borderBottomWidth: 0,
+          },
+        }}
+      />
+      <AccountsStack.Screen
+        name="Privacy"
+        component={Privacy}
+        options={{
+          headerShown: headerShown,
+          headerTitleStyle: { color: Colors.white },
+          headerTintColor: Colors.white,
+          title: 'Privacy',
+          headerTransparent: true,
+          headerStyle: {
+            borderBottomWidth: 0,
+          },
+        }}
+      />
+      <AccountsStack.Screen
+        name="Terms"
+        component={Terms}
+        options={{
+          headerShown: headerShown,
+          headerTitleStyle: { color: Colors.white },
+          headerTintColor: Colors.white,
+          title: 'Terms',
           headerTransparent: true,
           headerStyle: {
             borderBottomWidth: 0,
