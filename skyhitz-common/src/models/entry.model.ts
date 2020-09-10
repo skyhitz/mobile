@@ -1,8 +1,6 @@
 import { Payload } from './payload.model';
 
 export class EntryPayload extends Payload {
-  userDisplayName?: string;
-  userUsername?: string;
   imageUrl?: string;
   userId?: number;
   commentCount?: number;
@@ -21,6 +19,27 @@ export class EntryPayload extends Payload {
 export class Entry extends EntryPayload {
   constructor(payload: EntryPayload) {
     super(payload);
+    this.imageUrl = payload.imageUrl;
+    this.userId = payload.userId;
+    this.commentCount = payload.commentCount;
+    this.description = payload.description;
+    this.likeCount = payload.likeCount;
+    this.publishedAt = payload.publishedAt;
+    this.ranking = payload.ranking;
+    this.shareCount = payload.shareCount;
+    this.title = payload.title;
+    this.id = payload.id;
+    this.videoUrl = payload.videoUrl;
+    this.forSale = payload.forSale;
+    this.price = payload.price;
+  }
+
+  get imageUrlSmall() {
+    return this.imageUrl?.split('/upload/').join('/upload/w_80/');
+  }
+
+  get imageUrlMedium() {
+    return this.imageUrl?.split('/upload/').join('/upload/w_500/');
   }
 
   get cloudinaryPublicId() {

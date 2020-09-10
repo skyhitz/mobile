@@ -14,15 +14,6 @@ type Stores = typeof stores;
   loading: stores.userEntriesStore.loading,
 }))
 export default class MyMusicScreen extends React.Component<any, any> {
-  static navigationOptions = {
-    title: 'My Music',
-    headerTitleStyle: { color: Colors.white },
-    headerStyle: {
-      backgroundColor: Colors.headerBackground,
-      borderBottomWidth: 0,
-    },
-    headerTintColor: Colors.tabIconSelected,
-  };
   render() {
     return (
       <ScrollView
@@ -32,16 +23,17 @@ export default class MyMusicScreen extends React.Component<any, any> {
         }}
       >
         {SearchingLoader(this.props.loading)}
-        {this.props.entries.map((entry: any) =>
-          EntryRow(
-            this.props.loadAndPlay,
-            entry,
-            null,
-            null,
-            null,
-            this.props.navigation.state.routeName
-          )
-        )}
+        {this.props.entries.map((entry: any) => (
+          <EntryRow
+            key={entry.id}
+            play={this.props.loadAndPlay}
+            entry={entry}
+            addRecentEntrySearch={null}
+            options={null}
+            disablePlaylistMode={null}
+            previousScreen={'MyMusicScreen'}
+          />
+        ))}
         <BottomPlaceholder />
       </ScrollView>
     );

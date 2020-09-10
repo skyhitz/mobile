@@ -1,32 +1,21 @@
-import React from 'react';
-import { withNavigationFocus } from 'react-navigation';
-import { inject } from 'mobx-react';
+import React, { useCallback } from 'react';
+import { observer } from 'mobx-react';
 import SearchEntryList from 'app/modules/search/SearchEntryList';
-import TopRecentEntryView from 'app/modules/search/TopRecentEntryView';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import RecentlyAdded from 'app/modules/search/RecentlyAdded';
+import { useFocusEffect } from '@react-navigation/native';
+import { Stores } from 'app/functions/Stores';
 
-@inject((stores: Stores) => ({
-  isSearchActive: stores.entriesSearchStore.active,
-  inputSearchStore: stores.inputSearchStore,
-}))
-class SearchEntryView extends React.Component<any, any> {
-  static navigationOptions = {
-    tabBarLabel: 'Music',
-  };
+export default observer(() => {
+  let { entriesSearchStore, inputSearchStore } = Stores();
 
-  componentDidUpdate() {
-    if (this.props.isFocused) {
-      this.props.inputSearchStore.updateSearchType('entries');
-    }
+  useFocusEffect(
+    useCallback(() => {
+      inputSearchStore.updateSearchType('entries');
+    }, [])
+  );
+
+  if (entriesSearchStore.active) {
+    return <SearchEntryList />;
   }
-
-  render() {
-    if (this.props.isSearchActive) {
-      return <SearchEntryList />;
-    }
-    return <TopRecentEntryView />;
-  }
-}
-
-export default withNavigationFocus(SearchEntryView);
+  return <RecentlyAdded />;
+});

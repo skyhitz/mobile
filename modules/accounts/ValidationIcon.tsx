@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 
-const validationIcon = (isFieldValid: any) => {
-  if (isFieldValid) {
+const validationIcon = props => {
+  if (props.isFieldValid) {
     return (
       <Ionicons
         name="ios-checkmark-circle-outline"
@@ -14,7 +14,7 @@ const validationIcon = (isFieldValid: any) => {
       />
     );
   }
-  if (isFieldValid === false) {
+  if (props.isFieldValid === false) {
     return (
       <Ionicons
         name="ios-close-circle-outline"
@@ -29,9 +29,6 @@ const validationIcon = (isFieldValid: any) => {
 
 let styles = StyleSheet.create({
   icon: {
-    position: 'absolute',
-    bottom: 8,
-    right: 0,
     backgroundColor: Colors.transparent,
   },
 });

@@ -7,9 +7,8 @@ export class LikesBackend {
       .query({
         query: gql`
           {
-            userLikes(offset: 0, limit: 500) {
+            userLikes {
               imageUrl
-              userDisplayName
               description
               title
               id
@@ -27,14 +26,12 @@ export class LikesBackend {
       .query({
         query: gql`
       {
-        entryLikes(id: "${id}", offset: 0, limit: 8) {
+        entryLikes(id: "${id}") {
           count
           users {
             avatarUrl
-            bannerUrl
             displayName
             username
-            reputation
             id
   	      }
         }

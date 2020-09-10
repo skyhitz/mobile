@@ -33,7 +33,7 @@ export class EntriesSearchStore {
   });
 
   public searchEntries(q: string) {
-    return entriesBackend.search(q).then(results => {
+    return entriesBackend.search(q).then((results) => {
       let entries: Entry[] = results.map((result: any) => new Entry(result));
       this.setEntries(List(entries));
       this.searching = false;
@@ -64,7 +64,7 @@ export class EntriesSearchStore {
 
   public getTopChart() {
     this.loadingTopChart = true;
-    return entriesBackend.getTopChart().then(entries => {
+    return entriesBackend.getTopChart().then((entries) => {
       this.setTopChart(List(entries));
       this.loadingTopChart = false;
     });
@@ -72,7 +72,7 @@ export class EntriesSearchStore {
 
   public getRecentSearches() {
     this.loadingRecentSearches = true;
-    return entriesBackend.getRecentSearches().then(entries => {
+    return entriesBackend.getRecentSearches().then((entries) => {
       this.setRecentSearches(List(entries));
       this.loadingRecentSearches = false;
     });
@@ -80,7 +80,7 @@ export class EntriesSearchStore {
 
   public getRecentlyAdded() {
     this.loadingRecentlyAdded = true;
-    return entriesBackend.getRecentlyAdded().then(entries => {
+    return entriesBackend.getRecentlyAdded().then((entries) => {
       this.setRecentlyAdded(List(entries));
       this.loadingRecentlyAdded = false;
     });
@@ -88,7 +88,7 @@ export class EntriesSearchStore {
 
   public getTopSearches() {
     this.loadingTopSearches = true;
-    return entriesBackend.getTopSearches().then(entries => {
+    return entriesBackend.getTopSearches().then((entries) => {
       this.setTopSearches(List(entries));
       this.loadingTopSearches = false;
     });

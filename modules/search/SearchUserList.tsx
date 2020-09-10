@@ -16,7 +16,7 @@ const UserSearchList = inject((stores: Stores) => ({
   <ScrollView style={{ backgroundColor: Colors.listItemBackground, flex: 1 }}>
     {SearchingLoader(searching, query)}
     {users.map((user: { id: string | number | undefined }) => (
-      <UserRow user={user} recentSearch={true} key={user.id} />
+      <UserRow user={user} key={user.id} />
     ))}
     <BottomPlaceholder />
   </ScrollView>

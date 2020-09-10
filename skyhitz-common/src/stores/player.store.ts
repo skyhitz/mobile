@@ -3,9 +3,14 @@ import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
+import Animated, { set, add } from 'react-native-reanimated';
+import { State } from 'react-native-gesture-handler';
+
+const { Value } = Animated;
 
 export class PlayerStore {
   constructor() {}
+
   public observables: any = observable({
     entry: null,
   });
@@ -13,6 +18,14 @@ export class PlayerStore {
   get entry(): any {
     return this.observables.entry;
   }
+
+  @observable
+  showMiniPlayer: boolean = false;
+  @observable
+  goUp: Animated.Value<0 | 1> = new Value(0);
+  @observable
+  goDown: Animated.Value<0 | 1> = new Value(0);
+
   @observable
   show: boolean = false;
   @observable
@@ -46,7 +59,7 @@ export class PlayerStore {
   @observable
   shouldPlayAtEndOfSeek: boolean = false;
   @observable
-  sliderWidth!: number;
+  sliderWidth: number = 0;
   @observable
   cueList: List<Entry> = List([]);
   @observable
@@ -58,6 +71,42 @@ export class PlayerStore {
   @observable
   playbackInstance: any;
   seekPosition!: number;
+
+  @observable
+  streamUrl: string =
+    'https://res.cloudinary.com/skyhitz/video/upload/v1554330926/app/-LbM3m6WKdVQAsY3zrAd/videos/-Lb_KsQ7hbr0nquOTZee.mov';
+
+  video: any;
+
+  translationX: Animated.Value<number> = new Value(0);
+  sliderState: Animated.Value<number> = new Value(State.UNDETERMINED);
+  sliderOffset: Animated.Value<number> = new Value(0);
+
+  mountVideo = (component) => {
+    this.video = component;
+    this.loadNewPlaybackInstance(false);
+  };
+
+  async loadNewPlaybackInstance(playing, streamUrl = '') {
+    if (this.playbackInstance != null) {
+      await this.playbackInstance.unloadAsync();
+      this.playbackInstance = null;
+    }
+
+    if (!streamUrl) return;
+    await this.video.loadAsync(
+      { uri: streamUrl },
+      {
+        shouldPlay: playing,
+        positionMillis: 0,
+        progressUpdateIntervalMillis: 50,
+      }
+    );
+    this.playbackInstance = this.video;
+    if (playing && !this.isPlaying) {
+      this.playAsync();
+    }
+  }
 
   @action
   async refreshEntry() {
@@ -168,24 +217,15 @@ export class PlayerStore {
     return false;
   }
 
-  async loadAsync(streamUrl: string) {
-    return await this.playbackInstance.loadAsync(
-      { uri: streamUrl },
-      {
-        shouldPlay: true,
-        positionMillis: 0,
-        progressUpdateIntervalMillis: 50,
-      }
-    );
-  }
-
   async loadAndPlay(entry: Entry) {
     if (!entry) {
       return null;
     }
-    if (this.cueList.findIndex(item => !!item && item.id === entry.id) !== -1) {
+    if (
+      this.cueList.findIndex((item) => !!item && item.id === entry.id) !== -1
+    ) {
       this.currentIndex = this.cueList.findIndex(
-        item => !!item && item.id === entry.id
+        (item) => !!item && item.id === entry.id
       );
     }
 
@@ -201,9 +241,10 @@ export class PlayerStore {
     videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
     let optimizedVideo = '/upload/vc_auto/q_auto:good';
     videoUrl.replace('/upload', optimizedVideo);
-    let loadStream = await this.loadAsync(videoUrl);
+    this.streamUrl = videoUrl;
+    await this.loadNewPlaybackInstance(true, videoUrl);
     this.setPlaybackState('PLAYING');
-    return loadStream;
+    return;
   }
 
   async playNext() {
@@ -247,13 +288,25 @@ export class PlayerStore {
   }
 
   @action
+  unmountMiniPlayer() {
+    this.showMiniPlayer = false;
+  }
+
+  @action
+  mountMiniPlayer() {
+    this.showMiniPlayer = true;
+  }
+
+  @action
   hidePlayer() {
     this.show = false;
+    this.goDown.setValue(1);
   }
 
   @action
   showPlayer() {
     this.show = true;
+    this.goUp.setValue(1);
   }
 
   @computed
@@ -343,14 +396,13 @@ export class PlayerStore {
     return 0;
   }
 
-  onSeekSliderValueChange = (value: number) => {
+  onSeekSliderValueChange = () => {
     if (
       this.playbackInstance !== null &&
       this.seekState !== 'SEEKING' &&
       this.seekState !== 'SEEKED'
     ) {
       this.shouldPlayAtEndOfSeek = false;
-      // this.seekPosition = value * this.playbackInstanceDuration;
       this.setSeekState('SEEKING');
 
       if (this.isPlaying) {
@@ -372,9 +424,7 @@ export class PlayerStore {
 
         this.setSeekState('NOT_SEEKING');
         this.setPlaybackState(this.getPlaybackStateFromStatus(status));
-      } catch (message) {
-        console.info('Seek error: ', message);
-      }
+      } catch (message) {}
     }
   };
 
@@ -388,7 +438,6 @@ export class PlayerStore {
       )
     ) {
       const value = evt.nativeEvent.locationX / this.sliderWidth;
-      this.onSeekSliderValueChange(value);
       this.onSeekSliderSlidingComplete(value);
     }
   };
@@ -431,6 +480,11 @@ export class PlayerStore {
     return false;
   }
 
+  setSliderPosition(position: number) {
+    this.sliderOffset.setValue(position);
+    this.translationX.setValue(0);
+  }
+
   @action
   onPlaybackStatusUpdate(status: any) {
     if (this.disablePlaybackStatusUpdate) {
@@ -456,6 +510,9 @@ export class PlayerStore {
     if (status.isPlaying && !status.isBuffering) {
       this.playbackInstancePosition = status.positionMillis;
       this.playbackInstanceDuration = status.durationMillis;
+      const position =
+        (status.positionMillis / status.durationMillis) * this.sliderWidth;
+      this.setSliderPosition(position);
     }
 
     this.shouldPlay = status.shouldPlay;

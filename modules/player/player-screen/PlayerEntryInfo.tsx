@@ -34,6 +34,7 @@ let styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     maxHeight: 130,
+    marginTop: 10,
   },
   row: {
     flexDirection: 'row',
@@ -41,7 +42,6 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'nowrap',
     height: 23,
-    marginBottom: 10,
   },
   entryArtist: {
     textAlign: 'center',

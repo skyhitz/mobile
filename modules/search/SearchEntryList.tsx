@@ -37,15 +37,17 @@ const SearchEntryList = inject((stores: Stores) => ({
       }}
     >
       {SearchingLoader(searching, query)}
-      {entries.map((entry: any) =>
-        EntryRow(
-          loadPlayAndPushToCueList,
-          entry,
-          addRecentEntrySearch,
-          null,
-          disablePlaylistMode
-        )
-      )}
+      {entries.map((entry: any) => (
+        <EntryRow
+          key={entry.id}
+          play={loadPlayAndPushToCueList}
+          entry={entry}
+          addRecentEntrySearch={addRecentEntrySearch}
+          options={null}
+          disablePlaylistMode={disablePlaylistMode}
+          previousScreen={null}
+        />
+      ))}
       <BottomPlaceholder />
     </ScrollView>
   )

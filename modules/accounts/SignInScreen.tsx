@@ -1,220 +1,171 @@
-import React from 'react';
-import { HeaderBackButton } from 'react-navigation-stack';
-import { goBack, navigate } from 'app/modules/navigation/Navigator';
-import { inject } from 'mobx-react';
-import { MaterialIcons } from '@expo/vector-icons';
-import Layout from 'app/constants/Layout';
+import React, { useState } from 'react';
+import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { AuthBackground2 } from 'app/assets/images/Images';
 import {
   StyleSheet,
   View,
   Text,
-  ImageBackground,
   TouchableHighlight,
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
+import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-@inject((stores: Stores) => ({
-  validateUsernameOrEmail: stores.signInValidationStore.validateUsernameOrEmail.bind(
-    stores.signInValidationStore
-  ),
-  usernameOrEmailValid: stores.signInValidationStore.usernameOrEmailValid,
-  validatePassword: stores.signInValidationStore.validatePassword.bind(
-    stores.signInValidationStore
-  ),
-  passwordValid: stores.signInValidationStore.passwordValid,
-  setBackendError: stores.signInValidationStore.setBackendError.bind(
-    stores.signInValidationStore
-  ),
-  validForm: stores.signInValidationStore.validForm,
-  error: stores.signInValidationStore.error,
-  signIn: stores.sessionStore.signIn.bind(stores.sessionStore),
-  loadUserLikes: stores.likesStore.refreshLikes.bind(stores.likesStore),
-  loadPlaylists: stores.playlistsStore.refreshPlaylists.bind(
-    stores.playlistsStore
-  ),
-}))
-export default class SignInScreen extends React.Component<any, any> {
-  static navigationOptions = () => ({
-    title: 'Log In',
-    headerTitleStyle: { color: Colors.white },
-    headerStyle: {
-      backgroundColor: Colors.headerBackground,
-      borderBottomWidth: 0,
-    },
-    headerLeft: () => (
-      <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
-    ),
-  });
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      usernameOrEmail: '',
-      password: '',
-      loading: false,
-    };
-  }
-  async signIn() {
-    this.setState({ loading: true });
+export default observer((props) => {
+  const { signInValidationStore, sessionStore } = Stores();
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { navigate } = useNavigation();
+
+  const signIn = async () => {
+    setLoading(true);
     try {
-      let user = await this.props.signIn({
-        usernameOrEmail: this.state.usernameOrEmail,
-        password: this.state.password,
+      await sessionStore.signIn({
+        usernameOrEmail: usernameOrEmail,
+        password: password,
       });
-      this.setState({ loading: false });
-      return navigate('ProfileSettings');
+      setLoading(false);
+      return navigate('Main', {
+        screen: 'ProfileSettings',
+      });
     } catch (e) {
-      this.props.setBackendError(e);
+      signInValidationStore.setBackendError(e);
     }
-    return this.setState({ loading: false });
-  }
-  goToResetPassword() {
-    navigate('ResetPassword');
-  }
-  updateUsernameOrEmail(text: any) {
-    this.setState({ usernameOrEmail: text });
-  }
-  updatePassword(text: any) {
-    this.setState({ password: text });
-    this.props.validatePassword(this.state.password);
-  }
-  render() {
-    return (
-      <ImageBackground style={styles.bg} source={AuthBackground2}>
-        <View
-          style={[styles.errorContainer, { opacity: this.props.error ? 1 : 0 }]}
-        >
-          <Text style={styles.error}>{this.props.error}</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <View style={styles.field}>
-            <MaterialIcons
-              name="person-outline"
-              size={24}
-              color={Colors.white}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Username or email"
-              autoCorrect={false}
-              style={styles.input}
-              autoFocus={true}
-              placeholderTextColor="white"
-              value={this.state.usernameOrEmail}
-              onChangeText={this.updateUsernameOrEmail.bind(this)}
-              onBlur={() =>
-                this.props.validateUsernameOrEmail(this.state.usernameOrEmail)
-              }
-            />
-          </View>
-          <View style={styles.field}>
-            <MaterialIcons
-              name="lock-outline"
-              size={22}
-              color={Colors.white}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Password"
-              autoCorrect={false}
-              style={styles.input}
-              secureTextEntry={true}
-              placeholderTextColor="white"
-              value={this.state.password}
-              onChangeText={this.updatePassword.bind(this)}
-              onBlur={() => this.props.validatePassword(this.state.password)}
-            />
-          </View>
-          <TouchableHighlight
+    return setLoading(false);
+  };
+
+  const updateUsernameOrEmail = ({ target }: any) => {
+    setUsernameOrEmail(target.value);
+    signInValidationStore.validateUsernameOrEmail(target.value);
+  };
+
+  const updatePassword = ({ target }: any) => {
+    setPassword(target.value);
+    signInValidationStore.validatePassword(target.value);
+  };
+
+  return (
+    <BackgroundImage authBackground={true}>
+      <View style={styles.inputContainer}>
+        <View style={styles.field}>
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="Username or email address"
+            autoCorrect={false}
             style={[
-              styles.joinBtn,
-              { opacity: this.props.validForm ? 1 : 0.5 },
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
             ]}
-            onPress={this.signIn.bind(this)}
-            underlayColor={Colors.underlayColor}
-            disabled={!this.props.validForm}
-          >
-            {this.renderButtonMessage(this.state.loading)}
-          </TouchableHighlight>
-          <TouchableOpacity
-            style={styles.forgotPass}
-            onPress={this.goToResetPassword.bind(this)}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.forgotPassText}>Forgot your password?</Text>
-          </TouchableOpacity>
+            autoFocus={true}
+            placeholderTextColor="white"
+            value={usernameOrEmail}
+            onChange={updateUsernameOrEmail}
+            onChangeText={(value) =>
+              updateUsernameOrEmail({ target: { value: value } })
+            }
+          />
         </View>
-      </ImageBackground>
-    );
-  }
-
-  renderButtonMessage(loading: any) {
-    if (loading) {
-      return (
-        <ActivityIndicator
-          size="small"
-          style={styles.loadingIndicator}
-          color={Colors.white}
-        />
-      );
-    }
-    return <Text style={styles.joinTextBtn}>LOG IN</Text>;
-  }
-}
-
-const formPadding = 20;
+        <View style={styles.field}>
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="Password"
+            autoCorrect={false}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            secureTextEntry={true}
+            placeholderTextColor="white"
+            value={password}
+            onChange={updatePassword}
+            onChangeText={(value) =>
+              updatePassword({ target: { value: value } })
+            }
+          />
+        </View>
+        <View style={styles.errorContainer}>
+          <Text
+            style={[
+              styles.error,
+              { opacity: signInValidationStore.error ? 1 : 0 },
+            ]}
+          >
+            {signInValidationStore.error}
+          </Text>
+        </View>
+        <TouchableHighlight
+          style={[
+            styles.joinBtn,
+            { opacity: signInValidationStore.validForm ? 1 : 0.5 },
+          ]}
+          onPress={signIn}
+          underlayColor={Colors.underlayColor}
+          disabled={!signInValidationStore.validForm}
+        >
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              style={styles.loadingIndicator}
+              color={Colors.white}
+            />
+          ) : (
+            <Text style={styles.joinTextBtn}>Log In</Text>
+          )}
+        </TouchableHighlight>
+        <TouchableOpacity
+          style={styles.forgotPass}
+          onPress={() => navigate('ResetPassword')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.forgotPassText}>Forgot your password?</Text>
+        </TouchableOpacity>
+      </View>
+    </BackgroundImage>
+  );
+});
 
 let styles = StyleSheet.create({
-  blur: {
-    height: Layout.window.height,
-  },
-  bg: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: Layout.window.width,
-    height: Layout.window.height,
-  },
-  field: {
-    maxHeight: 50,
-    flex: 1,
-    borderBottomColor: Colors.dividerBackground,
-    borderBottomWidth: 1,
-    justifyContent: 'flex-end',
+  background: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   inputContainer: {
-    marginLeft: formPadding,
-    marginRight: formPadding,
-    marginTop: 40,
-    flex: 1,
+    alignSelf: 'center',
+    marginTop: 0,
+    maxWidth: 380,
+    width: '100%',
   },
-  placeholderIcon: {
-    position: 'absolute',
-    bottom: 8,
-    left: 0,
-    backgroundColor: Colors.transparent,
+  field: {
+    height: 50,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: Colors.darkBlueFieldTransparent,
+    borderRadius: 10,
+    marginVertical: 10,
   },
   input: {
     backgroundColor: Colors.transparent,
     color: Colors.white,
     fontSize: 14,
-    paddingLeft: 36,
-    bottom: 8,
+    padding: 10,
+    width: '100%',
   },
   joinBtn: {
     height: 48,
     backgroundColor: Colors.lightBlueBtn,
-    borderRadius: 3,
-    marginTop: 40,
+    borderRadius: 24,
   },
   joinTextBtn: {
     textAlign: 'center',
@@ -224,16 +175,13 @@ let styles = StyleSheet.create({
     fontSize: 16,
   },
   errorContainer: {
-    maxHeight: 40,
-    backgroundColor: Colors.errorBackground,
-    paddingLeft: formPadding,
-    paddingRight: formPadding,
-    flex: 1,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   error: {
-    color: Colors.white,
+    color: Colors.errorBackground,
   },
   forgotPass: {
     backgroundColor: 'transparent',

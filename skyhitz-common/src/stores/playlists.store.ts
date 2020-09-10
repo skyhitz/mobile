@@ -109,6 +109,8 @@ export class PlaylistsStore {
   }
 
   async uploadImage(image: any) {
+    if (!this.sessionStore.user) return;
+
     this.loadingImage = true;
     let data = new FormData();
     data.append('file', `${preBase64String}${image.base64}`);

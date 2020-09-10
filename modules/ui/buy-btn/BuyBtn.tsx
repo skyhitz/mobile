@@ -1,48 +1,41 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { Stores } from 'skyhitz-common';
-import { navigate } from 'app/modules/navigation/Navigator';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 
 const Placeholder = () => <View style={styles.placeholder} />;
 
-@inject((stores: Stores) => ({
-  buyEntry: stores.paymentsStore.buyEntry.bind(stores.paymentsStore),
-  entry: stores.playerStore.entry,
-  user: stores.sessionStore.user,
-  credits: stores.paymentsStore.credits,
-}))
-export default class BuyBtn extends React.Component<any, any> {
-  showBuyOptionsModal() {
+export default observer(() => {
+  const { playerStore } = Stores();
+  const { navigate } = useNavigation();
+  const showBuyOptionsModal = () => {
     navigate('BuyOptionsModal', {
-      entry: this.props.entry,
+      entry: playerStore.entry,
     });
+  };
+  if (
+    !playerStore.entry ||
+    !playerStore.entry.forSale ||
+    !playerStore.entry.price
+  ) {
+    return <Placeholder />;
   }
-  render() {
-    if (
-      !this.props.entry ||
-      this.props.entry.userUsername === this.props.user.username ||
-      !this.props.entry.forSale ||
-      !this.props.entry.price
-    ) {
-      return <Placeholder />;
-    }
-    return (
-      <View style={styles.wrap}>
-        <TouchableOpacity
-          style={styles.controlTouch}
-          onPress={() => this.showBuyOptionsModal()}
-        >
-          <Text style={styles.creditsText}>
-            $ {this.props.entry.price} - Buy Now
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.wrap}>
+      <TouchableOpacity
+        style={styles.controlTouch}
+        onPress={showBuyOptionsModal}
+      >
+        <Text style={styles.creditsText}>
+          ${playerStore.entry.price} - Buy Now
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+});
 
 var styles = StyleSheet.create({
   wrap: {
@@ -55,23 +48,26 @@ var styles = StyleSheet.create({
     borderRadius: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 8,
+    marginTop: 10,
     height: 40,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   controlTouch: {
     backgroundColor: Colors.brandBlue,
     borderRadius: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 8,
+    marginVertical: 30,
     height: 40,
-    marginBottom: 20,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   creditsText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 14,
+    lineHeight: 14,
     fontWeight: 'bold',
   },
   priceTag: {

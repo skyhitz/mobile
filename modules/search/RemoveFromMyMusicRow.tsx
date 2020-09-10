@@ -4,7 +4,6 @@ import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { goBack } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -21,7 +20,7 @@ export default class RemoveFromMyMusicRow extends React.Component<any, any> {
       this.props.entry.cloudinaryPublicId
     );
     await this.props.refreshUserEntries();
-    goBack();
+    this.props.navigation.goBack();
   }
   render() {
     if (!this.props.entry) {
@@ -49,7 +48,7 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     maxHeight: 50,
-    width: Layout.window.width - 60,
+    width: '100%',
   },
   text: {
     fontSize: 14,

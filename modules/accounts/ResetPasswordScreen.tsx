@@ -1,180 +1,137 @@
-import React from 'react';
-import { HeaderBackButton } from 'react-navigation-stack';
-import { goBack } from 'app/modules/navigation/Navigator';
-import Layout from 'app/constants/Layout';
+import React, { useState } from 'react';
 import Colors from 'app/constants/Colors';
-import { AuthBackground2 } from 'app/assets/images/Images';
-import { inject } from 'mobx-react';
-import { MaterialIcons } from '@expo/vector-icons';
+import { observer } from 'mobx-react';
 import {
   StyleSheet,
   View,
   Text,
-  ImageBackground,
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
+import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-@inject((stores: Stores) => ({
-  validateEmail: stores.resetPasswordValidationStore.validateEmail.bind(
-    stores.resetPasswordValidationStore
-  ),
-  emailValid: stores.resetPasswordValidationStore.emailValid,
-  setBackendError: stores.resetPasswordValidationStore.setBackendError.bind(
-    stores.resetPasswordValidationStore
-  ),
-  validForm: stores.resetPasswordValidationStore.validForm,
-  error: stores.resetPasswordValidationStore.error,
-  sendResetEmail: stores.sessionStore.sendResetEmail.bind(stores.sessionStore),
-}))
-export default class ResetPasswordScreen extends React.Component<any, any> {
-  static navigationOptions = () => ({
-    title: 'Forgot Password',
-    headerTitleStyle: { color: Colors.white },
-    headerStyle: {
-      backgroundColor: Colors.headerBackground,
-      borderBottomWidth: 0,
-    },
-    headerLeft: () => (
-      <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
-    ),
-  });
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      email: '',
-      loading: false,
-      buttonMessage: 'SEND RESET EMAIL',
-      bottomCopy: "We'll send you an email to reset your password.",
-      buttonColor: Colors.lightBlueBtn,
-    };
-  }
-  async sendResetEmail() {
-    this.setState({ loading: true });
+export default observer((props) => {
+  const { resetPasswordValidationStore, sessionStore } = Stores();
+  const [email, setEmail] = useState('');
+  const [buttonMessage, setButtonMessage] = useState('Send reset email');
+  const [bottomCopy, setBottomCopy] = useState(
+    "We'll send you an email to reset your password."
+  );
+  const [buttonColor, setButtonColor] = useState(Colors.lightBlueBtn);
+  const [loading, setLoading] = useState(false);
+
+  const updateEmail = ({ target }: any) => {
+    setEmail(target.value);
+    resetPasswordValidationStore.validateEmail(target.value);
+  };
+
+  const sendResetEmail = async () => {
+    setLoading(true);
     try {
-      await this.props.sendResetEmail(this.state.email);
-      this.setState({
-        buttonMessage: 'RESET EMAIL SENT',
-        bottomCopy:
-          'Check your email. We just sent you a link to reset your password.',
-        buttonColor: Colors.valid,
-      });
-    } catch (e) {
-      this.props.setBackendError(e);
-    }
-    this.setState({ loading: false });
-  }
-  updateEmail(text: any) {
-    this.setState({ email: text });
-    this.props.validateEmail(this.state.email);
-  }
-  render() {
-    return (
-      <ImageBackground style={styles.bg} source={AuthBackground2}>
-        <View
-          style={[styles.errorContainer, { opacity: this.props.error ? 1 : 0 }]}
-        >
-          <Text style={styles.error}>{this.props.error}</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <View style={styles.field}>
-            <MaterialIcons
-              name="mail-outline"
-              size={22}
-              color={Colors.white}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Email address"
-              autoCorrect={false}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.state.email}
-              onChangeText={this.updateEmail.bind(this)}
-              onBlur={() => this.props.validateEmail(this.state.email)}
-              maxLength={34}
-            />
-          </View>
-          <TouchableHighlight
-            style={[
-              styles.joinBtn,
-              { opacity: this.props.validForm ? 1 : 0.5 },
-              { backgroundColor: this.state.buttonColor },
-            ]}
-            onPress={this.sendResetEmail.bind(this)}
-            underlayColor={Colors.underlayColor}
-            disabled={!this.props.validForm}
-          >
-            {this.renderButtonMessage(this.state.loading)}
-          </TouchableHighlight>
-          <Text style={styles.forgotPassText}>{this.state.bottomCopy}</Text>
-        </View>
-      </ImageBackground>
-    );
-  }
-
-  renderButtonMessage(loading: any) {
-    if (loading) {
-      return (
-        <ActivityIndicator
-          size="small"
-          style={styles.loadingIndicator}
-          color={Colors.white}
-        />
+      await sessionStore.sendResetEmail(email);
+      setButtonMessage('Reset email sent');
+      setBottomCopy(
+        'Check your email. We just sent you a link to reset your password.'
       );
+      setButtonColor(Colors.valid);
+    } catch (e) {
+      resetPasswordValidationStore.setBackendError(e);
     }
-    return <Text style={styles.joinTextBtn}>{this.state.buttonMessage}</Text>;
-  }
-}
+    setLoading(false);
+  };
 
-const formPadding = 20;
+  return (
+    <BackgroundImage authBackground={true}>
+      <View style={styles.inputContainer}>
+        <View style={styles.field}>
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="Email address"
+            autoCorrect={false}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            placeholderTextColor="white"
+            value={email}
+            onChange={updateEmail}
+            onChangeText={(value) => updateEmail({ target: { value: value } })}
+            maxLength={34}
+          />
+        </View>
+        <View
+          style={[
+            styles.errorContainer,
+            { opacity: resetPasswordValidationStore.error ? 1 : 0 },
+          ]}
+        >
+          <Text style={styles.error}>{resetPasswordValidationStore.error}</Text>
+        </View>
+        <TouchableHighlight
+          style={[
+            styles.joinBtn,
+            { opacity: resetPasswordValidationStore.validForm ? 1 : 0.5 },
+            { backgroundColor: buttonColor },
+          ]}
+          onPress={sendResetEmail}
+          underlayColor={Colors.underlayColor}
+          disabled={!resetPasswordValidationStore.validForm}
+        >
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              style={styles.loadingIndicator}
+              color={Colors.white}
+            />
+          ) : (
+            <Text style={styles.joinTextBtn}>{buttonMessage}</Text>
+          )}
+        </TouchableHighlight>
+        <Text style={styles.forgotPassText}>{bottomCopy}</Text>
+      </View>
+    </BackgroundImage>
+  );
+});
 
 let styles = StyleSheet.create({
-  blur: {
-    height: Layout.window.height,
-  },
-  bg: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: Layout.window.width,
-    height: Layout.window.height,
-  },
-  field: {
-    maxHeight: 50,
-    flex: 1,
-    borderBottomColor: Colors.dividerBackground,
-    borderBottomWidth: 1,
-    justifyContent: 'flex-end',
+  background: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   inputContainer: {
-    marginLeft: formPadding,
-    marginRight: formPadding,
-    marginTop: 40,
-    flex: 1,
+    alignSelf: 'center',
+    marginTop: 0,
+    maxWidth: 380,
+    width: '100%',
   },
-  placeholderIcon: {
-    position: 'absolute',
-    bottom: 8,
-    left: 0,
-    backgroundColor: Colors.transparent,
+  field: {
+    height: 50,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: Colors.darkBlueFieldTransparent,
+    borderRadius: 10,
+    marginVertical: 10,
   },
   input: {
     backgroundColor: Colors.transparent,
     color: Colors.white,
     fontSize: 14,
-    paddingLeft: 36,
-    bottom: 8,
+    padding: 10,
+    width: '100%',
   },
   joinBtn: {
     height: 48,
-    borderRadius: 3,
-    marginTop: 40,
+    backgroundColor: Colors.lightBlueBtn,
+    borderRadius: 24,
   },
   joinTextBtn: {
     textAlign: 'center',
@@ -184,19 +141,13 @@ let styles = StyleSheet.create({
     fontSize: 16,
   },
   errorContainer: {
-    maxHeight: 40,
-    backgroundColor: Colors.errorBackground,
-    paddingLeft: formPadding,
-    paddingRight: formPadding,
-    flex: 1,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   error: {
-    color: Colors.white,
-  },
-  forgotPass: {
-    backgroundColor: 'transparent',
+    color: Colors.errorBackground,
   },
   forgotPassText: {
     textAlign: 'center',

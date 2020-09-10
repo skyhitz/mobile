@@ -26,6 +26,14 @@ export class PaymentsStore {
     return true;
   }
 
+  async buyCredits(cardToken: string, amount: number) {
+    this.submittingSubscription = true;
+    await paymentsBackend.buyCredits(cardToken, amount);
+    this.submittingSubscription = false;
+    this.subscribed = true;
+    return true;
+  }
+
   async refreshSubscription() {
     let { subscribed, credits } = await paymentsBackend.refreshSubscription();
     this.subscribed = subscribed;

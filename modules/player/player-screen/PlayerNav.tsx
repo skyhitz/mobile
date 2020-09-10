@@ -1,24 +1,18 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { inject } from 'mobx-react';
+import {  observer } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-import Layout from 'app/constants/Layout';
-import * as stores from 'app/skyhitz-common';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
+import { RectButton } from 'react-native-gesture-handler';
 
-const PlayerNav = inject((stores: Stores) => ({
-  hidePlayer: stores.playerStore.hidePlayer.bind(stores.playerStore),
-  entry: stores.playerStore.entry,
-}))(({ hidePlayer, entry }: any) => {
-  if (!entry) {
-    return null;
-  }
+export default observer(({onPress}) => {
+  let { playerStore } = Stores();
+
   return (
     <View style={styles.playerNav}>
-      <TouchableOpacity
-        onPress={() => hidePlayer()}
+      <RectButton
+       {...{ onPress }}
         style={styles.arrowDownTouchableArea}
       >
         <EvilIcons
@@ -27,19 +21,18 @@ const PlayerNav = inject((stores: Stores) => ({
           color={Colors.white}
           style={styles.arrowDown}
         />
-      </TouchableOpacity>
-      <Text style={styles.header}>{entry.userUsername}</Text>
+      </RectButton>
+      <Text style={styles.header}>{playerStore.entry?.artist}</Text>
       <View style={styles.rightOptions} />
-    </View>
+    </View >
   );
 });
 
-export default PlayerNav;
 
 let styles = StyleSheet.create({
   playerNav: {
     height: 44,
-    width: Layout.window.width,
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

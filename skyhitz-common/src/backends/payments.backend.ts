@@ -14,6 +14,18 @@ export class PaymentsBackend {
       .then((data: any) => data.data)
       .then(({ subscribeUser }) => subscribeUser);
   }
+  async buyCredits(cardToken: string, amount: number) {
+    return client
+      .mutate({
+        mutation: gql`
+    mutation {
+      buyCredits(cardToken: "${cardToken}", amount: ${amount})
+    }
+    `,
+      })
+      .then((data: any) => data.data)
+      .then(({ buyCredits }) => buyCredits);
+  }
   async withdrawToExternalWallet(address: string, amount: number) {
     return client
       .mutate({

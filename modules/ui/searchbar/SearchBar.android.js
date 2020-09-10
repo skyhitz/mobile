@@ -6,14 +6,13 @@ import {
   View,
   ActivityIndicator,
   Text,
+  Platform,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
 import Input from 'app/modules/ui/Input';
 import Colors from 'app/constants/Colors';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const ANDROID_GRAY = Colors.searchTextColor;
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
 class SearchBar extends Component {
   focus = () => {
@@ -44,7 +43,7 @@ class SearchBar extends Component {
     this.setState({ hasFocus: false });
   };
 
-  onChangeText = text => {
+  onChangeText = (text) => {
     this.props.onChangeText(text);
     this.setState({ isEmpty: text === '' });
   };
@@ -72,11 +71,12 @@ class SearchBar extends Component {
     } = this.props;
     const { hasFocus, isEmpty } = this.state;
     const { style: loadingStyle, ...otherLoadingProps } = loadingProps;
+
     const searchIcon = (
-      <MaterialIcon
-        size={25}
-        color={ANDROID_GRAY}
-        name={'magnify'}
+      <Ionicon
+        size={20}
+        name={'ios-search'}
+        color={Colors.searchTextColor}
         onPress={hasFocus ? this.cancel : null}
       />
     );
@@ -87,8 +87,11 @@ class SearchBar extends Component {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onChangeText={this.onChangeText}
-          ref={input => (this.input = input)}
-          inputStyle={[styles.input]}
+          ref={(input) => (this.input = input)}
+          inputStyle={[
+            styles.input,
+            Platform.OS === 'web' ? { outlineWidth: 0 } : {},
+          ]}
           containerStyle={[styles.inputContainer, containerStyle]}
           leftIcon={noIcon ? undefined : leftIcon ? leftIcon : searchIcon}
           leftIconContainerStyle={[
@@ -110,7 +113,7 @@ class SearchBar extends Component {
                 <MaterialIcon
                   name={'close'}
                   size={25}
-                  color={ANDROID_GRAY}
+                  color={Colors.searchTextColor}
                   onPress={() => this.clear()}
                 />
               )}
@@ -139,24 +142,25 @@ SearchBar.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
-    marginTop: 6,
-    marginBottom: 8,
-    marginLeft: 4,
-    marginRight: 4,
-    height: 40,
+    width: '100%',
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 14,
+    paddingRight: 14,
+    backgroundColor: Colors.darkBlue,
   },
   input: {
     flex: 1,
+    width: '100%',
     color: Colors.searchTextColor,
+    fontSize: 14,
   },
   inputContainer: {
     backgroundColor: Colors.white,
     borderBottomWidth: 0,
-    marginLeft: 10,
-    marginRight: 10,
-    width: SCREEN_WIDTH - 30,
+    width: '100%',
     borderRadius: 6,
+    height: 30,
   },
   rightIconContainerStyle: {
     marginRight: 8,

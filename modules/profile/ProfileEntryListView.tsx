@@ -15,7 +15,17 @@ const ProfileEntryListView = inject((stores: Stores) => ({
 }))(({ loadAndPlay, entries, loading }: any) => (
   <ScrollView style={{ backgroundColor: Colors.listItemBackground, flex: 1 }}>
     {SearchingLoader(loading)}
-    {entries.map((entry: any) => EntryRow(loadAndPlay, entry))}
+    {entries.map((entry: any) => (
+      <EntryRow
+        key={entry.id}
+        play={loadAndPlay}
+        entry={entry}
+        addRecentEntrySearch={null}
+        disablePlaylistMode={null}
+        options={null}
+        previousScreen={null}
+      />
+    ))}
     <BottomPlaceholder />
   </ScrollView>
 ));

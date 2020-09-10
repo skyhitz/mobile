@@ -55,31 +55,39 @@ export class LikesStore {
 
   public refreshEntryLikes(id: string) {
     this.loadingEntryLikes = true;
-    likesBackend.entryLikes(id).then(payload => {
-      this.entryLikesCount = payload.count;
-      let users = payload.users.map(
-        (userPayload: any) => new User(userPayload)
-      );
-      this.entryLikes = List(users);
+    likesBackend.entryLikes(id).then((payload) => {
+      if (payload) {
+        this.entryLikesCount = payload.count;
+        let users = payload.users.map(
+          (userPayload: any) => new User(userPayload)
+        );
+        this.entryLikes = List(users);
+      }
+
       this.loadingEntryLikes = false;
     });
   }
 
   public refreshLikes() {
     this.loading = true;
-    likesBackend.userLikes().then(userLikes => {
-      let ids = userLikes.map((like: any) => like.id);
-      let entries = userLikes.map((like: any) => new Entry(like));
-      this.ids = Set(ids);
-      this.userLikes = List(entries);
-      this.userLikesCount = this.userLikes.size;
+    likesBackend.userLikes().then((userLikes) => {
+      if (!userLikes) {
+        return;
+      } else {
+        let ids = userLikes.map((like: any) => like.id);
+        let entries = userLikes.map((like: any) => new Entry(like));
+        this.ids = Set(ids);
+        this.userLikes = List(entries);
+        this.userLikesCount = this.userLikes.size;
+      }
+
       this.loading = false;
     });
   }
 
   async unlike(entry: Entry) {
     this.ids = this.ids.delete(entry.id);
-    let index = this.userLikes.findIndex(like => {
+    let index = this.userLikes.findIndex((like) => {
       if (like) {
         return like.id === entry.id;
       }
@@ -93,7 +101,7 @@ export class LikesStore {
     }
     this.userLikesCount = this.userLikes.size;
 
-    let userIndex = this.entryLikes.findIndex(like => {
+    let userIndex = this.entryLikes.findIndex((like) => {
       if (like) {
         return like.id === this.user.id;
       }
@@ -108,7 +116,7 @@ export class LikesStore {
     let liked = await likesBackend.like(entry.id);
     if (!liked) {
       this.ids = this.ids.remove(entry.id);
-      let index = this.userLikes.findIndex(like => {
+      let index = this.userLikes.findIndex((like) => {
         if (like) {
           return like.id === entry.id;
         }
@@ -125,7 +133,7 @@ export class LikesStore {
     if (this.isEntryLiked(entry)) {
       return this.unlike(entry);
     }
-    this.like(entry);
+    return this.like(entry);
   }
 
   get isLiked() {

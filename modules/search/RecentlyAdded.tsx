@@ -1,45 +1,41 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { inject } from 'mobx-react';
+import { Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { observer } from 'mobx-react';
 import EntryRow from 'app/modules/ui/EntryRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
 
-@inject((stores: Stores) => ({
-  loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
-  getRecentlyAdded: stores.entriesSearchStore.getRecentlyAdded.bind(
-    stores.entriesSearchStore
-  ),
-  recentlyAdded: stores.entriesSearchStore.recentlyAdded,
-  loadingRecentlyAdded: stores.entriesSearchStore.loadingRecentlyAdded,
-  setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),
-}))
-export default class RecentlyAdded extends React.Component<any, any> {
-  setRecentlyAdded() {
-    this.props.setPlaylistMode(this.props.recentlyAdded);
-  }
-  componentDidMount() {
-    this.props.getRecentlyAdded();
-  }
-  render() {
-    if (!this.props.loadingRecentlyAdded && !this.props.recentlyAdded.size) {
-      return null;
-    }
+export default observer((props) => {
+  const { playerStore, entriesSearchStore } = Stores();
+  const renderItem = (item) => {
     return (
-      <View>
-        <Text style={styles.recentText}>Recently Added</Text>
-        {SearchingLoader(this.props.loadingRecentSearches)}
-        {this.props.recentlyAdded.map((entry: any) =>
-          EntryRow(this.props.loadAndPlay, entry, null, null, () => {
-            this.setRecentlyAdded();
-          })
-        )}
-      </View>
+      <EntryRow
+        key={item.id}
+        play={() => playerStore.loadAndPlay(item)}
+        entry={item}
+        addRecentEntrySearch={null}
+        options={null}
+        disablePlaylistMode={() =>
+          playerStore.setPlaylistMode(entriesSearchStore.recentlyAdded)
+        }
+        previousScreen={null}
+      />
     );
-  }
-}
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.recentText}>Recently Added</Text>
+      {SearchingLoader(entriesSearchStore.loadingRecentSearches)}
+      <ScrollView style={{ flex: 1 }}>
+        {entriesSearchStore.recentlyAdded.map((entry: any) => {
+          return renderItem(entry);
+        })}
+      </ScrollView>
+    </SafeAreaView>
+  );
+});
 
 const styles = StyleSheet.create({
   recentText: {
@@ -48,5 +44,9 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 12,
     paddingLeft: 20,
+  },
+  container: {
+    backgroundColor: Colors.darkBlue,
+    flex: 1,
   },
 });

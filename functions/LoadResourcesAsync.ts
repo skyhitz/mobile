@@ -4,6 +4,7 @@ import {
   FontAwesome,
   EvilIcons,
   MaterialIcons,
+  Feather,
 } from '@expo/vector-icons';
 
 enum FontDisplay {
@@ -19,7 +20,7 @@ export async function loadResourcesAsync() {
     Font.loadAsync({
       'Raleway-Light': {
         uri: require('app/assets/fonts/Raleway-Light.ttf'),
-        fontDisplay: FontDisplay.SWAP,
+        display: FontDisplay.SWAP,
         name: 'Raleway-Light',
       },
     }),
@@ -27,5 +28,6 @@ export async function loadResourcesAsync() {
     Font.loadAsync(FontAwesome.font),
     Font.loadAsync(MaterialIcons.font),
     Font.loadAsync(EvilIcons.font),
+    Font.loadAsync(Feather.font),
   ]);
 }

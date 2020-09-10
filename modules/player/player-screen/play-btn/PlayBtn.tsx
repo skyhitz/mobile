@@ -1,57 +1,61 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { inject } from 'mobx-react';
-import { Ionicons } from '@expo/vector-icons';
+import { observer } from 'mobx-react';
+import { Feather } from '@expo/vector-icons';
 import {
   ReplayIcon,
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
-import Colors from 'app/constants/Colors';
-import * as stores from 'app/skyhitz-common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
 
-const PlayBtn = inject((stores: Stores) => ({
-  togglePlay: stores.playerStore.togglePlay.bind(stores.playerStore),
-  replay: stores.playerStore.replay.bind(stores.playerStore),
-  playbackState: stores.playerStore.playbackState,
-}))(({ togglePlay, replay, playbackState }: any) => {
-  if (playbackState === 'PAUSED') {
+export default observer(() => {
+  let { playerStore } = Stores();
+
+  if (playerStore.playbackState === 'PAUSED') {
     return (
       <TouchableOpacity
         style={styles.controlTouch}
-        onPress={() => togglePlay()}
+        onPress={() => playerStore.togglePlay()}
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <Ionicons
-              name={'ios-play'}
-              size={30}
-              color={Colors.white}
-              style={styles.playBtn}
+            <Feather
+              style={{ paddingLeft: 6 }}
+              name="play"
+              size={24}
+              color="white"
             />
           </View>
         </View>
       </TouchableOpacity>
     );
   }
-  if (playbackState === 'PLAYING') {
+  if (playerStore.playbackState === 'PLAYING') {
     return (
       <TouchableOpacity
         style={styles.controlTouch}
-        onPress={() => togglePlay()}
+        onPress={() => playerStore.togglePlay()}
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <Ionicons name={'ios-pause'} size={30} color={Colors.white} />
+            <Feather
+              style={{ paddingLeft: 1, textAlign: 'center' }}
+              name="pause"
+              size={24}
+              color="white"
+            />
           </View>
         </View>
       </TouchableOpacity>
     );
   }
-  if (playbackState === 'ENDED') {
+  if (playerStore.playbackState === 'ENDED') {
     return (
-      <TouchableOpacity style={styles.controlTouch} onPress={() => replay()}>
+      <TouchableOpacity
+        style={styles.controlTouch}
+        onPress={() => playerStore.replay()}
+      >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
             <ReplayIcon />
@@ -69,38 +73,29 @@ const PlayBtn = inject((stores: Stores) => ({
   );
 });
 
-export default PlayBtn;
-
 var styles = StyleSheet.create({
   controlTouch: {
     alignSelf: 'center',
   },
-  playBtn: {
-    paddingLeft: 6,
-  },
   containerWrap: {
-    width: 130,
-    height: 113,
+    width: 104,
+    height: 90.4,
     alignItems: 'center',
     justifyContent: 'center',
   },
   playBtnCircle: {
-    width: 87,
-    height: 87,
-    padding: 10,
-    borderWidth: 1.5,
+    width: 65,
+    height: 65,
+    borderWidth: 1,
     borderColor: 'white',
     borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   loadingSpinner: {
-    width: 87,
-    height: 87,
-    paddingRight: 10,
-    paddingLeft: 13,
-    paddingTop: 12,
-    paddingBottom: 10,
+    width: 86,
+    height: 86,
     borderWidth: 1.5,
     borderColor: 'white',
     borderRadius: 60,

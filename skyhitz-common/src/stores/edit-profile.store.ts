@@ -39,6 +39,7 @@ export class EditProfileStore {
   });
 
   async uploadProfilePhoto(image: any) {
+    if (!this.sessionStore.user) return;
     this.loadingAvatar = true;
     let data = new FormData();
     data.append('file', `${preBase64String}${image.base64}`);

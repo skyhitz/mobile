@@ -64,6 +64,11 @@ class HeadComponent extends React.Component {
           type="image/x-icon"
         />
         <link
+          href="https://js.stripe.com"
+          rel="preconnect"
+          crossOrigin="true"
+        />
+        <link
           href="https://connect.facebook.net"
           rel="preconnect"
           crossOrigin="true"

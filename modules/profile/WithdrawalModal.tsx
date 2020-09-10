@@ -10,7 +10,6 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { goBack } from 'app/modules/navigation/Navigator';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
@@ -55,13 +54,16 @@ export default class WithdrawalModal extends React.Component<any, any> {
       this.state.withdrawAddress,
       this.state.creditsToWithdraw
     );
-    goBack();
+    this.props.navigation.goBack();
   }
   render() {
     return (
       <View style={styles.modal}>
         <View style={styles.modalWrap}>
-          <TouchableOpacity style={styles.closeBtn} onPress={() => goBack()}>
+          <TouchableOpacity
+            style={styles.closeBtn}
+            onPress={() => this.props.navigation.goBack()}
+          >
             <MaterialIcons name="close" size={28} color={Colors.white} />
           </TouchableOpacity>
           <View>

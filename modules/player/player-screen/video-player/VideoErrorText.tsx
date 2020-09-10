@@ -9,7 +9,7 @@ import { PLAYBACK_STATES } from 'app/modules/player/player-screen/video-player/U
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
-const VideoErrorText = inject((stores:Stores) => ({
+const VideoErrorText = inject((stores: Stores) => ({
   playbackState: stores.playerStore.playbackState,
   error: stores.playerStore.error,
 }))(({ playbackState, error }: any) => {
@@ -17,8 +17,7 @@ const VideoErrorText = inject((stores:Stores) => ({
     <View
       style={{
         position: 'absolute',
-        top: videoHeight / 2,
-        width: videoWidth - 40,
+        width: videoWidth,
         marginRight: 20,
         marginLeft: 20,
       }}

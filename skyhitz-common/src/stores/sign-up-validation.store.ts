@@ -2,13 +2,13 @@ import { observable, computed } from 'mobx';
 
 export class SignUpValidationStore {
   @observable usernameError: string = '';
-  @observable usernameValid: boolean = true;
+  @observable usernameValid;
   @observable displayNameError: string = '';
-  @observable displayNameValid: boolean = true;
+  @observable displayNameValid;
   @observable emailError: string = '';
-  @observable emailValid: boolean = true;
+  @observable emailValid;
   @observable passwordError: string = '';
-  @observable passwordValid: boolean = true;
+  @observable passwordValid;
   @observable backendError: string = '';
 
   constructor() {}

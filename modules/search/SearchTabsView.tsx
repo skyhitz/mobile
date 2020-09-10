@@ -1,14 +1,17 @@
 import React from 'react';
-import { Text } from 'react-native';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { MaterialTopTabBar } from 'react-navigation-tabs';
+import { Text, View } from 'react-native';
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBar,
+} from '@react-navigation/material-top-tabs';
 import SearchEntryView from 'app/modules/search/SearchEntryView';
 import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
+import SearchHeader from './SearchHeader';
 
-const labelStyle = (props: { focused: any; tintColor: any }) => ({
+const labelStyle = (_) => ({
   fontSize: 14,
-  color: props.focused ? props.tintColor : Colors.defaultTextLight,
+  color: Colors.defaultTextLight,
   textAlign: 'center',
   alignSelf: 'center',
   paddingTop: 0,
@@ -21,42 +24,48 @@ const indicatorStyle = {
   backgroundColor: 'transparent',
 };
 
-const TabsView = createMaterialTopTabNavigator(
-  {
-    Music: {
-      screen: SearchEntryView,
-      navigationOptions: {
-        tabBarLabel: (props: any) => (
-          <Text style={labelStyle(props) as any}> {'Music'} </Text>
-        ),
-      },
-      path: `music`,
-    },
-    Influencers: {
-      screen: SearchUserView,
-      navigationOptions: {
-        tabBarLabel: (props: any) => (
-          <Text style={labelStyle(props) as any}> {'Beatmakers'} </Text>
-        ),
-      },
-      path: `beatmakers`,
-    },
-  },
-  {
-    tabBarComponent: props => (
-      <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
-    ),
-    tabBarPosition: 'top',
-    swipeEnabled: true,
-    tabBarOptions: {
-      activeTintColor: Colors.white,
-      showIcon: false,
-      style: {
-        height: 38,
-        backgroundColor: Colors.tabsBackground,
-      },
-    },
-  }
-);
+const Tab = createMaterialTopTabNavigator();
 
-export default TabsView;
+export default () => {
+  return (
+    <Tab.Navigator
+      swipeEnabled={true}
+      tabBarPosition={'top'}
+      tabBarOptions={{
+        activeTintColor: Colors.white,
+        showIcon: false,
+        style: {
+          height: 38,
+          backgroundColor: Colors.tabsBackground,
+        },
+      }}
+      tabBar={(props) => (
+        <View
+          style={{ paddingTop: 20, backgroundColor: Colors.tabsBackground }}
+        >
+          <SearchHeader />
+          <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
+        </View>
+      )}
+    >
+      <Tab.Screen
+        name="Beats"
+        component={SearchEntryView}
+        options={{
+          tabBarLabel: (props: any) => (
+            <Text style={labelStyle(props) as any}> {'Beats'} </Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Beatmakers"
+        component={SearchUserView}
+        options={{
+          tabBarLabel: (props: any) => (
+            <Text style={labelStyle(props) as any}> {'Beatmakers'} </Text>
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};

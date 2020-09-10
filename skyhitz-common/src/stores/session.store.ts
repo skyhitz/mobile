@@ -3,10 +3,10 @@ import { User } from '../models';
 import { userBackend } from '../backends/user.backend';
 import { forceSignOut } from '../backends/apollo-client.backend';
 import { SignUpForm, SignInForm } from '../types';
-import LocalStorage from '../async-storage';
+import { AsyncStorage } from 'react-native';
 
 export class SessionStore {
-  public session: { user: any } & IObservableObject = observable({
+  public session: { user: User | null } & IObservableObject = observable({
     user: null,
   });
   @computed
@@ -29,7 +29,7 @@ export class SessionStore {
 
   async setUser(value: any) {
     value = JSON.stringify(value);
-    if (value) return LocalStorage.setItem('userData', value);
+    if (value) return AsyncStorage.setItem('userData', value);
     else console.info('not set, stringify failed:', 'userData', value);
   }
 
@@ -41,17 +41,16 @@ export class SessionStore {
 
   async signOut() {
     this.session.user = null;
-    return await LocalStorage.removeItem('userData');
+    return await AsyncStorage.removeItem('userData');
   }
 
   async loadSession() {
-    await this.loadFromStorage();
-    return await this.refreshUser();
+    return await this.loadFromStorage();
   }
 
   async loadFromStorage() {
     try {
-      let userPayload = await LocalStorage.getItem('userData');
+      let userPayload = await AsyncStorage.getItem('userData');
       if (userPayload) {
         this.session.user = new User(JSON.parse(userPayload));
         return this.session.user;
@@ -90,32 +89,5 @@ export class SessionStore {
     let userPayload = await userBackend.updatePassword(token, password);
     await this.setUser(userPayload);
     return (this.session.user = new User(userPayload));
-  }
-
-  async signInWithFacebook(token: string) {
-    let user = await userBackend.signInWithFacebook(token);
-    if (!user.id) {
-      return {
-        username: user.username,
-        email: user.email,
-      };
-    }
-    await this.setUser(user);
-    return (this.session.user = new User(user));
-  }
-
-  async confirmUsernameAndEmail(
-    username: string,
-    email: string,
-    token: string
-  ) {
-    let userPayload = await userBackend.confirmUsernameAndEmail(
-      username,
-      email,
-      token
-    );
-    await this.setUser(userPayload);
-    this.session.user = new User(userPayload);
-    return this.session.user;
   }
 }

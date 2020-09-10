@@ -29,5 +29,9 @@ var styles = StyleSheet.create({
     marginTop: 15,
     paddingRight: 20,
     paddingLeft: 20,
+    maxWidth: 400,
+    maxHeight: 40,
+    width: '100%',
+    alignSelf: 'center',
   },
 });

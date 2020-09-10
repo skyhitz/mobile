@@ -8,6 +8,8 @@ import {
   ActivityIndicator,
   TextInput,
   Switch,
+  Platform,
+  Alert,
 } from 'react-native';
 import { inject } from 'mobx-react';
 import {
@@ -19,8 +21,8 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
-import { goBack } from 'app/modules/navigation/Navigator';
 import * as stores from 'app/skyhitz-common';
+
 type Stores = typeof stores;
 
 export const LoadingIndicator = () => {
@@ -56,7 +58,9 @@ class CircleWrap extends React.Component<any, any> {
 @inject((stores: Stores) => ({
   uploadVideo: stores.entryStore.uploadVideo.bind(stores.entryStore),
   uploadingError: stores.entryStore.uploadingError,
-  clearUploadingError: stores.entryStore.clearUploadingError.bind(stores.entryStore),
+  clearUploadingError: stores.entryStore.clearUploadingError.bind(
+    stores.entryStore
+  ),
   uploadArtwork: stores.entryStore.uploadArtwork.bind(stores.entryStore),
   updateLoadingVideo: stores.entryStore.updateLoadingVideo.bind(
     stores.entryStore.updateLoadingVideo
@@ -87,39 +91,58 @@ class CircleWrap extends React.Component<any, any> {
   price: stores.entryStore.price,
 }))
 export default class SelectMediaFile extends React.Component<any, any> {
-  async selectVideo() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === 'granted') {
-      let video: any;
-      try {
-        video = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-          allowsEditing: false,
-        });
-      } catch (e) {
-        console.log('error', e);
-      }
+  componentDidMount() {
+    this.getPermissionAsync();
+  }
 
-      if (video && !video.cancelled) {
-        await this.props.uploadVideo(video);
+  getPermissionAsync = async () => {
+    if (Platform.OS === 'ios' || Platform.OS === 'android') {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        Alert.alert(
+          'Camera Permission',
+          'We need camera permissions so you can upload beats!',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: true }
+        );
       }
+    }
+  };
+
+  async selectVideo() {
+    let video: any;
+    try {
+      video = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        allowsEditing: false,
+      });
+    } catch (e) {
+      console.log('error', e);
+    }
+
+    if (video && !video.cancelled) {
+      await this.props.uploadVideo(video);
     }
   }
 
   async selectArtwork() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === 'granted') {
-      let image = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-        base64: true,
-        exif: true,
-      });
-      if (image && !image.cancelled) {
-        await this.props.uploadArtwork(image);
-      }
+    let image = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+      base64: true,
+      exif: true,
+    });
+    if (image && !image.cancelled) {
+      await this.props.uploadArtwork(image);
     }
   }
 
@@ -173,7 +196,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
     await this.props.create();
     await this.props.refreshUserEntries();
     this.props.clearStore();
-    goBack();
+    this.props.navigation.goBack();
   }
 
   renderArtworkSection() {
@@ -221,7 +244,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.artist}
-              onChangeText={t => this.props.updateArtist(t)}
+              onChangeText={(t) => this.props.updateArtist(t)}
               maxLength={34}
             />
           </View>
@@ -240,7 +263,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.title}
-              onChangeText={t => this.props.updateTitle(t)}
+              onChangeText={(t) => this.props.updateTitle(t)}
               maxLength={34}
             />
           </View>
@@ -259,7 +282,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.description}
-              onChangeText={t => this.props.updateDescription(t)}
+              onChangeText={(t) => this.props.updateDescription(t)}
               maxLength={60}
             />
           </View>
@@ -280,14 +303,14 @@ export default class SelectMediaFile extends React.Component<any, any> {
             <TextInput
               underlineColorAndroid="transparent"
               autoCapitalize="none"
-              returnKeyType={"done"}
+              returnKeyType={'done'}
               placeholder=""
               keyboardType={'numeric'}
               autoCorrect={false}
               style={styles.input}
               placeholderTextColor="white"
               value={this.props.price}
-              onChangeText={price => this.props.updatePrice(price)}
+              onChangeText={(price) => this.props.updatePrice(price)}
               maxLength={30}
             />
           </View>
@@ -310,7 +333,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
               {'Available for Sale: '}
             </Text>
             <Switch
-              onValueChange={forSale =>
+              onValueChange={(forSale) =>
                 this.props.updateAvailableForSale(forSale)
               }
               value={this.props.availableForSale}

@@ -1,212 +1,193 @@
-import React from 'react';
-import { HeaderBackButton } from 'react-navigation-stack';
-import { inject } from 'mobx-react';
-import { MaterialIcons } from '@expo/vector-icons';
-import Layout from 'app/constants/Layout';
+import React, { useState } from 'react';
+import { HeaderBackButton } from '@react-navigation/stack';
+import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { AuthBackground2 } from 'app/assets/images/Images';
-import { goBack, navigate } from 'app/modules/navigation/Navigator';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import {
   StyleSheet,
   View,
   Text,
-  ImageBackground,
   TouchableHighlight,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { NavStatelessComponent } from 'app/interfaces/Interfaces';
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
+import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-@inject((stores: Stores) => ({
-  validatePassword: stores.updatePasswordValidationStore.validatePassword.bind(
-    stores.updatePasswordValidationStore
-  ),
-  validatePasswordConfirmation: stores.updatePasswordValidationStore.validatePasswordConfirmation.bind(
-    stores.updatePasswordValidationStore
-  ),
-  passwordValid: stores.updatePasswordValidationStore.passwordValid,
-  passwordConfirmationValid:
-    stores.updatePasswordValidationStore.passwordConfirmationValid,
-  setBackendError: stores.updatePasswordValidationStore.setBackendError.bind(
-    stores.updatePasswordValidationStore
-  ),
-  validForm: stores.updatePasswordValidationStore.validForm,
-  error: stores.updatePasswordValidationStore.error,
-  updatePassword: stores.sessionStore.updatePassword.bind(stores.sessionStore),
-}))
-export default class UpdatePasswordScreen extends React.Component<any, any> {
-  static navigationOptions = () => ({
-    title: 'Update Password',
-    headerTitleStyle: { color: Colors.white },
-    headerStyle: {
-      backgroundColor: Colors.headerBackground,
-      borderBottomWidth: 0,
-    },
-    headerLeft: () => (
-      <HeaderBackButton tintColor={Colors.white} onPress={() => goBack()} />
-    ),
-  });
-  constructor(props: { navigation: { state: { params: { token: any } } } }) {
-    let { token } = props.navigation.state.params;
-    super(props);
-    this.state = {
-      password: '',
-      passwordConfirmation: '',
-      token: token,
-      loading: false,
-    };
-  }
-  async updatePassword() {
-    this.setState({ loading: true });
-    try {
-      await this.props.updatePassword(this.state.token, this.state.password);
-      this.setState({ loading: false });
-      return navigate('ProfileSettings');
-    } catch (e) {
-      this.props.setBackendError(e);
-    }
-    this.setState({ loading: false });
-  }
-  updatePasswordInput(text: any) {
-    this.setState({ password: text });
-    this.props.validatePassword(text);
-  }
-  updatePasswordConfirmation(text: any) {
-    this.setState({ passwordConfirmation: text });
-    this.props.validatePasswordConfirmation(text, this.state.password);
-  }
-  render() {
-    return (
-      <ImageBackground style={styles.bg} source={AuthBackground2}>
-        <View
-          style={[styles.errorContainer, { opacity: this.props.error ? 1 : 0 }]}
-        >
-          <Text style={styles.error}>{this.props.error}</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <View style={styles.field}>
-            <MaterialIcons
-              name="lock-outline"
-              size={22}
-              color={Colors.white}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="New Password"
-              autoCorrect={false}
-              style={styles.input}
-              secureTextEntry={true}
-              placeholderTextColor="white"
-              value={this.state.password}
-              onChangeText={this.updatePasswordInput.bind(this)}
-              onBlur={() => this.props.validatePassword(this.state.password)}
-            />
-            {ValidationIcon(this.props.passwordValid)}
-          </View>
-          <View style={styles.field}>
-            <MaterialIcons
-              name="lock-outline"
-              size={22}
-              color={Colors.white}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Confirm New Password"
-              autoCorrect={false}
-              style={styles.input}
-              secureTextEntry={true}
-              placeholderTextColor="white"
-              value={this.state.passwordConfirmation}
-              onChangeText={this.updatePasswordConfirmation.bind(this)}
-              onBlur={() =>
-                this.props.validatePasswordConfirmation(
-                  this.state.passwordConfirmation,
-                  this.state.password
-                )
-              }
-            />
-            {ValidationIcon(this.props.passwordConfirmationValid)}
-          </View>
-          <TouchableHighlight
-            style={[
-              styles.joinBtn,
-              { opacity: this.props.validForm ? 1 : 0.5 },
-            ]}
-            onPress={this.updatePassword.bind(this)}
-            underlayColor={Colors.underlayColor}
-            disabled={!this.props.validForm}
-          >
-            {this.renderButtonMessage(this.state.loading)}
-          </TouchableHighlight>
-        </View>
-      </ImageBackground>
+const UpdatePassword: NavStatelessComponent = observer((props) => {
+  const { updatePasswordValidationStore, sessionStore } = Stores();
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { token } = props.navigation.state.params;
+  const { navigate } = useNavigation();
+
+  const updatePasswordText = ({ target }: any) => {
+    setPassword(target.value);
+    updatePasswordValidationStore.validatePassword(target.value);
+  };
+
+  const updatePasswordConfirmation = ({ target }: any) => {
+    setPasswordConfirmation(target.value);
+    updatePasswordValidationStore.validatePasswordConfirmation(
+      target.value,
+      password
     );
-  }
+  };
 
-  renderButtonMessage(loading: any) {
-    if (loading) {
-      return (
-        <ActivityIndicator
-          size="small"
-          style={styles.loadingIndicator}
-          color={Colors.white}
-        />
-      );
+  const updatePassword = async () => {
+    setLoading(true);
+    try {
+      await sessionStore.updatePassword(token, password);
+      setLoading(false);
+      return navigate('Main', {
+        screen: 'ProfileSettings',
+      });
+    } catch (e) {
+      updatePasswordValidationStore.setBackendError(e);
     }
-    return <Text style={styles.joinTextBtn}>UPDATE PASSWORD</Text>;
-  }
-}
+    setLoading(false);
+  };
 
-const formPadding = 20;
+  return (
+    <BackgroundImage authBackground={true}>
+      <View style={styles.inputContainer}>
+        <View style={styles.field}>
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="New Password"
+            autoCorrect={false}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            secureTextEntry={true}
+            placeholderTextColor="white"
+            value={password}
+            onChange={updatePasswordText}
+            onChangeText={(value) =>
+              updatePasswordText({ target: { value: value } })
+            }
+          />
+          <ValidationIcon
+            isFieldValid={updatePasswordValidationStore.passwordValid}
+          />
+        </View>
+        <View style={styles.field}>
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="Confirm New Password"
+            autoCorrect={false}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            secureTextEntry={true}
+            placeholderTextColor="white"
+            value={passwordConfirmation}
+            onChange={updatePasswordConfirmation}
+            onChangeText={(value) =>
+              updatePasswordConfirmation({ target: { value: value } })
+            }
+          />
+          <ValidationIcon
+            isFieldValid={
+              updatePasswordValidationStore.passwordConfirmationValid
+            }
+          />
+        </View>
+        <View
+          style={[
+            styles.errorContainer,
+            { opacity: updatePasswordValidationStore.error ? 1 : 0 },
+          ]}
+        >
+          <Text style={styles.error}>
+            {updatePasswordValidationStore.error}
+          </Text>
+        </View>
+        <TouchableHighlight
+          style={[
+            styles.joinBtn,
+            { opacity: updatePasswordValidationStore.validForm ? 1 : 0.5 },
+          ]}
+          onPress={updatePassword}
+          underlayColor={Colors.underlayColor}
+          disabled={!updatePasswordValidationStore.validForm}
+        >
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              style={styles.loadingIndicator}
+              color={Colors.white}
+            />
+          ) : (
+            <Text style={styles.joinTextBtn}>Update Password</Text>
+          )}
+        </TouchableHighlight>
+      </View>
+    </BackgroundImage>
+  );
+});
+
+UpdatePassword.navigationOptions = ({ navigation }) => ({
+  title: 'Update Password',
+  headerTitleStyle: { color: Colors.white },
+  headerStyle: {
+    backgroundColor: Colors.headerBackground,
+    borderBottomWidth: 0,
+  },
+  headerLeft: () => (
+    <HeaderBackButton
+      tintColor={Colors.white}
+      onPress={() => navigation.goBack()}
+    />
+  ),
+});
+
+export default UpdatePassword;
 
 let styles = StyleSheet.create({
-  blur: {
-    height: Layout.window.height,
-  },
-  bg: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: Layout.window.width,
-    height: Layout.window.height,
-  },
-  field: {
-    maxHeight: 50,
-    flex: 1,
-    borderBottomColor: Colors.dividerBackground,
-    borderBottomWidth: 1,
-    justifyContent: 'flex-end',
+  background: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   inputContainer: {
-    marginLeft: formPadding,
-    marginRight: formPadding,
-    marginTop: 40,
-    flex: 1,
+    alignSelf: 'center',
+    marginTop: 0,
+    maxWidth: 380,
+    width: '100%',
   },
-  placeholderIcon: {
-    position: 'absolute',
-    bottom: 8,
-    left: 0,
-    backgroundColor: Colors.transparent,
+  field: {
+    height: 50,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: Colors.darkBlueFieldTransparent,
+    borderRadius: 10,
+    marginVertical: 10,
+    paddingRight: 10,
   },
   input: {
     backgroundColor: Colors.transparent,
     color: Colors.white,
     fontSize: 14,
-    paddingLeft: 36,
-    bottom: 8,
+    padding: 10,
+    width: '100%',
   },
   joinBtn: {
     height: 48,
     backgroundColor: Colors.lightBlueBtn,
-    borderRadius: 3,
-    marginTop: 40,
+    borderRadius: 24,
   },
   joinTextBtn: {
     textAlign: 'center',
@@ -216,19 +197,13 @@ let styles = StyleSheet.create({
     fontSize: 16,
   },
   errorContainer: {
-    maxHeight: 40,
-    backgroundColor: Colors.errorBackground,
-    paddingLeft: formPadding,
-    paddingRight: formPadding,
-    flex: 1,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   error: {
-    color: Colors.white,
-  },
-  forgotPass: {
-    backgroundColor: 'transparent',
+    color: Colors.errorBackground,
   },
   forgotPassText: {
     textAlign: 'center',

@@ -3,27 +3,24 @@ import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { goBack, navigate } from 'app/modules/navigation/Navigator';
+import { useNavigation } from '@react-navigation/native';
 
-export default class SetPrice extends React.Component<any, any> {
-  async handleSetPrice() {
+export default ({ entry }) => {
+  const { navigate, goBack } = useNavigation();
+  const handleSetPrice = () => {
     goBack();
-    navigate('PricingOptionsModal', { entry: this.props.entry });
-  }
-  render() {
-    if (!this.props.entry) {
-      return null;
-    }
-    return (
-      <TouchableOpacity onPress={this.handleSetPrice.bind(this)}>
-        <View style={styles.field}>
-          <MaterialIcons name={'attach-money'} size={30} color={Colors.white} />
-          <Text style={styles.text}>Set Price</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
+    navigate('PricingOptionsModal', { entry: entry });
+  };
+  if (!entry) return null;
+  return (
+    <TouchableOpacity onPress={handleSetPrice}>
+      <View style={styles.field}>
+        <MaterialIcons name={'attach-money'} size={30} color={Colors.white} />
+        <Text style={styles.text}>Set Price</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 var styles = StyleSheet.create({
   field: {
@@ -32,7 +29,7 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     maxHeight: 50,
-    width: Layout.window.width - 60,
+    width: '100%',
   },
   text: {
     fontSize: 14,

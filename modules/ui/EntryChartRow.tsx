@@ -10,17 +10,18 @@ import {
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
-import { navigate } from 'app/modules/navigation/Navigator';
+import { useNavigation } from '@react-navigation/native';
 
-const EntryChartRow = (
-  play: any,
-  entry: any,
-  addRecentEntrySearch?: any,
-  options?: any,
-  disablePlaylistMode?: any,
-  previousScreen?: any,
-  position?: number
-) => {
+export default ({
+  play,
+  entry,
+  addRecentEntrySearch,
+  options,
+  disablePlaylistMode,
+  previousScreen,
+  position,
+}) => {
+  const { navigate } = useNavigation();
   return (
     <View key={entry.id} style={styles.rowWrap}>
       <TouchableOpacity
@@ -36,7 +37,7 @@ const EntryChartRow = (
         }}
       >
         <View style={styles.row}>
-          <Image source={{ uri: entry.imageUrl }} style={styles.thumb} />
+          <Image source={{ uri: entry.imageUrlSmall }} style={styles.thumb} />
           <View style={styles.numberWrap}>
             <Text style={styles.numbersText}>{position}</Text>
           </View>
@@ -89,7 +90,6 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     width: 60,
     height: 30,
-    textAlign: 'center',
   },
   row: {
     flexDirection: 'row',
@@ -120,5 +120,3 @@ let styles = StyleSheet.create({
     color: Colors.defaultTextLight,
   },
 });
-
-export default EntryChartRow;

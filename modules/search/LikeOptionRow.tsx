@@ -1,51 +1,46 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { goBack } from 'app/modules/navigation/Navigator';
-import * as stores from 'app/skyhitz-common';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
 
-@inject((stores: Stores) => ({
-  toggleLike: stores.likesStore.toggleLike.bind(stores.likesStore),
-  isEntryLiked: stores.likesStore.isEntryLiked.bind(stores.likesStore),
-}))
-export default class LikeOptionRow extends React.Component<any, any> {
-  handleToggle() {
-    this.props.toggleLike(this.props.entry);
-    this.forceUpdate();
+export default observer(({ entry }) => {
+  const { likesStore } = Stores();
+  const { goBack } = useNavigation();
+
+  const handleToggle = async () => {
+    await likesStore.toggleLike(entry);
     goBack();
+  };
+  const isLiked = () => {
+    return likesStore.isEntryLiked(entry);
+  };
+  if (!entry) {
+    return null;
   }
-  get isLiked() {
-    return this.props.isEntryLiked(this.props.entry);
-  }
-  render() {
-    if (!this.props.entry) {
-      return null;
-    }
-    if (this.isLiked) {
-      return (
-        <TouchableOpacity onPress={this.handleToggle.bind(this)}>
-          <View style={styles.field}>
-            <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
-            <Text style={styles.textLiked}>Like</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    }
+  if (isLiked()) {
     return (
-      <TouchableOpacity onPress={this.handleToggle.bind(this)}>
+      <TouchableOpacity onPress={handleToggle}>
         <View style={styles.field}>
-          <EvilIcons name={'like'} size={32} color={Colors.dividerBackground} />
-          <Text style={styles.text}>Like</Text>
+          <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
+          <Text style={styles.textLiked}>Like</Text>
         </View>
       </TouchableOpacity>
     );
   }
-}
+  return (
+    <TouchableOpacity onPress={handleToggle}>
+      <View style={styles.field}>
+        <EvilIcons name={'like'} size={32} color={Colors.dividerBackground} />
+        <Text style={styles.text}>Like</Text>
+      </View>
+    </TouchableOpacity>
+  );
+});
 
 var styles = StyleSheet.create({
   field: {
@@ -54,7 +49,7 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     maxHeight: 50,
-    width: Layout.window.width - 60,
+    width: '100%',
   },
   text: {
     fontSize: 14,

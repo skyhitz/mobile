@@ -12,14 +12,11 @@ export class UsersSearchStore {
   @observable loadingRecentSearches: boolean = false;
   @observable loadingTopSearches: boolean = false;
   @observable query: string = '';
-  @computed get active () {
+  @computed get active() {
     return !!this.query;
   }
 
-  constructor (
-    public queryObservable: any
-  ) {
-  }
+  constructor(public queryObservable: any) {}
 
   public disposer = observe(this.queryObservable, ({ object }) => {
     if (object.type === 'users' && object.q !== this.query) {
@@ -30,11 +27,10 @@ export class UsersSearchStore {
   });
 
   public searchUsers(q: string) {
-    usersBackend.search(q)
-      .then(users => {
-        this.setUsers(List(users));
-        this.searching = false;
-      });
+    usersBackend.search(q).then((users) => {
+      this.setUsers(List(users));
+      this.searching = false;
+    });
   }
 
   public debouncedSearch = debounce(this.searchUsers, 400);
@@ -53,28 +49,17 @@ export class UsersSearchStore {
 
   public getRecentSearches() {
     this.loadingRecentSearches = true;
-    return usersBackend.getRecentSearches()
-      .then(users => {
-        this.setRecentSearches(List(users));
-        this.loadingRecentSearches = false;
-      });
+    return usersBackend.getRecentSearches().then((users) => {
+      this.setRecentSearches(List(users));
+      this.loadingRecentSearches = false;
+    });
   }
 
   public getTopSearches() {
     this.loadingTopSearches = true;
-    return usersBackend.getTopSearches()
-      .then(users => {
-        this.setTopSearches(List(users));
-        this.loadingTopSearches = false;
-      });
+    return usersBackend.getTopSearches().then((users) => {
+      this.setTopSearches(List(users));
+      this.loadingTopSearches = false;
+    });
   }
-
-  public async addRecentUserSearch(id: string) {
-    await usersBackend.addRecentUserSearch(id);
-    this.getRecentSearches();
-  }
-
 }
-
-
-

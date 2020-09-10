@@ -6,6 +6,7 @@ import Divider from 'app/modules/ui/Divider';
 import Layout from 'app/constants/Layout';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
 import * as stores from 'app/skyhitz-common';
+import Colors from 'app/constants/Colors';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -59,10 +60,13 @@ export default class LikersSection extends React.Component<any, any> {
 
 let styles = StyleSheet.create({
   bottomSection: {
-    height: 110,
-    width: Layout.window.width,
-    paddingLeft: 20,
-    paddingRight: 20,
+    width: '100%',
+    paddingLeft: 15,
+    paddingRight: 15,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    maxWidth: 650,
+    alignSelf: 'center',
   },
   likedByWrap: {
     flexDirection: 'row',
@@ -87,7 +91,9 @@ let styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flexWrap: 'nowrap',
-    marginTop: 15,
+    marginTop: 10,
+    marginBottom: 15,
+    minHeight: 30,
   },
   liker: {
     marginRight: 7,

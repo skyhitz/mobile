@@ -1,40 +1,126 @@
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import AuthScreen from 'app/modules/accounts/AuthScreen';
 import SignUpScreen from 'app/modules/accounts/SignUpScreen';
 import SignInScreen from 'app/modules/accounts/SignInScreen';
 import ResetPasswordScreen from 'app/modules/accounts/ResetPasswordScreen';
 import UpdatePasswordScreen from 'app/modules/accounts/UpdatePasswordScreen';
-import ConfirmUsernameAndEmailScreen from 'app/modules/accounts/ConfirmUsernameAndEmailScreen';
+import { Platform } from 'react-native';
+import WebApp from '../marketing/web/Home';
+import React, { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import Colors from 'app/constants/Colors';
+import Privacy from '../marketing/web/Privacy';
+import Terms from '../marketing/web/Terms';
 
-const AccountsNavigator = createStackNavigator({
-  AuthScreen: {
-    screen: AuthScreen as any,
-    navigationOptions: {
-      headerShown: false,
-      gestureEnabled: false,
-    },
-    path: `home`
-  },
-  SignUp: {
-    screen: SignUpScreen as any,
-    path: `sign-up`,
-  },
-  SignIn: {
-    screen: SignInScreen as any,
-    path: `sign-in`,
-  },
-  ResetPassword: {
-    screen: ResetPasswordScreen as any,
-    path: `reset-password`,
-  },
-  UpdatePassword: {
-    screen: UpdatePasswordScreen as any,
-    path: `update-password/:token`,
-  },
-  ConfirmUsernameAndEmail: {
-    screen: ConfirmUsernameAndEmailScreen as any,
-    path: `confirm-username-and-email`,
-  },
-});
+const AccountsStack = createStackNavigator();
 
-export default AccountsNavigator;
+export default () => {
+  const [headerShown, setHeaderShown] = useState(true);
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  useEffect(() => {
+    if (isDesktop) {
+      setHeaderShown(false);
+    }
+  }, []);
+  return (
+    <AccountsStack.Navigator>
+      {Platform.OS === 'web' ? (
+        <AccountsStack.Screen
+          name="WebApp"
+          component={WebApp}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <AccountsStack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
+          options={{ headerShown: false, gestureEnabled: false }}
+        />
+      )}
+      <AccountsStack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{
+          headerShown: headerShown,
+          headerTitleStyle: { color: Colors.white },
+          headerTintColor: Colors.white,
+          title: 'Sign Up',
+          headerTransparent: true,
+          headerStyle: {
+            borderBottomWidth: 0,
+          },
+        }}
+      />
+      <AccountsStack.Screen
+        name="SignIn"
+        component={SignInScreen}
+        options={{
+          headerShown: headerShown,
+          headerTitleStyle: { color: Colors.white },
+          headerTintColor: Colors.white,
+          title: 'Log In',
+          headerTransparent: true,
+          headerStyle: {
+            borderBottomWidth: 0,
+          },
+        }}
+      />
+      <AccountsStack.Screen
+        name="ResetPassword"
+        component={ResetPasswordScreen}
+        options={{
+          headerShown: headerShown,
+          headerTitleStyle: { color: Colors.white },
+          headerTintColor: Colors.white,
+          title: 'Reset Password',
+          headerTransparent: true,
+          headerStyle: {
+            borderBottomWidth: 0,
+          },
+        }}
+      />
+      <AccountsStack.Screen
+        name="UpdatePassword"
+        component={UpdatePasswordScreen}
+        options={{
+          headerShown: headerShown,
+          headerTitleStyle: { color: Colors.white },
+          headerTintColor: Colors.white,
+          title: 'Update Password',
+          headerTransparent: true,
+          headerStyle: {
+            borderBottomWidth: 0,
+          },
+        }}
+      />
+      <AccountsStack.Screen
+        name="Privacy"
+        component={Privacy}
+        options={{
+          headerShown: headerShown,
+          headerTitleStyle: { color: Colors.white },
+          headerTintColor: Colors.white,
+          title: 'Privacy',
+          headerTransparent: true,
+          headerStyle: {
+            borderBottomWidth: 0,
+          },
+        }}
+      />
+      <AccountsStack.Screen
+        name="Terms"
+        component={Terms}
+        options={{
+          headerShown: headerShown,
+          headerTitleStyle: { color: Colors.white },
+          headerTintColor: Colors.white,
+          title: 'Terms',
+          headerTransparent: true,
+          headerStyle: {
+            borderBottomWidth: 0,
+          },
+        }}
+      />
+    </AccountsStack.Navigator>
+  );
+};

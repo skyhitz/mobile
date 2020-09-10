@@ -21,7 +21,7 @@ export class ResetPasswordValidationStore {
       return;
     }
 
-    delete this.emailError;
+    this.emailError = '';
     return (this.emailValid = true);
   }
 

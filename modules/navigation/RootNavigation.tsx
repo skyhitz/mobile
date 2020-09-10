@@ -1,189 +1,229 @@
-/// <reference path="./CreateBrowserApp.d.ts"/>
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StatusBar, Platform } from 'react-native';
-import { inject } from 'mobx-react';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createBrowserApp } from '@react-navigation/web';
+import { observer } from 'mobx-react';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
-import { navigate } from 'app/modules/navigation/Navigator';
 import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
-import EditPlaylistModal from 'app/modules/playlists/EditPlaylistModal';
-import RemovePlaylistModal from 'app/modules/playlists/RemovePlaylistModal';
 import EntryOptionsModal from 'app/modules/search/EntryOptionsModal';
 import PricingOptionsModal from 'app/modules/search/PricingOptionsModal';
-import SelectPlaylistModal from 'app/modules/playlists/SelectPlaylistModal';
 import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
+import PaymentModal from 'app/modules/profile/PaymentModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
-import * as stores from 'app/skyhitz-common';
-// import WebApp from '../marketing/web/Home';
+import { Stores } from 'app/functions/Stores';
+import { loadResourcesAsync } from 'app/functions/LoadResourcesAsync';
+import { Asset } from 'expo-asset';
+import { Images } from 'app/assets/images/Images';
+import { createStackNavigator } from '@react-navigation/stack';
+import {
+  NavigationContainer,
+  useLinking,
+  DefaultTheme,
+} from '@react-navigation/native';
+import CancelEditBtn from 'app/modules/ui/CancelEditBtn';
+import DoneEditBtn from 'app/modules/ui/DoneEditBtn';
+import Colors from 'app/constants/Colors';
 
-type Stores = typeof stores;
-
-const AuthStack = createStackNavigator({
-  Accounts: {
-    screen: AccountsNavigator,
-    navigationOptions: {
-      headerShown: false,
-    },
-    path: ``,
+const Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    card: Colors.darkBlue,
+    background: Colors.darkBlue,
   },
-});
+};
 
-const AppStack = createStackNavigator(
-  {
-    Main: {
-      screen: MainTabNavigator,
-      path: `main`,
-      navigationOptions: {
-        headerShown: false,
-        gestureEnabled: false,
-      },
-    },
-    EditProfileModal: {
-      screen: EditProfileScreen as any,
-      path: `edit-profile`,
-    },
-    EditPlaylistModal: {
-      screen: EditPlaylistModal,
-      path: `edit-playlist-modal`,
-      navigationOptions: {
-        headerShown: false,
-        gestureEnabled: false,
-        cardStyle: { backgroundColor: 'transparent' },
-      },
-    },
-    UploadMusicModal: {
-      screen: UploadMusicModal,
-      path: `upload-music-modal`,
-      navigationOptions: {
-        headerShown: false,
-        gestureEnabled: false,
-        cardStyle: { backgroundColor: 'transparent' },
-      },
-    },
-    WithdrawalModal: {
-      screen: WithdrawalModal,
-      path: `withdrawal-modal`,
-      navigationOptions: {
-        headerShown: false,
-        gestureEnabled: false,
-        cardStyle: { backgroundColor: 'transparent' },
-      },
-    },
-    BuyOptionsModal: {
-      screen: BuyOptionsModal,
-      path: `buy-options-modal`,
-      navigationOptions: {
-        headerShown: false,
-        gestureEnabled: false,
-        cardStyle: { backgroundColor: 'transparent' },
-      },
-    },
-    RemovePlaylistModal: {
-      screen: RemovePlaylistModal,
-      path: 'remove-playlist',
-      navigationOptions: {
-        headerShown: false,
-        gestureEnabled: false,
-        cardStyle: { backgroundColor: 'transparent' },
-      },
-    },
-    EntryOptionsModal: {
-      screen: EntryOptionsModal,
-      path: `entry-options-modal`,
-      navigationOptions: {
-        headerShown: false,
-        cardStyle: { backgroundColor: 'transparent' },
-      },
-    },
-    PricingOptionsModal: {
-      screen: PricingOptionsModal,
-      path: `pricing-options-modal`,
-      navigationOptions: {
-        headerShown: false,
-        cardStyle: { backgroundColor: 'transparent' },
-      },
-    },
-    SelectPlaylistModal: {
-      screen: SelectPlaylistModal as any,
-      path: `select-playlist-modal`,
-      navigationOptions: {
-        gestureEnabled: false,
-        cardStyle: { backgroundColor: 'transparent' },
-      },
-    },
-  },
-  {
-    mode: 'modal',
-  }
-);
+const AppStack = createStackNavigator();
 
-const createApp = Platform.select({
-  web: (config: any) => createBrowserApp(config, { history: 'browser' }),
-  default: (config: any) => createAppContainer(config),
-});
+export default observer(() => {
+  const [loaded, setLoaded] = useState(false);
+  const {
+    sessionStore,
+    paymentsStore,
+    userEntriesStore,
+    likesStore,
+    entriesSearchStore,
+  } = Stores();
 
-const RootStackNavigator = createSwitchNavigator(
-  {
-    AuthLoading: {
-      screen: AuthLoadingScreen,
-      path: ``,
-    },
-    App: {
-      screen: AppStack,
-      path: `app`,
-    },
-    Auth: {
-      screen: AuthStack,
-      path: `auth`,
-    },
-    // WebApp: {
-    //   screen: WebApp,
-    //   path: ``,
-    // },
-  },
-  {
-    initialRouteName: 'AuthLoading',
-  }
-);
+  StatusBar.setBarStyle('light-content');
 
-const AppContainer = createApp(RootStackNavigator);
+  const loadAssets = async () => {
+    return Promise.all([Asset.loadAsync(Images), loadResourcesAsync()]);
+  };
 
-@inject((stores: Stores) => ({
-  user: stores.sessionStore.user,
-  loadUserLikes: stores.likesStore.refreshLikes.bind(stores.likesStore),
-  loadPlaylists: stores.playlistsStore.refreshPlaylists.bind(
-    stores.playlistsStore
-  ),
-  loadUserEntries: stores.userEntriesStore.refreshEntries.bind(
-    stores.userEntriesStore
-  ),
-  loadPayments: stores.paymentsStore.refreshSubscription.bind(
-    stores.paymentsStore
-  ),
-}))
-export default class RootNavigator extends React.Component<any, any> {
-  state = {};
-  static async getDerivedStateFromProps(props: any) {
-    StatusBar.setBarStyle('light-content');
+  const loadUserData = async () => {
+    return Promise.all([
+      likesStore.refreshLikes(),
+      userEntriesStore.refreshEntries(),
+      paymentsStore.refreshSubscription(),
+      entriesSearchStore.getRecentlyAdded(),
+    ]);
+  };
 
-    if (!props.user) {
-      navigate('Auth');
-    } else {
-      [
-        await props.loadUserLikes(),
-        await props.loadPlaylists(),
-        await props.loadUserEntries(),
-        await props.loadPayments(),
-      ];
+  const loadAll = async () => {
+    await loadAssets();
+    const user = await sessionStore.loadSession();
+    if (user) {
+      await loadUserData();
     }
-  }
+    setLoaded(true);
+  };
 
-  render() {
-    return <AppContainer />;
+  useEffect(() => {
+    loadAll();
+  }, []);
+
+  const ref: any = useRef();
+
+  const { getInitialState } = useLinking(ref, {
+    prefixes: ['https://skyhitz.io', 'skyhitz://'],
+    config: {
+      WebApp: '',
+      SignUp: 'accounts/sign-up',
+      SignIn: 'accounts/sign-in',
+      ResetPassword: 'accounts/reset-password',
+      UpdatePassword: 'accounts/update-password',
+      Privacy: 'accounts/privacy',
+      Terms: 'accounts/terms',
+      Main: {
+        screens: {
+          SearchNavigator: {
+            screens: {
+              Search: {
+                screens: {
+                  Beats: 'beats',
+                  Beatmakers: 'beatmakers',
+                },
+              },
+            },
+          },
+          ChartsView: 'charts',
+          ProfileSettings: {
+            screens: {
+              ProfileSettingsScreen: 'profile',
+              LikesScreen: 'likes',
+              MyMusicScreen: 'my-music',
+            },
+          },
+        },
+      },
+      EditProfileModal: 'edit-profile',
+      UploadMusicModal: 'upload',
+      EntryOptionsModal: 'options',
+      PaymentModal: 'payment',
+    },
+  });
+
+  const [isReady, setIsReady] = useState(false);
+  const [initialState, setInitialState] = useState();
+
+  useEffect(() => {
+    Promise.race([
+      getInitialState(),
+      new Promise((resolve) =>
+        // Timeout in 150ms if `getInitialState` doesn't resolve
+        // Workaround for https://github.com/facebook/react-native/issues/25675
+        setTimeout(resolve, 50)
+      ),
+    ])
+      .catch((e) => {
+        console.error(e);
+      })
+      .then((state: any) => {
+        if (state !== undefined) {
+          setInitialState(state);
+        }
+
+        setIsReady(true);
+      });
+  }, [getInitialState]);
+
+  if (loaded && isReady) {
+    return (
+      <NavigationContainer initialState={initialState} ref={ref} theme={Theme}>
+        {sessionStore.user ? (
+          <AppStack.Navigator mode="modal">
+            <AppStack.Screen
+              name="Main"
+              component={MainTabNavigator}
+              options={{ headerShown: false }}
+            />
+            <AppStack.Screen
+              name="EditProfileModal"
+              component={EditProfileScreen}
+              options={{
+                gestureEnabled: false,
+                title: 'Edit Profile',
+                headerTitleStyle: { color: Colors.white },
+                headerStyle: {
+                  backgroundColor: Colors.headerBackground,
+                  borderBottomWidth: 0,
+                  shadowColor: 'transparent',
+                },
+                headerLeft: () => <CancelEditBtn />,
+                headerRight: () => <DoneEditBtn />,
+              }}
+            />
+            <AppStack.Screen
+              name="UploadMusicModal"
+              component={UploadMusicModal}
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+
+            <AppStack.Screen
+              name="PaymentModal"
+              component={PaymentModal}
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="WithdrawalModal"
+              component={WithdrawalModal}
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="BuyOptionsModal"
+              component={BuyOptionsModal}
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="EntryOptionsModal"
+              component={EntryOptionsModal}
+              options={{
+                headerShown: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+            <AppStack.Screen
+              name="PricingOptionsModal"
+              component={PricingOptionsModal}
+              options={{
+                headerShown: false,
+                cardStyle: { backgroundColor: 'transparent' },
+              }}
+            />
+          </AppStack.Navigator>
+        ) : (
+          <AccountsNavigator />
+        )}
+      </NavigationContainer>
+    );
   }
-}
+  return <AuthLoadingScreen />;
+});

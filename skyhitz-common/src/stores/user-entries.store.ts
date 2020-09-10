@@ -11,7 +11,14 @@ export class UserEntriesStore {
   constructor(private sessionStore: SessionStore) {}
 
   public async refreshEntries() {
+    if (!this.sessionStore.user) {
+      return;
+    }
+    if (!this.sessionStore.user.id) {
+      return;
+    }
     this.loading = true;
+
     const entries = await entriesBackend.getByUserId(this.sessionStore.user.id);
     this.loading = false;
     this.entries = List(entries);
@@ -20,5 +27,4 @@ export class UserEntriesStore {
   get entriesCount() {
     return this.entries.size;
   }
-
 }
