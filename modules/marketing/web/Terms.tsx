@@ -398,7 +398,6 @@ export default () => {
 const styles = StyleSheet.create({
   wrap: {
     zIndex: 1,
-    backgroundColor: '000000d4',
     position: 'relative',
     margin: 0,
     display: 'flex',
