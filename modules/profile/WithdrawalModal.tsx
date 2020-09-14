@@ -62,7 +62,7 @@ export default observer((props) => {
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
-            placeholder="Enter Stellar Address"
+            placeholder="Stellar or AnchorUSD Address"
             autoCorrect={false}
             autoFocus={true}
             style={[
