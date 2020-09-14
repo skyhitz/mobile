@@ -1,148 +1,129 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
   Text,
   View,
   TextInput,
+  Platform,
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import Layout from 'app/constants/Layout';
 import LargeBtn from 'app/modules/ui/LargeBtn';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
 
-@inject((stores: Stores) => ({
-  withdrawToExternalWallet: stores.paymentsStore.withdrawToExternalWallet.bind(
-    stores.paymentsStore
-  ),
-  submittingWithdraw: stores.paymentsStore.submittingWithdraw,
-  credits: stores.paymentsStore.credits,
-}))
-export default class WithdrawalModal extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      withdrawAddress: undefined,
-      creditsToWithdraw: undefined,
-    };
-  }
-  updateWithdrawAddress(withdrawAddress: string) {
-    this.setState({
-      withdrawAddress: withdrawAddress,
-    });
-  }
-  updateAmount(creditsToWithdraw: any) {
-    if (this.props.credits < creditsToWithdraw) {
+export default observer((props) => {
+  const { paymentsStore } = Stores();
+  const { goBack } = useNavigation();
+  const [address, setAddress] = useState('');
+  const [creditsToWithdraw, setCreditsToWithdraw] = useState(0);
+
+  const updateWithdrawAddress = ({ target }: any) => {
+    setAddress(target.value);
+  };
+
+  const updateAmount = ({ target }: any) => {
+    let creditsToWithdraw = parseFloat(target.value);
+    if (paymentsStore.credits < creditsToWithdraw) {
       return;
     }
-    if (/^\d+$/.test(creditsToWithdraw)) {
-      return this.setState({
-        creditsToWithdraw: creditsToWithdraw,
-      });
-    }
-    if (creditsToWithdraw === '') {
-      this.setState({
-        creditsToWithdraw: null,
-      });
-    }
-  }
-  async onWithdraw() {
-    await this.props.withdrawToExternalWallet(
-      this.state.withdrawAddress,
-      this.state.creditsToWithdraw
-    );
-    this.props.navigation.goBack();
-  }
-  render() {
-    return (
-      <View style={styles.modal}>
-        <View style={styles.modalWrap}>
-          <TouchableOpacity
-            style={styles.closeBtn}
-            onPress={() => this.props.navigation.goBack()}
-          >
-            <MaterialIcons name="close" size={28} color={Colors.white} />
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.modalTitle}>Withdraw credits</Text>
-          </View>
-          <View style={styles.fieldWithoutBorderTop}>
-            <Text style={styles.currentBalance}>
-              Current balance: {this.props.credits}
-            </Text>
-          </View>
-          <View style={styles.field}>
-            <MaterialIcons
-              name="account-balance-wallet"
-              size={22}
-              color={Colors.white}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Enter Stellar Address"
-              autoCorrect={false}
-              autoFocus={true}
-              style={styles.addressInput}
-              placeholderTextColor="white"
-              value={this.state.withdrawAddress}
-              onChangeText={this.updateWithdrawAddress.bind(this)}
-              maxLength={56}
-            />
-          </View>
-          <View style={styles.field}>
-            <MaterialCommunityIcons
-              name="coin"
-              size={22}
-              color={Colors.white}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Amount to withdraw"
-              autoCorrect={false}
-              autoFocus={true}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.state.creditsToWithdraw}
-              onChangeText={this.updateAmount.bind(this)}
-              maxLength={18}
-            />
-          </View>
-          <View style={styles.fieldWithoutBorder}>
-            <Text style={styles.smallText}>
-              Credits will converted and withdrawn in Stellar's
-            </Text>
-            <Text style={styles.smallText}>
-              native currency (XLM), we charge a 10% fee
-            </Text>
-            <Text style={styles.smallText}>
-              plus credit card processing fees.
-            </Text>
-          </View>
-          <LargeBtn
-            disabled={
-              !(this.state.withdrawAddress && this.state.creditsToWithdraw)
+
+    return setCreditsToWithdraw(creditsToWithdraw);
+  };
+
+  const onWithdraw = async () => {
+    await paymentsStore.withdrawToExternalWallet(address, creditsToWithdraw);
+    goBack();
+  };
+
+  return (
+    <View style={styles.modal}>
+      <View style={styles.modalWrap}>
+        <TouchableOpacity style={styles.closeBtn} onPress={() => goBack()}>
+          <MaterialIcons name="close" size={28} color={Colors.white} />
+        </TouchableOpacity>
+        <View>
+          <Text style={styles.modalTitle}>Withdraw credits</Text>
+        </View>
+        <View style={styles.fieldWithoutBorderTop}>
+          <Text style={styles.currentBalance}>
+            Current balance: {paymentsStore.credits}
+          </Text>
+        </View>
+        <View style={styles.field}>
+          <MaterialIcons
+            name="account-balance-wallet"
+            size={22}
+            color={Colors.white}
+            style={styles.placeholderIcon}
+          />
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="Enter Stellar Address"
+            autoCorrect={false}
+            autoFocus={true}
+            style={[
+              styles.addressInput,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            placeholderTextColor="white"
+            value={address}
+            onChange={updateWithdrawAddress}
+            onChangeText={(value) =>
+              updateWithdrawAddress({ target: { value: value } })
             }
-            onPress={this.onWithdraw.bind(this)}
-            text={
-              this.props.submittingWithdraw
-                ? 'Submitting withdraw...'
-                : 'Withdraw'
-            }
+            maxLength={56}
           />
         </View>
+        <View style={styles.field}>
+          <MaterialCommunityIcons
+            name="coin"
+            size={22}
+            color={Colors.white}
+            style={styles.placeholderIcon}
+          />
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="USD to withdraw"
+            autoCorrect={false}
+            autoFocus={true}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            placeholderTextColor="white"
+            keyboardType={'numeric'}
+            value={creditsToWithdraw ? String(creditsToWithdraw) : undefined}
+            onChange={updateAmount}
+            onChangeText={(value) => updateAmount({ target: { value: value } })}
+            maxLength={18}
+          />
+        </View>
+        <View style={styles.fieldWithoutBorder}>
+          <Text style={styles.smallText}>
+            Withdraw to an AnchorUSD's address, or
+          </Text>
+          <Text style={styles.smallText}>
+            a Stellar address that trusts AnchorUSD.
+          </Text>
+        </View>
+        <LargeBtn
+          disabled={!(address && creditsToWithdraw)}
+          onPress={onWithdraw}
+          text={
+            paymentsStore.submittingWithdraw
+              ? 'Submitting withdraw...'
+              : 'Withdraw'
+          }
+        />
       </View>
-    );
-  }
-}
-
-const modalWidth = Layout.window.width - 40;
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   fieldWithoutBorderTop: {
@@ -190,12 +171,14 @@ const styles = StyleSheet.create({
   modalWrap: {
     flex: 1,
     flexDirection: 'column',
-    maxHeight: 400,
-    width: modalWidth,
+    maxHeight: 500,
+    maxWidth: 600,
+    width: '100%',
     backgroundColor: Colors.overlayBackground,
     borderRadius: 5,
     justifyContent: 'space-around',
     alignItems: 'center',
+    alignSelf: 'center',
   },
   modalTitle: {
     color: Colors.white,
