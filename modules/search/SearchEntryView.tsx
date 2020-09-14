@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import SearchEntryList from 'app/modules/search/SearchEntryList';
 import RecentlyAdded from 'app/modules/search/RecentlyAdded';
@@ -13,6 +13,10 @@ export default observer(() => {
       inputSearchStore.updateSearchType('entries');
     }, [])
   );
+
+  useEffect(() => {
+    entriesSearchStore.getRecentlyAdded();
+  });
 
   if (entriesSearchStore.active) {
     return <SearchEntryList />;
