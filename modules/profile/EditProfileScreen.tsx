@@ -75,7 +75,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
         <View style={styles.withdrawalXLMField}>
           <Text style={styles.creditsInfo}>Credits</Text>
           <LargeBtn
-            text="Withdraw to external wallet"
+            text="Withdraw"
             onPress={this.handleWithdrawal.bind(this)}
           />
         </View>
