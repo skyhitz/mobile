@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { inject } from 'mobx-react';
@@ -13,21 +13,27 @@ type Stores = typeof stores;
   ),
 }))
 export default class EditProfilePhotoBtn extends React.Component<any, any> {
+  async launchImageLibrary() {
+    let image = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+      base64: true,
+      exif: true,
+    });
+    if (image && !image.cancelled) {
+      this.props.uploadProfilePhoto(image);
+    }
+  }
   async changeProfilePhoto() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === 'granted') {
-      let image = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 0.7,
-        base64: true,
-        exif: true,
-      });
-      if (image && !image.cancelled) {
-        this.props.uploadProfilePhoto(image);
+    if (Platform.OS === 'ios' || Platform.OS === 'android') {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status === 'granted') {
+        return this.launchImageLibrary();
       }
     }
+    this.launchImageLibrary();
   }
   render() {
     return (
