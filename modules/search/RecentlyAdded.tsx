@@ -27,7 +27,7 @@ export default observer((props) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.recentText}>Recently Added</Text>
-      {SearchingLoader(entriesSearchStore.loadingRecentSearches)}
+      {SearchingLoader(entriesSearchStore.loadingRecentlyAdded)}
       <ScrollView style={{ flex: 1 }}>
         {entriesSearchStore.recentlyAdded.map((entry: any) => {
           return renderItem(entry);

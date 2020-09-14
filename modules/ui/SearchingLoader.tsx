@@ -20,7 +20,6 @@ const SearchingLoader = (searching: any, query?: any) => {
           <ActivityIndicator color={Colors.defaultTextLight} size={'small'} />
           <View>{SearchingText(query)}</View>
         </View>
-        <Divider />
       </View>
     );
   }
