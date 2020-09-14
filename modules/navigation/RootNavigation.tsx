@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StatusBar, Platform } from 'react-native';
+import { StatusBar } from 'react-native';
 import { observer } from 'mobx-react';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
 import AccountsNavigator from 'app/modules/navigation/AccountsNavigator';
@@ -43,7 +43,6 @@ export default observer(() => {
     paymentsStore,
     userEntriesStore,
     likesStore,
-    entriesSearchStore,
   } = Stores();
 
   StatusBar.setBarStyle('light-content');
@@ -57,7 +56,6 @@ export default observer(() => {
       likesStore.refreshLikes(),
       userEntriesStore.refreshEntries(),
       paymentsStore.refreshSubscription(),
-      entriesSearchStore.getRecentlyAdded(),
     ]);
   };
 
