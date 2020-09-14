@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "dev": "SKYHITZ_ENV=test expo start",
+    "dev": "EXPO_SKYHITZ_ENV=test expo start",
     "start:prod": "expo start --no-dev",
-    "start:dev": "SKYHITZ_ENV=test yarn next dev",
-    "start:staging": "SKYHITZ_ENV=development yarn next dev",
+    "start:dev": "EXPO_SKYHITZ_ENV=test yarn next dev",
+    "start:staging": "EXPO_SKYHITZ_ENV=development yarn next dev",
     "expo:publish": "expo publish",
     "eject": "expo eject",
     "android": "expo start --android --no-dev",
