@@ -1,6 +1,5 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { observable } from 'mobx';
-import { fragmentMatcher } from '../apollo/fragment-matcher';
 import { Config } from '../config';
 import { AsyncStorage } from 'react-native';
 
@@ -83,6 +82,5 @@ networkInterface.useAfter([
 ]);
 
 export const client = new ApolloClient({
-  fragmentMatcher,
   networkInterface: networkInterface,
 });
