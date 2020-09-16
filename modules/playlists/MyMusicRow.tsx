@@ -1,57 +1,55 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
-import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
 
-@inject((stores: Stores) => ({
-  count: stores.userEntriesStore.entriesCount,
-  entries: stores.userEntriesStore.entries,
-}))
-export default class MyMusicRow extends React.Component<any, any> {
-  copy() {
-    if (!this.props.count) {
+export default observer(() => {
+  let { userEntriesStore } = Stores();
+  let { navigate } = useNavigation();
+
+  const handleNavigation = () => {
+    navigate('MyMusicScreen');
+  };
+
+  const copy = () => {
+    if (!userEntriesStore.entriesCount) {
       return null;
     }
-    if (this.props.count === 1) {
+    if (userEntriesStore.entriesCount === 1) {
       return '1 Video';
     }
-    return `${this.props.count} Videos`;
-  }
-  handleNavigation() {
-    this.props.navigation.navigate('MyMusicScreen');
-  }
-  render() {
-    return (
+    return `${userEntriesStore.entriesCount} Videos`;
+  };
+  return (
+    <View style={styles.rowWrap}>
       <View style={styles.rowWrap}>
-        <View style={styles.rowWrap}>
-          <TouchableOpacity onPress={this.handleNavigation.bind(this)}>
-            <View style={styles.row}>
-              <View style={styles.leftSection}>
-                <MaterialIcons
-                  name="star-border"
-                  size={30}
-                  color={Colors.brandBlue}
-                />
-                <Text style={styles.likesText}>My Music</Text>
-              </View>
-              <View style={styles.rightSection}>
-                <Text style={styles.videosText}>{this.copy()}</Text>
-                <EvilIcons
-                  name={'chevron-right'}
-                  size={36}
-                  color={Colors.defaultTextLight}
-                />
-              </View>
+        <TouchableOpacity onPress={handleNavigation}>
+          <View style={styles.row}>
+            <View style={styles.leftSection}>
+              <MaterialIcons
+                name="star-border"
+                size={30}
+                color={Colors.brandBlue}
+              />
+              <Text style={styles.likesText}>My Music</Text>
             </View>
-          </TouchableOpacity>
-        </View>
+            <View style={styles.rightSection}>
+              <Text style={styles.videosText}>{copy()}</Text>
+              <EvilIcons
+                name={'chevron-right'}
+                size={36}
+                color={Colors.defaultTextLight}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
-    );
-  }
-}
+    </View>
+  );
+});
 
 let styles = StyleSheet.create({
   rowWrap: {

@@ -38,12 +38,7 @@ const AppStack = createStackNavigator();
 
 export default observer(() => {
   const [loaded, setLoaded] = useState(false);
-  const {
-    sessionStore,
-    paymentsStore,
-    userEntriesStore,
-    likesStore,
-  } = Stores();
+  const { sessionStore } = Stores();
 
   StatusBar.setBarStyle('light-content');
 
@@ -51,20 +46,8 @@ export default observer(() => {
     return Promise.all([Asset.loadAsync(Images), loadResourcesAsync()]);
   };
 
-  const loadUserData = async () => {
-    return Promise.all([
-      likesStore.refreshLikes(),
-      userEntriesStore.refreshEntries(),
-      paymentsStore.refreshSubscription(),
-    ]);
-  };
-
   const loadAll = async () => {
-    await loadAssets();
-    const user = await sessionStore.loadSession();
-    if (user) {
-      await loadUserData();
-    }
+    [await loadAssets(), await sessionStore.loadSession()];
     setLoaded(true);
   };
 
