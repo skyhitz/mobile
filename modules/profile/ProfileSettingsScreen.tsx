@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import ProfileSettingsTopContainer from 'app/modules/profile/ProfileSettingsTopContainer';
 import EditBtn from 'app/modules/ui/EditBtn';
@@ -10,29 +10,27 @@ import LikesScreen from 'app/modules/playlists/LikesScreen';
 import MyMusicScreen from 'app/modules/playlists/MyMusicScreen';
 import LikesRow from 'app/modules/playlists/LikesRow';
 import MyMusicRow from 'app/modules/playlists/MyMusicRow';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
 
-@inject((stores: Stores) => ({
-  user: stores.sessionStore.user,
-}))
-class ProfileSettingsScreen extends React.Component<any, any> {
-  render() {
-    if (!this.props.user) {
-      return null;
-    }
-    return (
-      <View style={styles.container}>
-        <ProfileSettingsTopContainer />
-        <View style={styles.settingsContainer}>
-          <LikesRow navigation={this.props.navigation} />
-          <MyMusicRow navigation={this.props.navigation} />
-          <ShareAppBanner navigation={this.props.navigation} />
-        </View>
+const ProfileSettingsScreen = observer(() => {
+  let { likesStore, userEntriesStore, paymentsStore } = Stores();
+  useEffect(() => {
+    likesStore.refreshLikes();
+    userEntriesStore.refreshEntries();
+    paymentsStore.refreshSubscription();
+  });
+
+  return (
+    <View style={styles.container}>
+      <ProfileSettingsTopContainer />
+      <View style={styles.settingsContainer}>
+        <LikesRow />
+        <MyMusicRow />
+        <ShareAppBanner />
       </View>
-    );
-  }
-}
+    </View>
+  );
+});
 
 const ProfileSettingsStack = createStackNavigator();
 

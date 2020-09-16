@@ -2,54 +2,51 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { EvilIcons } from '@expo/vector-icons';
-import { inject } from 'mobx-react';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { observer } from 'mobx-react';
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
 
-@inject((stores: Stores) => ({
-  count: stores.likesStore.userLikesCount,
-  likes: stores.likesStore.userLikes,
-  setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),
-}))
-export default class LikesRow extends React.Component<any, any> {
-  likesCopy() {
-    if (!this.props.count) {
+export default observer(() => {
+  let { likesStore, playerStore } = Stores();
+  let { navigate } = useNavigation();
+
+  const handleLikesNavigation = () => {
+    navigate('LikesScreen');
+    playerStore.setPlaylistMode(likesStore.userLikes);
+  };
+
+  const likesCopy = () => {
+    if (!likesStore.userLikesCount) {
       return null;
     }
-    if (this.props.count === 1) {
+    if (likesStore.userLikesCount === 1) {
       return '1 Video';
     }
-    return `${this.props.count} Videos`;
-  }
-  handleLikesNavigation() {
-    this.props.navigation.navigate('LikesScreen');
-    this.props.setPlaylistMode(this.props.likes);
-  }
-  render() {
-    return (
+    return `${likesStore.userLikesCount} Videos`;
+  };
+  return (
+    <View style={styles.rowWrap}>
       <View style={styles.rowWrap}>
-        <View style={styles.rowWrap}>
-          <TouchableOpacity onPress={this.handleLikesNavigation.bind(this)}>
-            <View style={styles.row}>
-              <View style={styles.leftSection}>
-                <EvilIcons name={'like'} size={30} color={Colors.brandBlue} />
-                <Text style={styles.likesText}>Likes</Text>
-              </View>
-              <View style={styles.rightSection}>
-                <Text style={styles.videosText}>{this.likesCopy()}</Text>
-                <EvilIcons
-                  name={'chevron-right'}
-                  size={36}
-                  color={Colors.defaultTextLight}
-                />
-              </View>
+        <TouchableOpacity onPress={handleLikesNavigation}>
+          <View style={styles.row}>
+            <View style={styles.leftSection}>
+              <EvilIcons name={'like'} size={30} color={Colors.brandBlue} />
+              <Text style={styles.likesText}>Likes</Text>
             </View>
-          </TouchableOpacity>
-        </View>
+            <View style={styles.rightSection}>
+              <Text style={styles.videosText}>{likesCopy()}</Text>
+              <EvilIcons
+                name={'chevron-right'}
+                size={36}
+                color={Colors.defaultTextLight}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
-    );
-  }
-}
+    </View>
+  );
+});
 
 let styles = StyleSheet.create({
   rowWrap: {

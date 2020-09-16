@@ -2,14 +2,16 @@ import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
+import { useNavigation } from '@react-navigation/native';
 
 export default (props) => {
+  let { navigate } = useNavigation();
   const onUpload = async () => {
-    props.navigation.navigate('UploadMusicModal');
+    navigate('UploadMusicModal');
   };
 
   const onBuyCredits = async () => {
-    props.navigation.navigate('PaymentModal');
+    navigate('PaymentModal');
   };
 
   return (
