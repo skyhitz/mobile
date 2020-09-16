@@ -40,6 +40,7 @@ class Input extends Component<any, any> {
     Animated.timing(shakeAnimationValue, {
       duration: 375,
       toValue: 3,
+      useNativeDriver: false,
     }).start();
   }
 
@@ -85,7 +86,7 @@ class Input extends Component<any, any> {
           <TextInput
             autoCorrect={false}
             placeholderTextColor="#ffff"
-            ref={input => (this.input = input)}
+            ref={(input) => (this.input = input)}
             underlineColorAndroid={Colors.transparent}
             style={[
               styles.input,

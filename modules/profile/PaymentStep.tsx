@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
-import { StyleSheet, View, TextInput, Platform } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Platform,
+  TouchableHighlight,
+} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { P, A, H3 } from '@expo/html-elements';
+import { P, H3 } from '@expo/html-elements';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
@@ -84,7 +90,7 @@ export default observer((props) => {
   return (
     <View style={styles.checkoutWrap}>
       <View style={styles.options}>
-        <A onPress={changeToSubscription}>
+        <TouchableHighlight onPress={changeToSubscription}>
           <View
             style={[
               styles.radio,
@@ -99,8 +105,8 @@ export default observer((props) => {
               </View>
             </View>
           </View>
-        </A>
-        <A onPress={changeToOneTime}>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={changeToOneTime}>
           <View
             style={[
               styles.radio,
@@ -130,7 +136,7 @@ export default observer((props) => {
               </View>
             </View>
           </View>
-        </A>
+        </TouchableHighlight>
       </View>
       <CardElement
         options={{
