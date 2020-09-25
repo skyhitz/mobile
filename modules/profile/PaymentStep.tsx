@@ -8,8 +8,8 @@ import {
   TextInput,
   Platform,
   TouchableHighlight,
+  Pressable,
 } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
 import { P, H3 } from '@expo/html-elements';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
@@ -155,13 +155,13 @@ export default observer((props) => {
         }}
       />
       {paymentsStore.submittingSubscription ? (
-        <RectButton style={styles.submitPayment}>
+        <Pressable style={styles.submitPayment}>
           <P style={styles.submitPaymentText}>Submitting Transaction...</P>
-        </RectButton>
+        </Pressable>
       ) : (
-        <RectButton style={styles.submitPayment} onPress={submit}>
+        <Pressable style={styles.submitPayment} onPress={submit}>
           <P style={styles.submitPaymentText}>Submit Payment</P>
-        </RectButton>
+        </Pressable>
       )}
     </View>
   );

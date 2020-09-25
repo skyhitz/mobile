@@ -1,9 +1,8 @@
 import React from 'react';
 import { Nav } from '@expo/html-elements';
 import SkyhitzLogo from './SkyhitzLogo';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default () => {
   const { navigate } = useNavigation();
@@ -19,10 +18,7 @@ export default () => {
         justifyContent: 'space-between',
       }}
     >
-      <TouchableOpacity
-        onPress={() => navigate('WebApp')}
-        style={styles.logoWrap}
-      >
+      <Pressable onPress={() => navigate('WebApp')} style={styles.logoWrap}>
         <View
           style={{
             display: 'flex',
@@ -34,7 +30,7 @@ export default () => {
           <SkyhitzLogo />
           <Text style={styles.logo}>SKYHITZ</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       <View
         style={{
           height: 56,
@@ -48,12 +44,9 @@ export default () => {
         <Text onPress={() => navigate('SignIn')} style={styles.defaultText}>
           Log in
         </Text>
-        <TouchableOpacity
-          onPress={() => navigate('SignUp')}
-          style={styles.signUpWrap}
-        >
+        <Pressable onPress={() => navigate('SignUp')} style={styles.signUpWrap}>
           <Text style={styles.signUpText}>Sign Up</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </Nav>
   );

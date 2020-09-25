@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 
@@ -24,21 +23,21 @@ export default observer(({ entry }) => {
   }
   if (isLiked()) {
     return (
-      <TouchableOpacity onPress={handleToggle}>
+      <Pressable onPress={handleToggle}>
         <View style={styles.field}>
           <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
           <Text style={styles.textLiked}>Like</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   return (
-    <TouchableOpacity onPress={handleToggle}>
+    <Pressable onPress={handleToggle}>
       <View style={styles.field}>
         <EvilIcons name={'like'} size={32} color={Colors.dividerBackground} />
         <Text style={styles.text}>Like</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 });
 

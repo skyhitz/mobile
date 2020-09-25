@@ -4,7 +4,7 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
+  Pressable,
   Platform,
 } from 'react-native';
 import Layout from 'app/constants/Layout';
@@ -24,7 +24,7 @@ export default ({
   const { navigate } = useNavigation();
   return (
     <View key={entry.id} style={styles.rowWrap}>
-      <TouchableOpacity
+      <Pressable
         onPress={() => {
           // Clear the cue and disable playlist mode if user is searching
           if (disablePlaylistMode) {
@@ -54,7 +54,7 @@ export default ({
             </Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       <ThreeDots
         onPress={() =>
           navigate('EntryOptionsModal', {

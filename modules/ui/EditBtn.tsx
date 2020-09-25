@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,9 +10,9 @@ const EditBtn = () => {
     navigate('EditProfileModal');
   };
   return (
-    <TouchableOpacity style={styles.btn} onPress={handleOnPress}>
+    <Pressable style={styles.btn} onPress={handleOnPress}>
       <Text style={styles.white}>Edit</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

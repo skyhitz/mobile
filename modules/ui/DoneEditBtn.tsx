@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { Stores } from 'app/functions/Stores';
@@ -14,7 +14,7 @@ const DoneEditBtn = observer(() => {
     goBack();
   };
   return (
-    <TouchableOpacity
+    <Pressable
       style={styles.btn}
       onPress={closeProfileModal}
       disabled={!editProfileStore.canUpdate}
@@ -27,7 +27,7 @@ const DoneEditBtn = observer(() => {
       >
         Done
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 });
 

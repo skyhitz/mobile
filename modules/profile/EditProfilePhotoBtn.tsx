@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, Platform } from 'react-native';
+import { Pressable, StyleSheet, Text, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { inject } from 'mobx-react';
@@ -37,12 +37,12 @@ export default class EditProfilePhotoBtn extends React.Component<any, any> {
   }
   render() {
     return (
-      <TouchableOpacity
+      <Pressable
         style={styles.btn}
         onPress={this.changeProfilePhoto.bind(this)}
       >
         <Text style={{ color: Colors.white }}>Change Profile Photo</Text>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 }

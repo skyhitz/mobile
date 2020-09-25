@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 type Stores = typeof stores;
@@ -13,21 +12,15 @@ const ShuffleBtn = inject((stores: Stores) => ({
 }))(({ toggleShuffle, shuffle }: any) => {
   if (shuffle) {
     return (
-      <TouchableOpacity
-        style={styles.controlTouch}
-        onPress={() => toggleShuffle()}
-      >
+      <Pressable style={styles.controlTouch} onPress={() => toggleShuffle()}>
         <Feather name="shuffle" size={20} color={Colors.lightBrandBlue} />
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   return (
-    <TouchableOpacity
-      style={styles.controlTouch}
-      onPress={() => toggleShuffle()}
-    >
+    <Pressable style={styles.controlTouch} onPress={() => toggleShuffle()}>
       <Feather name="shuffle" size={20} color="white" />
-    </TouchableOpacity>
+    </Pressable>
   );
 });
 

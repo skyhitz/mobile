@@ -1,33 +1,28 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import {  observer } from 'mobx-react';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { observer } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
-import { RectButton } from 'react-native-gesture-handler';
 
-export default observer(({onPress}) => {
+export default observer(({ onPress }) => {
   let { playerStore } = Stores();
 
   return (
     <View style={styles.playerNav}>
-      <RectButton
-       {...{ onPress }}
-        style={styles.arrowDownTouchableArea}
-      >
+      <Pressable {...{ onPress }} style={styles.arrowDownTouchableArea}>
         <EvilIcons
           name={'chevron-down'}
           size={36}
           color={Colors.white}
           style={styles.arrowDown}
         />
-      </RectButton>
+      </Pressable>
       <Text style={styles.header}>{playerStore.entry?.artist}</Text>
       <View style={styles.rightOptions} />
-    </View >
+    </View>
   );
 });
-
 
 let styles = StyleSheet.create({
   playerNav: {

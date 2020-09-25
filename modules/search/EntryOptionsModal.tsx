@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import LikeOptionRow from 'app/modules/search/LikeOptionRow';
@@ -53,9 +53,9 @@ export default observer(({ route }) => {
         {previousScreen === 'MyMusicScreen' ? renderSetPrice(entry) : null}
       </View>
       <View style={styles.bottomWrap}>
-        <TouchableOpacity onPress={() => goBack()}>
+        <Pressable onPress={() => goBack()}>
           <Text style={styles.btnText}>Cancel</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

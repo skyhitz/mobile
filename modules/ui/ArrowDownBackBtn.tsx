@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
@@ -7,17 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 export default () => {
   const { goBack } = useNavigation();
   return (
-    <TouchableOpacity
-      onPress={() => goBack()}
-      style={styles.arrowDownTouchableArea}
-    >
+    <Pressable onPress={() => goBack()} style={styles.arrowDownTouchableArea}>
       <EvilIcons
         name={'chevron-down'}
         size={36}
         color={Colors.white}
         style={styles.arrowDown}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

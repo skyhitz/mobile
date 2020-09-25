@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, Pressable } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Stores } from 'app/functions/Stores';
 
@@ -10,21 +9,21 @@ export default observer(() => {
 
   if (playerStore.isPlaying) {
     return (
-      <TouchableOpacity
+      <Pressable
         style={styles.playBtnWrapper}
         onPress={() => playerStore.pauseAsync()}
       >
         <Feather name="pause" size={18} color="white" />
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   return (
-    <TouchableOpacity
+    <Pressable
       style={styles.playBtnWrapper}
       onPress={() => playerStore.playAsync()}
     >
       <Feather name="play" size={18} color="white" />
-    </TouchableOpacity>
+    </Pressable>
   );
 });
 

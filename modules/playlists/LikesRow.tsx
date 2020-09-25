@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { EvilIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react';
@@ -27,7 +27,7 @@ export default observer(() => {
   return (
     <View style={styles.rowWrap}>
       <View style={styles.rowWrap}>
-        <TouchableOpacity onPress={handleLikesNavigation}>
+        <Pressable onPress={handleLikesNavigation}>
           <View style={styles.row}>
             <View style={styles.leftSection}>
               <EvilIcons name={'like'} size={30} color={Colors.brandBlue} />
@@ -42,7 +42,7 @@ export default observer(() => {
               />
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

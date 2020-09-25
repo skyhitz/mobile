@@ -3,7 +3,7 @@ import { User } from '../models';
 import { userBackend } from '../backends/user.backend';
 import { forceSignOut } from '../backends/apollo-client.backend';
 import { SignUpForm, SignInForm } from '../types';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export class SessionStore {
   public session: { user: User | null } & IObservableObject = observable({

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   Dimensions,
@@ -9,7 +8,6 @@ import {
   Platform,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
 import Input from 'app/modules/ui/Input';
 import Colors from 'app/constants/Colors';
 import Ionicon from 'react-native-vector-icons/Ionicons';

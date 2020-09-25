@@ -6,7 +6,7 @@ import {
   View,
   Text,
   TouchableHighlight,
-  TouchableOpacity,
+  Pressable,
   TextInput,
   ActivityIndicator,
   Platform,
@@ -119,13 +119,12 @@ export default observer((props) => {
             <Text style={styles.joinTextBtn}>Log In</Text>
           )}
         </TouchableHighlight>
-        <TouchableOpacity
+        <Pressable
           style={styles.forgotPass}
           onPress={() => navigate('ResetPassword')}
-          activeOpacity={0.8}
         >
           <Text style={styles.forgotPassText}>Forgot your password?</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </BackgroundImage>
   );

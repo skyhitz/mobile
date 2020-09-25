@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -19,21 +18,21 @@ export default class LikeBtn extends React.Component<any, any> {
     }
     if (this.props.isLiked) {
       return (
-        <TouchableOpacity
+        <Pressable
           style={styles.controlTouch}
           onPress={() => this.props.toggleLike(this.props.entry)}
         >
           <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
-        </TouchableOpacity>
+        </Pressable>
       );
     }
     return (
-      <TouchableOpacity
+      <Pressable
         style={styles.controlTouch}
         onPress={() => this.props.toggleLike(this.props.entry)}
       >
         <EvilIcons name={'like'} size={32} color={Colors.dividerBackground} />
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 }

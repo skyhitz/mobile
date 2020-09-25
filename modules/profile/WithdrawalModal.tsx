@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  TouchableOpacity,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -41,9 +41,9 @@ export default observer((props) => {
   return (
     <View style={styles.modal}>
       <View style={styles.modalWrap}>
-        <TouchableOpacity style={styles.closeBtn} onPress={() => goBack()}>
+        <Pressable style={styles.closeBtn} onPress={() => goBack()}>
           <MaterialIcons name="close" size={28} color={Colors.white} />
-        </TouchableOpacity>
+        </Pressable>
         <View>
           <Text style={styles.modalTitle}>Withdraw credits</Text>
         </View>

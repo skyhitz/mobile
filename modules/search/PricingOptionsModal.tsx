@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  Pressable,
   TextInput,
   Switch,
 } from 'react-native';
@@ -120,12 +120,12 @@ export default class PricingOptionsModal extends React.Component<any, any> {
         </View>
 
         <View style={styles.bottomWrap}>
-          <TouchableOpacity onPress={() => this.handleUpdatePricing(entry)}>
+          <Pressable onPress={() => this.handleUpdatePricing(entry)}>
             <Text style={styles.btnText}>Done</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+          </Pressable>
+          <Pressable onPress={() => this.props.navigation.goBack()}>
             <Text style={styles.btnText}>Cancel</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     );

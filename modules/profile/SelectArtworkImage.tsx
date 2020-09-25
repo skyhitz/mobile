@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  TouchableOpacity,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -57,11 +57,11 @@ export default class SelectArtworkImage extends React.Component<any, any> {
     }
     if (!this.props.playlistPhotoUrl) {
       return (
-        <TouchableOpacity onPress={this.selectImage.bind(this)}>
+        <Pressable onPress={this.selectImage.bind(this)}>
           <View style={styles.imageLoader}>
             <FontAwesome name={'plus'} size={25} color={Colors.white} />
           </View>
-        </TouchableOpacity>
+        </Pressable>
       );
     }
     return (
@@ -75,12 +75,9 @@ export default class SelectArtworkImage extends React.Component<any, any> {
     return (
       <View style={styles.wrap}>
         {this.renderImage()}
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={this.selectImage.bind(this)}
-        >
+        <Pressable style={styles.btn} onPress={this.selectImage.bind(this)}>
           <Text style={{ color: Colors.white }}>Select Artwork</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     );
   }

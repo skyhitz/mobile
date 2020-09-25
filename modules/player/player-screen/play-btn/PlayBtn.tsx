@@ -1,12 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
 import { Feather } from '@expo/vector-icons';
 import {
   ReplayIcon,
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stores } from 'app/functions/Stores';
 
 export default observer(() => {
@@ -14,7 +13,7 @@ export default observer(() => {
 
   if (playerStore.playbackState === 'PAUSED') {
     return (
-      <TouchableOpacity
+      <Pressable
         style={styles.controlTouch}
         onPress={() => playerStore.togglePlay()}
       >
@@ -28,12 +27,12 @@ export default observer(() => {
             />
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   if (playerStore.playbackState === 'PLAYING') {
     return (
-      <TouchableOpacity
+      <Pressable
         style={styles.controlTouch}
         onPress={() => playerStore.togglePlay()}
       >
@@ -47,12 +46,12 @@ export default observer(() => {
             />
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   if (playerStore.playbackState === 'ENDED') {
     return (
-      <TouchableOpacity
+      <Pressable
         style={styles.controlTouch}
         onPress={() => playerStore.replay()}
       >
@@ -61,7 +60,7 @@ export default observer(() => {
             <ReplayIcon />
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   return (

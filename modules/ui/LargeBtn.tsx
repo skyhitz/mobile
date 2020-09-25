@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { Feather } from '@expo/vector-icons';
 
@@ -12,7 +12,7 @@ export default class LargeBtn extends React.Component<any, any> {
   }
   render() {
     return (
-      <TouchableOpacity
+      <Pressable
         style={this.getStyles()}
         onPress={this.props.onPress}
         disabled={this.props.disabled}
@@ -26,7 +26,7 @@ export default class LargeBtn extends React.Component<any, any> {
             color="white"
           />
         ) : null}
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 }

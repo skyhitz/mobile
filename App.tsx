@@ -4,12 +4,9 @@ import Providers from 'app/modules/providers/Providers';
 import { View, Text } from 'react-native';
 import '@expo/match-media';
 import useCachedResources from './functions/CacheResourcesAsync';
-// import { Images } from './assets/images/Images';
-// import { useAssets } from 'expo-asset';
 
 export default () => {
   const isLoadingComplete = useCachedResources();
-  // const [assets] = useAssets(Images);
 
   if (!isLoadingComplete) {
     return null;

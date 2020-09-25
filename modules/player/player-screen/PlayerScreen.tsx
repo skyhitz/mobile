@@ -1,6 +1,11 @@
 import React from 'react';
-import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import {
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Pressable,
+} from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import VideoPlayer from './video-player/VideoPlayer';
 import PlayerEntryInfo from './PlayerEntryInfo';
@@ -62,12 +67,12 @@ export default observer(() => {
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
-        <RectButton
+        <Pressable
           style={styles.button}
           onPress={() => playerStore.hidePlayer()}
         >
           <Icon name="chevron-down" color="white" size={24} />
-        </RectButton>
+        </Pressable>
       </View>
       <VideoPlayer />
       <PlayerEntryInfo />

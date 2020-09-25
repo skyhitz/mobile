@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import SelectMediaFile from 'app/modules/profile/SelectMediaFile';
@@ -18,7 +18,7 @@ export default class UploadMusicModal extends React.Component<any, any> {
     return (
       <View style={styles.modal}>
         <View style={styles.modalWrap}>
-          <TouchableOpacity
+          <Pressable
             style={styles.closeBtn}
             onPress={() => {
               this.props.clearUploadingError();
@@ -26,7 +26,7 @@ export default class UploadMusicModal extends React.Component<any, any> {
             }}
           >
             <MaterialIcons name="close" size={28} color={Colors.white} />
-          </TouchableOpacity>
+          </Pressable>
           <View>
             <Text style={styles.modalTitle}>New Beat</Text>
           </View>

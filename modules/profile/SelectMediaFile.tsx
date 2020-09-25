@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  TouchableOpacity,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -162,11 +162,11 @@ export default class SelectMediaFile extends React.Component<any, any> {
       );
     }
     return (
-      <TouchableOpacity onPress={this.selectVideo.bind(this)}>
+      <Pressable onPress={this.selectVideo.bind(this)}>
         <CircleWrap>
           <Text style={{ color: Colors.white }}>Select Video</Text>
         </CircleWrap>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 
@@ -209,11 +209,11 @@ export default class SelectMediaFile extends React.Component<any, any> {
     }
     if (!this.props.artworkUrl) {
       return (
-        <TouchableOpacity onPress={this.selectArtwork.bind(this)}>
+        <Pressable onPress={this.selectArtwork.bind(this)}>
           <CircleWrap>
             <Text style={{ color: Colors.white }}>Select Artwork</Text>
           </CircleWrap>
-        </TouchableOpacity>
+        </Pressable>
       );
     }
     return (

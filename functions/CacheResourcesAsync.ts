@@ -8,6 +8,8 @@ import {
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
+import { useAssets } from 'expo-asset';
+import { Images } from 'app/assets/images/Images';
 
 enum FontDisplay {
   AUTO = 'auto',
@@ -19,6 +21,7 @@ enum FontDisplay {
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
+  const [assets] = useAssets(Images);
 
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
@@ -51,5 +54,5 @@ export default function useCachedResources() {
     loadResourcesAndDataAsync();
   }, []);
 
-  return isLoadingComplete;
+  return isLoadingComplete && assets;
 }

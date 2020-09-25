@@ -1,11 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Pressable } from 'react-native';
 
 const centeredContentWidth = 60;
 
-const Control = ({ callback, center, children, ...otherProps }: any) => (
-  <TouchableOpacity
+export default ({ callback, center, children, ...otherProps }: any) => (
+  <Pressable
     {...otherProps}
     hitSlop={{ top: 20, left: 20, bottom: 20, right: 20 }}
     onPress={() => {
@@ -27,7 +26,5 @@ const Control = ({ callback, center, children, ...otherProps }: any) => (
     >
       {children}
     </View>
-  </TouchableOpacity>
+  </Pressable>
 );
-
-export default Control;

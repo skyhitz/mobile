@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   Button,
@@ -10,12 +9,11 @@ import {
   ActivityIndicator,
   Text,
   Platform,
+  Pressable,
 } from 'react-native';
 import Colors from 'app/constants/Colors';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import ViewPropTypes from 'app/modules/ui/ViewPropTypes';
 import Input from 'app/modules/ui/Input';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const IOS_GRAY = Colors.searchTextColor;
@@ -133,36 +131,13 @@ class SearchBar extends Component {
             rightIconContainerStyle,
           ]}
         />
-        <TouchableOpacity onPress={this.cancel}>
+        <Pressable onPress={this.cancel}>
           <Text style={styles.cancelBtn}>{'Cancel'}</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     );
   }
 }
-
-SearchBar.propTypes = {
-  clearIcon: PropTypes.bool,
-  loadingProps: PropTypes.object,
-  noIcon: PropTypes.bool,
-  showLoading: PropTypes.bool,
-  onCancel: PropTypes.func,
-  containerStyle: ViewPropTypes.style,
-  leftIcon: PropTypes.object,
-  leftIconContainerStyle: ViewPropTypes.style,
-  rightIconContainerStyle: ViewPropTypes.style,
-  inputStyle: Text.propTypes.style,
-  placeholderTextColor: PropTypes.string,
-};
-
-SearchBar.defaultProps = {
-  clearIcon: true,
-  loadingProps: {},
-  noIcon: false,
-  showLoading: false,
-  onCancel: null,
-  placeholderTextColor: IOS_GRAY,
-};
 
 const styles = StyleSheet.create({
   container: {

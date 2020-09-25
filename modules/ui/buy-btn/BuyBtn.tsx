@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
@@ -25,14 +24,11 @@ export default observer(() => {
   }
   return (
     <View style={styles.wrap}>
-      <TouchableOpacity
-        style={styles.controlTouch}
-        onPress={showBuyOptionsModal}
-      >
+      <Pressable style={styles.controlTouch} onPress={showBuyOptionsModal}>
         <Text style={styles.creditsText}>
           ${playerStore.entry.price} - Buy Now
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 });

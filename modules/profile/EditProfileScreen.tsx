@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -211,7 +211,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
           {this.renderWithdrawalXLM()}
           <Text style={styles.privateInfo}>More</Text>
           <View style={styles.inputContainerBottom}>
-            <TouchableOpacity
+            <Pressable
               style={styles.fieldWithoutBorder}
               onPress={this.handleLogOut.bind(this)}
             >
@@ -224,7 +224,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
                 />
                 <Text style={styles.input}>Log Out</Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </KeyboardAvoidingView>
       </View>

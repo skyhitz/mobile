@@ -1,7 +1,7 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { observable } from 'mobx';
 import { Config } from '../config';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 let networkInterface = createNetworkInterface({
   uri: Config.GRAPHQL_URL,

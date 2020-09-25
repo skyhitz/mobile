@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
 import { Stores } from 'app/functions/Stores';
@@ -12,7 +12,7 @@ export default observer(({ user }) => {
   return (
     <View style={styles.rowWrap}>
       <View style={styles.rowWrap}>
-        <TouchableOpacity
+        <Pressable
           onPress={() => {
             profileStore.getProfileInfo(user).then((entries: any) => {
               playerStore.setPlaylistMode(entries);
@@ -29,7 +29,7 @@ export default observer(({ user }) => {
               <Text style={styles.displayName}>{user.displayName}</Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
