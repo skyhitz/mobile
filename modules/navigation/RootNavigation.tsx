@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { observer } from 'mobx-react';
 import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
@@ -12,9 +12,6 @@ import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
 import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
 import { Stores } from 'app/functions/Stores';
-import { loadResourcesAsync } from 'app/functions/LoadResourcesAsync';
-import { Asset } from 'expo-asset';
-import { Images } from 'app/assets/images/Images';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import CancelEditBtn from 'app/modules/ui/CancelEditBtn';
@@ -39,12 +36,8 @@ export default observer(() => {
 
   StatusBar.setBarStyle('light-content');
 
-  const loadAssets = async () => {
-    return Promise.all([Asset.loadAsync(Images), loadResourcesAsync()]);
-  };
-
   const loadAll = async () => {
-    [await loadAssets(), await sessionStore.loadSession()];
+    await sessionStore.loadSession();
     setLoaded(true);
   };
 
