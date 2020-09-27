@@ -4,6 +4,7 @@ import { inject } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -19,7 +20,7 @@ export default class LikeBtn extends React.Component<any, any> {
     if (this.props.isLiked) {
       return (
         <Pressable
-          style={styles.controlTouch}
+          style={[styles.controlTouch, cursorPointer]}
           onPress={() => this.props.toggleLike(this.props.entry)}
         >
           <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />

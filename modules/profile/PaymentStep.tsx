@@ -13,6 +13,7 @@ import {
 import { P, H3 } from '@expo/html-elements';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer((props) => {
   const [selectedOption, setSelectedOption] = useState('subscription');
@@ -155,11 +156,14 @@ export default observer((props) => {
         }}
       />
       {paymentsStore.submittingSubscription ? (
-        <Pressable style={styles.submitPayment}>
+        <Pressable style={[styles.submitPayment, cursorPointer]}>
           <P style={styles.submitPaymentText}>Submitting Transaction...</P>
         </Pressable>
       ) : (
-        <Pressable style={styles.submitPayment} onPress={submit}>
+        <Pressable
+          style={[styles.submitPayment, cursorPointer]}
+          onPress={submit}
+        >
           <P style={styles.submitPaymentText}>Submit Payment</P>
         </Pressable>
       )}

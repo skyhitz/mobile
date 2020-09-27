@@ -8,6 +8,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Config } from 'app/skyhitz-common/src/config/index';
 import PaymentStep from './PaymentStep';
+import cursorPointer from 'app/constants/CursorPointer';
 
 let stripePromise;
 
@@ -21,7 +22,7 @@ export default observer((props) => {
     <View style={styles.modal}>
       <View style={styles.modalWrap}>
         <Pressable
-          style={styles.closeBtn}
+          style={[styles.closeBtn, cursorPointer]}
           onPress={() => {
             entryStore.clearUploadingError();
             props.navigation.goBack();

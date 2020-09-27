@@ -11,6 +11,7 @@ import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default ({
   play,
@@ -35,7 +36,7 @@ export default ({
           }
         }}
       >
-        <View style={styles.row}>
+        <View style={[styles.row, cursorPointer]}>
           <Image source={{ uri: entry.imageUrlSmall }} style={styles.thumb} />
           <View style={styles.infoWrap}>
             <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>

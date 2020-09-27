@@ -3,6 +3,7 @@ import { Nav } from '@expo/html-elements';
 import SkyhitzLogo from './SkyhitzLogo';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default () => {
   const { navigate } = useNavigation();
@@ -45,7 +46,7 @@ export default () => {
           Log in
         </Text>
         <Pressable onPress={() => navigate('SignUp')} style={styles.signUpWrap}>
-          <Text style={styles.signUpText}>Sign Up</Text>
+          <Text style={[styles.signUpText, cursorPointer]}>Sign Up</Text>
         </Pressable>
       </View>
     </Nav>
