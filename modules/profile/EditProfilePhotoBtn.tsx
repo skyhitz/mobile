@@ -5,6 +5,7 @@ import * as Permissions from 'expo-permissions';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -38,7 +39,7 @@ export default class EditProfilePhotoBtn extends React.Component<any, any> {
   render() {
     return (
       <Pressable
-        style={styles.btn}
+        style={[styles.btn, cursorPointer]}
         onPress={this.changeProfilePhoto.bind(this)}
       >
         <Text style={{ color: Colors.white }}>Change Profile Photo</Text>

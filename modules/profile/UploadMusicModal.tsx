@@ -6,6 +6,7 @@ import SelectMediaFile from 'app/modules/profile/SelectMediaFile';
 import Layout from 'app/constants/Layout';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -19,7 +20,7 @@ export default class UploadMusicModal extends React.Component<any, any> {
       <View style={styles.modal}>
         <View style={styles.modalWrap}>
           <Pressable
-            style={styles.closeBtn}
+            style={[styles.closeBtn, cursorPointer]}
             onPress={() => {
               this.props.clearUploadingError();
               this.props.navigation.goBack();

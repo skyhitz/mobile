@@ -15,6 +15,7 @@ import LikersSection from './likers-section/LikersSection';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
+import cursorPointer from 'app/constants/CursorPointer';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -68,7 +69,7 @@ export default observer(() => {
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
         <Pressable
-          style={styles.button}
+          style={[styles.button, cursorPointer]}
           onPress={() => playerStore.hidePlayer()}
         >
           <Icon name="chevron-down" color="white" size={24} />

@@ -7,6 +7,7 @@ import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
 import SetPrice from 'app/modules/search/SetPrice';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
 export default observer(({ route }) => {
@@ -53,7 +54,7 @@ export default observer(({ route }) => {
         {previousScreen === 'MyMusicScreen' ? renderSetPrice(entry) : null}
       </View>
       <View style={styles.bottomWrap}>
-        <Pressable onPress={() => goBack()}>
+        <Pressable style={cursorPointer} onPress={() => goBack()}>
           <Text style={styles.btnText}>Cancel</Text>
         </Pressable>
       </View>

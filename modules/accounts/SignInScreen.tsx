@@ -14,6 +14,7 @@ import {
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer((props) => {
   const { signInValidationStore, sessionStore } = Stores();
@@ -120,7 +121,7 @@ export default observer((props) => {
           )}
         </TouchableHighlight>
         <Pressable
-          style={styles.forgotPass}
+          style={[styles.forgotPass, cursorPointer]}
           onPress={() => navigate('ResetPassword')}
         >
           <Text style={styles.forgotPassText}>Forgot your password?</Text>

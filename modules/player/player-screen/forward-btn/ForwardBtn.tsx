@@ -3,12 +3,16 @@ import { StyleSheet, Pressable } from 'react-native';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
 import { Feather } from '@expo/vector-icons';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 const ForwardBtn = inject((stores: Stores) => ({
   playNext: stores.playerStore.playNext.bind(stores.playerStore),
 }))(({ playNext }: any) => (
-  <Pressable style={styles.controlTouch} onPress={() => playNext()}>
+  <Pressable
+    style={[styles.controlTouch, cursorPointer]}
+    onPress={() => playNext()}
+  >
     <Feather name="fast-forward" size={24} color="white" />
   </Pressable>
 ));

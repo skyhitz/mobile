@@ -29,7 +29,7 @@ export default class LikeBtn extends React.Component<any, any> {
     }
     return (
       <Pressable
-        style={styles.controlTouch}
+        style={[styles.controlTouch, cursorPointer]}
         onPress={() => this.props.toggleLike(this.props.entry)}
       >
         <EvilIcons name={'like'} size={32} color={Colors.dividerBackground} />

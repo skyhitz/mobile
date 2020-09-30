@@ -1,19 +1,20 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Stores } from 'app/functions/Stores';
 import Colors from 'app/constants/Colors';
 import { EvilIcons } from '@expo/vector-icons';
 import PlayBtnSmall from './play-btn-small/PlayBtnSmall';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer(() => {
   let { playerStore } = Stores();
 
   return (
     <View style={styles.bg}>
-      <TouchableWithoutFeedback
+      <Pressable
         onPress={() => playerStore.showPlayer()}
-        style={styles.section}
+        style={[cursorPointer]}
       >
         <View style={styles.section}>
           <EvilIcons
@@ -32,7 +33,7 @@ export default observer(() => {
               : ''}
           </Text>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
       <PlayBtnSmall />
     </View>
   );
@@ -58,6 +59,7 @@ let styles = StyleSheet.create({
     fontSize: 12,
     color: 'white',
     paddingLeft: 4,
+    minWidth: 250,
   },
   arrowUp: {
     alignSelf: 'center',

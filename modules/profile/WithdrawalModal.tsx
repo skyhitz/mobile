@@ -13,6 +13,7 @@ import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer((props) => {
   const { paymentsStore } = Stores();
@@ -41,7 +42,10 @@ export default observer((props) => {
   return (
     <View style={styles.modal}>
       <View style={styles.modalWrap}>
-        <Pressable style={styles.closeBtn} onPress={() => goBack()}>
+        <Pressable
+          style={[styles.closeBtn, cursorPointer]}
+          onPress={() => goBack()}
+        >
           <MaterialIcons name="close" size={28} color={Colors.white} />
         </Pressable>
         <View>

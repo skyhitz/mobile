@@ -7,6 +7,7 @@ import {
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
 import { Stores } from 'app/functions/Stores';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer(() => {
   let { playerStore } = Stores();
@@ -14,7 +15,7 @@ export default observer(() => {
   if (playerStore.playbackState === 'PAUSED') {
     return (
       <Pressable
-        style={styles.controlTouch}
+        style={[styles.controlTouch, cursorPointer]}
         onPress={() => playerStore.togglePlay()}
       >
         <View style={styles.containerWrap}>
@@ -33,7 +34,7 @@ export default observer(() => {
   if (playerStore.playbackState === 'PLAYING') {
     return (
       <Pressable
-        style={styles.controlTouch}
+        style={[styles.controlTouch, cursorPointer]}
         onPress={() => playerStore.togglePlay()}
       >
         <View style={styles.containerWrap}>
@@ -52,7 +53,7 @@ export default observer(() => {
   if (playerStore.playbackState === 'ENDED') {
     return (
       <Pressable
-        style={styles.controlTouch}
+        style={[styles.controlTouch, cursorPointer]}
         onPress={() => playerStore.replay()}
       >
         <View style={styles.containerWrap}>

@@ -4,6 +4,7 @@ import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
 import { Feather } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 const ShuffleBtn = inject((stores: Stores) => ({
@@ -12,13 +13,19 @@ const ShuffleBtn = inject((stores: Stores) => ({
 }))(({ toggleShuffle, shuffle }: any) => {
   if (shuffle) {
     return (
-      <Pressable style={styles.controlTouch} onPress={() => toggleShuffle()}>
+      <Pressable
+        style={[styles.controlTouch, cursorPointer]}
+        onPress={() => toggleShuffle()}
+      >
         <Feather name="shuffle" size={20} color={Colors.lightBrandBlue} />
       </Pressable>
     );
   }
   return (
-    <Pressable style={styles.controlTouch} onPress={() => toggleShuffle()}>
+    <Pressable
+      style={[styles.controlTouch, cursorPointer]}
+      onPress={() => toggleShuffle()}
+    >
       <Feather name="shuffle" size={20} color="white" />
     </Pressable>
   );

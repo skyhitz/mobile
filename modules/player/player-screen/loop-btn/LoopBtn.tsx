@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { Feather } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer(() => {
   let { playerStore } = Stores();
@@ -11,7 +12,7 @@ export default observer(() => {
   if (playerStore.loop) {
     return (
       <Pressable
-        style={styles.controlTouch}
+        style={[styles.controlTouch, cursorPointer]}
         onPress={() => playerStore.toggleLoop()}
       >
         <Feather name="repeat" size={20} color={Colors.lightBrandBlue} />
@@ -20,7 +21,7 @@ export default observer(() => {
   }
   return (
     <Pressable
-      style={styles.controlTouch}
+      style={[styles.controlTouch, cursorPointer]}
       onPress={() => playerStore.toggleLoop()}
     >
       <Feather name="repeat" size={20} color={Colors.white} />

@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer(() => {
   let { userEntriesStore } = Stores();
@@ -26,7 +27,7 @@ export default observer(() => {
   return (
     <View style={styles.rowWrap}>
       <View style={styles.rowWrap}>
-        <Pressable onPress={handleNavigation}>
+        <Pressable style={cursorPointer} onPress={handleNavigation}>
           <View style={styles.row}>
             <View style={styles.leftSection}>
               <MaterialIcons

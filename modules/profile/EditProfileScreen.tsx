@@ -23,6 +23,7 @@ import {
 import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
 import * as stores from 'app/skyhitz-common';
 import LargeBtn from '../ui/LargeBtn';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -212,7 +213,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
           <Text style={styles.privateInfo}>More</Text>
           <View style={styles.inputContainerBottom}>
             <Pressable
-              style={styles.fieldWithoutBorder}
+              style={[styles.fieldWithoutBorder, cursorPointer]}
               onPress={this.handleLogOut.bind(this)}
             >
               <View>
