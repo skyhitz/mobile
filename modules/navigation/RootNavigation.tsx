@@ -10,7 +10,7 @@ import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
 import PaymentModal from 'app/modules/profile/PaymentModal';
 import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
 import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
-import AuthLoadingScreen from 'app/modules/accounts/AuthLoadingScreen';
+import LoadingScreen from 'app/modules/accounts/LoadingScreen';
 import { Stores } from 'app/functions/Stores';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
@@ -131,5 +131,5 @@ export default observer(() => {
       </NavigationContainer>
     );
   }
-  return <AuthLoadingScreen />;
+  return <LoadingScreen />;
 });
