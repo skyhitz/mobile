@@ -1,6 +1,11 @@
 import React from 'react';
-import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import {
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Pressable,
+} from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import VideoPlayer from './video-player/VideoPlayer';
 import PlayerEntryInfo from './PlayerEntryInfo';
@@ -10,6 +15,7 @@ import LikersSection from './likers-section/LikersSection';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
+import cursorPointer from 'app/constants/CursorPointer';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -62,12 +68,12 @@ export default observer(() => {
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
-        <RectButton
-          style={styles.button}
+        <Pressable
+          style={[styles.button, cursorPointer]}
           onPress={() => playerStore.hidePlayer()}
         >
           <Icon name="chevron-down" color="white" size={24} />
-        </RectButton>
+        </Pressable>
       </View>
       <VideoPlayer />
       <PlayerEntryInfo />

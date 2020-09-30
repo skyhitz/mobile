@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer(({ entry }) => {
   const { likesStore } = Stores();
@@ -24,21 +24,21 @@ export default observer(({ entry }) => {
   }
   if (isLiked()) {
     return (
-      <TouchableOpacity onPress={handleToggle}>
-        <View style={styles.field}>
+      <Pressable onPress={handleToggle}>
+        <View style={[styles.field, cursorPointer]}>
           <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
           <Text style={styles.textLiked}>Like</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   return (
-    <TouchableOpacity onPress={handleToggle}>
-      <View style={styles.field}>
+    <Pressable onPress={handleToggle}>
+      <View style={[styles.field, cursorPointer]}>
         <EvilIcons name={'like'} size={32} color={Colors.dividerBackground} />
         <Text style={styles.text}>Like</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 });
 

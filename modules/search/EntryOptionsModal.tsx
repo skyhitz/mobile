@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import LikeOptionRow from 'app/modules/search/LikeOptionRow';
@@ -7,6 +7,7 @@ import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
 import SetPrice from 'app/modules/search/SetPrice';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
 export default observer(({ route }) => {
@@ -53,9 +54,9 @@ export default observer(({ route }) => {
         {previousScreen === 'MyMusicScreen' ? renderSetPrice(entry) : null}
       </View>
       <View style={styles.bottomWrap}>
-        <TouchableOpacity onPress={() => goBack()}>
+        <Pressable style={cursorPointer} onPress={() => goBack()}>
           <Text style={styles.btnText}>Cancel</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

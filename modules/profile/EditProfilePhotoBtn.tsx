@@ -1,10 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, Platform } from 'react-native';
+import { Pressable, StyleSheet, Text, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -37,12 +38,12 @@ export default class EditProfilePhotoBtn extends React.Component<any, any> {
   }
   render() {
     return (
-      <TouchableOpacity
-        style={styles.btn}
+      <Pressable
+        style={[styles.btn, cursorPointer]}
         onPress={this.changeProfilePhoto.bind(this)}
       >
         <Text style={{ color: Colors.white }}>Change Profile Photo</Text>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 }

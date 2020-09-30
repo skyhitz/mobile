@@ -4,13 +4,14 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
+  Pressable,
   Platform,
 } from 'react-native';
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default ({
   play,
@@ -24,7 +25,8 @@ export default ({
   const { navigate } = useNavigation();
   return (
     <View key={entry.id} style={styles.rowWrap}>
-      <TouchableOpacity
+      <Pressable
+        style={cursorPointer}
         onPress={() => {
           // Clear the cue and disable playlist mode if user is searching
           if (disablePlaylistMode) {
@@ -54,7 +56,7 @@ export default ({
             </Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       <ThreeDots
         onPress={() =>
           navigate('EntryOptionsModal', {

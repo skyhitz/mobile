@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import { observer } from 'mobx-react';
@@ -12,9 +12,9 @@ export default observer(() => {
     likesStore.clearLikes();
   };
   return (
-    <TouchableOpacity style={styles.btn} onPress={handleLogOut}>
+    <Pressable style={styles.btn} onPress={handleLogOut}>
       <Ionicons name={'ios-log-out'} size={24} color={Colors.white} />
-    </TouchableOpacity>
+    </Pressable>
   );
 });
 

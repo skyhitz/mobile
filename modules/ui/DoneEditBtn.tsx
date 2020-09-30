@@ -1,9 +1,10 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { Stores } from 'app/functions/Stores';
 import { observer } from 'mobx-react';
+import cursorPointer from 'app/constants/CursorPointer';
 
 const DoneEditBtn = observer(() => {
   const { goBack } = useNavigation();
@@ -14,8 +15,8 @@ const DoneEditBtn = observer(() => {
     goBack();
   };
   return (
-    <TouchableOpacity
-      style={styles.btn}
+    <Pressable
+      style={[styles.btn, cursorPointer]}
       onPress={closeProfileModal}
       disabled={!editProfileStore.canUpdate}
     >
@@ -27,7 +28,7 @@ const DoneEditBtn = observer(() => {
       >
         Done
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 });
 

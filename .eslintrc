@@ -31,12 +31,6 @@
     "import/no-duplicates": 2,
     "import/named": 0,
     "import/no-unresolved": 0,
-    "react/prop-types": [
-      1,
-      {
-        "skipUndeclared": true
-      }
-    ],
     "prettier/prettier": [
       "error",
       {

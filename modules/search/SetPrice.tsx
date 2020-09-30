@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
@@ -13,12 +13,12 @@ export default ({ entry }) => {
   };
   if (!entry) return null;
   return (
-    <TouchableOpacity onPress={handleSetPrice}>
+    <Pressable onPress={handleSetPrice}>
       <View style={styles.field}>
         <MaterialIcons name={'attach-money'} size={30} color={Colors.white} />
         <Text style={styles.text}>Set Price</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
@@ -27,7 +27,7 @@ export default class RemoveFromMyMusicRow extends React.Component<any, any> {
       return null;
     }
     return (
-      <TouchableOpacity onPress={this.handleRemoveEntry.bind(this)}>
+      <Pressable onPress={this.handleRemoveEntry.bind(this)}>
         <View style={styles.field}>
           <MaterialIcons
             name={'remove-circle-outline'}
@@ -36,7 +36,7 @@ export default class RemoveFromMyMusicRow extends React.Component<any, any> {
           />
           <Text style={styles.text}>Remove from platform</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 }

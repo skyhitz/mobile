@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
@@ -10,7 +10,7 @@ export default observer((props) => {
   return (
     <View style={styles.modal}>
       <View style={styles.modalWrap}>
-        <TouchableOpacity
+        <Pressable
           style={styles.closeBtn}
           onPress={() => {
             entryStore.clearUploadingError();
@@ -18,7 +18,7 @@ export default observer((props) => {
           }}
         >
           <MaterialIcons name="close" size={28} color={Colors.white} />
-        </TouchableOpacity>
+        </Pressable>
         <View>
           <Text style={styles.modalTitle}>Buy Credits</Text>
         </View>

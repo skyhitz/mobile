@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  TouchableOpacity,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -22,6 +22,7 @@ import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import * as stores from 'app/skyhitz-common';
+import cursorPointer from 'app/constants/CursorPointer';
 
 type Stores = typeof stores;
 
@@ -162,11 +163,11 @@ export default class SelectMediaFile extends React.Component<any, any> {
       );
     }
     return (
-      <TouchableOpacity onPress={this.selectVideo.bind(this)}>
+      <Pressable style={cursorPointer} onPress={this.selectVideo.bind(this)}>
         <CircleWrap>
           <Text style={{ color: Colors.white }}>Select Video</Text>
         </CircleWrap>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 
@@ -209,11 +210,14 @@ export default class SelectMediaFile extends React.Component<any, any> {
     }
     if (!this.props.artworkUrl) {
       return (
-        <TouchableOpacity onPress={this.selectArtwork.bind(this)}>
+        <Pressable
+          style={cursorPointer}
+          onPress={this.selectArtwork.bind(this)}
+        >
           <CircleWrap>
             <Text style={{ color: Colors.white }}>Select Artwork</Text>
           </CircleWrap>
-        </TouchableOpacity>
+        </Pressable>
       );
     }
     return (

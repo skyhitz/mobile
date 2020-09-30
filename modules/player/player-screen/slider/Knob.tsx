@@ -1,12 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { State, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Colors from 'app/constants/Colors';
-
-interface KnobProps {
-  state: Animated.Node<State>;
-}
+import cursorPointer from 'app/constants/CursorPointer';
 
 export const KNOB_SIZE = 20;
 
@@ -24,14 +20,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ({ state }: KnobProps) => {
+export default ({ state }) => {
   return (
-    <View
-      style={[
-        styles.container,
-        Platform.OS === 'web' ? ({ cursor: 'pointer' } as any) : {},
-      ]}
-    >
+    <View style={[styles.container, cursorPointer]}>
       <Animated.View style={[styles.image]}></Animated.View>
     </View>
   );

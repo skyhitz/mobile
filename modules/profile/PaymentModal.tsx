@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Platform,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, View, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
@@ -14,6 +8,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Config } from 'app/skyhitz-common/src/config/index';
 import PaymentStep from './PaymentStep';
+import cursorPointer from 'app/constants/CursorPointer';
 
 let stripePromise;
 
@@ -26,15 +21,15 @@ export default observer((props) => {
   return (
     <View style={styles.modal}>
       <View style={styles.modalWrap}>
-        <TouchableOpacity
-          style={styles.closeBtn}
+        <Pressable
+          style={[styles.closeBtn, cursorPointer]}
           onPress={() => {
             entryStore.clearUploadingError();
             props.navigation.goBack();
           }}
         >
           <MaterialIcons name="close" size={28} color={Colors.white} />
-        </TouchableOpacity>
+        </Pressable>
         <View>
           <Text style={styles.modalTitle}>Buy Credits</Text>
           {Platform.OS === 'web' ? (

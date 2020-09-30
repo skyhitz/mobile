@@ -6,6 +6,7 @@ import {
   FullscreenExitIcon,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
 import * as stores from 'app/skyhitz-common';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 const FullscreenControl = inject((stores: Stores) => ({
@@ -23,11 +24,14 @@ const FullscreenControl = inject((stores: Stores) => ({
     dismissFullscreenPlayer,
   }: any) => (
     <Control
-      style={{
-        backgroundColor: 'transparent',
-        marginLeft: 10,
-        marginRight: 10,
-      }}
+      style={[
+        {
+          backgroundColor: 'transparent',
+          marginLeft: 10,
+          marginRight: 10,
+        },
+        cursorPointer,
+      ]}
       center={false}
       callback={() => {
         isOnFullScreenMode

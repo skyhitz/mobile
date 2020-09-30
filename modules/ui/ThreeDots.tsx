@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import cursorPointer from 'app/constants/CursorPointer';
 
 var styles = StyleSheet.create({
   dot: {
@@ -23,13 +23,13 @@ var styles = StyleSheet.create({
 export default class ThreeDots extends React.Component<any, any> {
   render() {
     return (
-      <TouchableOpacity onPress={this.props.onPress}>
-        <View style={styles.dots}>
+      <Pressable onPress={this.props.onPress}>
+        <View style={[styles.dots, cursorPointer]}>
           <View style={styles.dot} />
           <View style={styles.dot} />
           <View style={styles.dot} />
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 }

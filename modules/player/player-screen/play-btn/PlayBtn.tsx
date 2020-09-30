@@ -1,21 +1,21 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
 import { Feather } from '@expo/vector-icons';
 import {
   ReplayIcon,
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stores } from 'app/functions/Stores';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer(() => {
   let { playerStore } = Stores();
 
   if (playerStore.playbackState === 'PAUSED') {
     return (
-      <TouchableOpacity
-        style={styles.controlTouch}
+      <Pressable
+        style={[styles.controlTouch, cursorPointer]}
         onPress={() => playerStore.togglePlay()}
       >
         <View style={styles.containerWrap}>
@@ -28,13 +28,13 @@ export default observer(() => {
             />
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   if (playerStore.playbackState === 'PLAYING') {
     return (
-      <TouchableOpacity
-        style={styles.controlTouch}
+      <Pressable
+        style={[styles.controlTouch, cursorPointer]}
         onPress={() => playerStore.togglePlay()}
       >
         <View style={styles.containerWrap}>
@@ -47,13 +47,13 @@ export default observer(() => {
             />
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   if (playerStore.playbackState === 'ENDED') {
     return (
-      <TouchableOpacity
-        style={styles.controlTouch}
+      <Pressable
+        style={[styles.controlTouch, cursorPointer]}
         onPress={() => playerStore.replay()}
       >
         <View style={styles.containerWrap}>
@@ -61,7 +61,7 @@ export default observer(() => {
             <ReplayIcon />
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
   return (

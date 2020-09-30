@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer(() => {
   let { userEntriesStore } = Stores();
@@ -26,7 +27,7 @@ export default observer(() => {
   return (
     <View style={styles.rowWrap}>
       <View style={styles.rowWrap}>
-        <TouchableOpacity onPress={handleNavigation}>
+        <Pressable style={cursorPointer} onPress={handleNavigation}>
           <View style={styles.row}>
             <View style={styles.leftSection}>
               <MaterialIcons
@@ -45,7 +46,7 @@ export default observer(() => {
               />
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

@@ -1,12 +1,11 @@
 import React from 'react';
 import { H1, Main, P, A } from '@expo/html-elements';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import Colors from 'app/constants/Colors';
 import ScreenShots from './Screenshots';
-let Anchor: React.ComponentType<any> = A;
 import { useMediaQuery } from 'react-responsive';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 // https://apps.apple.com/us/app/skyhitz/id1105406020
 
@@ -34,21 +33,24 @@ export default function MainWrapper() {
           Upload exclusive beats for sale and buy fresh songwriting ideas from
           other music producers. Join a music community of beatmakers!
         </P>
-        <TouchableOpacity onPress={() => navigate('SignUp')}>
+        <Pressable onPress={() => navigate('SignUp')}>
           <View
-            style={{
-              minWidth: 200,
-              backgroundColor: Colors.white,
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingLeft: 14,
-              paddingRight: 14,
-              borderColor: Colors.black,
-              borderRadius: 30,
-              height: 48,
-              marginBottom: 60,
-              borderWidth: 2,
-            }}
+            style={[
+              {
+                minWidth: 200,
+                backgroundColor: Colors.white,
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingLeft: 14,
+                paddingRight: 14,
+                borderColor: Colors.black,
+                borderRadius: 30,
+                height: 48,
+                marginBottom: 60,
+                borderWidth: 2,
+              },
+              cursorPointer,
+            ]}
           >
             <Text
               style={{
@@ -60,7 +62,7 @@ export default function MainWrapper() {
               Sign up for free
             </Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
         <ScreenShots />
       </View>
     </Main>

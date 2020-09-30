@@ -385,7 +385,7 @@ export default class SideSwipe extends Component<any, State> {
     }
   };
 
-  getItemLayout = (data: Array<any>, index: number) => ({
+  getItemLayout = (data: any, index: number) => ({
     offset: this.props.itemWidth * index + this.props.contentOffset,
     length: this.props.itemWidth,
     index,

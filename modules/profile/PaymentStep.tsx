@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
-import { StyleSheet, View, TextInput, Platform } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
-import { P, A, H3 } from '@expo/html-elements';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Platform,
+  TouchableHighlight,
+  Pressable,
+} from 'react-native';
+import { P, H3 } from '@expo/html-elements';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer((props) => {
   const [selectedOption, setSelectedOption] = useState('subscription');
@@ -84,7 +91,7 @@ export default observer((props) => {
   return (
     <View style={styles.checkoutWrap}>
       <View style={styles.options}>
-        <A onPress={changeToSubscription}>
+        <TouchableHighlight onPress={changeToSubscription}>
           <View
             style={[
               styles.radio,
@@ -99,8 +106,8 @@ export default observer((props) => {
               </View>
             </View>
           </View>
-        </A>
-        <A onPress={changeToOneTime}>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={changeToOneTime}>
           <View
             style={[
               styles.radio,
@@ -130,7 +137,7 @@ export default observer((props) => {
               </View>
             </View>
           </View>
-        </A>
+        </TouchableHighlight>
       </View>
       <CardElement
         options={{
@@ -149,13 +156,16 @@ export default observer((props) => {
         }}
       />
       {paymentsStore.submittingSubscription ? (
-        <RectButton style={styles.submitPayment}>
+        <Pressable style={[styles.submitPayment, cursorPointer]}>
           <P style={styles.submitPaymentText}>Submitting Transaction...</P>
-        </RectButton>
+        </Pressable>
       ) : (
-        <RectButton style={styles.submitPayment} onPress={submit}>
+        <Pressable
+          style={[styles.submitPayment, cursorPointer]}
+          onPress={submit}
+        >
           <P style={styles.submitPaymentText}>Submit Payment</P>
-        </RectButton>
+        </Pressable>
       )}
     </View>
   );

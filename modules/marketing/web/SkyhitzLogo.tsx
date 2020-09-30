@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 
-const SkyhitzLogo = () => (
+export default () => (
   <Image
     source={{
       uri:
@@ -10,5 +10,3 @@ const SkyhitzLogo = () => (
     style={{ width: 42, height: 33.6 }}
   />
 );
-
-export default SkyhitzLogo;

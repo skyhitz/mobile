@@ -2,15 +2,13 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import Colors from 'app/constants/Colors';
 
-const AuthLoadingScreen = () => {
+export default () => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color={Colors.brandBlue} />
     </View>
   );
 };
-
-export default AuthLoadingScreen;
 
 const styles = StyleSheet.create({
   container: {

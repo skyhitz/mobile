@@ -31,6 +31,7 @@ export default () => {
     <Tab.Navigator
       swipeEnabled={true}
       tabBarPosition={'top'}
+      lazy={true}
       tabBarOptions={{
         activeTintColor: Colors.white,
         showIcon: false,

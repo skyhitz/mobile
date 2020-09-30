@@ -6,7 +6,7 @@ import {
   View,
   Text,
   TouchableHighlight,
-  TouchableOpacity,
+  Pressable,
   TextInput,
   ActivityIndicator,
   Platform,
@@ -14,6 +14,7 @@ import {
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
+import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer((props) => {
   const { signInValidationStore, sessionStore } = Stores();
@@ -119,13 +120,12 @@ export default observer((props) => {
             <Text style={styles.joinTextBtn}>Log In</Text>
           )}
         </TouchableHighlight>
-        <TouchableOpacity
-          style={styles.forgotPass}
+        <Pressable
+          style={[styles.forgotPass, cursorPointer]}
           onPress={() => navigate('ResetPassword')}
-          activeOpacity={0.8}
         >
           <Text style={styles.forgotPassText}>Forgot your password?</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </BackgroundImage>
   );

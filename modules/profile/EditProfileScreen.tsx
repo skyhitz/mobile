@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -23,6 +23,7 @@ import {
 import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
 import * as stores from 'app/skyhitz-common';
 import LargeBtn from '../ui/LargeBtn';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -211,8 +212,8 @@ export default class EditProfileScreen extends React.Component<any, any> {
           {this.renderWithdrawalXLM()}
           <Text style={styles.privateInfo}>More</Text>
           <View style={styles.inputContainerBottom}>
-            <TouchableOpacity
-              style={styles.fieldWithoutBorder}
+            <Pressable
+              style={[styles.fieldWithoutBorder, cursorPointer]}
               onPress={this.handleLogOut.bind(this)}
             >
               <View>
@@ -224,7 +225,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
                 />
                 <Text style={styles.input}>Log Out</Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </KeyboardAvoidingView>
       </View>

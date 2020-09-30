@@ -1,11 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import SelectMediaFile from 'app/modules/profile/SelectMediaFile';
 import Layout from 'app/constants/Layout';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
+import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -18,15 +19,15 @@ export default class UploadMusicModal extends React.Component<any, any> {
     return (
       <View style={styles.modal}>
         <View style={styles.modalWrap}>
-          <TouchableOpacity
-            style={styles.closeBtn}
+          <Pressable
+            style={[styles.closeBtn, cursorPointer]}
             onPress={() => {
               this.props.clearUploadingError();
               this.props.navigation.goBack();
             }}
           >
             <MaterialIcons name="close" size={28} color={Colors.white} />
-          </TouchableOpacity>
+          </Pressable>
           <View>
             <Text style={styles.modalTitle}>New Beat</Text>
           </View>
