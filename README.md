@@ -2,7 +2,7 @@
 
 Skyhitz is a beatmakers app for [iOS](https://apps.apple.com/us/app/skyhitz/id1105406020) and [Android](https://play.google.com/store/apps/details?id=com.skyhitz.skyhitz) designed to serve creators around the world so they can upload, buy and sell beats. It uses [Stellar](stellar.org) to facilitate transactions.
 
-- The app is built with [![Expo](https://img.shields.io/badge/Runs%20with%20Expo-000.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.io/)
+- The app [![runs with expo](https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.io/)
   using `Typescript`, `React` and `Mobx React`.
 - It consumes a [common module](https://github.com/skyhitz/common) that manages all the state of the app and makes requests to a [GraphQL Api](https://github.com/skyhitz/api).
 - Works on iOS and Android
