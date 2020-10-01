@@ -43,6 +43,12 @@ export default observer((props) => {
     setLoading(false);
   };
 
+  const onSubmit = (e) => {
+    if (e.nativeEvent.key == 'Enter') {
+      sendResetEmail();
+    }
+  };
+
   return (
     <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
@@ -61,6 +67,7 @@ export default observer((props) => {
             onChange={updateEmail}
             onChangeText={(value) => updateEmail({ target: { value: value } })}
             maxLength={34}
+            onKeyPress={onSubmit}
           />
         </View>
         <View

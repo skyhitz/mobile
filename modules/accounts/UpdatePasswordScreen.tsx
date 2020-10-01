@@ -52,6 +52,12 @@ const UpdatePassword: NavStatelessComponent = observer((props) => {
     setLoading(false);
   };
 
+  const onSubmit = (e) => {
+    if (e.nativeEvent.key == 'Enter') {
+      updatePassword();
+    }
+  };
+
   return (
     <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
@@ -72,6 +78,7 @@ const UpdatePassword: NavStatelessComponent = observer((props) => {
             onChangeText={(value) =>
               updatePasswordText({ target: { value: value } })
             }
+            onKeyPress={onSubmit}
           />
           <ValidationIcon
             isFieldValid={updatePasswordValidationStore.passwordValid}

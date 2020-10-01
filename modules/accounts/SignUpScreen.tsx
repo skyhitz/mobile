@@ -63,6 +63,12 @@ export default observer(() => {
     return setLoading(false);
   };
 
+  const onSubmit = (e) => {
+    if (e.nativeEvent.key == 'Enter') {
+      signUp();
+    }
+  };
+
   return (
     <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
@@ -141,6 +147,7 @@ export default observer(() => {
             onChangeText={(value) =>
               updatePassword({ target: { value: value } })
             }
+            onKeyPress={onSubmit}
           />
           <ValidationIcon isFieldValid={signUpValidationStore.passwordValid} />
         </View>
