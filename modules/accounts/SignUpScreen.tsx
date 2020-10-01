@@ -63,6 +63,12 @@ export default observer(() => {
     return setLoading(false);
   };
 
+  const onSubmit = (e) => {
+    if (e.nativeEvent.key == 'Enter') {
+      signUp();
+    }
+  };
+
   return (
     <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
@@ -141,6 +147,7 @@ export default observer(() => {
             onChangeText={(value) =>
               updatePassword({ target: { value: value } })
             }
+            onKeyPress={onSubmit}
           />
           <ValidationIcon isFieldValid={signUpValidationStore.passwordValid} />
         </View>
@@ -177,22 +184,6 @@ export default observer(() => {
 });
 
 var styles = StyleSheet.create({
-  background: {
-    width: '100%',
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  overlay: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: '100%',
-    height: '100%',
-    opacity: 0.4,
-    backgroundColor: Colors.overlayBackground,
-  },
   field: {
     height: 50,
     width: '100%',

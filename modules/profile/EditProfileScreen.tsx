@@ -57,6 +57,9 @@ type Stores = typeof stores;
 export default class EditProfileScreen extends React.Component<any, any> {
   async handleLogOut() {
     await this.props.logOut();
+    this.props.navigation.navigate(
+      Platform.OS === 'web' ? 'WebApp' : 'AuthScreen'
+    );
   }
   async handleWithdrawal() {
     this.props.navigation.navigate('WithdrawalModal');

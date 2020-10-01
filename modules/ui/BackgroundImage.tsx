@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
 
-const BackgroundImage = (props: any) => (
+export default (props: any) => (
   <ImageBackground
     source={{
       uri:
@@ -38,5 +38,3 @@ const BackgroundImage = (props: any) => (
     </ImageBackground>
   </ImageBackground>
 );
-
-export default BackgroundImage;

@@ -50,6 +50,12 @@ export default observer((props) => {
     signInValidationStore.validatePassword(target.value);
   };
 
+  const onSubmit = (e) => {
+    if (e.nativeEvent.key == 'Enter') {
+      signIn();
+    }
+  };
+
   return (
     <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
@@ -89,6 +95,7 @@ export default observer((props) => {
             onChangeText={(value) =>
               updatePassword({ target: { value: value } })
             }
+            onKeyPress={onSubmit}
           />
         </View>
         <View style={styles.errorContainer}>
@@ -132,13 +139,6 @@ export default observer((props) => {
 });
 
 let styles = StyleSheet.create({
-  background: {
-    width: '100%',
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   inputContainer: {
     alignSelf: 'center',
     marginTop: 0,
