@@ -16,11 +16,12 @@ export default () => {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         height: 60,
-        marginBottom: 20,
         marginTop: 20,
         alignItems: 'center',
         width: '94%',
         alignSelf: 'center',
+        position: 'absolute',
+        bottom: 0,
       }}
     >
       <Text
