@@ -132,13 +132,6 @@ export default observer((props) => {
 });
 
 let styles = StyleSheet.create({
-  background: {
-    width: '100%',
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   inputContainer: {
     alignSelf: 'center',
     marginTop: 0,

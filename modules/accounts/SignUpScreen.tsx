@@ -177,22 +177,6 @@ export default observer(() => {
 });
 
 var styles = StyleSheet.create({
-  background: {
-    width: '100%',
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  overlay: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: '100%',
-    height: '100%',
-    opacity: 0.4,
-    backgroundColor: Colors.overlayBackground,
-  },
   field: {
     height: 50,
     width: '100%',
