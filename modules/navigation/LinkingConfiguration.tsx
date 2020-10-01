@@ -4,6 +4,7 @@ export default {
   prefixes: [Linking.makeUrl('/')],
   config: {
     WebApp: '',
+    AuthScreen: 'accounts',
     SignUp: 'accounts/sign-up',
     SignIn: 'accounts/sign-in',
     ResetPassword: 'accounts/reset-password',
