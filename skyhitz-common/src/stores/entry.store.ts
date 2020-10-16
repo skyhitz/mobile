@@ -1,12 +1,13 @@
 import { observable, action, computed } from 'mobx';
 import {
-  cloudinaryApiVideoPath,
   preBase64String,
   cloudinaryApiPath,
+  cloudinaryPreset,
 } from '../constants/constants';
 import { SessionStore } from './session.store';
 import { entriesBackend } from '../backends/entries.backend';
 import UniqueIdGenerator from '../utils/unique-id-generator';
+import { Platform } from 'react-native';
 
 export class EntryStore {
   @observable uploadingVideo: boolean = false;
@@ -34,6 +35,9 @@ export class EntryStore {
   @observable
   price: number | undefined;
 
+  @observable
+  progress: number = 0;
+
   constructor(private sessionStore: SessionStore) {}
 
   @computed
@@ -44,22 +48,51 @@ export class EntryStore {
     return 'upload';
   }
 
-  async uploadVideo(video: any) {
+  async webVideoUpload(video: any) {
+    if (!this.sessionStore.user) return;
+
+    let id = UniqueIdGenerator.generate();
+    let xhr = new XMLHttpRequest();
+    let data = new FormData();
+    xhr.open('POST', cloudinaryApiPath, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    this.updateUploadingVideo(true);
+    xhr.upload.addEventListener('progress', (e) => {
+      this.progress = Math.round((e.loaded * 100.0) / e.total);
+    });
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        let { secure_url, etag } = JSON.parse(xhr.responseText);
+        this.updateUploadingVideo(false);
+        this.updateId(id);
+        this.updateEtag(etag);
+        this.updateVideoUrl(secure_url);
+      }
+    };
+    data.append('folder', `/app/${this.sessionStore.user.id}/videos`);
+    data.append('public_id', id);
+    data.append('upload_preset', cloudinaryPreset);
+    data.append('file', video.uri);
+    xhr.send(data);
+  }
+
+  async mobileVideoUpload(video: any) {
     if (!this.sessionStore.user) return;
 
     this.updateUploadingVideo(true);
     let id = UniqueIdGenerator.generate();
     let data: any = new FormData();
-    data.append('file', {
-      uri: video.uri,
-      name: video.uri.split('/').pop(),
-      type: 'video/mp4',
-    });
+    data.append('upload_preset', cloudinaryPreset);
+    data.append('file', video.uri);
     data.append('folder', `/app/${this.sessionStore.user.id}/videos`);
     data.append('public_id', id);
     let res;
     try {
-      res = await fetch(cloudinaryApiVideoPath, { method: 'POST', body: data });
+      res = await fetch(cloudinaryApiPath, {
+        method: 'POST',
+        body: data,
+      });
       let { secure_url, etag } = await res.json();
       this.updateUploadingVideo(false);
       this.updateId(id);
@@ -68,6 +101,10 @@ export class EntryStore {
     } catch (e) {
       this.uploadingError = 'Error uploading video, please try again!';
     }
+  }
+
+  async uploadVideo(video: any) {
+    return this.webVideoUpload(video);
   }
 
   @action
@@ -80,8 +117,9 @@ export class EntryStore {
 
     this.updateLoadingArtwork(true);
     let data = new FormData();
-    data.append('file', `${preBase64String}${image.base64}`);
+    data.append('file', image.uri);
     data.append('folder', `/app/${this.sessionStore.user.id}/images`);
+    data.append('upload_preset', cloudinaryPreset);
     let res = await fetch(cloudinaryApiPath, { method: 'POST', body: data });
     let { secure_url } = await res.json();
     this.updateArtworkUrl(secure_url);

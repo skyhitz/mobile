@@ -90,6 +90,7 @@ class CircleWrap extends React.Component<any, any> {
   updatePrice: stores.entryStore.updatePrice.bind(stores.entryStore),
   availableForSale: stores.entryStore.availableForSale,
   price: stores.entryStore.price,
+  progress: stores.entryStore.progress,
 }))
 export default class SelectMediaFile extends React.Component<any, any> {
   componentDidMount() {
@@ -123,6 +124,9 @@ export default class SelectMediaFile extends React.Component<any, any> {
       video = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: false,
+        base64: true,
+        quality: 1,
+        exif: true,
       });
     } catch (e) {
       console.log('error', e);
@@ -158,7 +162,9 @@ export default class SelectMediaFile extends React.Component<any, any> {
     if (this.props.uploadingVideo) {
       return (
         <CircleWrap>
-          <Text style={{ color: Colors.white }}>Uploading...</Text>
+          <Text style={{ color: Colors.white }}>
+            {this.props.progress + ' %'}
+          </Text>
         </CircleWrap>
       );
     }
