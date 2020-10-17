@@ -53,7 +53,7 @@ export class EntriesBackend {
         }
         return new Entry(entries[0]);
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         return null;
       });
@@ -85,7 +85,7 @@ export class EntriesBackend {
         }
         return entries.map((entry: any) => new Entry(entry));
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         return null;
       });
@@ -137,7 +137,7 @@ export class EntriesBackend {
       .then(({ createEntry }) => {
         return new Entry(createEntry);
       })
-      .catch(e => {
+      .catch((e) => {
         return this.getById(id);
       });
   }
@@ -168,10 +168,7 @@ export class EntriesBackend {
       }
       `,
       })
-      .then((data: any) => data.data)
-      .then(({ createEntry }) => {
-        return new Entry(createEntry);
-      });
+      .then((data: any) => data.data);
   }
 
   async getTopChart(): Promise<Entry[]> {
@@ -199,7 +196,7 @@ export class EntriesBackend {
         }
         return topChart.map((entry: any) => new Entry(entry));
       })
-      .catch(e => {
+      .catch((e) => {
         console.info(e);
         return [];
       });
@@ -234,7 +231,7 @@ export class EntriesBackend {
         }
         return recentlyAdded.map((entry: any) => new Entry(entry));
       })
-      .catch(e => {
+      .catch((e) => {
         console.info(e);
         return [];
       });
