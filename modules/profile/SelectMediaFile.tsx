@@ -177,7 +177,7 @@ export default observer(() => {
     await entryStore.create();
     await userEntriesStore.refreshEntries();
     entryStore.clearStore();
-    navigate('UserProfile');
+    navigate('ProfileSettings');
   };
 
   if (entryStore.uploadingError) {

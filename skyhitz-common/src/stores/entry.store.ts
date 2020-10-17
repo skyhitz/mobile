@@ -220,12 +220,12 @@ export class EntryStore {
       this.availableForSale,
       this.price
     );
-    entriesBackend.youtubeUpload(
-      this.videoUrl,
-      this.description,
-      this.title,
-      this.id
-    );
+    // entriesBackend.youtubeUpload(
+    //   this.videoUrl,
+    //   this.description,
+    //   this.title,
+    //   this.id
+    // );
   }
 
   async updatePricing(entry: any) {
