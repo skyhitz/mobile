@@ -162,7 +162,7 @@ export default class SelectMediaFile extends React.Component<any, any> {
     if (this.props.uploadingVideo) {
       return (
         <CircleWrap>
-          <Text style={{ color: Colors.white }}>
+          <Text style={{ color: Colors.white, fontSize: 32 }}>
             {this.props.progress + ' %'}
           </Text>
         </CircleWrap>
