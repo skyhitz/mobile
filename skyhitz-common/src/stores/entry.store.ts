@@ -132,11 +132,6 @@ export class EntryStore {
   };
 
   @action
-  updateLoadingVideo = (state: boolean) => {
-    this.loadingVideo = state;
-  };
-
-  @action
   updateUploadingVideo = (state: boolean) => {
     this.uploadingVideo = state;
   };
@@ -187,7 +182,6 @@ export class EntryStore {
   };
 
   clearStore() {
-    this.updateLoadingVideo(false);
     this.updateUploadingVideo(false);
     this.updateLoadingArtwork(false);
     this.updateArtworkUrl('');
