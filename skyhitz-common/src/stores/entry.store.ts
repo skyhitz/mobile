@@ -73,7 +73,16 @@ export class EntryStore {
     data.append('folder', `/app/${this.sessionStore.user.id}/videos`);
     data.append('public_id', id);
     data.append('upload_preset', cloudinaryPreset);
-    data.append('file', video.uri);
+
+    if (Platform.OS === 'web') {
+      data.append('file', video.uri);
+    } else {
+      data.append('file', {
+        uri: video.uri,
+        name: video.uri.split('/').pop(),
+        type: 'video/mp4',
+      });
+    }
     xhr.send(data);
   }
 
@@ -84,7 +93,11 @@ export class EntryStore {
     let id = UniqueIdGenerator.generate();
     let data: any = new FormData();
     data.append('upload_preset', cloudinaryPreset);
-    data.append('file', video.uri);
+    data.append('file', {
+      uri: video.uri,
+      name: video.uri.split('/').pop(),
+      type: 'video/mp4',
+    });
     data.append('folder', `/app/${this.sessionStore.user.id}/videos`);
     data.append('public_id', id);
     let res;
@@ -104,10 +117,7 @@ export class EntryStore {
   }
 
   async uploadVideo(video: any) {
-    if (Platform.OS === 'web') {
-      return this.webVideoUpload(video);
-    }
-    return this.mobileVideoUpload(video);
+    return this.webVideoUpload(video);
   }
 
   @action
@@ -121,6 +131,12 @@ export class EntryStore {
     this.updateLoadingArtwork(true);
     let data = new FormData();
     data.append('file', image.uri);
+    if (Platform.OS === 'web') {
+      data.append('file', image.uri);
+    } else {
+      data.append('file', `${preBase64String}${image.base64}`);
+    }
+
     data.append('folder', `/app/${this.sessionStore.user.id}/images`);
     data.append('upload_preset', cloudinaryPreset);
     let res = await fetch(cloudinaryApiPath, { method: 'POST', body: data });
