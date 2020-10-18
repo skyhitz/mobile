@@ -104,7 +104,10 @@ export class EntryStore {
   }
 
   async uploadVideo(video: any) {
-    return this.webVideoUpload(video);
+    if (Platform.OS === 'web') {
+      return this.webVideoUpload(video);
+    }
+    return this.mobileVideoUpload(video);
   }
 
   @action

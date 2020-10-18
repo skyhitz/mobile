@@ -56,7 +56,7 @@ const UploadView = ({ uploadingVideo, progress, selectVideo }) => {
     return (
       <CircleWrap>
         <Text style={{ color: Colors.white, fontSize: 32 }}>
-          {progress + ' %'}
+          {progress ? progress + ' %' : 'Uploading'}
         </Text>
       </CircleWrap>
     );
