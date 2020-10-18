@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -11,7 +11,7 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import {
   MaterialIcons,
   FontAwesome,
@@ -21,12 +21,11 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
-import * as stores from 'app/skyhitz-common';
 import cursorPointer from 'app/constants/CursorPointer';
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
 
-type Stores = typeof stores;
-
-export const LoadingIndicator = () => {
+const LoadingIndicator = () => {
   return (
     <View
       style={[
@@ -40,63 +39,84 @@ export const LoadingIndicator = () => {
   );
 };
 
-class CircleWrap extends React.Component<any, any> {
-  render() {
+const CircleWrap = (props) => (
+  <View
+    style={[
+      styles.imageLoader,
+      styles.activityIndicatorOffset,
+      { backgroundColor: Colors.overlayBackground },
+    ]}
+  >
+    {props.children}
+  </View>
+);
+
+const UploadView = ({ uploadingVideo, progress, selectVideo }) => {
+  if (uploadingVideo) {
     return (
-      <View
-        style={[
-          styles.imageLoader,
-          styles.activityIndicatorOffset,
-          { backgroundColor: Colors.overlayBackground },
-        ]}
-      >
-        {this.props.children}
-      </View>
+      <CircleWrap>
+        <Text style={{ color: Colors.white, fontSize: progress ? 32 : 14 }}>
+          {progress ? progress + ' %' : 'Uploading'}
+        </Text>
+      </CircleWrap>
     );
   }
-}
+  return (
+    <Pressable style={cursorPointer} onPress={selectVideo}>
+      <CircleWrap>
+        <Text style={{ color: Colors.white }}>Select Video</Text>
+      </CircleWrap>
+    </Pressable>
+  );
+};
 
-@inject((stores: Stores) => ({
-  uploadVideo: stores.entryStore.uploadVideo.bind(stores.entryStore),
-  uploadingError: stores.entryStore.uploadingError,
-  clearUploadingError: stores.entryStore.clearUploadingError.bind(
-    stores.entryStore
-  ),
-  uploadArtwork: stores.entryStore.uploadArtwork.bind(stores.entryStore),
-  updateLoadingVideo: stores.entryStore.updateLoadingVideo.bind(
-    stores.entryStore.updateLoadingVideo
-  ),
-  uploadingVideo: stores.entryStore.uploadingVideo,
-  loadingVideo: stores.entryStore.loadingVideo,
-  loadingArtwork: stores.entryStore.loadingArtwork,
-  artworkUrl: stores.entryStore.artworkUrl,
-  currentView: stores.entryStore.currentView,
-  description: stores.entryStore.description,
-  title: stores.entryStore.title,
-  updateDescription: stores.entryStore.updateDescription.bind(
-    stores.entryStore
-  ),
-  updateTitle: stores.entryStore.updateTitle.bind(stores.entryStore),
-  updateArtist: stores.entryStore.updateArtist.bind(stores.entryStore),
-  create: stores.entryStore.create.bind(stores.entryStore),
-  canCreate: stores.entryStore.canCreate,
-  refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(
-    stores.userEntriesStore
-  ),
-  clearStore: stores.entryStore.clearStore.bind(stores.entryStore),
-  updateAvailableForSale: stores.entryStore.updateAvailableForSale.bind(
-    stores.entryStore
-  ),
-  updatePrice: stores.entryStore.updatePrice.bind(stores.entryStore),
-  availableForSale: stores.entryStore.availableForSale,
-  price: stores.entryStore.price,
-}))
-export default class SelectMediaFile extends React.Component<any, any> {
-  componentDidMount() {
-    this.getPermissionAsync();
+const UploadViewWrap = ({ uploadingVideo, progress, selectVideo }) => (
+  <View style={styles.wrap}>
+    <UploadView
+      uploadingVideo={uploadingVideo}
+      progress={progress}
+      selectVideo={selectVideo}
+    />
+    <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
+      Only original video music related material will be uploaded. We take
+      copyright law very seriously. Maximum file size allowed: 50MB
+    </Text>
+  </View>
+);
+
+const UploadErrorView = ({ uploadingError }) => (
+  <View style={styles.wrap}>
+    <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
+      {uploadingError}
+    </Text>
+  </View>
+);
+
+const ArtworkSection = ({ loadingArtwork, artworkUrl, selectArtwork }) => {
+  if (loadingArtwork) {
+    return (
+      <CircleWrap>
+        <Text style={{ color: Colors.white }}>Uploading...</Text>
+      </CircleWrap>
+    );
   }
+  if (!artworkUrl) {
+    return (
+      <Pressable style={cursorPointer} onPress={selectArtwork}>
+        <CircleWrap>
+          <Text style={{ color: Colors.white }}>Select Artwork</Text>
+        </CircleWrap>
+      </Pressable>
+    );
+  }
+  return <Image source={{ uri: artworkUrl }} style={styles.imageLoader} />;
+};
 
-  getPermissionAsync = async () => {
+export default observer(() => {
+  const { entryStore, userEntriesStore } = Stores();
+  const { navigate } = useNavigation();
+
+  const getPermissionAsync = async () => {
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status !== 'granted') {
@@ -116,24 +136,30 @@ export default class SelectMediaFile extends React.Component<any, any> {
       }
     }
   };
+  useEffect(() => {
+    getPermissionAsync();
+  }, []);
 
-  async selectVideo() {
+  const selectVideo = async () => {
     let video: any;
     try {
       video = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: false,
+        base64: true,
+        quality: 1,
+        exif: true,
       });
     } catch (e) {
       console.log('error', e);
     }
 
     if (video && !video.cancelled) {
-      await this.props.uploadVideo(video);
+      await entryStore.uploadVideo(video);
     }
-  }
+  };
 
-  async selectArtwork() {
+  const selectArtwork = async () => {
     let image = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -143,235 +169,182 @@ export default class SelectMediaFile extends React.Component<any, any> {
       exif: true,
     });
     if (image && !image.cancelled) {
-      await this.props.uploadArtwork(image);
+      await entryStore.uploadArtwork(image);
     }
+  };
+
+  const onCreate = async () => {
+    await entryStore.create();
+    await userEntriesStore.refreshEntries();
+    entryStore.clearStore();
+    navigate('ProfileSettings');
+  };
+
+  if (entryStore.uploadingError) {
+    return <UploadErrorView uploadingError={entryStore.uploadingError} />;
   }
 
-  renderUploadViewText() {
-    if (this.props.loadingVideo) {
-      return (
-        <CircleWrap>
-          <Text style={{ color: Colors.white }}>Loading...</Text>
-        </CircleWrap>
-      );
-    }
-    if (this.props.uploadingVideo) {
-      return (
-        <CircleWrap>
-          <Text style={{ color: Colors.white }}>Uploading...</Text>
-        </CircleWrap>
-      );
-    }
+  if (entryStore.currentView == 'upload') {
     return (
-      <Pressable style={cursorPointer} onPress={this.selectVideo.bind(this)}>
-        <CircleWrap>
-          <Text style={{ color: Colors.white }}>Select Video</Text>
-        </CircleWrap>
-      </Pressable>
-    );
-  }
-
-  renderUploadView() {
-    return (
-      <View style={styles.wrap}>
-        {this.renderUploadViewText()}
-        <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
-          Only original video music related material will be uploaded. We take
-          copyright law very seriously. Maximum file size allowed: 50MB
-        </Text>
-      </View>
-    );
-  }
-
-  renderUploadErrorView() {
-    return (
-      <View style={styles.wrap}>
-        <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
-          {this.props.uploadingError}
-        </Text>
-      </View>
-    );
-  }
-
-  async onCreate() {
-    await this.props.create();
-    await this.props.refreshUserEntries();
-    this.props.clearStore();
-    this.props.navigation.goBack();
-  }
-
-  renderArtworkSection() {
-    if (this.props.loadingArtwork) {
-      return (
-        <CircleWrap>
-          <Text style={{ color: Colors.white }}>Uploading...</Text>
-        </CircleWrap>
-      );
-    }
-    if (!this.props.artworkUrl) {
-      return (
-        <Pressable
-          style={cursorPointer}
-          onPress={this.selectArtwork.bind(this)}
-        >
-          <CircleWrap>
-            <Text style={{ color: Colors.white }}>Select Artwork</Text>
-          </CircleWrap>
-        </Pressable>
-      );
-    }
-    return (
-      <Image
-        source={{ uri: this.props.artworkUrl }}
-        style={styles.imageLoader}
+      <UploadViewWrap
+        selectVideo={selectVideo}
+        progress={entryStore.progress}
+        uploadingVideo={entryStore.uploadingVideo}
       />
     );
   }
 
-  renderInfoView() {
-    return (
-      <View style={styles.wrap}>
-        <View style={styles.inputContainerTop}>
-          <View style={styles.field}>
-            <FontAwesome
-              name="info-circle"
-              size={24}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Artist"
-              autoCorrect={false}
-              autoFocus={true}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.props.artist}
-              onChangeText={(t) => this.props.updateArtist(t)}
-              maxLength={34}
-            />
-          </View>
-          <View style={styles.field}>
-            <FontAwesome
-              name="info-circle"
-              size={24}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Title"
-              autoCorrect={false}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.props.title}
-              onChangeText={(t) => this.props.updateTitle(t)}
-              maxLength={34}
-            />
-          </View>
-          <View style={styles.field}>
-            <MaterialIcons
-              name="description"
-              size={22}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Description"
-              autoCorrect={false}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.props.description}
-              onChangeText={(t) => this.props.updateDescription(t)}
-              maxLength={60}
-            />
-          </View>
-          <View style={styles.field}>
-            <MaterialIcons
-              name={'attach-money'}
-              size={20}
-              color={Colors.dividerBackground}
-              style={styles.placeholderIcon}
-            />
-            <Text
-              style={styles.priceDescription}
-              ellipsizeMode="tail"
-              numberOfLines={1}
-            >
-              {'Price USD: '}
-            </Text>
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              returnKeyType={'done'}
-              placeholder=""
-              keyboardType={'numeric'}
-              autoCorrect={false}
-              style={styles.input}
-              placeholderTextColor="white"
-              value={this.props.price}
-              onChangeText={(price) => this.props.updatePrice(price)}
-              maxLength={30}
-            />
-          </View>
-          <View style={styles.field}>
-            <MaterialCommunityIcons
-              name="circle-medium"
-              size={24}
-              color={
-                this.props.availableForSale
-                  ? Colors.lightBrandBlue
-                  : Colors.dividerBackground
-              }
-              style={styles.placeholderIcon}
-            />
-            <Text
-              style={styles.priceDescription}
-              ellipsizeMode="tail"
-              numberOfLines={1}
-            >
-              {'Available for Sale: '}
-            </Text>
-            <Switch
-              onValueChange={(forSale) =>
-                this.props.updateAvailableForSale(forSale)
-              }
-              value={this.props.availableForSale}
-              style={styles.input}
-              trackColor={{
-                false: Colors.defaultTextLight,
-                true: Colors.lightBrandBlue,
-              }}
-              thumbColor={Colors.lightGrey}
-            />
-          </View>
+  return (
+    <View style={styles.wrap}>
+      <View style={styles.inputContainerTop}>
+        <View style={styles.field}>
+          <FontAwesome
+            name="info-circle"
+            size={24}
+            color={Colors.dividerBackground}
+            style={styles.placeholderIcon}
+          />
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="Artist"
+            autoCorrect={false}
+            autoFocus={true}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            placeholderTextColor="white"
+            value={entryStore.artist}
+            onChangeText={(t) => entryStore.updateArtist(t)}
+            maxLength={34}
+          />
         </View>
-        {this.renderArtworkSection()}
-        <View style={styles.btn}>
-          <LargeBtn
-            disabled={!this.props.canCreate}
-            onPress={this.onCreate.bind(this)}
-            text="Done"
+        <View style={styles.field}>
+          <FontAwesome
+            name="info-circle"
+            size={24}
+            color={Colors.dividerBackground}
+            style={styles.placeholderIcon}
+          />
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="Title"
+            autoCorrect={false}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            placeholderTextColor="white"
+            value={entryStore.title}
+            onChangeText={(t) => entryStore.updateTitle(t)}
+            maxLength={34}
+          />
+        </View>
+        <View style={styles.field}>
+          <MaterialIcons
+            name="description"
+            size={22}
+            color={Colors.dividerBackground}
+            style={styles.placeholderIcon}
+          />
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            placeholder="Description"
+            autoCorrect={false}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            placeholderTextColor="white"
+            value={entryStore.description}
+            onChangeText={(t) => entryStore.updateDescription(t)}
+            maxLength={60}
+          />
+        </View>
+        <View style={styles.field}>
+          <MaterialIcons
+            name={'attach-money'}
+            size={20}
+            color={Colors.dividerBackground}
+            style={styles.placeholderIcon}
+          />
+          <Text
+            style={styles.priceDescription}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+          >
+            {'Price USD: '}
+          </Text>
+          <TextInput
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            returnKeyType={'done'}
+            placeholder=""
+            keyboardType={'numeric'}
+            autoCorrect={false}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            placeholderTextColor="white"
+            value={entryStore.price?.toString()}
+            onChangeText={(price) => entryStore.updatePrice(parseInt(price))}
+            maxLength={30}
+          />
+        </View>
+        <View style={styles.field}>
+          <MaterialCommunityIcons
+            name="circle-medium"
+            size={24}
+            color={
+              entryStore.availableForSale
+                ? Colors.lightBrandBlue
+                : Colors.dividerBackground
+            }
+            style={styles.placeholderIcon}
+          />
+          <Text
+            style={styles.priceDescription}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+          >
+            {'Available for Sale: '}
+          </Text>
+          <Switch
+            onValueChange={(forSale) =>
+              entryStore.updateAvailableForSale(forSale)
+            }
+            value={entryStore.availableForSale}
+            style={[
+              styles.input,
+              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+            ]}
+            trackColor={{
+              false: Colors.defaultTextLight,
+              true: Colors.lightBrandBlue,
+            }}
+            thumbColor={Colors.lightGrey}
           />
         </View>
       </View>
-    );
-  }
-
-  render() {
-    if (this.props.uploadingError) {
-      return this.renderUploadErrorView();
-    }
-    if (this.props.currentView == 'upload') {
-      return this.renderUploadView();
-    }
-    return this.renderInfoView();
-  }
-}
+      <ArtworkSection
+        loadingArtwork={entryStore.loadingArtwork}
+        artworkUrl={entryStore.artworkUrl}
+        selectArtwork={selectArtwork}
+      />
+      <View style={styles.btn}>
+        <LargeBtn
+          disabled={!entryStore.canCreate}
+          onPress={onCreate}
+          text="Done"
+        />
+      </View>
+    </View>
+  );
+});
 
 const circleSize = 120;
 const circleBorderRadius = circleSize / 2;
