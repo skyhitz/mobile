@@ -48,9 +48,7 @@ export default observer(({ route }) => {
       </View>
       <View style={styles.options}>
         <LikeOptionRow entry={entry} />
-        {previousScreen === 'MyMusicScreen'
-          ? renderRemoveFromMyMusic(entry)
-          : null}
+        {renderRemoveFromMyMusic(entry)}
         {previousScreen === 'MyMusicScreen' ? renderSetPrice(entry) : null}
       </View>
       <View style={styles.bottomWrap}>
