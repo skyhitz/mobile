@@ -6,12 +6,14 @@ import {
   Pressable,
   TextInput,
   Switch,
+  Platform
 } from 'react-native';
 import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { Stores } from 'skyhitz-common';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import cursorPointer from 'app/constants/CursorPointer';
 
 @inject((stores: Stores) => ({
   user: stores.sessionStore.user,
@@ -28,7 +30,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 }))
 export default class PricingOptionsModal extends React.Component<any, any> {
   componentDidMount() {
-    const { entry } = this.props.navigation.state.params;
+    const { entry } = this.props.route.params;
     if (!entry) return;
     this.props.updateAvailableForSale(entry.forSale);
     if (entry.price) {
@@ -41,7 +43,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
     this.props.navigation.goBack();
   }
   render() {
-    const { entry } = this.props.navigation.state.params;
+    const { entry } = this.props.route.params;
 
     return (
       <View style={styles.container}>
@@ -111,7 +113,7 @@ export default class PricingOptionsModal extends React.Component<any, any> {
             keyboardType={'numeric'}
             autoCorrect={false}
             autoFocus={true}
-            style={styles.input}
+            style={[styles.input,  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},]}
             placeholderTextColor="white"
             value={this.props.price ? String(this.props.price) : undefined}
             onChangeText={(price) => this.props.updatePrice(price)}
@@ -121,10 +123,10 @@ export default class PricingOptionsModal extends React.Component<any, any> {
 
         <View style={styles.bottomWrap}>
           <Pressable onPress={() => this.handleUpdatePricing(entry)}>
-            <Text style={styles.btnText}>Done</Text>
+            <Text style={[styles.btnText, cursorPointer]}>Done</Text>
           </Pressable>
           <Pressable onPress={() => this.props.navigation.goBack()}>
-            <Text style={styles.btnText}>Cancel</Text>
+            <Text style={[styles.btnText, cursorPointer]}>Cancel</Text>
           </Pressable>
         </View>
       </View>

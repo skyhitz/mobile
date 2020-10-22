@@ -36,6 +36,7 @@ export default {
     EditProfileModal: 'edit-profile',
     UploadMusicModal: 'upload',
     EntryOptionsModal: 'options',
+    PricingOptionsModal: 'pricing-options',
     PaymentModal: 'payment',
   },
 };
