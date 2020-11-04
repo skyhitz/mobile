@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, View, Pressable, Platform } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Animated, {
   call,
@@ -17,6 +17,7 @@ import Knob, { KNOB_SIZE } from './Knob';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
+import cursorPointer from 'app/constants/CursorPointer';
 
 const RULER_HEIGHT = 4;
 
@@ -62,15 +63,23 @@ export default observer(() => {
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
-        <TouchableWithoutFeedback
+        <Pressable
           onLayout={(evt) => playerStore.onSliderLayout(evt)}
-          onPress={(evt) => {
-            playerStore.setSliderPosition(evt.nativeEvent.locationX);
-            playerStore.onSeekBarTap(evt);
+          onPress={(evt: any) => {
+            if (Platform.OS === 'web') {
+              let currentTargetRect = evt.currentTarget.getBoundingClientRect();
+              let offsetX = evt.pageX - currentTargetRect.left;
+              let positionX = offsetX / playerStore.sliderWidth;
+              playerStore.onSeekSliderSlidingComplete(positionX);
+              playerStore.sliderState.setValue(State.UNDETERMINED);
+              return;
+            }
+
+            let locationX = evt.nativeEvent.locationX;
+            playerStore.setSliderPosition(locationX);
+            playerStore.onSeekBarTap(locationX);
           }}
-          style={{
-            zIndex: 15,
-          }}
+          style={[cursorPointer]}
         >
           <View>
             <View style={styles.backgroundSlider} />
@@ -88,7 +97,7 @@ export default observer(() => {
               ]}
             />
           </View>
-        </TouchableWithoutFeedback>
+        </Pressable>
         <PanGestureHandler minDist={0} {...gestureHandler}>
           <Animated.View
             style={{

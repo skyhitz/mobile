@@ -94,9 +94,9 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
   },
   loadingSpinner: {
-    width: 86,
-    height: 86,
-    borderWidth: 1.5,
+    width: 65,
+    height: 65,
+    borderWidth: 1,
     borderColor: 'white',
     borderRadius: 60,
     alignItems: 'center',
