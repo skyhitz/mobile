@@ -507,7 +507,7 @@ export class PlayerStore {
       return;
     }
 
-    if (status.isPlaying && !status.isBuffering) {
+    if (!status.isBuffering) {
       this.playbackInstancePosition = status.positionMillis;
       this.playbackInstanceDuration = status.durationMillis;
       const position =
