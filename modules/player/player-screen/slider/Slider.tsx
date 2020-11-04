@@ -66,6 +66,7 @@ export default observer(() => {
         <Pressable
           onLayout={(evt) => playerStore.onSliderLayout(evt)}
           onPress={(evt: any) => {
+            playerStore.onSeekSliderValueChange();
             if (Platform.OS === 'web') {
               let currentTargetRect = evt.currentTarget.getBoundingClientRect();
               let offsetX = evt.pageX - currentTargetRect.left;
@@ -76,8 +77,9 @@ export default observer(() => {
             }
 
             let locationX = evt.nativeEvent.locationX;
-            playerStore.setSliderPosition(locationX);
-            playerStore.onSeekBarTap(locationX);
+            let positionX = locationX / playerStore.sliderWidth;
+            playerStore.onSeekSliderSlidingComplete(positionX);
+            playerStore.sliderState.setValue(State.UNDETERMINED);
           }}
           style={[cursorPointer]}
         >
