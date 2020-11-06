@@ -31,6 +31,7 @@ export default observer(() => {
       </Pressable>
     );
   }
+
   if (playerStore.playbackState === 'PLAYING') {
     return (
       <Pressable
@@ -50,6 +51,7 @@ export default observer(() => {
       </Pressable>
     );
   }
+
   if (playerStore.playbackState === 'ENDED') {
     return (
       <Pressable

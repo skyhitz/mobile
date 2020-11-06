@@ -100,6 +100,7 @@ export class PlayerStore {
         shouldPlay: playing,
         positionMillis: 0,
         progressUpdateIntervalMillis: 50,
+        androidImplementation: 'MediaPlayer',
       }
     );
     this.playbackInstance = this.video;
@@ -146,9 +147,9 @@ export class PlayerStore {
 
   async pauseAsync() {
     if (this.playbackInstanceExists) {
-      this.setPlaybackState('PAUSED');
+      // this.setPlaybackState('PAUSED');
       await this.playbackInstance.pauseAsync();
-      this.setPlaybackState('PAUSED');
+      // this.setPlaybackState('PAUSED');
       return true;
     }
   }
@@ -497,13 +498,6 @@ export class PlayerStore {
         this.error = errorMsg;
         return this.setPlaybackState('ERROR');
       }
-      return;
-    }
-
-    if (this.networkState === 'none' && status.isBuffering) {
-      this.setPlaybackState('ERROR');
-      this.error =
-        'You are probably offline. Please make sure you are connected to the Internet to watch this video';
       return;
     }
 
