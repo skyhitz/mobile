@@ -24,18 +24,19 @@ const BottomBar = () => {
   );
 };
 
+Audio.setAudioModeAsync({
+  playsInSilentModeIOS: true,
+  allowsRecordingIOS: false,
+  staysActiveInBackground: true,
+  interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+  interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+  shouldDuckAndroid: false,
+  playThroughEarpieceAndroid: true,
+});
+
 export default observer(() => {
   let [dynamicHeight, setDynamicHeight] = useState(0);
   let { playerStore } = Stores();
-  Audio.setAudioModeAsync({
-    playsInSilentModeIOS: true,
-    allowsRecordingIOS: false,
-    staysActiveInBackground: true,
-    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-    interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-    shouldDuckAndroid: false,
-    playThroughEarpieceAndroid: false,
-  });
 
   const onLayout = ({ nativeEvent }) => {
     let { layout } = nativeEvent;
