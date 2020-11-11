@@ -34,7 +34,7 @@ export const LoadingCircle = () => (
 );
 
 export const Spinner = () => (
-  <ActivityIndicator color={ICON_COLOR} size={'large'} />
+  <ActivityIndicator color={ICON_COLOR} size={CENTER_ICON_SIZE} />
 );
 
 export const FullscreenEnterIcon = () => (
