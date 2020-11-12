@@ -428,7 +428,7 @@ export class PlayerStore {
     }
   };
 
-  onSeekBarTap = (evt: any) => {
+  onSeekBarTap = (locationX) => {
     if (
       !(
         this.playbackState === 'LOADING' ||
@@ -437,7 +437,7 @@ export class PlayerStore {
         this.controlsState !== 'SHOWN'
       )
     ) {
-      const value = evt.nativeEvent.locationX / this.sliderWidth;
+      const value = locationX / this.sliderWidth;
       this.onSeekSliderSlidingComplete(value);
     }
   };
@@ -507,7 +507,7 @@ export class PlayerStore {
       return;
     }
 
-    if (status.isPlaying && !status.isBuffering) {
+    if (!status.isBuffering) {
       this.playbackInstancePosition = status.positionMillis;
       this.playbackInstanceDuration = status.durationMillis;
       const position =
