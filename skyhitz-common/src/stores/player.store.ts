@@ -3,8 +3,7 @@ import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
-import Animated, { set, add } from 'react-native-reanimated';
-import { State } from 'react-native-gesture-handler';
+import Animated from 'react-native-reanimated';
 import { Platform } from 'react-native';
 
 const { Value } = Animated;
@@ -80,10 +79,6 @@ export class PlayerStore {
     'https://res.cloudinary.com/skyhitz/video/upload/v1554330926/app/-LbM3m6WKdVQAsY3zrAd/videos/-Lb_KsQ7hbr0nquOTZee.mov';
 
   video: any;
-
-  translationX: Animated.Value<number> = new Value(0);
-  sliderState: Animated.Value<number> = new Value(State.UNDETERMINED);
-  sliderOffset: Animated.Value<number> = new Value(0);
 
   mountVideo = (component) => {
     this.video = component;
@@ -386,19 +381,6 @@ export class PlayerStore {
     this.seekState = seekState;
   }
 
-  @computed
-  get seekSliderPosition() {
-    if (
-      this.playbackInstance !== null &&
-      this.playbackInstancePosition != null &&
-      this.playbackInstanceDuration != null &&
-      this.playbackInstanceDuration !== 0
-    ) {
-      return this.playbackInstancePosition / this.playbackInstanceDuration;
-    }
-    return 0;
-  }
-
   onSeekSliderValueChange = () => {
     if (
       this.playbackInstance !== null &&
@@ -487,11 +469,6 @@ export class PlayerStore {
       return true;
     }
     return false;
-  }
-
-  setSliderPosition(position: number) {
-    this.sliderOffset.setValue(position);
-    this.translationX.setValue(0);
   }
 
   @action
