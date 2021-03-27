@@ -5,6 +5,7 @@ import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
 import Animated, { set, add } from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
+import { Platform } from 'react-native';
 
 const { Value } = Animated;
 
@@ -70,7 +71,9 @@ export class PlayerStore {
   playlistMode: boolean = false;
   @observable
   playbackInstance: any;
-  seekPosition!: number;
+
+  @observable
+  seekPosition: number = 0;
 
   @observable
   streamUrl: string =
@@ -413,7 +416,7 @@ export class PlayerStore {
   };
 
   onSeekSliderSlidingComplete = async (value: number) => {
-    if (this.playbackInstance != null && this.seekState !== 'SEEKED') {
+    if (this.seekState !== 'SEEKED') {
       this.setSeekState('SEEKED');
       let status;
       try {
@@ -437,7 +440,13 @@ export class PlayerStore {
         this.controlsState !== 'SHOWN'
       )
     ) {
-      const value = evt.nativeEvent.locationX / this.sliderWidth;
+      let xValue;
+      if (Platform.OS === 'web') {
+        xValue = evt.nativeEvent.clientX - evt.target.getBoundingClientRect().x;
+      } else {
+        xValue = evt.nativeEvent.locationX;
+      }
+      const value = xValue / this.sliderWidth;
       this.onSeekSliderSlidingComplete(value);
     }
   };
@@ -487,10 +496,6 @@ export class PlayerStore {
 
   @action
   onPlaybackStatusUpdate(status: any) {
-    if (this.disablePlaybackStatusUpdate) {
-      return;
-    }
-
     if (!status.isLoaded) {
       if (status.error) {
         const errorMsg = `Encountered a fatal error during playback: ${status.error}`;
@@ -510,9 +515,8 @@ export class PlayerStore {
     if (status.isPlaying && !status.isBuffering) {
       this.playbackInstancePosition = status.positionMillis;
       this.playbackInstanceDuration = status.durationMillis;
-      const position =
-        (status.positionMillis / status.durationMillis) * this.sliderWidth;
-      this.setSliderPosition(position);
+      this.seekPosition =
+        this.playbackInstancePosition / this.playbackInstanceDuration;
     }
 
     this.shouldPlay = status.shouldPlay;

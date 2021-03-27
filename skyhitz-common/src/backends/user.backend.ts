@@ -1,7 +1,6 @@
 import { client } from './apollo-client.backend';
 import gql from 'graphql-tag';
-import { User } from '../models/user.model';
-import { SignUpForm, SignInForm } from '../types';
+import { SignUpForm } from '../types';
 import { isTesting } from '../config/index';
 
 export class UserBackend {
@@ -57,12 +56,30 @@ export class UserBackend {
       });
   }
 
-  async signIn({ usernameOrEmail, password }: SignInForm) {
+  async requestToken(usernameOrEmail) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        signIn(usernameOrEmail: "${usernameOrEmail}", password: "${password}"){
+        requestToken(usernameOrEmail: "${usernameOrEmail}")
+      }
+      `,
+      })
+      .then(({ data }: any) => {
+        return data;
+      })
+      .catch(({ graphQLErrors }) => {
+        let [{ message }] = graphQLErrors;
+        throw message;
+      });
+  }
+
+  async signIn(token: string, uid: string) {
+    return client
+      .mutate({
+        mutation: gql`
+      mutation {
+        signIn(token: "${token}", uid: "${uid}"){
           avatarUrl
           displayName
           username

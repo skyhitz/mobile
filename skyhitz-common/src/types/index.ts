@@ -11,5 +11,4 @@ export type SignUpForm = {
 };
 export type SignInForm = {
   usernameOrEmail: string,
-  password: string,
 };
