@@ -2,7 +2,7 @@ import { observable, observe, computed, IObservableObject } from 'mobx';
 import { User } from '../models';
 import { userBackend } from '../backends/user.backend';
 import { forceSignOut } from '../backends/apollo-client.backend';
-import { SignUpForm, SignInForm } from '../types';
+import { SignUpForm } from '../types';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export class SessionStore {
@@ -21,10 +21,18 @@ export class SessionStore {
     return (this.session.user = new User(userPayload));
   }
 
-  async signIn(signIn: SignInForm) {
-    let userPayload = await userBackend.signIn(signIn);
-    await this.setUser(userPayload);
-    return (this.session.user = new User(userPayload));
+  async requestToken(usernameOrEmail: string) {
+    await userBackend.requestToken(usernameOrEmail);
+    return;
+  }
+
+  async signIn(token: string, uid: string) {
+    let userPayload = await userBackend.signIn(token, uid);
+    if (userPayload) {
+      await this.setUser(userPayload);
+      return (this.session.user = new User(userPayload));
+    }
+    return null;
   }
 
   async setUser(value: any) {
@@ -79,15 +87,5 @@ export class SessionStore {
       console.info(e);
     }
     return await this.signOut();
-  }
-
-  async sendResetEmail(email: string) {
-    return userBackend.sendResetEmail(email);
-  }
-
-  async updatePassword(token: string, password: string) {
-    let userPayload = await userBackend.updatePassword(token, password);
-    await this.setUser(userPayload);
-    return (this.session.user = new User(userPayload));
   }
 }

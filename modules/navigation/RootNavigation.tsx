@@ -21,8 +21,6 @@ import LinkingConfiguration from './LinkingConfiguration';
 import AuthScreen from 'app/modules/accounts/AuthScreen';
 import SignUpScreen from 'app/modules/accounts/SignUpScreen';
 import SignInScreen from 'app/modules/accounts/SignInScreen';
-import ResetPasswordScreen from 'app/modules/accounts/ResetPasswordScreen';
-import UpdatePasswordScreen from 'app/modules/accounts/UpdatePasswordScreen';
 import WebApp from 'app/modules/marketing/web/Home';
 import Privacy from 'app/modules/marketing/web/Privacy';
 import Terms from 'app/modules/marketing/web/Terms';
@@ -110,34 +108,6 @@ export default observer(() => {
                   headerTitleStyle: { color: Colors.white },
                   headerTintColor: Colors.white,
                   title: 'Log In',
-                  headerTransparent: true,
-                  headerStyle: {
-                    borderBottomWidth: 0,
-                  },
-                }}
-              />
-              <AppStack.Screen
-                name="ResetPassword"
-                component={ResetPasswordScreen}
-                options={{
-                  headerShown: headerShown,
-                  headerTitleStyle: { color: Colors.white },
-                  headerTintColor: Colors.white,
-                  title: 'Reset Password',
-                  headerTransparent: true,
-                  headerStyle: {
-                    borderBottomWidth: 0,
-                  },
-                }}
-              />
-              <AppStack.Screen
-                name="UpdatePassword"
-                component={UpdatePasswordScreen}
-                options={{
-                  headerShown: headerShown,
-                  headerTitleStyle: { color: Colors.white },
-                  headerTintColor: Colors.white,
-                  title: 'Update Password',
                   headerTransparent: true,
                   headerStyle: {
                     borderBottomWidth: 0,

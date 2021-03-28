@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Video, Audio } from 'expo-av';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ImageBackground } from 'react-native';
 import { observer } from 'mobx-react';
 import {
   CurrentTimeDisplay,
@@ -46,24 +46,29 @@ export default observer(() => {
   return (
     <View style={styles.container}>
       <View style={styles.container} onLayout={onLayout}>
-        <Video
-          source={{
-            uri: playerStore.streamUrl,
-          }}
-          ref={(ref) => playerStore.mountVideo(ref)}
-          onPlaybackStatusUpdate={(status) =>
-            playerStore.onPlaybackStatusUpdate(status)
-          }
-          resizeMode={Video.RESIZE_MODE_CONTAIN}
-          style={[
-            styles.videoPlayer,
-            { height: dynamicHeight, maxHeight: 360 },
-          ]}
-          onError={(error) => playerStore.onError(error)}
-          onFullscreenUpdate={(update) =>
-            playerStore.onFullscreenUpdate(update)
-          }
-        />
+        <ImageBackground
+          source={{ uri: playerStore.entry?.imageUrl }}
+          imageStyle={{ resizeMode: 'contain' }}
+        >
+          <Video
+            source={{
+              uri: playerStore.streamUrl,
+            }}
+            ref={(ref) => playerStore.mountVideo(ref)}
+            onPlaybackStatusUpdate={(status) =>
+              playerStore.onPlaybackStatusUpdate(status)
+            }
+            resizeMode={Video.RESIZE_MODE_CONTAIN}
+            style={[
+              styles.videoPlayer,
+              { height: dynamicHeight, maxHeight: 360 },
+            ]}
+            onError={(error) => playerStore.onError(error)}
+            onFullscreenUpdate={(update) =>
+              playerStore.onFullscreenUpdate(update)
+            }
+          />
+        </ImageBackground>
         <PlayPauseInvisibleArea />
         <VideoErrorText />
       </View>

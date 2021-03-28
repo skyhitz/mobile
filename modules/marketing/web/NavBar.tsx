@@ -45,7 +45,10 @@ export default () => {
         <Text onPress={() => navigate('SignIn')} style={styles.defaultText}>
           Log in
         </Text>
-        <Pressable onPress={() => navigate('SignUp')} style={styles.signUpWrap}>
+        <Pressable
+          onPress={() => navigate('SignUp')}
+          style={[styles.signUpWrap, cursorPointer]}
+        >
           <Text style={[styles.signUpText, cursorPointer]}>Sign Up</Text>
         </Pressable>
       </View>

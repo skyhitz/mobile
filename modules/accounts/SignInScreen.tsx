@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import {
@@ -6,7 +6,6 @@ import {
   View,
   Text,
   TouchableHighlight,
-  Pressable,
   TextInput,
   ActivityIndicator,
   Platform,
@@ -15,39 +14,39 @@ import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 import cursorPointer from 'app/constants/CursorPointer';
+import { openEmail } from './OpenEmail';
 
-export default observer((props) => {
+export default observer(({ route, navigation }) => {
   const { signInValidationStore, sessionStore } = Stores();
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showEmailLink, setShowEmailLink] = useState(false);
+  const [showAuthenticating, setShowAuthenticating] = useState(
+    route.params && route.params.token && route.params.uid
+  );
   const { navigate } = useNavigation();
 
   const signIn = async () => {
     setLoading(true);
     try {
-      await sessionStore.signIn({
-        usernameOrEmail: usernameOrEmail,
-        password: password,
-      });
+      await sessionStore.requestToken(usernameOrEmail);
+      // check your email to access your account
       setLoading(false);
-      return navigate('Main', {
-        screen: 'ProfileSettings',
-      });
+      setShowEmailLink(true);
+      return;
     } catch (e) {
       signInValidationStore.setBackendError(e);
     }
     return setLoading(false);
   };
 
+  const handleOpenEmail = () => {
+    openEmail();
+  };
+
   const updateUsernameOrEmail = ({ target }: any) => {
     setUsernameOrEmail(target.value);
     signInValidationStore.validateUsernameOrEmail(target.value);
-  };
-
-  const updatePassword = ({ target }: any) => {
-    setPassword(target.value);
-    signInValidationStore.validatePassword(target.value);
   };
 
   const onSubmit = (e) => {
@@ -56,84 +55,110 @@ export default observer((props) => {
     }
   };
 
+  const handleAuth = async () => {
+    const res = await sessionStore.signIn(route.params.token, route.params.uid);
+    if (res) {
+      return navigate('Main', {
+        screen: 'ProfileSettings',
+      });
+    }
+    navigation.setParams({ token: undefined, uid: undefined });
+    setShowAuthenticating(false);
+  };
+
+  useEffect(() => {
+    if (showAuthenticating) {
+      handleAuth();
+    }
+  }, []);
+
   return (
     <BackgroundImage authBackground={true}>
-      <View style={styles.inputContainer}>
-        <View style={styles.field}>
-          <TextInput
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            placeholder="Username or email address"
-            autoCorrect={false}
-            style={[
-              styles.input,
-              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-            ]}
-            autoFocus={true}
-            placeholderTextColor="white"
-            value={usernameOrEmail}
-            onChange={updateUsernameOrEmail}
-            onChangeText={(value) =>
-              updateUsernameOrEmail({ target: { value: value } })
-            }
-          />
+      {showAuthenticating ? (
+        <View style={styles.inputContainer}>
+          <View style={styles.field}>
+            <Text style={styles.signingIn}>Authenticating...</Text>
+          </View>
         </View>
-        <View style={styles.field}>
-          <TextInput
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            placeholder="Password"
-            autoCorrect={false}
-            style={[
-              styles.input,
-              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-            ]}
-            secureTextEntry={true}
-            placeholderTextColor="white"
-            value={password}
-            onChange={updatePassword}
-            onChangeText={(value) =>
-              updatePassword({ target: { value: value } })
-            }
-            onKeyPress={onSubmit}
-          />
-        </View>
-        <View style={styles.errorContainer}>
-          <Text
-            style={[
-              styles.error,
-              { opacity: signInValidationStore.error ? 1 : 0 },
-            ]}
+      ) : showEmailLink ? (
+        <View style={styles.inputContainer}>
+          <View style={styles.field}>
+            <Text style={styles.emailSent}>
+              We sent you an email to access your account!
+            </Text>
+          </View>
+
+          <TouchableHighlight
+            style={[styles.joinBtn]}
+            onPress={handleOpenEmail}
+            underlayColor={Colors.underlayColor}
           >
-            {signInValidationStore.error}
-          </Text>
+            {loading ? (
+              <ActivityIndicator
+                size="small"
+                style={styles.loadingIndicator}
+                color={Colors.white}
+              />
+            ) : (
+              <Text style={[styles.joinTextBtn, cursorPointer]}>
+                Open Email
+              </Text>
+            )}
+          </TouchableHighlight>
         </View>
-        <TouchableHighlight
-          style={[
-            styles.joinBtn,
-            { opacity: signInValidationStore.validForm ? 1 : 0.5 },
-          ]}
-          onPress={signIn}
-          underlayColor={Colors.underlayColor}
-          disabled={!signInValidationStore.validForm}
-        >
-          {loading ? (
-            <ActivityIndicator
-              size="small"
-              style={styles.loadingIndicator}
-              color={Colors.white}
+      ) : (
+        <View style={styles.inputContainer}>
+          <View style={styles.field}>
+            <TextInput
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+              placeholder="Email address"
+              autoCorrect={false}
+              style={[
+                styles.input,
+                Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+              ]}
+              autoFocus={true}
+              placeholderTextColor="white"
+              value={usernameOrEmail}
+              onChange={updateUsernameOrEmail}
+              onChangeText={(value) =>
+                updateUsernameOrEmail({ target: { value: value } })
+              }
+              onKeyPress={onSubmit}
             />
-          ) : (
-            <Text style={styles.joinTextBtn}>Log In</Text>
-          )}
-        </TouchableHighlight>
-        <Pressable
-          style={[styles.forgotPass, cursorPointer]}
-          onPress={() => navigate('ResetPassword')}
-        >
-          <Text style={styles.forgotPassText}>Forgot your password?</Text>
-        </Pressable>
-      </View>
+          </View>
+          <View style={styles.errorContainer}>
+            <Text
+              style={[
+                styles.error,
+                { opacity: signInValidationStore.error ? 1 : 0 },
+              ]}
+            >
+              {signInValidationStore.error}
+            </Text>
+          </View>
+          <TouchableHighlight
+            style={[
+              styles.joinBtn,
+              { opacity: signInValidationStore.validForm ? 1 : 0.5 },
+            ]}
+            onPress={signIn}
+            underlayColor={Colors.underlayColor}
+            disabled={!signInValidationStore.validForm}
+          >
+            {loading ? (
+              <ActivityIndicator
+                size="small"
+                style={styles.loadingIndicator}
+                color={Colors.white}
+              />
+            ) : (
+              <Text style={[styles.joinTextBtn, cursorPointer]}>Log In</Text>
+            )}
+          </TouchableHighlight>
+        </View>
+      )}
     </BackgroundImage>
   );
 });
@@ -159,6 +184,20 @@ let styles = StyleSheet.create({
     backgroundColor: Colors.transparent,
     color: Colors.white,
     fontSize: 14,
+    padding: 10,
+    width: '100%',
+  },
+  emailSent: {
+    backgroundColor: Colors.transparent,
+    color: Colors.white,
+    fontSize: 16,
+    padding: 10,
+    width: '100%',
+  },
+  signingIn: {
+    backgroundColor: Colors.transparent,
+    color: Colors.white,
+    fontSize: 16,
     padding: 10,
     width: '100%',
   },
