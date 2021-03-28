@@ -7,8 +7,6 @@ export class SignUpValidationStore {
   @observable displayNameValid;
   @observable emailError: string = '';
   @observable emailValid;
-  @observable passwordError: string = '';
-  @observable passwordValid;
   @observable backendError: string = '';
 
   constructor() {}
@@ -73,23 +71,6 @@ export class SignUpValidationStore {
     return (this.emailValid = true);
   }
 
-  validatePassword(password: string) {
-    if (!password) {
-      this.passwordValid = false;
-      this.passwordError = 'Password is required.';
-      return;
-    }
-
-    if (password.length < 7) {
-      this.passwordValid = false;
-      this.passwordError = 'Password is minimum 8 characters.';
-      return;
-    }
-
-    this.passwordError = '';
-    return (this.passwordValid = true);
-  }
-
   @computed
   get error() {
     if (this.usernameError) {
@@ -104,10 +85,6 @@ export class SignUpValidationStore {
       return this.emailError;
     }
 
-    if (this.passwordError) {
-      return this.passwordError;
-    }
-
     if (this.backendError) {
       return this.backendError;
     }
@@ -117,12 +94,7 @@ export class SignUpValidationStore {
 
   @computed
   get validForm() {
-    return (
-      this.usernameValid &&
-      this.displayNameValid &&
-      this.emailValid &&
-      this.passwordValid
-    );
+    return this.usernameValid && this.displayNameValid && this.emailValid;
   }
 
   setBackendError(error: string) {

@@ -88,14 +88,4 @@ export class SessionStore {
     }
     return await this.signOut();
   }
-
-  async sendResetEmail(email: string) {
-    return userBackend.sendResetEmail(email);
-  }
-
-  async updatePassword(token: string, password: string) {
-    let userPayload = await userBackend.updatePassword(token, password);
-    await this.setUser(userPayload);
-    return (this.session.user = new User(userPayload));
-  }
 }
