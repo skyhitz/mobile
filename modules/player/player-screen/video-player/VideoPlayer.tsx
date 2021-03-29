@@ -49,6 +49,10 @@ export default observer(() => {
         <ImageBackground
           source={{ uri: playerStore.entry?.imageUrl }}
           imageStyle={{ resizeMode: 'contain' }}
+          style={[
+            styles.videoPlayer,
+            { height: dynamicHeight, maxHeight: 360 },
+          ]}
         >
           <Video
             source={{
