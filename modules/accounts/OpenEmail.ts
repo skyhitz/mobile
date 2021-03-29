@@ -1,4 +1,5 @@
-import { Linking, NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
+import * as Linking from 'expo-linking';
 
 class EmailException extends Error {
   constructor(...params) {
