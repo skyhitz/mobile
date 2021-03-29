@@ -23,9 +23,7 @@ export default observer(({ route, navigation }) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [showEmailLink, setShowEmailLink] = useState(false);
-  const [showAuthenticating, setShowAuthenticating] = useState(
-    route.params && route.params.token && route.params.uid
-  );
+  const { token, uid } = route.params || {};
   const { navigate } = useNavigation();
 
   const signIn = async () => {
@@ -62,31 +60,31 @@ export default observer(({ route, navigation }) => {
     const openApp = await Linking.canOpenURL(`${Config.SCHEMA}`);
     if (openApp && Platform.OS === 'web') {
       await Linking.openURL(
-        `${Config.SCHEMA}accounts/sign-in?token=${route.params.token}&uid=${route.params.uid}`
+        `${Config.SCHEMA}accounts/sign-in?token=${token}&uid=${uid}`
       );
       return;
     }
 
-    const res = await sessionStore.signIn(route.params.token, route.params.uid);
+    const res = await sessionStore.signIn(token, uid);
     if (res) {
       return navigate('Main', {
         screen: 'ProfileSettings',
       });
     }
     navigation.setParams({ token: undefined, uid: undefined });
-    setShowAuthenticating(false);
     return;
   };
 
   useEffect(() => {
-    if (showAuthenticating) {
+    // prevent bug where deep links don't handle auth even if token and uid are set
+    if (token && uid) {
       handleAuth();
     }
-  }, []);
+  }, [token, uid]);
 
   return (
     <BackgroundImage authBackground={true}>
-      {showAuthenticating ? (
+      {token && uid ? (
         <View style={styles.inputContainer}>
           <View style={styles.field}>
             <Text style={styles.signingIn}>Authenticating...</Text>
