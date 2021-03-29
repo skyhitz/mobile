@@ -350,7 +350,7 @@ export async function openComposerAndroid(options: any = {}) {
 
 export function openEmail() {
   if (Platform.OS === 'web') {
-    Linking.openURL('mailto:');
+    Linking.openURL('https://mail.google.com/mail/u/0/#inbox');
   } else if (Platform.OS === 'android') {
     openInboxAndroid();
   } else if (Platform.OS === 'ios') {
