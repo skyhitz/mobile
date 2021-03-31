@@ -58,6 +58,7 @@ export default observer(({ route, navigation }) => {
   const handleAuth = async () => {
     // if the app is installed and the user can open it from web
     const openApp = await Linking.canOpenURL(`${Config.SCHEMA}`);
+    console.log('can open link on app: ', openApp);
     if (openApp && Platform.OS === 'web') {
       await Linking.openURL(
         `${Config.SCHEMA}accounts/sign-in?token=${token}&uid=${uid}`
