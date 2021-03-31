@@ -3,8 +3,8 @@ import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
-import Animated, { set, add } from 'react-native-reanimated';
-import { State } from 'react-native-gesture-handler';
+import Animated from 'react-native-reanimated';
+import { Platform } from 'react-native';
 
 const { Value } = Animated;
 
@@ -70,17 +70,15 @@ export class PlayerStore {
   playlistMode: boolean = false;
   @observable
   playbackInstance: any;
-  seekPosition!: number;
+
+  @observable
+  seekPosition: number = 0;
 
   @observable
   streamUrl: string =
     'https://res.cloudinary.com/skyhitz/video/upload/v1554330926/app/-LbM3m6WKdVQAsY3zrAd/videos/-Lb_KsQ7hbr0nquOTZee.mov';
 
   video: any;
-
-  translationX: Animated.Value<number> = new Value(0);
-  sliderState: Animated.Value<number> = new Value(State.UNDETERMINED);
-  sliderOffset: Animated.Value<number> = new Value(0);
 
   mountVideo = (component) => {
     this.video = component;
@@ -383,19 +381,6 @@ export class PlayerStore {
     this.seekState = seekState;
   }
 
-  @computed
-  get seekSliderPosition() {
-    if (
-      this.playbackInstance !== null &&
-      this.playbackInstancePosition != null &&
-      this.playbackInstanceDuration != null &&
-      this.playbackInstanceDuration !== 0
-    ) {
-      return this.playbackInstancePosition / this.playbackInstanceDuration;
-    }
-    return 0;
-  }
-
   onSeekSliderValueChange = () => {
     if (
       this.playbackInstance !== null &&
@@ -413,7 +398,7 @@ export class PlayerStore {
   };
 
   onSeekSliderSlidingComplete = async (value: number) => {
-    if (this.playbackInstance != null && this.seekState !== 'SEEKED') {
+    if (this.seekState !== 'SEEKED') {
       this.setSeekState('SEEKED');
       let status;
       try {
@@ -428,7 +413,7 @@ export class PlayerStore {
     }
   };
 
-  onSeekBarTap = (locationX) => {
+  onSeekBarTap = (evt: any) => {
     if (
       !(
         this.playbackState === 'LOADING' ||
@@ -437,7 +422,13 @@ export class PlayerStore {
         this.controlsState !== 'SHOWN'
       )
     ) {
-      const value = locationX / this.sliderWidth;
+      let xValue;
+      if (Platform.OS === 'web') {
+        xValue = evt.nativeEvent.clientX - evt.target.getBoundingClientRect().x;
+      } else {
+        xValue = evt.nativeEvent.locationX;
+      }
+      const value = xValue / this.sliderWidth;
       this.onSeekSliderSlidingComplete(value);
     }
   };
@@ -480,17 +471,8 @@ export class PlayerStore {
     return false;
   }
 
-  setSliderPosition(position: number) {
-    this.sliderOffset.setValue(position);
-    this.translationX.setValue(0);
-  }
-
   @action
   onPlaybackStatusUpdate(status: any) {
-    if (this.disablePlaybackStatusUpdate) {
-      return;
-    }
-
     if (!status.isLoaded) {
       if (status.error) {
         const errorMsg = `Encountered a fatal error during playback: ${status.error}`;
@@ -507,12 +489,11 @@ export class PlayerStore {
       return;
     }
 
-    if (!status.isBuffering) {
+    if (status.isPlaying && !status.isBuffering) {
       this.playbackInstancePosition = status.positionMillis;
       this.playbackInstanceDuration = status.durationMillis;
-      const position =
-        (status.positionMillis / status.durationMillis) * this.sliderWidth;
-      this.setSliderPosition(position);
+      this.seekPosition =
+        this.playbackInstancePosition / this.playbackInstanceDuration;
     }
 
     this.shouldPlay = status.shouldPlay;

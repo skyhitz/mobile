@@ -1,8 +1,6 @@
 import { SessionStore } from './session.store';
 import { SignUpValidationStore } from './sign-up-validation.store';
 import { SignInValidationStore } from './sign-in-validation.store';
-import { ResetPasswordValidationStore } from './reset-password-validation.store';
-import { UpdatePasswordValidationStore } from './update-password-validation.store';
 import { UsernameAndEmailValidationStore } from './username-and-email-validation.store';
 import { PlayerStore } from './player.store';
 import { InputSearchStore } from './input-search.store';
@@ -19,8 +17,6 @@ import { UserEntriesStore } from './user-entries.store';
 export const sessionStore = new SessionStore();
 export const signUpValidationStore = new SignUpValidationStore();
 export const signInValidationStore = new SignInValidationStore();
-export const resetPasswordValidationStore = new ResetPasswordValidationStore();
-export const updatePasswordValidationStore = new UpdatePasswordValidationStore();
 export const usernameAndEmailValidationStore = new UsernameAndEmailValidationStore();
 export const playerStore = new PlayerStore();
 export const inputSearchStore = new InputSearchStore();
@@ -43,8 +39,6 @@ export type Stores = {
   sessionStore: SessionStore;
   signInValidationStore: SignInValidationStore;
   signUpValidationStore: SignUpValidationStore;
-  resetPasswordValidationStore: ResetPasswordValidationStore;
-  updatePasswordValidationStore: UpdatePasswordValidationStore;
   usernameAndEmailValidationStore: UsernameAndEmailValidationStore;
   playerStore: PlayerStore;
   inputSearchStore: InputSearchStore;

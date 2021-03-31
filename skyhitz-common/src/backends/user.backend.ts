@@ -1,7 +1,6 @@
 import { client } from './apollo-client.backend';
 import gql from 'graphql-tag';
-import { User } from '../models/user.model';
-import { SignUpForm, SignInForm } from '../types';
+import { SignUpForm } from '../types';
 import { isTesting } from '../config/index';
 
 export class UserBackend {
@@ -28,12 +27,12 @@ export class UserBackend {
       .then(({ authenticatedUser }) => authenticatedUser);
   }
 
-  async signUp({ displayName, email, username, password }: SignUpForm) {
+  async signUp({ displayName, email, username }: SignUpForm) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        createUserWithEmail(displayName: "${displayName}", email: "${email}", username: "${username}", password: "${password}", testing:${
+        createUserWithEmail(displayName: "${displayName}", email: "${email}", username: "${username}", testing:${
           isTesting ? true : false
         }){
           avatarUrl
@@ -57,12 +56,30 @@ export class UserBackend {
       });
   }
 
-  async signIn({ usernameOrEmail, password }: SignInForm) {
+  async requestToken(usernameOrEmail) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        signIn(usernameOrEmail: "${usernameOrEmail}", password: "${password}"){
+        requestToken(usernameOrEmail: "${usernameOrEmail}")
+      }
+      `,
+      })
+      .then(({ data }: any) => {
+        return data;
+      })
+      .catch(({ graphQLErrors }) => {
+        let [{ message }] = graphQLErrors;
+        throw message;
+      });
+  }
+
+  async signIn(token: string, uid: string) {
+    return client
+      .mutate({
+        mutation: gql`
+      mutation {
+        signIn(token: "${token}", uid: "${uid}"){
           avatarUrl
           displayName
           username
@@ -78,50 +95,6 @@ export class UserBackend {
       })
       .then((data: any) => data.data)
       .then(({ signIn }) => signIn)
-      .catch(({ graphQLErrors }) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
-
-  async sendResetEmail(email: string) {
-    return client
-      .mutate({
-        mutation: gql`
-    mutation {
-      sendResetEmail(email: "${email}")
-    }
-    `,
-      })
-      .then((data: any) => data.data)
-      .then(({ sendResetEmail }) => sendResetEmail)
-      .catch(({ graphQLErrors }) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
-
-  async updatePassword(token: string, password: string) {
-    return client
-      .mutate({
-        mutation: gql`
-    mutation {
-      updatePassword(token: "${token}", password: "${password}"){
-        avatarUrl
-        displayName
-        username
-        id
-        jwt
-        publishedAt
-        email
-        description
-        phone
-      }
-    }
-    `,
-      })
-      .then((data: any) => data.data)
-      .then(({ updatePassword }) => updatePassword)
       .catch(({ graphQLErrors }) => {
         let [{ message }] = graphQLErrors;
         throw message;

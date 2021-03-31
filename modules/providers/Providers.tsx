@@ -4,8 +4,6 @@ import {
   sessionStore,
   signUpValidationStore,
   signInValidationStore,
-  resetPasswordValidationStore,
-  updatePasswordValidationStore,
   usernameAndEmailValidationStore,
   playerStore,
   usersSearchStore,
@@ -28,8 +26,6 @@ export default class Providers extends React.Component<any, any> {
         signUpValidationStore={signUpValidationStore}
         signInValidationStore={signInValidationStore}
         usernameAndEmailValidationStore={usernameAndEmailValidationStore}
-        resetPasswordValidationStore={resetPasswordValidationStore}
-        updatePasswordValidationStore={updatePasswordValidationStore}
         playerStore={playerStore}
         inputSearchStore={inputSearchStore}
         usersSearchStore={usersSearchStore}

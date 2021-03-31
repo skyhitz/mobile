@@ -6,10 +6,6 @@ export class SignInValidationStore {
   @observable
   usernameOrEmailValid!: boolean;
   @observable
-  passwordError!: string;
-  @observable
-  passwordValid!: boolean;
-  @observable
   backendError!: string;
 
   constructor() {}
@@ -31,31 +27,10 @@ export class SignInValidationStore {
     return (this.usernameOrEmailValid = true);
   }
 
-  validatePassword(password: string) {
-    if (!password) {
-      this.passwordValid = false;
-      this.passwordError = 'Password is required.';
-      return;
-    }
-
-    if (password.length < 7) {
-      this.passwordValid = false;
-      this.passwordError = 'Enter a valid password.';
-      return;
-    }
-
-    this.passwordError = '';
-    return (this.passwordValid = true);
-  }
-
   @computed
   get error() {
     if (this.usernameOrEmailError) {
       return this.usernameOrEmailError;
-    }
-
-    if (this.passwordError) {
-      return this.passwordError;
     }
 
     if (this.backendError) {
@@ -67,7 +42,7 @@ export class SignInValidationStore {
 
   @computed
   get validForm() {
-    return this.usernameOrEmailValid && this.passwordValid;
+    return this.usernameOrEmailValid;
   }
 
   setBackendError(error: string) {

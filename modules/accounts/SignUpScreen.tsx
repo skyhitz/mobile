@@ -20,18 +20,12 @@ export default observer(() => {
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { navigate } = useNavigation();
 
   const updateUsername = ({ target }: any) => {
     setUsername(target.value);
     signUpValidationStore.validateUsername(target.value);
-  };
-
-  const updatePassword = ({ target }: any) => {
-    setPassword(target.value);
-    signUpValidationStore.validatePassword(target.value);
   };
 
   const updateDisplayName = ({ target }: any) => {
@@ -51,7 +45,6 @@ export default observer(() => {
         username: username,
         displayName: displayName,
         email: email,
-        password: password,
       });
       setLoading(false);
       return navigate('Main', {
@@ -127,29 +120,9 @@ export default observer(() => {
             onChange={updateEmail}
             onChangeText={(value) => updateEmail({ target: { value: value } })}
             maxLength={34}
-          />
-          <ValidationIcon isFieldValid={signUpValidationStore.emailValid} />
-        </View>
-        <View style={styles.field}>
-          <TextInput
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            placeholder="Password"
-            autoCorrect={false}
-            style={[
-              styles.input,
-              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-            ]}
-            secureTextEntry={true}
-            placeholderTextColor="white"
-            value={password}
-            onChange={updatePassword}
-            onChangeText={(value) =>
-              updatePassword({ target: { value: value } })
-            }
             onKeyPress={onSubmit}
           />
-          <ValidationIcon isFieldValid={signUpValidationStore.passwordValid} />
+          <ValidationIcon isFieldValid={signUpValidationStore.emailValid} />
         </View>
         <View
           style={[
