@@ -17,6 +17,7 @@ import cursorPointer from 'app/constants/CursorPointer';
 import { openEmail } from './OpenEmail';
 import * as Linking from 'expo-linking';
 import { Config } from 'app/skyhitz-common/src/config';
+import * as Device from 'expo-device';
 
 export default observer(({ route, navigation }) => {
   const { signInValidationStore, sessionStore } = Stores();
@@ -56,22 +57,18 @@ export default observer(({ route, navigation }) => {
   };
 
   const handleAuth = async () => {
-    // if the app is installed and the user can open it from web
-    let openApp = await Linking.canOpenURL(`${Config.SCHEMA}`);
-    console.log('can open link on app: ', openApp);
-    if (openApp && Platform.OS === 'web') {
-      try {
-        await Linking.openURL(
-          `${Config.SCHEMA}accounts/sign-in?token=${token}&uid=${uid}`
-        );
-      } catch (e) {
-        openApp = false;
-        handleAuth();
-      }
+    const device = await Device.getDeviceTypeAsync();
 
+    if (
+      Platform.OS === 'web' &&
+      (device === Device.DeviceType.PHONE ||
+        device === Device.DeviceType.TABLET)
+    ) {
+      await Linking.openURL(
+        `${Config.SCHEMA}accounts/sign-in?token=${token}&uid=${uid}`
+      );
       return;
     }
-
     const res = await sessionStore.signIn(token, uid);
     if (res) {
       return navigate('Main', {
