@@ -18,7 +18,7 @@
     "build": "next build"
   },
   "name": "app",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "Skyhitz is an app made for beatmakers",
   "author": "Alejo Mendoza",
   "license": "MIT",
