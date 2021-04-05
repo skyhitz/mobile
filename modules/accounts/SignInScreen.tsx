@@ -61,6 +61,7 @@ export default observer(({ route, navigation }) => {
 
     if (
       Platform.OS === 'web' &&
+      Device.osName === 'Android' &&
       (device === Device.DeviceType.PHONE ||
         device === Device.DeviceType.TABLET)
     ) {
