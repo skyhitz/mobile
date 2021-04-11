@@ -10,20 +10,8 @@ export class EntriesBackend {
       return [];
     }
 
-    const { hits } = await entriesIndex.search({
-      query: q,
+    const { hits } = await entriesIndex.search(q, {
       filters: `testing = ${isTesting}`,
-      attributesToRetrieve: [
-        'imageUrl',
-        'description',
-        'title',
-        'artist',
-        'id',
-        'videoUrl',
-        'price',
-        'forSale',
-      ],
-      hitsPerPage: 50,
     });
     return hits;
   }
