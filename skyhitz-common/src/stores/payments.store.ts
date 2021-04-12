@@ -15,8 +15,18 @@ export class PaymentsStore {
   submittingSubscription: boolean = false;
   @observable
   submittingWithdraw: boolean = false;
+  @observable
+  loadingBalance: boolean = false;
 
   constructor() {}
+
+  setLoadingBalance(loading: boolean) {
+    this.loadingBalance = loading;
+  }
+
+  setSubmittingSubscription(submitting) {
+    this.submittingSubscription = submitting;
+  }
 
   async subscribeUser(cardToken: string) {
     this.submittingSubscription = true;
@@ -35,10 +45,12 @@ export class PaymentsStore {
   }
 
   async refreshSubscription() {
+    this.loadingBalance = true;
     let { subscribed, credits } = await paymentsBackend.refreshSubscription();
     this.subscribed = subscribed;
     this.credits = credits;
     this.subscriptionLoaded = true;
+    this.loadingBalance = false;
   }
 
   async withdrawToExternalWallet(

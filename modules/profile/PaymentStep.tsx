@@ -15,6 +15,10 @@ import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 
+async function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default observer((props) => {
   const [selectedOption, setSelectedOption] = useState('subscription');
   const [amount, setAmount] = useState(50);
@@ -24,7 +28,26 @@ export default observer((props) => {
 
   const { paymentsStore } = Stores();
 
+  const refreshSubscription = async () => {
+    paymentsStore.setLoadingBalance(true);
+    let lastBalance = paymentsStore.credits;
+    await timeout(15000);
+    await paymentsStore.refreshSubscription();
+    if (lastBalance === paymentsStore.credits) {
+      paymentsStore.setLoadingBalance(true);
+      await timeout(15000);
+      paymentsStore.refreshSubscription();
+    }
+  };
+
+  const onSubmit = (e) => {
+    if (e.nativeEvent.key == 'Enter') {
+      submit();
+    }
+  };
+
   const submit = async () => {
+    paymentsStore.setSubmittingSubscription(true);
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
@@ -44,17 +67,18 @@ export default observer((props) => {
     const { id } = token;
     if (selectedOption === 'one-time') {
       const purchased = await paymentsStore.buyCredits(id, amount * 1.03);
+
       if (purchased) {
-        console.log('Purchase Complete!');
         goBack();
+        refreshSubscription();
       }
       return;
     }
 
     const subscribed = await paymentsStore.subscribeUser(id);
     if (subscribed) {
-      console.log('Purchase Complete!');
       goBack();
+      refreshSubscription();
     }
   };
 
@@ -116,7 +140,7 @@ export default observer((props) => {
           >
             <View>
               <TextInput
-                keyboardType={'numeric'}
+                keyboardType={Platform.OS === 'web' ? 'default' : 'number-pad'}
                 value={amount ? String(amount) : undefined}
                 onChange={handleAmountChange}
                 onChangeText={(value) =>
@@ -128,6 +152,7 @@ export default observer((props) => {
                     ? ({ outlineWidth: 0, backgroundColor: '#e9e9e9' } as any)
                     : {},
                 ]}
+                onKeyPress={onSubmit}
               />
               <P style={styles.description}>Buy credits</P>
               <View style={styles.priceSection}>
