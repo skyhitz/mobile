@@ -4,13 +4,15 @@ import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
+import cursorPointer from 'app/constants/CursorPointer';
 
 const Placeholder = () => <View style={styles.placeholder} />;
 
 export default observer(() => {
-  const { playerStore } = Stores();
+  const { playerStore, paymentsStore } = Stores();
   const { navigate } = useNavigation();
   const showBuyOptionsModal = () => {
+    paymentsStore.refreshSubscription();
     navigate('BuyOptionsModal', {
       entry: playerStore.entry,
     });
@@ -24,7 +26,10 @@ export default observer(() => {
   }
   return (
     <View style={styles.wrap}>
-      <Pressable style={styles.controlTouch} onPress={showBuyOptionsModal}>
+      <Pressable
+        style={[styles.controlTouch, cursorPointer]}
+        onPress={showBuyOptionsModal}
+      >
         <Text style={styles.creditsText}>
           ${playerStore.entry.price} - Buy Now
         </Text>
