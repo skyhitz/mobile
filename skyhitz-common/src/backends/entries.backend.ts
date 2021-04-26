@@ -263,12 +263,17 @@ export class EntriesBackend {
       .then((data: any) => data.data);
   }
 
-  updatePricing(id: string, price: number, forSale: boolean) {
+  updatePricing(
+    id: string,
+    price: number,
+    forSale: boolean,
+    equityForSale: number
+  ) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        updatePricing(id: "${id}", price: ${price}, forSale: ${forSale})
+        updatePricing(id: "${id}", price: ${price}, forSale: ${forSale}, equityForSale: ${equityForSale})
       }
       `,
       })

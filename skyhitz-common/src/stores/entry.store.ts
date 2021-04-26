@@ -268,10 +268,14 @@ export class EntryStore {
     if (!this.price) {
       return;
     }
+    if (!this.equityForSale) {
+      return;
+    }
     await entriesBackend.updatePricing(
       entry.id,
       this.price,
-      this.availableForSale
+      this.availableForSale,
+      this.equityForSale
     );
     this.clearStore();
   }
