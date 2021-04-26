@@ -139,13 +139,14 @@ export class EntriesBackend {
     artist: string,
     id: string,
     forSale: boolean = false,
-    price: number = 0
+    price: number = 0,
+    equityForSale: number = 0
   ) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", artist: "${artist}", id: "${id}", forSale: ${forSale}, price: ${price}){
+        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", artist: "${artist}", id: "${id}", forSale: ${forSale}, price: ${price}, equityForSale: ${equityForSale}){
           videoUrl
           imageUrl
           description
@@ -156,7 +157,11 @@ export class EntriesBackend {
       }
       `,
       })
-      .then((data: any) => data.data);
+      .then((data: any) => data.data)
+      .catch((e) => {
+        console.info(e);
+        return null;
+      });
   }
 
   async getTopChart(): Promise<Entry[]> {
