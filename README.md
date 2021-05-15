@@ -28,5 +28,5 @@ Skyhitz is a beatmakers app for [iOS](https://apps.apple.com/us/app/skyhitz/id11
 ## Support
 
 - This is a self-funded project so we accept donations in [XLM](https://www.stellar.org/lumens).
-- Stellar XLM Address `GCBUQ5P3AORPFS3P5QEQCFXXPXLX3YI2TFUMZP4ENZQTJH7CLIHBE5IG` Memo Id `12`
+- Stellar XLM Address `GACYXISCGD5DLQPWPQRPYV5QR6TBFK6JWPKCMIY6ETUF5AF7WVE7ZRW2`
 - For more info visit [Skyhitz.io](https://skyhitz.io)

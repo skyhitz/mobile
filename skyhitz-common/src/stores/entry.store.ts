@@ -34,9 +34,19 @@ export class EntryStore {
   availableForSale!: boolean;
   @observable
   price: number | undefined;
+  @observable
+  equityForSaleValue: number | undefined;
+  @observable
+  equityForSale: number | undefined;
+
+  @observable
+  equityForSalePercentage: string = '1 %';
 
   @observable
   progress: number = 0;
+
+  @observable
+  creating: boolean = false;
 
   constructor(private sessionStore: SessionStore) {}
 
@@ -200,6 +210,12 @@ export class EntryStore {
     this.price = price;
   };
 
+  @action
+  updateEquityForSalePercentage = (value: number) => {
+    this.equityForSale = value;
+    this.equityForSalePercentage = `${value ? value : 0} %`;
+  };
+
   clearStore() {
     this.updateUploadingVideo(false);
     this.updateLoadingArtwork(false);
@@ -212,6 +228,8 @@ export class EntryStore {
     this.updateId('');
     this.updateAvailableForSale(false);
     this.updatePrice(0);
+    this.updateEquityForSalePercentage(1);
+    this.creating = false;
   }
 
   @computed
@@ -228,6 +246,7 @@ export class EntryStore {
   }
 
   async create() {
+    this.creating = true;
     await entriesBackend.createFromUpload(
       this.eTag,
       this.artworkUrl,
@@ -237,14 +256,9 @@ export class EntryStore {
       this.artist,
       this.id,
       this.availableForSale,
-      this.price
+      this.price,
+      this.equityForSale
     );
-    // entriesBackend.youtubeUpload(
-    //   this.videoUrl,
-    //   this.description,
-    //   this.title,
-    //   this.id
-    // );
   }
 
   async updatePricing(entry: any) {
@@ -254,10 +268,14 @@ export class EntryStore {
     if (!this.price) {
       return;
     }
+    if (!this.equityForSale) {
+      return;
+    }
     await entriesBackend.updatePricing(
       entry.id,
       this.price,
-      this.availableForSale
+      this.availableForSale,
+      this.equityForSale
     );
     this.clearStore();
   }
