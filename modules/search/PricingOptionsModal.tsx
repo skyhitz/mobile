@@ -25,6 +25,9 @@ export default observer(({ route }) => {
   const { entryStore, userEntriesStore } = Stores();
   const { goBack } = useNavigation();
   const { entry } = route.params;
+  let equityForSaleValue = entryStore.equityForSale
+    ? entryStore.equityForSale
+    : 0;
 
   useEffect(() => {
     if (!entry) return;
@@ -75,7 +78,7 @@ export default observer(({ route }) => {
             entryStore.updateAvailableForSale(forSale)
           }
           value={entryStore.availableForSale}
-          style={styles.input}
+          style={styles.switch}
           trackColor={{
             false: Colors.defaultTextLight,
             true: Colors.lightBrandBlue,
@@ -122,7 +125,7 @@ export default observer(({ route }) => {
           style={styles.placeholderIcon}
         />
         <Text
-          style={styles.priceDescription}
+          style={styles.equityDescription}
           ellipsizeMode="tail"
           numberOfLines={1}
         >
@@ -131,10 +134,10 @@ export default observer(({ route }) => {
         </Text>
 
         <Slider
-          style={{ flex: 1 }}
+          style={{ flex: 1, marginLeft: 10 }}
           minimumValue={1}
           maximumValue={100}
-          value={entryStore.equityForSaleValue}
+          value={equityForSaleValue}
           onValueChange={(target) => {
             entryStore.updateEquityForSalePercentage(target);
           }}
@@ -175,14 +178,16 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: Colors.white,
     marginTop: 40,
-    width: Layout.window.width,
+    width: '100%',
+    maxWidth: 400,
   },
   artistName: {
     fontSize: 16,
     textAlign: 'left',
     marginTop: 10,
     color: Colors.white,
-    width: Layout.window.width,
+    width: '100%',
+    maxWidth: 400,
   },
   options: {
     flex: 1,
@@ -196,13 +201,20 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     height: 50,
-    width: Layout.window.width,
+    width: '100%',
+    maxWidth: 400,
     paddingHorizontal: 30,
   },
   priceDescription: {
     color: Colors.defaultTextLight,
     fontSize: 16,
-    paddingLeft: 36,
+    paddingLeft: 15,
+  },
+  equityDescription: {
+    color: Colors.defaultTextLight,
+    fontSize: 16,
+    paddingLeft: 15,
+    width: 180,
   },
   text: {
     fontSize: 16,
@@ -227,7 +239,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 100,
     maxHeight: 100,
-    width: Layout.window.width,
+    width: '100%',
+    maxWidth: 400,
   },
   placeholderIcon: {
     backgroundColor: Colors.transparent,
@@ -236,6 +249,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.transparent,
     color: Colors.defaultTextLight,
     fontSize: 14,
-    paddingLeft: 36,
+    paddingLeft: 15,
+  },
+  switch: {
+    backgroundColor: Colors.transparent,
+    color: Colors.defaultTextLight,
+    fontSize: 14,
+    marginLeft: 10,
   },
 });

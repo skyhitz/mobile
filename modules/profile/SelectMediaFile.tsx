@@ -118,6 +118,9 @@ const ArtworkSection = ({ loadingArtwork, artworkUrl, selectArtwork }) => {
 export default observer(() => {
   const { entryStore, userEntriesStore } = Stores();
   const { navigate } = useNavigation();
+  let equityForSaleValue = entryStore.equityForSale
+    ? entryStore.equityForSale
+    : 0;
 
   const getPermissionAsync = async () => {
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
@@ -358,7 +361,7 @@ export default observer(() => {
                 style={{ flex: 1 }}
                 minimumValue={1}
                 maximumValue={100}
-                value={entryStore.equityForSaleValue}
+                value={equityForSaleValue}
                 onValueChange={(target) => {
                   entryStore.updateEquityForSalePercentage(target);
                 }}

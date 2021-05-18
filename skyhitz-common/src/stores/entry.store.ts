@@ -35,8 +35,6 @@ export class EntryStore {
   @observable
   price: number | undefined;
   @observable
-  equityForSaleValue: number | undefined;
-  @observable
   equityForSale: number | undefined;
 
   @observable
