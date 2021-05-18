@@ -16,6 +16,31 @@ export class EntriesBackend {
     return hits;
   }
 
+  async getPriceInfo(id: string) {
+    return client
+      .query({
+        query: gql`
+      {
+        entryPrice(id: "${id}"){
+          price
+          amount
+        }
+      }
+      `,
+      })
+      .then((data: any) => data.data)
+      .then(({ entryPrice }: any) => {
+        return {
+          price: parseFloat(entryPrice.price),
+          amount: parseFloat(entryPrice.amount),
+        };
+      })
+      .catch((e) => {
+        console.error(e);
+        return { price: 0, amount: 0 };
+      });
+  }
+
   async getById(id: string) {
     return client
       .query({
@@ -92,12 +117,12 @@ export class EntriesBackend {
       .then(({ addRecentEntrySearch }) => addRecentEntrySearch);
   }
 
-  async buyEntry(id: string) {
+  async buyEntry(id: string, amount: number, price: number) {
     return client
       .mutate({
         mutation: gql`
     mutation {
-      buyEntry(id: "${id}")
+      buyEntry(id: "${id}", amount: ${amount}, price: ${price})
     }
     `,
       })

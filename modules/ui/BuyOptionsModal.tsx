@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import Colors from 'app/constants/Colors';
 import LargeBtn from './LargeBtn';
 import { observer } from 'mobx-react';
@@ -8,7 +8,8 @@ import { useNavigation } from '@react-navigation/core';
 
 export default observer(({ route }) => {
   const router = useNavigation();
-  const { entry } = route.params;
+  const { entry, priceInfo } = route.params;
+  const [submitting, setSubmitting] = useState(false);
   const { goBack } = useNavigation();
 
   const {
@@ -19,14 +20,15 @@ export default observer(({ route }) => {
   } = Stores();
 
   const buyEntry = async (id: string) => {
-    await paymentsStore.buyEntry(id);
+    setSubmitting(true);
+    await paymentsStore.buyEntry(id, priceInfo.amount, priceInfo.price);
     [
       await userEntriesStore.refreshEntries(),
       await entriesSearchStore.getRecentSearches(),
       await paymentsStore.refreshSubscription(),
     ];
     playerStore.refreshEntry();
-
+    setSubmitting(false);
     goBack();
   };
 
@@ -44,11 +46,23 @@ export default observer(({ route }) => {
       </View>
     );
   }
+  if (submitting) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.infoWrap}>
+          <Text style={styles.title}>Submitting transaction...</Text>
+        </View>
+        <View style={styles.bottomWrap}>
+          <ActivityIndicator color={Colors.defaultTextLight} size={'small'} />
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.infoWrap}>
         <Text style={styles.title}>
-          You are about to purchase all the rights of the following creation:{' '}
+          You are about to buy {priceInfo.amount}% equity for ${priceInfo.price}
         </Text>
         <Text style={styles.title}>{entry.title}</Text>
       </View>

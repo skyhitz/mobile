@@ -66,7 +66,11 @@ export class PaymentsStore {
     this.submittingWithdraw = false;
   }
 
-  public async buyEntry(id: string) {
-    await entriesBackend.buyEntry(id);
+  public async buyEntry(id: string, amount: number, price: number) {
+    await entriesBackend.buyEntry(id, amount, price);
+  }
+
+  public getPriceInfo(id: string) {
+    return entriesBackend.getPriceInfo(id);
   }
 }
