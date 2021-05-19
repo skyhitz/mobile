@@ -1,78 +1,78 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import Colors from 'app/constants/Colors';
 import LargeBtn from './LargeBtn';
-import { inject } from 'mobx-react';
-import { Stores } from 'skyhitz-common';
+import { observer } from 'mobx-react';
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/core';
 
-@inject((stores: Stores) => ({
-  buyEntry: stores.paymentsStore.buyEntry.bind(stores.paymentsStore),
-  credits: stores.paymentsStore.credits,
-  refreshEntries: stores.userEntriesStore.refreshEntries.bind(
-    stores.userEntriesStore
-  ),
-  refreshRecentSearches: stores.entriesSearchStore.getRecentSearches.bind(
-    stores.entriesSearchStore
-  ),
-  refreshSubscription: stores.paymentsStore.refreshSubscription.bind(
-    stores.paymentsStore
-  ),
-  refreshEntry: stores.playerStore.refreshEntry.bind(stores.playerStore),
-  entry: stores.playerStore.entry,
-}))
-export default class BuyOptionsModal extends React.Component<any, any> {
-  async buyEntry(id: string) {
-    await this.props.buyEntry(id);
+export default observer(({ route }) => {
+  const router = useNavigation();
+  const { entry, priceInfo } = route.params;
+  const [submitting, setSubmitting] = useState(false);
+  const { goBack } = useNavigation();
+
+  const {
+    paymentsStore,
+    userEntriesStore,
+    entriesSearchStore,
+    playerStore,
+  } = Stores();
+
+  const buyEntry = async (id: string) => {
+    setSubmitting(true);
+    await paymentsStore.buyEntry(id, priceInfo.amount, priceInfo.price);
     [
-      await this.props.refreshEntries(),
-      await this.props.refreshRecentSearches(),
-      await this.props.refreshSubscription(),
+      await userEntriesStore.refreshEntries(),
+      await entriesSearchStore.getRecentSearches(),
+      await paymentsStore.refreshSubscription(),
     ];
-    this.props.refreshEntry();
+    playerStore.refreshEntry();
+    setSubmitting(false);
+    goBack();
+  };
 
-    this.props.navigation.goBack();
-  }
-  render() {
-    const { entry } = this.props.navigation.state.params;
-
-    if (!this.props.credits || this.props.credits < entry.price) {
-      return (
-        <View style={styles.container}>
-          <View style={styles.infoWrap}>
-            <Text style={styles.title}>
-              You don't have enough credits to buy this creation.
-            </Text>
-          </View>
-          <View style={styles.bottomWrap}>
-            <LargeBtn
-              text="Done"
-              secondary={true}
-              onPress={() => this.props.navigation.goBack()}
-            />
-          </View>
-        </View>
-      );
-    }
+  if (!paymentsStore.credits || paymentsStore.credits < entry.price) {
     return (
       <View style={styles.container}>
         <View style={styles.infoWrap}>
           <Text style={styles.title}>
-            You are about to purchase all the rights of the following creation:{' '}
+            You don't have enough credits to buy this creation.
           </Text>
-          <Text style={styles.title}>{entry.title}</Text>
         </View>
         <View style={styles.bottomWrap}>
-          <LargeBtn
-            text="Cancel"
-            secondary={true}
-            onPress={() => this.props.navigation.goBack()}
-          />
-          <LargeBtn text="Confirm" onPress={() => this.buyEntry(entry.id)} />
+          <LargeBtn text="Done" secondary={true} onPress={() => goBack()} />
         </View>
       </View>
     );
   }
-}
+  if (submitting) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.infoWrap}>
+          <Text style={styles.title}>Submitting transaction...</Text>
+        </View>
+        <View style={styles.bottomWrap}>
+          <ActivityIndicator color={Colors.defaultTextLight} size={'small'} />
+        </View>
+      </View>
+    );
+  }
+  return (
+    <View style={styles.container}>
+      <View style={styles.infoWrap}>
+        <Text style={styles.title}>
+          You are about to buy {priceInfo.amount}% equity for ${priceInfo.price}
+        </Text>
+        <Text style={styles.title}>{entry.title}</Text>
+      </View>
+      <View style={styles.bottomWrap}>
+        <LargeBtn text="Cancel" secondary={true} onPress={() => goBack()} />
+        <LargeBtn text="Confirm" onPress={() => buyEntry(entry.id)} />
+      </View>
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {

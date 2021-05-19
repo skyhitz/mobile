@@ -24,6 +24,9 @@ import LargeBtn from 'app/modules/ui/LargeBtn';
 import cursorPointer from 'app/constants/CursorPointer';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import Slider from '@react-native-community/slider';
+
+const SwitchWeb: any = Switch;
 
 const LoadingIndicator = () => {
   return (
@@ -115,6 +118,9 @@ const ArtworkSection = ({ loadingArtwork, artworkUrl, selectArtwork }) => {
 export default observer(() => {
   const { entryStore, userEntriesStore } = Stores();
   const { navigate } = useNavigation();
+  let equityForSaleValue = entryStore.equityForSale
+    ? entryStore.equityForSale
+    : 0;
 
   const getPermissionAsync = async () => {
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
@@ -265,37 +271,6 @@ export default observer(() => {
           />
         </View>
         <View style={styles.field}>
-          <MaterialIcons
-            name={'attach-money'}
-            size={20}
-            color={Colors.dividerBackground}
-            style={styles.placeholderIcon}
-          />
-          <Text
-            style={styles.priceDescription}
-            ellipsizeMode="tail"
-            numberOfLines={1}
-          >
-            {'Price USD: '}
-          </Text>
-          <TextInput
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            returnKeyType={'done'}
-            placeholder=""
-            keyboardType={'numeric'}
-            autoCorrect={false}
-            style={[
-              styles.input,
-              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-            ]}
-            placeholderTextColor="white"
-            value={entryStore.price?.toString()}
-            onChangeText={(price) => entryStore.updatePrice(parseInt(price))}
-            maxLength={30}
-          />
-        </View>
-        <View style={styles.field}>
           <MaterialCommunityIcons
             name="circle-medium"
             size={24}
@@ -313,22 +288,93 @@ export default observer(() => {
           >
             {'Available for Sale: '}
           </Text>
-          <Switch
+          <SwitchWeb
             onValueChange={(forSale) =>
               entryStore.updateAvailableForSale(forSale)
             }
             value={entryStore.availableForSale}
             style={[
-              styles.input,
+              styles.switch,
               Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
             ]}
+            activeThumbColor={Colors.defaultTextLight}
             trackColor={{
               false: Colors.defaultTextLight,
               true: Colors.lightBrandBlue,
             }}
-            thumbColor={Colors.lightGrey}
+            thumbColor={Colors.defaultTextLight}
           />
         </View>
+        {entryStore.availableForSale ? (
+          <>
+            <View style={styles.field}>
+              <MaterialIcons
+                name={'attach-money'}
+                size={20}
+                color={Colors.dividerBackground}
+                style={styles.placeholderIcon}
+              />
+
+              <Text
+                style={styles.priceUSDDescription}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+              >
+                {'Price USD: '}
+              </Text>
+              <TextInput
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+                returnKeyType={'done'}
+                placeholder=""
+                keyboardType={'numeric'}
+                autoCorrect={false}
+                style={[
+                  styles.priceInput,
+                  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+                ]}
+                placeholderTextColor="white"
+                value={entryStore.price ? entryStore.price.toString() : ''}
+                onChangeText={(price) =>
+                  entryStore.updatePrice(parseInt(price))
+                }
+                maxLength={30}
+              />
+            </View>
+            <View style={styles.field}>
+              <FontAwesome
+                name="pie-chart"
+                size={24}
+                color={Colors.dividerBackground}
+                style={styles.placeholderIcon}
+              />
+              <Text
+                style={styles.priceDescription}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+              >
+                {'Equity for Sale: '}
+                {entryStore.equityForSalePercentage}
+              </Text>
+
+              <Slider
+                style={{ flex: 1 }}
+                minimumValue={1}
+                maximumValue={100}
+                value={equityForSaleValue}
+                onValueChange={(target) => {
+                  entryStore.updateEquityForSalePercentage(target);
+                }}
+                step={1}
+                minimumTrackTintColor={Colors.brandBlue}
+                maximumTrackTintColor={Colors.backgroundTrackColor}
+                thumbTintColor={Colors.brandBlue}
+              />
+            </View>
+          </>
+        ) : (
+          <View style={styles.emptyField}></View>
+        )}
       </View>
       <ArtworkSection
         loadingArtwork={entryStore.loadingArtwork}
@@ -339,7 +385,7 @@ export default observer(() => {
         <LargeBtn
           disabled={!entryStore.canCreate}
           onPress={onCreate}
-          text="Done"
+          text={entryStore.creating ? 'Creating...' : 'Done'}
         />
       </View>
     </View>
@@ -356,7 +402,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btn: {
-    marginTop: 40,
+    marginTop: 30,
   },
   imageLoader: {
     borderRadius: circleBorderRadius,
@@ -379,7 +425,12 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomColor: Colors.dividerBackground,
     borderBottomWidth: 1,
-    minWidth: 300,
+    minWidth: 367,
+  },
+  emptyField: {
+    minHeight: 73,
+    flex: 1,
+    minWidth: 367,
   },
   placeholderIcon: {
     backgroundColor: Colors.transparent,
@@ -390,15 +441,38 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingLeft: 10,
   },
+  priceInput: {
+    backgroundColor: Colors.white,
+    borderRadius: 5,
+    height: 28,
+    color: Colors.black,
+    fontSize: 14,
+    paddingLeft: 10,
+  },
+  switch: {
+    backgroundColor: Colors.transparent,
+    color: Colors.white,
+    fontSize: 14,
+  },
   inputContainerTop: {
     flex: 1,
     maxHeight: 250,
-    marginBottom: 40,
+    marginBottom: 30,
   },
   priceDescription: {
     color: Colors.defaultTextLight,
     fontSize: 16,
     paddingLeft: 10,
-    paddingRight: 40,
+    paddingRight: 20,
+    maxWidth: 190,
+    width: 190,
+  },
+  priceUSDDescription: {
+    color: Colors.defaultTextLight,
+    fontSize: 16,
+    paddingLeft: 10,
+    paddingRight: 20,
+    maxWidth: 190,
+    width: 110,
   },
 });

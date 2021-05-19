@@ -1,37 +1,17 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
 import { MaterialIcons } from '@expo/vector-icons';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { observer } from 'mobx-react';
+import { Stores } from 'app/functions/Stores';
 
-@inject((stores: Stores) => ({
-  user: stores.sessionStore.user,
-  subscribed: stores.paymentsStore.subscribed,
-  credits: stores.paymentsStore.credits,
-}))
-export default class ProfileSettingsTopContainer extends React.Component<
-  any,
-  any
-> {
-  render() {
-    if (!this.props.user) {
-      return null;
-    }
-    let source;
-    if (this.props.user.avatarUrl) {
-      source = { uri: this.props.user.avatarUrl };
-    }
-    if (source) {
-      return <View style={styles.container}>{this.renderBlurSection()}</View>;
-    }
-    return <View style={styles.container}>{this.renderBlurSection()}</View>;
-  }
-  renderDollarSign() {
-    if (this.props.credits > 0) {
+export default observer((props) => {
+  const { paymentsStore, sessionStore } = Stores();
+
+  const renderDollarSign = () => {
+    if (paymentsStore.credits > 0) {
       return (
         <MaterialIcons
           size={22}
@@ -42,26 +22,50 @@ export default class ProfileSettingsTopContainer extends React.Component<
       );
     }
     return null;
-  }
-  renderBlurSection() {
+  };
+
+  const renderCreditsSection = () => {
+    if (paymentsStore.loadingBalance) {
+      return <Text style={styles.text}> {'   '}Loading Balance...</Text>;
+    }
+    return (
+      <>
+        {renderDollarSign()}
+        <Text style={styles.text}>
+          {paymentsStore.credits ? paymentsStore.credits : ''}
+        </Text>{' '}
+      </>
+    );
+  };
+
+  const renderBlurSection = () => {
     return (
       <View style={styles.overlay}>
         <View style={styles.topContainer}>
           <View style={styles.topHeader}>
-            {UserAvatarMedium(this.props.user)}
+            {UserAvatarMedium(sessionStore.user)}
             <View style={styles.profileInfo}>
-              <Text style={styles.text}>{this.props.user.displayName}</Text>
-              {this.renderDollarSign()}
-              <Text style={styles.text}>
-                {this.props.credits ? this.props.credits : ''}
-              </Text>
+              <Text style={styles.text}>{sessionStore.user?.displayName}</Text>
+              {renderCreditsSection()}
             </View>
           </View>
         </View>
       </View>
     );
+  };
+
+  if (!sessionStore.user) {
+    return null;
   }
-}
+  let source;
+  if (sessionStore.user.avatarUrl) {
+    source = { uri: sessionStore.user.avatarUrl };
+  }
+  if (source) {
+    return <View style={styles.container}>{renderBlurSection()}</View>;
+  }
+  return <View style={styles.container}>{renderBlurSection()}</View>;
+});
 
 const styles = StyleSheet.create({
   container: {

@@ -10,22 +10,35 @@ export class EntriesBackend {
       return [];
     }
 
-    const { hits } = await entriesIndex.search({
-      query: q,
+    const { hits } = await entriesIndex.search(q, {
       filters: `testing = ${isTesting}`,
-      attributesToRetrieve: [
-        'imageUrl',
-        'description',
-        'title',
-        'artist',
-        'id',
-        'videoUrl',
-        'price',
-        'forSale',
-      ],
-      hitsPerPage: 50,
     });
     return hits;
+  }
+
+  async getPriceInfo(id: string) {
+    return client
+      .query({
+        query: gql`
+      {
+        entryPrice(id: "${id}"){
+          price
+          amount
+        }
+      }
+      `,
+      })
+      .then((data: any) => data.data)
+      .then(({ entryPrice }: any) => {
+        return {
+          price: parseFloat(entryPrice.price),
+          amount: parseFloat(entryPrice.amount),
+        };
+      })
+      .catch((e) => {
+        console.error(e);
+        return { price: 0, amount: 0 };
+      });
   }
 
   async getById(id: string) {
@@ -104,12 +117,12 @@ export class EntriesBackend {
       .then(({ addRecentEntrySearch }) => addRecentEntrySearch);
   }
 
-  async buyEntry(id: string) {
+  async buyEntry(id: string, amount: number, price: number) {
     return client
       .mutate({
         mutation: gql`
     mutation {
-      buyEntry(id: "${id}")
+      buyEntry(id: "${id}", amount: ${amount}, price: ${price})
     }
     `,
       })
@@ -151,13 +164,14 @@ export class EntriesBackend {
     artist: string,
     id: string,
     forSale: boolean = false,
-    price: number = 0
+    price: number = 0,
+    equityForSale: number = 0
   ) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", artist: "${artist}", id: "${id}", forSale: ${forSale}, price: ${price}){
+        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", artist: "${artist}", id: "${id}", forSale: ${forSale}, price: ${price}, equityForSale: ${equityForSale}){
           videoUrl
           imageUrl
           description
@@ -168,7 +182,11 @@ export class EntriesBackend {
       }
       `,
       })
-      .then((data: any) => data.data);
+      .then((data: any) => data.data)
+      .catch((e) => {
+        console.info(e);
+        return null;
+      });
   }
 
   async getTopChart(): Promise<Entry[]> {
@@ -270,12 +288,17 @@ export class EntriesBackend {
       .then((data: any) => data.data);
   }
 
-  updatePricing(id: string, price: number, forSale: boolean) {
+  updatePricing(
+    id: string,
+    price: number,
+    forSale: boolean,
+    equityForSale: number
+  ) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        updatePricing(id: "${id}", price: ${price}, forSale: ${forSale})
+        updatePricing(id: "${id}", price: ${price}, forSale: ${forSale}, equityForSale: ${equityForSale})
       }
       `,
       })

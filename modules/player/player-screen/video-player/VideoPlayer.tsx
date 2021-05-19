@@ -46,33 +46,25 @@ export default observer(() => {
   return (
     <View style={styles.container}>
       <View style={styles.container} onLayout={onLayout}>
-        <ImageBackground
-          source={{ uri: playerStore.entry?.imageUrl }}
-          imageStyle={{ resizeMode: 'contain' }}
+        <Video
+          posterSource={{ uri: playerStore.entry?.imageUrl }}
+          source={{
+            uri: playerStore.streamUrl,
+          }}
+          ref={(ref) => playerStore.mountVideo(ref)}
+          onPlaybackStatusUpdate={(status) =>
+            playerStore.onPlaybackStatusUpdate(status)
+          }
+          resizeMode={Video.RESIZE_MODE_CONTAIN}
           style={[
             styles.videoPlayer,
             { height: dynamicHeight, maxHeight: 360 },
           ]}
-        >
-          <Video
-            source={{
-              uri: playerStore.streamUrl,
-            }}
-            ref={(ref) => playerStore.mountVideo(ref)}
-            onPlaybackStatusUpdate={(status) =>
-              playerStore.onPlaybackStatusUpdate(status)
-            }
-            resizeMode={Video.RESIZE_MODE_CONTAIN}
-            style={[
-              styles.videoPlayer,
-              { height: dynamicHeight, maxHeight: 360 },
-            ]}
-            onError={(error) => playerStore.onError(error)}
-            onFullscreenUpdate={(update) =>
-              playerStore.onFullscreenUpdate(update)
-            }
-          />
-        </ImageBackground>
+          onError={(error) => playerStore.onError(error)}
+          onFullscreenUpdate={(update) =>
+            playerStore.onFullscreenUpdate(update)
+          }
+        />
         <PlayPauseInvisibleArea />
         <VideoErrorText />
       </View>

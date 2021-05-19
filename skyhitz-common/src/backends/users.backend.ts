@@ -10,17 +10,8 @@ export class UsersBackend {
       return [];
     }
 
-    const { hits } = await usersIndex.search({
-      query: q,
+    const { hits } = await usersIndex.search(q, {
       filters: `testing = ${isTesting}`,
-      attributesToRetrieve: [
-        'avatarUrl',
-        'displayName',
-        'username',
-        'reputation',
-        'id',
-      ],
-      hitsPerPage: 50,
     });
     return hits.map((user: any) => new User(user));
   }

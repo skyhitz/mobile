@@ -1,44 +1,41 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { observer } from 'mobx-react';
+import { Stores } from 'app/functions/Stores';
 
-@inject((stores: Stores) => ({
-  user: stores.profileStore.user,
-}))
-export default class ProfileTopContainer extends React.Component<any, any> {
-  render() {
-    if (!this.props.user) {
-      return null;
-    }
-    let source;
-    if (this.props.user.avatarUrl) {
-      source = { uri: this.props.user.avatarUrl };
-    }
-    if (source) {
-      return <View style={styles.container}>{this.renderBlurSection()}</View>;
-    }
-    return <View style={styles.container}>{this.renderBlurSection()}</View>;
-  }
-  renderBlurSection() {
+export default observer((props) => {
+  const { profileStore } = Stores();
+
+  const renderBlurSection = () => {
     return (
       <View style={styles.overlay}>
         <View style={styles.topContainer}>
           <View style={styles.topHeader}>
-            {UserAvatarMedium(this.props.user)}
+            {UserAvatarMedium(profileStore.user)}
             <View style={styles.profileInfo}>
-              <Text style={styles.text}>{this.props.user.displayName}</Text>
+              <Text style={styles.text}>{profileStore.user.displayName}</Text>
             </View>
           </View>
         </View>
       </View>
     );
+  };
+
+  if (!profileStore.user) {
+    return null;
   }
-}
+  let source;
+  if (profileStore.user.avatarUrl) {
+    source = { uri: profileStore.user.avatarUrl };
+  }
+  if (source) {
+    return <View style={styles.container}>{renderBlurSection()}</View>;
+  }
+  return <View style={styles.container}>{renderBlurSection()}</View>;
+});
 
 const styles = StyleSheet.create({
   container: {

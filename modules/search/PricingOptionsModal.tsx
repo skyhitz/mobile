@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,133 +6,159 @@ import {
   Pressable,
   TextInput,
   Switch,
-  Platform
+  Platform,
 } from 'react-native';
-import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
-import { Stores } from 'skyhitz-common';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import {
+  MaterialCommunityIcons,
+  MaterialIcons,
+  FontAwesome,
+} from '@expo/vector-icons';
 import cursorPointer from 'app/constants/CursorPointer';
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
+import Slider from '@react-native-community/slider';
 
-@inject((stores: Stores) => ({
-  user: stores.sessionStore.user,
-  updateAvailableForSale: stores.entryStore.updateAvailableForSale.bind(
-    stores.entryStore
-  ),
-  updatePrice: stores.entryStore.updatePrice.bind(stores.entryStore),
-  availableForSale: stores.entryStore.availableForSale,
-  price: stores.entryStore.price,
-  updatePricing: stores.entryStore.updatePricing.bind(stores.entryStore),
-  refreshEntries: stores.userEntriesStore.refreshEntries.bind(
-    stores.userEntriesStore
-  ),
-}))
-export default class PricingOptionsModal extends React.Component<any, any> {
-  componentDidMount() {
-    const { entry } = this.props.route.params;
+export default observer(({ route }) => {
+  const { entryStore, userEntriesStore } = Stores();
+  const { goBack } = useNavigation();
+  const { entry } = route.params;
+  let equityForSaleValue = entryStore.equityForSale
+    ? entryStore.equityForSale
+    : 0;
+
+  useEffect(() => {
     if (!entry) return;
-    this.props.updateAvailableForSale(entry.forSale);
+    entryStore.updateAvailableForSale(entry.forSale);
     if (entry.price) {
-      this.props.updatePrice(entry.price.toString());
+      entryStore.updatePrice(entry.price);
     }
-  }
-  async handleUpdatePricing(entry: any) {
-    await this.props.updatePricing(entry);
-    this.props.refreshEntries();
-    this.props.navigation.goBack();
-  }
-  render() {
-    const { entry } = this.props.route.params;
+  }, []);
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.field}>
-          <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
-            {`Title:       ${entry.title}`}
-          </Text>
-        </View>
-        <View style={styles.field}>
-          <Text
-            style={styles.artistName}
-            ellipsizeMode="tail"
-            numberOfLines={1}
-          >
-            {`Owner:   ${entry.artist}`}
-          </Text>
-        </View>
-        <View style={styles.field}>
-          <MaterialCommunityIcons
-            name="circle-medium"
-            size={24}
-            color={
-              this.props.availableForSale
-                ? Colors.lightBrandBlue
-                : Colors.dividerBackground
-            }
-            style={styles.placeholderIcon}
-          />
-          <Text
-            style={styles.priceDescription}
-            ellipsizeMode="tail"
-            numberOfLines={1}
-          >
-            {'Available for Sale: '}
-          </Text>
-          <Switch
-            onValueChange={(forSale) =>
-              this.props.updateAvailableForSale(forSale)
-            }
-            value={this.props.availableForSale}
-            style={styles.input}
-            trackColor={{
-              false: Colors.defaultTextLight,
-              true: Colors.lightBrandBlue,
-            }}
-            thumbColor={Colors.lightGrey}
-          />
-        </View>
-        <View style={styles.field}>
-          <MaterialIcons
-            name={'attach-money'}
-            size={20}
-            color={Colors.dividerBackground}
-            style={styles.placeholderIcon}
-          />
-          <Text
-            style={styles.priceDescription}
-            ellipsizeMode="tail"
-            numberOfLines={1}
-          >
-            {'Price USD: '}
-          </Text>
-          <TextInput
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            placeholder=""
-            keyboardType={'numeric'}
-            autoCorrect={false}
-            autoFocus={true}
-            style={[styles.input,  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},]}
-            placeholderTextColor="white"
-            value={this.props.price ? String(this.props.price) : undefined}
-            onChangeText={(price) => this.props.updatePrice(price)}
-            maxLength={30}
-          />
-        </View>
+  const handleUpdatePricing = async (entry: any) => {
+    await entryStore.updatePricing(entry);
+    userEntriesStore.refreshEntries();
+    goBack();
+  };
 
-        <View style={styles.bottomWrap}>
-          <Pressable onPress={() => this.handleUpdatePricing(entry)}>
-            <Text style={[styles.btnText, cursorPointer]}>Done</Text>
-          </Pressable>
-          <Pressable onPress={() => this.props.navigation.goBack()}>
-            <Text style={[styles.btnText, cursorPointer]}>Cancel</Text>
-          </Pressable>
-        </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.field}>
+        <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
+          {`Title:       ${entry.title}`}
+        </Text>
       </View>
-    );
-  }
-}
+      <View style={styles.field}>
+        <Text style={styles.artistName} ellipsizeMode="tail" numberOfLines={1}>
+          {`Owner:   ${entry.artist}`}
+        </Text>
+      </View>
+      <View style={styles.field}>
+        <MaterialCommunityIcons
+          name="circle-medium"
+          size={24}
+          color={
+            entryStore.availableForSale
+              ? Colors.lightBrandBlue
+              : Colors.dividerBackground
+          }
+          style={styles.placeholderIcon}
+        />
+        <Text
+          style={styles.priceDescription}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {'Available for Sale: '}
+        </Text>
+        <Switch
+          onValueChange={(forSale) =>
+            entryStore.updateAvailableForSale(forSale)
+          }
+          value={entryStore.availableForSale}
+          style={styles.switch}
+          trackColor={{
+            false: Colors.defaultTextLight,
+            true: Colors.lightBrandBlue,
+          }}
+          thumbColor={Colors.lightGrey}
+        />
+      </View>
+      <View style={styles.field}>
+        <MaterialIcons
+          name={'attach-money'}
+          size={20}
+          color={Colors.dividerBackground}
+          style={styles.placeholderIcon}
+        />
+        <Text
+          style={styles.priceDescription}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {'Price USD: '}
+        </Text>
+        <TextInput
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          placeholder=""
+          keyboardType={'numeric'}
+          autoCorrect={false}
+          autoFocus={true}
+          style={[
+            styles.input,
+            Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+          ]}
+          placeholderTextColor="white"
+          value={entryStore.price ? String(entryStore.price) : undefined}
+          onChangeText={(price) => entryStore.updatePrice(parseInt(price))}
+          maxLength={30}
+        />
+      </View>
+      <View style={styles.field}>
+        <FontAwesome
+          name="pie-chart"
+          size={24}
+          color={Colors.dividerBackground}
+          style={styles.placeholderIcon}
+        />
+        <Text
+          style={styles.equityDescription}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {'Equity for Sale: '}
+          {entryStore.equityForSalePercentage}
+        </Text>
+
+        <Slider
+          style={{ flex: 1, marginLeft: 10 }}
+          minimumValue={1}
+          maximumValue={100}
+          value={equityForSaleValue}
+          onValueChange={(target) => {
+            entryStore.updateEquityForSalePercentage(target);
+          }}
+          step={1}
+          minimumTrackTintColor={Colors.brandBlue}
+          maximumTrackTintColor={Colors.backgroundTrackColor}
+          thumbTintColor={Colors.brandBlue}
+        />
+      </View>
+
+      <View style={styles.bottomWrap}>
+        <Pressable onPress={() => handleUpdatePricing(entry)}>
+          <Text style={[styles.btnText, cursorPointer]}>Done</Text>
+        </Pressable>
+        <Pressable onPress={() => goBack()}>
+          <Text style={[styles.btnText, cursorPointer]}>Cancel</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -152,14 +178,16 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: Colors.white,
     marginTop: 40,
-    width: Layout.window.width,
+    width: '100%',
+    maxWidth: 400,
   },
   artistName: {
     fontSize: 16,
     textAlign: 'left',
     marginTop: 10,
     color: Colors.white,
-    width: Layout.window.width,
+    width: '100%',
+    maxWidth: 400,
   },
   options: {
     flex: 1,
@@ -173,13 +201,20 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     height: 50,
-    width: Layout.window.width,
+    width: '100%',
+    maxWidth: 400,
     paddingHorizontal: 30,
   },
   priceDescription: {
     color: Colors.defaultTextLight,
     fontSize: 16,
-    paddingLeft: 36,
+    paddingLeft: 15,
+  },
+  equityDescription: {
+    color: Colors.defaultTextLight,
+    fontSize: 16,
+    paddingLeft: 15,
+    width: 180,
   },
   text: {
     fontSize: 16,
@@ -204,7 +239,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 100,
     maxHeight: 100,
-    width: Layout.window.width,
+    width: '100%',
+    maxWidth: 400,
   },
   placeholderIcon: {
     backgroundColor: Colors.transparent,
@@ -213,6 +249,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.transparent,
     color: Colors.defaultTextLight,
     fontSize: 14,
-    paddingLeft: 36,
+    paddingLeft: 15,
+  },
+  switch: {
+    backgroundColor: Colors.transparent,
+    color: Colors.defaultTextLight,
+    fontSize: 14,
+    marginLeft: 10,
   },
 });
