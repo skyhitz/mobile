@@ -15,6 +15,9 @@ module.exports = withExpo(
       withTM(
         withOffline({
           webpack5: false,
+          eslint: {
+            ignoreDuringBuilds: true,
+          },
           projectRoot: __dirname,
           target: 'serverless',
           workboxOpts: {

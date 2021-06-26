@@ -14,29 +14,30 @@ export class EditProfileStore {
   @observable phone: string | undefined;
   @observable profile: User | undefined;
   @observable loadingAvatar: boolean | undefined;
+  disposer;
 
-  constructor(public sessionStore: SessionStore) {}
-
-  public disposer = observe(this.sessionStore.session, ({ object }) => {
-    this.profile = object.user;
-    if (!this.profile) {
-      return;
-    }
-    let {
-      avatarUrl,
-      displayName,
-      description,
-      username,
-      email,
-      phone,
-    } = this.profile;
-    this.avatarUrl = avatarUrl;
-    this.displayName = displayName;
-    this.description = description;
-    this.username = username;
-    this.email = email;
-    this.phone = phone;
-  });
+  constructor(public sessionStore: SessionStore) {
+    this.disposer = observe(sessionStore.session, ({ object }) => {
+      this.profile = object.user;
+      if (!this.profile) {
+        return;
+      }
+      let {
+        avatarUrl,
+        displayName,
+        description,
+        username,
+        email,
+        phone,
+      } = this.profile;
+      this.avatarUrl = avatarUrl;
+      this.displayName = displayName;
+      this.description = description;
+      this.username = username;
+      this.email = email;
+      this.phone = phone;
+    });
+  }
 
   async uploadProfilePhoto(image: any) {
     if (!this.sessionStore.user) return;

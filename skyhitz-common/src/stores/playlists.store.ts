@@ -17,7 +17,7 @@ export class PlaylistsStore {
   @observable modalPlaylistName: string = '';
   @observable modalPlaylistDescription: string = '';
   @observable showPlaylistsModal: boolean = false;
-  @observable entryToBeAdded!: Entry;
+  @observable entryToBeAdded?: Entry;
 
   constructor(private sessionStore: SessionStore) {}
 
@@ -40,7 +40,7 @@ export class PlaylistsStore {
       this.loading = false;
       return;
     }
-    const playlists = userPlaylists.map(playlist => new Playlist(playlist));
+    const playlists = userPlaylists.map((playlist) => new Playlist(playlist));
     this.loading = false;
     this.playlists = List(playlists);
   }
@@ -127,8 +127,9 @@ export class PlaylistsStore {
   };
 
   async remove() {
-    await playlistsBackend.removePlaylist(this.playlistToBeRemoved
-      .id as string);
+    await playlistsBackend.removePlaylist(
+      this.playlistToBeRemoved.id as string
+    );
     await this.refreshPlaylists();
   }
 
@@ -141,6 +142,7 @@ export class PlaylistsStore {
   }
 
   async addToPlaylist(playlistId: string) {
+    if (!this.entryToBeAdded) return;
     await playlistsBackend.addEntryToPlaylist(
       playlistId,
       this.entryToBeAdded.id
