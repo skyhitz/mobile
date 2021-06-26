@@ -1,3 +1,4 @@
+import 'setimmediate';
 import React from 'react';
 import RootNavigation from 'app/modules/navigation/RootNavigation';
 import Providers from 'app/modules/providers/Providers';

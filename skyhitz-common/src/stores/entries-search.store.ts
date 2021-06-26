@@ -17,20 +17,21 @@ export class EntriesSearchStore {
   @observable public recentlyAdded: List<Entry> = List([]);
   @observable public topSearches: List<Entry> = List([]);
   @observable topChart: List<Entry> = List([]);
+  disposer: any;
 
   @computed get active() {
     return !!this.query;
   }
 
-  constructor(public queryObservable: any) {}
-
-  public disposer = observe(this.queryObservable, ({ object }) => {
-    if (object.type === 'entries' && object.q !== this.query) {
-      this.query = object.q;
-      this.searching = true;
-      this.debouncedSearch(object.q);
-    }
-  });
+  constructor(public queryObservable: any) {
+    this.disposer = observe(queryObservable, ({ object }) => {
+      if (object.type === 'entries' && object.q !== this.query) {
+        this.query = object.q;
+        this.searching = true;
+        this.debouncedSearch(object.q);
+      }
+    });
+  }
 
   public searchEntries(q: string) {
     return entriesBackend.search(q).then((results) => {

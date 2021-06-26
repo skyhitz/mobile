@@ -15,6 +15,8 @@ export class LikesStore {
   @observable user!: User;
 
   public viewLimit: number = 8;
+  disposer: any;
+  userDisposer: any;
 
   get hasMoreLikers(): boolean {
     if (this.entryLikesCount > this.viewLimit) {
@@ -34,24 +36,24 @@ export class LikesStore {
   constructor(
     public observables: IObservableObject,
     public session: IObservableObject
-  ) {}
+  ) {
+    this.disposer = observe(observables, ({ object }) => {
+      if (!object.entry) {
+        return;
+      }
+      this.entry = object.entry;
+      this.refreshEntryLikes(this.entry.id);
+    });
+
+    this.userDisposer = observe(this.session, ({ object }) => {
+      this.user = object.user;
+    });
+  }
 
   public clearLikes() {
     this.entryLikes = List([]);
     this.userLikes = List([]);
   }
-
-  public disposer = observe(this.observables, ({ object }) => {
-    if (!object.entry) {
-      return;
-    }
-    this.entry = object.entry;
-    this.refreshEntryLikes(this.entry.id);
-  });
-
-  public userDisposer = observe(this.session, ({ object }) => {
-    this.user = object.user;
-  });
 
   public refreshEntryLikes(id: string) {
     this.loadingEntryLikes = true;

@@ -9,6 +9,7 @@ import * as Font from 'expo-font';
 import * as React from 'react';
 import { useAssets } from 'expo-asset';
 import { Images } from 'app/assets/images/Images';
+import RalewayLight from 'app/assets/fonts/Raleway-Light.ttf';
 
 enum FontDisplay {
   AUTO = 'auto',
@@ -34,7 +35,7 @@ export default function useCachedResources() {
           ...MaterialIcons.font,
           ...Feather.font,
           'Raleway-Light': {
-            uri: require('app/assets/fonts/Raleway-Light.ttf'),
+            uri: RalewayLight,
             display: FontDisplay.SWAP,
             name: 'Raleway-Light',
           },

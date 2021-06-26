@@ -12,19 +12,20 @@ export class UsersSearchStore {
   @observable loadingRecentSearches: boolean = false;
   @observable loadingTopSearches: boolean = false;
   @observable query: string = '';
+  disposer: any;
   @computed get active() {
     return !!this.query;
   }
 
-  constructor(public queryObservable: any) {}
-
-  public disposer = observe(this.queryObservable, ({ object }) => {
-    if (object.type === 'users' && object.q !== this.query) {
-      this.query = object.q;
-      this.searching = true;
-      this.searchUsers(object.q);
-    }
-  });
+  constructor(public queryObservable: any) {
+    this.disposer = observe(queryObservable, ({ object }) => {
+      if (object.type === 'users' && object.q !== this.query) {
+        this.query = object.q;
+        this.searching = true;
+        this.searchUsers(object.q);
+      }
+    });
+  }
 
   public searchUsers(q: string) {
     usersBackend.search(q).then((users) => {
