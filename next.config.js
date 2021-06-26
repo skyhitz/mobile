@@ -14,6 +14,7 @@ module.exports = withExpo(
     withFonts(
       withTM(
         withOffline({
+          webpack5: false,
           projectRoot: __dirname,
           target: 'serverless',
           workboxOpts: {
