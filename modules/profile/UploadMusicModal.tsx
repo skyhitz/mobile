@@ -3,7 +3,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import SelectMediaFile from 'app/modules/profile/SelectMediaFile';
-import Layout from 'app/constants/Layout';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
 import cursorPointer from 'app/constants/CursorPointer';
@@ -37,8 +36,6 @@ export default class UploadMusicModal extends React.Component<any, any> {
     );
   }
 }
-
-const modalWidth = Layout.window.width - 40;
 
 const styles = StyleSheet.create({
   btn: {

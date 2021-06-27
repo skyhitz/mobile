@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-import Layout from 'app/constants/Layout';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';

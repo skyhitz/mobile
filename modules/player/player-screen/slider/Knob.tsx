@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import Colors from 'app/constants/Colors';
 import cursorPointer from 'app/constants/CursorPointer';

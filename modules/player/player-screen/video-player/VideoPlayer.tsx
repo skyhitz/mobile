@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Video, Audio } from 'expo-av';
-import { View, StyleSheet, ImageBackground } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import {
   CurrentTimeDisplay,

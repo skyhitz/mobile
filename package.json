@@ -15,7 +15,9 @@
     "upload:ios": "expo upload:ios",
     "expo:install": "expo install",
     "build:ios-simulator": "expo build:ios -t simulator",
-    "build": "next build"
+    "build": "next build",
+    "build:analyze": "EXPO_ANALYZE=true next build",
+    "next:serve": "next start"
   },
   "name": "app",
   "version": "0.3.9",
@@ -31,7 +33,6 @@
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/slider": "^3.0.3",
     "@react-navigation/bottom-tabs": "5.5.2",
-    "@react-navigation/compat": "5.1.26",
     "@react-navigation/material-top-tabs": "5.2.10",
     "@react-navigation/native": "5.5.1",
     "@react-navigation/stack": "5.5.1",
@@ -49,7 +50,6 @@
     "expo-linking": "^1.0.1",
     "expo-next-react-navigation": "0.0.25",
     "expo-permissions": "~9.3.0",
-    "expo-web-browser": "~8.5.0",
     "graphql-tag": "2.4.2",
     "immutable": "3.8.1",
     "lodash.debounce": "4.0.8",
@@ -82,6 +82,7 @@
     "@babel/preset-env": "7.9.5",
     "@babel/runtime-corejs2": "^7.14.6",
     "@expo/next-adapter": "^2.1.82",
+    "@next/bundle-analyzer": "^11.0.1",
     "@types/algoliasearch": "3.30.1",
     "@types/expo": "33.0.1",
     "@types/node": "8.0.31",
@@ -91,7 +92,6 @@
     "babel-plugin-module-resolver": "3.2.0",
     "next-offline": "^5.0.5",
     "prettier": "2.0.5",
-    "typescript": "4.3.2",
-    "webpack-bundle-analyzer": "^4.4.2"
+    "typescript": "4.3.2"
   }
 }

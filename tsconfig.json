@@ -3,6 +3,7 @@
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "isolatedModules": true,

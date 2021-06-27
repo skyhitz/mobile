@@ -53,22 +53,22 @@ export type ScrollEvent = {
 //   animatedValue: Animated.Value;
 // };
 
-type CarouselDefaultProps = {
-  contentOffset: number;
-  data: Array<any>;
-  extractKey: (item: any, index: number) => string;
-  itemWidth: number;
-  onEndReached: () => void;
-  onEndReachedThreshold: number;
-  onIndexChange: (a: number) => any;
-  renderItem: (props: CarouselRenderProps<any>) => any;
-  shouldCapture: (e: GestureState) => boolean;
-  shouldRelease: (e: GestureState) => boolean;
-  threshold: number;
-  useNativeDriver: boolean;
-  onGestureRelease: () => any;
-  onGestureStart: (e: any) => any;
-};
+// type CarouselDefaultProps = {
+//   contentOffset: number;
+//   data: Array<any>;
+//   extractKey: (item: any, index: number) => string;
+//   itemWidth: number;
+//   onEndReached: () => void;
+//   onEndReachedThreshold: number;
+//   onIndexChange: (a: number) => any;
+//   renderItem: (props: CarouselRenderProps<any>) => any;
+//   shouldCapture: (e: GestureState) => boolean;
+//   shouldRelease: (e: GestureState) => boolean;
+//   threshold: number;
+//   useNativeDriver: boolean;
+//   onGestureRelease: () => any;
+//   onGestureStart: (e: any) => any;
+// };
 
 // export type CarouselProps = CarouselDefaultProps & {
 //   index?: number;

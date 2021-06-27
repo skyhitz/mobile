@@ -1,8 +1,7 @@
-import { observable, observe, IObservableObject, computed, action } from 'mobx';
-import { Query } from '../types/index';
+import { observable, computed, action } from 'mobx';
 import { List } from 'immutable';
 import { playlistsBackend } from '../backends/playlists.backend';
-import { Entry, User, Playlist } from '../models';
+import { Entry, Playlist } from '../models';
 import { preBase64String, cloudinaryApiPath } from '../constants/constants';
 import { SessionStore } from './session.store';
 

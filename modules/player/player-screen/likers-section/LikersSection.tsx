@@ -3,10 +3,8 @@ import { inject } from 'mobx-react';
 import { StyleSheet, View, Text } from 'react-native';
 import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import Divider from 'app/modules/ui/Divider';
-import Layout from 'app/constants/Layout';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
 import * as stores from 'app/skyhitz-common';
-import Colors from 'app/constants/Colors';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({

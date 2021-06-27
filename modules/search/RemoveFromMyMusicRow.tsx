@@ -3,7 +3,6 @@ import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-import Layout from 'app/constants/Layout';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 

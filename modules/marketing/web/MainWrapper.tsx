@@ -1,6 +1,6 @@
 import React from 'react';
-import { H1, Main, P, A } from '@expo/html-elements';
-import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
+import { H1, Main, P } from '@expo/html-elements';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
 import ScreenShots from './Screenshots';
 import { useMediaQuery } from 'react-responsive';

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Footer, A } from '@expo/html-elements';
+import { Footer } from '@expo/html-elements';
 import SocialLinks from './SocialLinks';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
-let Anchor: React.ComponentType<any> = A;
 import { Text } from 'react-native';
 
 export default () => {

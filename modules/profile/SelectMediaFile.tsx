@@ -5,7 +5,6 @@ import {
   Text,
   View,
   Image,
-  ActivityIndicator,
   TextInput,
   Switch,
   Platform,
@@ -27,20 +26,6 @@ import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 
 const SwitchWeb: any = Switch;
-
-const LoadingIndicator = () => {
-  return (
-    <View
-      style={[
-        styles.imageLoader,
-        styles.activityIndicatorOffset,
-        { backgroundColor: Colors.overlayBackground },
-      ]}
-    >
-      <ActivityIndicator color={Colors.white} size={'large'} />
-    </View>
-  );
-};
 
 const CircleWrap = (props) => (
   <View
