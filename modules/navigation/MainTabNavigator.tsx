@@ -14,7 +14,8 @@ import {
 
 const Tab = createBottomTabNavigator();
 
-export default () => {
+export default ({ route }) => {
+  console.log(route);
   return (
     <Tab.Navigator
       tabBar={(props) => {

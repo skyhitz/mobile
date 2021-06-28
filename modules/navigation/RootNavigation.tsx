@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { StatusBar, Platform } from 'react-native';
 import { observer } from 'mobx-react';
 import { useMediaQuery } from 'react-responsive';
@@ -10,9 +10,17 @@ import DoneEditBtn from 'app/modules/ui/DoneEditBtn';
 import Colors from 'app/constants/Colors';
 import LinkingConfiguration from './LinkingConfiguration';
 import LoadingScreen from 'app/modules/accounts/LoadingScreen';
+const SuspenseLoading = (props) => (
+  <Suspense fallback={<LoadingScreen />}>{props.children}</Suspense>
+);
 
 const MainTabNavigator = lazy(() =>
   import('app/modules/navigation/MainTabNavigator')
+);
+const MainTabNavigatorLazy = (props) => (
+  <SuspenseLoading>
+    <MainTabNavigator {...props} />
+  </SuspenseLoading>
 );
 const EditProfileScreen = lazy(() =>
   import('app/modules/profile/EditProfileScreen')
@@ -74,13 +82,17 @@ export default observer(() => {
 
   if (loaded) {
     return (
-      <NavigationContainer linking={LinkingConfiguration} theme={Theme}>
+      <NavigationContainer
+        linking={LinkingConfiguration}
+        fallback={<LoadingScreen />}
+        theme={Theme}
+      >
         <AppStack.Navigator mode="modal">
           {sessionStore.user ? (
             <>
               <AppStack.Screen
                 name="Main"
-                component={MainTabNavigator}
+                component={MainTabNavigatorLazy}
                 options={{ headerShown: false }}
               />
             </>
