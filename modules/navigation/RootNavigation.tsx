@@ -1,16 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import { StatusBar, Platform } from 'react-native';
 import { observer } from 'mobx-react';
 import { useMediaQuery } from 'react-responsive';
-import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
-import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
-import EntryOptionsModal from 'app/modules/search/EntryOptionsModal';
-import PricingOptionsModal from 'app/modules/search/PricingOptionsModal';
-import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
-import PaymentModal from 'app/modules/profile/PaymentModal';
-import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
-import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
-import LoadingScreen from 'app/modules/accounts/LoadingScreen';
 import { Stores } from 'app/functions/Stores';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
@@ -18,12 +9,34 @@ import CancelEditBtn from 'app/modules/ui/CancelEditBtn';
 import DoneEditBtn from 'app/modules/ui/DoneEditBtn';
 import Colors from 'app/constants/Colors';
 import LinkingConfiguration from './LinkingConfiguration';
-import AuthScreen from 'app/modules/accounts/AuthScreen';
-import SignUpScreen from 'app/modules/accounts/SignUpScreen';
-import SignInScreen from 'app/modules/accounts/SignInScreen';
-import WebApp from 'app/modules/marketing/web/Home';
-import Privacy from 'app/modules/marketing/web/Privacy';
-import Terms from 'app/modules/marketing/web/Terms';
+import LoadingScreen from 'app/modules/accounts/LoadingScreen';
+
+const MainTabNavigator = lazy(() =>
+  import('app/modules/navigation/MainTabNavigator')
+);
+const EditProfileScreen = lazy(() =>
+  import('app/modules/profile/EditProfileScreen')
+);
+const EntryOptionsModal = lazy(() =>
+  import('app/modules/search/EntryOptionsModal')
+);
+const PricingOptionsModal = lazy(() =>
+  import('app/modules/search/PricingOptionsModal')
+);
+const UploadMusicModal = lazy(() =>
+  import('app/modules/profile/UploadMusicModal')
+);
+const PaymentModal = lazy(() => import('app/modules/profile/PaymentModal'));
+const WithdrawalModal = lazy(() =>
+  import('app/modules/profile/WithdrawalModal')
+);
+const BuyOptionsModal = lazy(() => import('app/modules/ui/BuyOptionsModal'));
+const AuthScreen = lazy(() => import('app/modules/accounts/AuthScreen'));
+const SignUpScreen = lazy(() => import('app/modules/accounts/SignUpScreen'));
+const SignInScreen = lazy(() => import('app/modules/accounts/SignInScreen'));
+const WebApp = lazy(() => import('app/modules/marketing/web/Home'));
+const Privacy = lazy(() => import('app/modules/marketing/web/Privacy'));
+const Terms = lazy(() => import('app/modules/marketing/web/Terms'));
 
 const Theme = {
   ...DefaultTheme,
