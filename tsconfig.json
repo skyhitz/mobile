@@ -24,5 +24,10 @@
     "noImplicitAny": false
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "node_modules/react-native-redash/lib/typescript/v1/index.d.ts"
+  ]
 }

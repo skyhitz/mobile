@@ -6,7 +6,12 @@ import PlayerScreen from '../player-screen/PlayerScreen';
 import MiniPlayer from './MiniPlayer';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
-import { clamp, onGestureEvent, timing, withSpring } from 'react-native-redash';
+import {
+  clamp,
+  onGestureEvent,
+  timing,
+  withSpring,
+} from 'react-native-redash/lib/module/v1';
 import { Stores } from 'app/functions/Stores';
 import Colors from 'app/constants/Colors';
 
@@ -60,30 +65,34 @@ export default observer(({ children }) => {
     snapPoints: [SNAP_TOP, SNAP_BOTTOM],
     config,
   });
-  const translateBottomTab = interpolate(translateY, {
-    inputRange: [SNAP_TOP, SNAP_BOTTOM],
-    outputRange: [TABBAR_HEIGHT, 0],
-    extrapolate: Extrapolate.CLAMP,
-  });
-  const opacity = interpolate(translateY, {
-    inputRange: [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
-    outputRange: [0, 1],
-    extrapolate: Extrapolate.CLAMP,
-  });
-  const opacityInverted = interpolate(translateY, {
-    inputRange: [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
-    outputRange: [1, 0],
-    extrapolate: Extrapolate.CLAMP,
-  });
+  const translateBottomTab = interpolate(
+    translateY,
+    [SNAP_TOP, SNAP_BOTTOM],
+    [TABBAR_HEIGHT, 0],
+    Extrapolate.CLAMP
+  );
+  const opacity = interpolate(
+    translateY,
+    [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
+    [0, 1],
+    Extrapolate.CLAMP
+  );
+  const opacityInverted = interpolate(
+    translateY,
+    [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
+    [1, 0],
+    Extrapolate.CLAMP
+  );
 
-  const opacity2 = interpolate(translateY, {
-    inputRange: [
+  const opacity2 = interpolate(
+    translateY,
+    [
       SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT * 2,
       SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT,
     ],
-    outputRange: [0, 1],
-    extrapolate: Extrapolate.CLAMP,
-  });
+    [0, 1],
+    Extrapolate.CLAMP
+  );
 
   useCode(
     () =>
