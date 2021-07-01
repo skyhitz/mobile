@@ -45,6 +45,9 @@ const {
 
 const translationY = new Value(0);
 const velocityY = new Value(0);
+const goUp = new Value(0);
+const goDown = new Value(0);
+
 const state = new Value(State.UNDETERMINED);
 const offset = new Value(SNAP_BOTTOM);
 const clock = new Clock();
@@ -97,7 +100,7 @@ export default observer(({ children }) => {
   useCode(
     () =>
       block([
-        cond(playerStore.goUp, [
+        cond(goUp, [
           set(
             offset,
             timing({
@@ -106,9 +109,9 @@ export default observer(({ children }) => {
               to: SNAP_TOP,
             })
           ),
-          cond(not(clockRunning(clock)), [set(playerStore.goUp, 0)]),
+          cond(not(clockRunning(clock)), [set(goUp, 0)]),
         ]),
-        cond(playerStore.goDown, [
+        cond(goDown, [
           set(
             offset,
             timing({
@@ -117,7 +120,7 @@ export default observer(({ children }) => {
               to: SNAP_BOTTOM,
             })
           ),
-          cond(not(clockRunning(clock)), [set(playerStore.goDown, 0)]),
+          cond(not(clockRunning(clock)), [set(goDown, 0)]),
         ]),
       ]),
     []

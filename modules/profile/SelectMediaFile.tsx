@@ -22,7 +22,7 @@ import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import cursorPointer from 'app/constants/CursorPointer';
 import { Stores } from 'app/functions/Stores';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 
 const SwitchWeb: any = Switch;
@@ -102,7 +102,7 @@ const ArtworkSection = ({ loadingArtwork, artworkUrl, selectArtwork }) => {
 
 export default observer(() => {
   const { entryStore, userEntriesStore } = Stores();
-  const { navigate } = useNavigation();
+  const linkTo = useLinkTo();
   let equityForSaleValue = entryStore.equityForSale
     ? entryStore.equityForSale
     : 0;
@@ -168,7 +168,7 @@ export default observer(() => {
     await entryStore.create();
     await userEntriesStore.refreshEntries();
     entryStore.clearStore();
-    navigate('ProfileSettings');
+    linkTo('/profile');
   };
 
   if (entryStore.uploadingError) {

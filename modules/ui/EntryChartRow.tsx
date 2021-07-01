@@ -10,7 +10,7 @@ import {
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 
 export default ({
@@ -22,7 +22,7 @@ export default ({
   previousScreen,
   position,
 }) => {
-  const { navigate } = useNavigation();
+  const { dispatch } = useNavigation();
   return (
     <View key={entry.id} style={styles.rowWrap}>
       <Pressable
@@ -59,11 +59,16 @@ export default ({
       </Pressable>
       <ThreeDots
         onPress={() =>
-          navigate('EntryOptionsModal', {
-            entry: entry,
-            options: options,
-            previousScreen: previousScreen,
-          })
+          dispatch(
+            CommonActions.navigate({
+              name: 'EntryOptionsModal',
+              params: {
+                entry: entry,
+                options: options,
+                previousScreen: previousScreen,
+              },
+            })
+          )
         }
       />
     </View>

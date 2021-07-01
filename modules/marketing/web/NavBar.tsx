@@ -2,11 +2,11 @@ import React from 'react';
 import { Nav } from '@expo/html-elements';
 import SkyhitzLogo from './SkyhitzLogo';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 
 export default () => {
-  const { navigate } = useNavigation();
+  const linkTo = useLinkTo();
 
   return (
     <Nav
@@ -19,7 +19,7 @@ export default () => {
         justifyContent: 'space-between',
       }}
     >
-      <Pressable onPress={() => navigate('WebApp')} style={styles.logoWrap}>
+      <Pressable onPress={() => linkTo('/')} style={styles.logoWrap}>
         <View
           style={{
             display: 'flex',
@@ -42,11 +42,14 @@ export default () => {
           paddingRight: 20,
         }}
       >
-        <Text onPress={() => navigate('SignIn')} style={styles.defaultText}>
+        <Text
+          onPress={() => linkTo('/accounts/sign-in')}
+          style={styles.defaultText}
+        >
           Log in
         </Text>
         <Pressable
-          onPress={() => navigate('SignUp')}
+          onPress={() => linkTo('/accounts/sign-up')}
           style={[styles.signUpWrap, cursorPointer]}
         >
           <Text style={[styles.signUpText, cursorPointer]}>Sign Up</Text>

@@ -17,11 +17,7 @@ const SuspenseLoading = (props) => (
 const MainTabNavigator = lazy(() =>
   import('app/modules/navigation/MainTabNavigator')
 );
-const MainTabNavigatorLazy = (props) => (
-  <SuspenseLoading>
-    <MainTabNavigator {...props} />
-  </SuspenseLoading>
-);
+
 const EditProfileScreen = lazy(() =>
   import('app/modules/profile/EditProfileScreen')
 );
@@ -41,8 +37,18 @@ const WithdrawalModal = lazy(() =>
 const BuyOptionsModal = lazy(() => import('app/modules/ui/BuyOptionsModal'));
 const AuthScreen = lazy(() => import('app/modules/accounts/AuthScreen'));
 const SignUpScreen = lazy(() => import('app/modules/accounts/SignUpScreen'));
+const SignUpSuspense = (props) => (
+  <SuspenseLoading>
+    <SignUpScreen {...props} />
+  </SuspenseLoading>
+);
 const SignInScreen = lazy(() => import('app/modules/accounts/SignInScreen'));
 const WebApp = lazy(() => import('app/modules/marketing/web/Home'));
+const WebAppSuspense = (props) => (
+  <SuspenseLoading>
+    <WebApp {...props} />
+  </SuspenseLoading>
+);
 const Privacy = lazy(() => import('app/modules/marketing/web/Privacy'));
 const Terms = lazy(() => import('app/modules/marketing/web/Terms'));
 
@@ -87,12 +93,12 @@ export default observer(() => {
         fallback={<LoadingScreen />}
         theme={Theme}
       >
-        <AppStack.Navigator mode="modal">
+        <AppStack.Navigator screenOptions={{ presentation: 'modal' }}>
           {sessionStore.user ? (
             <>
               <AppStack.Screen
                 name="Main"
-                component={MainTabNavigatorLazy}
+                component={MainTabNavigator}
                 options={{ headerShown: false }}
               />
             </>
@@ -101,7 +107,7 @@ export default observer(() => {
               {Platform.OS === 'web' ? (
                 <AppStack.Screen
                   name="WebApp"
-                  component={WebApp}
+                  component={WebAppSuspense}
                   options={{ headerShown: false }}
                 />
               ) : (
@@ -113,7 +119,7 @@ export default observer(() => {
               )}
               <AppStack.Screen
                 name="SignUp"
-                component={SignUpScreen}
+                component={SignUpSuspense}
                 options={{
                   headerShown: headerShown,
                   headerTitleStyle: { color: Colors.white },

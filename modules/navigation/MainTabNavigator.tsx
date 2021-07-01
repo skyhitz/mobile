@@ -3,7 +3,7 @@ import { Platform, View, Image } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
-import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
+// import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
 import Colors from 'app/constants/Colors';
 import ChartsView from 'app/modules/search/ChartsView';
 import { Logo } from 'app/assets/images/Images';
@@ -14,32 +14,31 @@ import {
 
 const Tab = createBottomTabNavigator();
 
-export default ({ route }) => {
-  console.log(route);
+export default () => {
   return (
     <Tab.Navigator
       tabBar={(props) => {
         return (
-          <PlayerDrawer>
-            <BottomTabBar
-              {...props}
-              style={{
-                backgroundColor: Colors.tabsBackground,
-                borderTopColor: Colors.lightBrandBlue,
-                borderTopWidth: 1,
-              }}
-            />
-          </PlayerDrawer>
+          // <PlayerDrawer>
+          <BottomTabBar
+            {...props}
+            style={{
+              backgroundColor: Colors.tabsBackground,
+              borderTopColor: Colors.lightBrandBlue,
+              borderTopWidth: 1,
+            }}
+          />
+          // </PlayerDrawer>
         );
       }}
-      tabBarOptions={{
-        showLabel: false,
-        activeBackgroundColor: 'transparent',
-        inactiveBackgroundColor: 'transparent',
-        activeTintColor: Colors.tabIconSelected,
-        inactiveTintColor: Colors.tabIconDefault,
-      }}
-      lazy={true}
+      // tabBarOptions={{
+      //   showLabel: false,
+      //   activeBackgroundColor: 'transparent',
+      //   inactiveBackgroundColor: 'transparent',
+      //   activeTintColor: Colors.tabIconSelected,
+      //   inactiveTintColor: Colors.tabIconDefault,
+      // }}
+      // lazy={true}
     >
       <Tab.Screen
         name="SearchNavigator"

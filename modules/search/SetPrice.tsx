@@ -2,14 +2,21 @@ import React from 'react';
 import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 
 export default ({ entry }) => {
-  const { navigate, goBack } = useNavigation();
+  const { dispatch, goBack } = useNavigation();
   const handleSetPrice = () => {
     goBack();
-    navigate('PricingOptionsModal', { entry: entry });
+    dispatch(
+      CommonActions.navigate({
+        name: 'PricingOptionsModal',
+        params: {
+          entry: entry,
+        },
+      })
+    );
   };
   if (!entry) return null;
   return (

@@ -11,11 +11,11 @@ import { Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 
-const AuthScreen: NavStatelessComponent = props => {
-  const { navigate } = useNavigation();
+const AuthScreen: NavStatelessComponent = (props) => {
+  const linkTo = useLinkTo();
 
   return (
     <BackgroundImage authBackground={true}>
@@ -35,13 +35,13 @@ const AuthScreen: NavStatelessComponent = props => {
             <View style={styles.joinContainer}>
               <TouchableHighlight
                 style={styles.joinBtn}
-                onPress={() => navigate('SignUp')}
+                onPress={() => linkTo('/accounts/sign-up')}
               >
                 <Text style={styles.joinText}>JOIN</Text>
               </TouchableHighlight>
               <TouchableHighlight
                 style={styles.loginBtn}
-                onPress={() => navigate('SignIn')}
+                onPress={() => linkTo('/accounts/sign-in')}
               >
                 <Text style={styles.loginText}>LOGIN</Text>
               </TouchableHighlight>
