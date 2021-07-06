@@ -5,7 +5,7 @@ import { DevelopmentConfig } from './config.development';
 
 const testingModeOn = process.env.EXPO_SKYHITZ_ENV === 'test';
 
-const testingStagingModeOn = process.env.EXPO_SKYHITZ_ENV === 'development';
+const testingStagingModeOn = true;
 
 const testingEnv = testingModeOn || testingStagingModeOn;
 

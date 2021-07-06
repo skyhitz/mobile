@@ -1,6 +1,6 @@
 import React from 'react';
-import { Platform, View, Image } from 'react-native';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { View, Image } from 'react-native';
+import { EvilIcons, Feather } from '@expo/vector-icons';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
 // import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
@@ -45,8 +45,8 @@ export default () => {
         component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons
-              name={Platform.OS === 'ios' ? `ios-search` : 'md-search'}
+            <EvilIcons
+              name={'search'}
               size={24}
               style={{ marginBottom: -3 }}
               color={color}
