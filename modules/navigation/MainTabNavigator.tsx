@@ -31,14 +31,14 @@ export default () => {
           // </PlayerDrawer>
         );
       }}
-      // tabBarOptions={{
-      //   showLabel: false,
-      //   activeBackgroundColor: 'transparent',
-      //   inactiveBackgroundColor: 'transparent',
-      //   activeTintColor: Colors.tabIconSelected,
-      //   inactiveTintColor: Colors.tabIconDefault,
-      // }}
-      // lazy={true}
+      tabBarOptions={{
+        showLabel: false,
+        activeBackgroundColor: 'transparent',
+        inactiveBackgroundColor: 'transparent',
+        activeTintColor: Colors.tabIconSelected,
+        inactiveTintColor: Colors.tabIconDefault,
+      }}
+      lazy={true}
     >
       <Tab.Screen
         name="SearchNavigator"
