@@ -12,7 +12,7 @@ export default observer(() => {
   let linkTo = useLinkTo();
 
   const handleNavigation = () => {
-    linkTo('/my-music');
+    linkTo('/dashboard/profile/my-music');
   };
 
   const copy = () => {

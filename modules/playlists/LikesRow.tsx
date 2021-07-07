@@ -12,7 +12,7 @@ export default observer(() => {
   let linkTo = useLinkTo();
 
   const handleLikesNavigation = () => {
-    linkTo('/likes');
+    linkTo('/dashboard/profile/likes');
     playerStore.setPlaylistMode(likesStore.userLikes);
   };
 

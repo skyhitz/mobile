@@ -31,19 +31,20 @@ export default () => {
           // </PlayerDrawer>
         );
       }}
-      tabBarOptions={{
-        showLabel: false,
-        activeBackgroundColor: 'transparent',
-        inactiveBackgroundColor: 'transparent',
-        activeTintColor: Colors.tabIconSelected,
-        inactiveTintColor: Colors.tabIconDefault,
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveBackgroundColor: 'transparent',
+        tabBarInactiveBackgroundColor: 'transparent',
+        tabBarActiveTintColor: Colors.tabIconSelected,
+        tabBarInactiveTintColor: Colors.tabIconDefault,
+        lazy: true,
       }}
-      lazy={true}
     >
       <Tab.Screen
         name="SearchNavigator"
         component={SearchNavigator}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <EvilIcons
               name={'search'}
@@ -58,6 +59,7 @@ export default () => {
         name="ChartsView"
         component={ChartsView}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <View
               style={{
@@ -85,6 +87,7 @@ export default () => {
         name="ProfileSettings"
         component={ProfileSettingsScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Feather name={'user'} size={24} color={color} />
           ),

@@ -30,12 +30,16 @@ export default () => {
   return (
     <Tab.Navigator
       swipeEnabled={true}
-      tabBarPosition={'top'}
       lazy={true}
-      tabBarOptions={{
-        activeTintColor: Colors.white,
-        showIcon: false,
-        style: {
+      screenOptions={{
+        tabBarActiveTintColor: Colors.white,
+        tabBarIndicatorStyle: {
+          backgroundColor: 'transparent',
+          borderWidth: 0,
+          borderColor: Colors.white,
+        },
+        tabBarShowIcon: false,
+        tabBarStyle: {
           height: 38,
           backgroundColor: Colors.tabsBackground,
         },
