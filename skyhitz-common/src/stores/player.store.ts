@@ -18,10 +18,6 @@ export class PlayerStore {
 
   @observable
   showMiniPlayer: boolean = false;
-  @observable
-  goUp: 0 | 1 = 0;
-  @observable
-  goDown: 0 | 1 = 0;
 
   @observable
   show: boolean = false;
@@ -295,13 +291,11 @@ export class PlayerStore {
   @action
   hidePlayer() {
     this.show = false;
-    this.goDown = 1;
   }
 
   @action
   showPlayer() {
     this.show = true;
-    this.goUp = 1;
   }
 
   @computed

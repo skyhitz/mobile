@@ -30,7 +30,6 @@ export default () => {
   return (
     <Tab.Navigator
       swipeEnabled={true}
-      lazy={true}
       screenOptions={{
         tabBarActiveTintColor: Colors.white,
         tabBarIndicatorStyle: {
@@ -43,6 +42,7 @@ export default () => {
           height: 38,
           backgroundColor: Colors.tabsBackground,
         },
+        lazy: true,
       }}
       tabBar={(props) => (
         <View

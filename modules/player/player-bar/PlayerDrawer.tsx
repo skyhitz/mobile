@@ -4,16 +4,12 @@ import { StyleSheet, Dimensions } from 'react-native';
 import Animated from 'react-native-reanimated';
 import PlayerScreen from '../player-screen/PlayerScreen';
 import MiniPlayer from './MiniPlayer';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { State } from 'react-native-gesture-handler';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
-import {
-  clamp,
-  onGestureEvent,
-  timing,
-  withSpring,
-} from 'react-native-redash/lib/module/v1';
+import { clamp, timing, withSpring } from 'react-native-redash/lib/module/v1';
 import { Stores } from 'app/functions/Stores';
 import Colors from 'app/constants/Colors';
+import { useEffect } from 'react';
 
 let tabNavBottom = 89;
 
@@ -39,7 +35,7 @@ const {
   block,
   not,
   clockRunning,
-  interpolate,
+  interpolateNode,
   Extrapolate,
 } = Animated;
 
@@ -47,7 +43,6 @@ const translationY = new Value(0);
 const velocityY = new Value(0);
 const goUp = new Value(0);
 const goDown = new Value(0);
-
 const state = new Value(State.UNDETERMINED);
 const offset = new Value(SNAP_BOTTOM);
 const clock = new Clock();
@@ -55,11 +50,6 @@ const clock = new Clock();
 export default observer(({ children }) => {
   const { playerStore } = Stores();
 
-  const gestureHandler = onGestureEvent({
-    state,
-    translationY,
-    velocityY,
-  });
   const translateY = withSpring({
     value: clamp(translationY, SNAP_TOP, SNAP_BOTTOM),
     velocity: velocityY,
@@ -68,34 +58,38 @@ export default observer(({ children }) => {
     snapPoints: [SNAP_TOP, SNAP_BOTTOM],
     config,
   });
-  const translateBottomTab = interpolate(
-    translateY,
-    [SNAP_TOP, SNAP_BOTTOM],
-    [TABBAR_HEIGHT, 0],
-    Extrapolate.CLAMP
-  );
-  const opacity = interpolate(
-    translateY,
-    [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
-    [0, 1],
-    Extrapolate.CLAMP
-  );
-  const opacityInverted = interpolate(
-    translateY,
-    [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
-    [1, 0],
-    Extrapolate.CLAMP
-  );
+  const translateBottomTab = interpolateNode(translateY, {
+    inputRange: [SNAP_TOP, SNAP_BOTTOM],
+    outputRange: [TABBAR_HEIGHT, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const opacity = interpolateNode(translateY, {
+    inputRange: [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
+    outputRange: [0, 1],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const opacityInverted = interpolateNode(translateY, {
+    inputRange: [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
+    outputRange: [1, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
 
-  const opacity2 = interpolate(
-    translateY,
-    [
+  const opacity2 = interpolateNode(translateY, {
+    inputRange: [
       SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT * 2,
       SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT,
     ],
-    [0, 1],
-    Extrapolate.CLAMP
-  );
+    outputRange: [0, 1],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  useEffect(() => {
+    if (playerStore.show) {
+      goUp.setValue(1 as any);
+    } else {
+      goDown.setValue(1 as any);
+    }
+  }, [playerStore.show]);
 
   useCode(
     () =>
@@ -128,47 +122,45 @@ export default observer(({ children }) => {
 
   return (
     <>
-      <PanGestureHandler {...gestureHandler}>
+      <Animated.View
+        style={[
+          styles.playerSheet,
+          { opacity: playerStore.entry ? 1 : 0 },
+          {
+            transform: [{ translateY }],
+          },
+        ]}
+      >
         <Animated.View
-          style={[
-            styles.playerSheet,
-            { opacity: playerStore.entry ? 1 : 0 },
-            {
-              transform: [{ translateY }],
-            },
-          ]}
-        >
-          <Animated.View
-            pointerEvents="none"
-            style={{
-              opacity: opacity2,
-              backgroundColor: '#272829',
-              ...StyleSheet.absoluteFillObject,
-            }}
-          />
+          pointerEvents="none"
+          style={{
+            opacity: opacity2,
+            backgroundColor: '#272829',
+            ...StyleSheet.absoluteFillObject,
+          }}
+        />
 
-          <Animated.View
-            style={{
-              opacity,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              zIndex: opacity,
-            }}
-          >
-            <MiniPlayer />
-          </Animated.View>
-          <Animated.View
-            style={{
-              opacity: opacityInverted,
-              flex: 1,
-            }}
-          >
-            <PlayerScreen />
-          </Animated.View>
+        <Animated.View
+          style={{
+            opacity,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: opacity,
+          }}
+        >
+          <MiniPlayer />
         </Animated.View>
-      </PanGestureHandler>
+        <Animated.View
+          style={{
+            opacity: opacityInverted,
+            flex: 1,
+          }}
+        >
+          <PlayerScreen />
+        </Animated.View>
+      </Animated.View>
 
       <Animated.View
         style={{ transform: [{ translateY: translateBottomTab }] }}

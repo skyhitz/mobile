@@ -3,7 +3,7 @@ import { View, Image } from 'react-native';
 import { EvilIcons, Feather } from '@expo/vector-icons';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
-// import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
+import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
 import Colors from 'app/constants/Colors';
 import ChartsView from 'app/modules/search/ChartsView';
 import { Logo } from 'app/assets/images/Images';
@@ -19,16 +19,16 @@ export default () => {
     <Tab.Navigator
       tabBar={(props) => {
         return (
-          // <PlayerDrawer>
-          <BottomTabBar
-            {...props}
-            style={{
-              backgroundColor: Colors.tabsBackground,
-              borderTopColor: Colors.lightBrandBlue,
-              borderTopWidth: 1,
-            }}
-          />
-          // </PlayerDrawer>
+          <PlayerDrawer>
+            <BottomTabBar
+              {...props}
+              style={{
+                backgroundColor: Colors.tabsBackground,
+                borderTopColor: Colors.lightBrandBlue,
+                borderTopWidth: 1,
+              }}
+            />
+          </PlayerDrawer>
         );
       }}
       screenOptions={{

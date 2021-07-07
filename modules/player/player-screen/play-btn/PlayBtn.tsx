@@ -23,7 +23,7 @@ export default observer(() => {
             <Feather
               style={{ paddingLeft: 6 }}
               name="play"
-              size={24}
+              size={28}
               color="white"
             />
           </View>
@@ -42,7 +42,7 @@ export default observer(() => {
             <Feather
               style={{ paddingLeft: 1, textAlign: 'center' }}
               name="pause"
-              size={24}
+              size={28}
               color="white"
             />
           </View>
@@ -87,7 +87,7 @@ var styles = StyleSheet.create({
     width: 65,
     height: 65,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: 'transparent',
     borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',
