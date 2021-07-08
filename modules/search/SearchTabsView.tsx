@@ -9,9 +9,9 @@ import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
 import SearchHeader from './SearchHeader';
 
-const labelStyle = (_) => ({
+const labelStyle = ({ focused }) => ({
   fontSize: 14,
-  color: Colors.defaultTextLight,
+  color: focused ? Colors.white : Colors.grey,
   textAlign: 'center',
   alignSelf: 'center',
   paddingTop: 0,
@@ -32,6 +32,7 @@ export default () => {
       swipeEnabled={true}
       screenOptions={{
         tabBarActiveTintColor: Colors.white,
+        tabBarInactiveTintColor: Colors.darkGrey,
         tabBarIndicatorStyle: {
           backgroundColor: 'transparent',
           borderWidth: 0,
@@ -57,7 +58,7 @@ export default () => {
         name="Beats"
         component={SearchEntryView}
         options={{
-          tabBarLabel: (props: any) => (
+          tabBarLabel: (props) => (
             <Text style={labelStyle(props) as any}> {'Beats'} </Text>
           ),
         }}
@@ -66,7 +67,7 @@ export default () => {
         name="Beatmakers"
         component={SearchUserView}
         options={{
-          tabBarLabel: (props: any) => (
+          tabBarLabel: (props) => (
             <Text style={labelStyle(props) as any}> {'Beatmakers'} </Text>
           ),
         }}

@@ -29,5 +29,6 @@
     "**/*.ts",
     "**/*.tsx",
     "node_modules/react-native-redash/lib/typescript/v1/index.d.ts"
-  ]
+  ],
+  "extends": "expo/tsconfig.base"
 }
