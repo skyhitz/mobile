@@ -7,13 +7,13 @@ import SearchNavigator from 'app/modules/search/SearchNavigator';
 import Colors from 'app/constants/Colors';
 import ChartsView from 'app/modules/search/ChartsView';
 import { Logo } from 'app/assets/images/Images';
-// import BottomTabBar from './BottomTabBar';
-import {
-  createBottomTabNavigator,
-  BottomTabBar,
-} from '@react-navigation/bottom-tabs';
+import BottomTabBar from './BottomTabBar';
+// import {
+//   createBottomTabNavigator,
+//   BottomTabBar,
+// } from '@react-navigation/bottom-tabs';
 
-// import createBottomTabNavigator from './WebTabNavigator';
+import createBottomTabNavigator from './WebTabNavigator';
 
 const Tab = createBottomTabNavigator();
 
