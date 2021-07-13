@@ -1,127 +1,119 @@
-import * as React from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  StyleProp,
-  ViewStyle,
-  StyleSheet,
-} from 'react-native';
 import {
   createNavigatorFactory,
   DefaultNavigatorOptions,
   ParamListBase,
   TabActionHelpers,
-  TabActions,
   TabNavigationState,
   TabRouter,
   TabRouterOptions,
   useNavigationBuilder,
 } from '@react-navigation/native';
+import * as React from 'react';
+import { View } from 'react-native';
+import warnOnce from 'warn-once';
 
-// Props accepted by the view
-type TabNavigationConfig = {
-  tabBarStyle: StyleProp<ViewStyle>;
-  contentStyle: StyleProp<ViewStyle>;
-};
+import type {
+  BottomTabNavigationConfig,
+  BottomTabNavigationEventMap,
+  BottomTabNavigationOptions,
+} from '@react-navigation/bottom-tabs/src/types';
+import BottomTabView from './BottomTabView';
 
-// Supported screen options
-type TabNavigationOptions = {
-  title?: string;
-};
+type Props = DefaultNavigatorOptions<
+  ParamListBase,
+  TabNavigationState<ParamListBase>,
+  BottomTabNavigationOptions,
+  BottomTabNavigationEventMap
+> &
+  TabRouterOptions &
+  BottomTabNavigationConfig;
 
-// Map of event name and the type of data (in event.data)
-//
-// canPreventDefault: true adds the defaultPrevented property to the
-// emitted events.
-type TabNavigationEventMap = {
-  tabPress: {
-    data: { isAlreadyFocused: boolean };
-    canPreventDefault: true;
-  };
-};
-
-// The props accepted by the component is a combination of 3 things
-// type Props = DefaultNavigatorOptions & TabRouterOptions & TabNavigationConfig;
-
-function TabNavigator({
+function BottomTabNavigator({
   initialRouteName,
+  backBehavior,
   children,
+  screenListeners,
   screenOptions,
-  tabBarStyle,
-  contentStyle,
-}) {
+  sceneContainerStyle,
+  // @ts-expect-error: lazy is deprecated
+  lazy,
+  // @ts-expect-error: tabBarOptions is deprecated
+  tabBarOptions,
+  ...rest
+}: Props) {
+  let defaultScreenOptions: BottomTabNavigationOptions = {};
+
+  if (tabBarOptions) {
+    Object.assign(defaultScreenOptions, {
+      tabBarHideOnKeyboard: tabBarOptions.keyboardHidesTabBar,
+      tabBarActiveTintColor: tabBarOptions.activeTintColor,
+      tabBarInactiveTintColor: tabBarOptions.inactiveTintColor,
+      tabBarActiveBackgroundColor: tabBarOptions.activeBackgroundColor,
+      tabBarInactiveBackgroundColor: tabBarOptions.inactiveBackgroundColor,
+      tabBarAllowFontScaling: tabBarOptions.allowFontScaling,
+      tabBarShowLabel: tabBarOptions.showLabel,
+      tabBarLabelStyle: tabBarOptions.labelStyle,
+      tabBarIconStyle: tabBarOptions.iconStyle,
+      tabBarItemStyle: tabBarOptions.tabStyle,
+      tabBarLabelPosition: tabBarOptions.labelPosition,
+      tabBarAdaptive: tabBarOptions.adaptive,
+    });
+
+    warnOnce(
+      tabBarOptions,
+      `Bottom Tab Navigator: 'tabBarOptions' is deprecated. Migrate the options to 'screenOptions' instead.\n\nPlace the following in 'screenOptions' in your code to keep current behavior:\n\n${JSON.stringify(
+        defaultScreenOptions,
+        null,
+        2
+      )}\n\nSee https://reactnavigation.org/docs/6.x/bottom-tab-navigator#options for more details.`
+    );
+  }
+
+  if (typeof lazy === 'boolean') {
+    defaultScreenOptions.lazy = lazy;
+
+    warnOnce(
+      true,
+      `Bottom Tab Navigator: 'lazy' in props is deprecated. Move it to 'screenOptions' instead.`
+    );
+  }
+
   const {
     state,
-    navigation,
     descriptors,
+    navigation,
     NavigationContent,
   } = useNavigationBuilder<
     TabNavigationState<ParamListBase>,
     TabRouterOptions,
     TabActionHelpers<ParamListBase>,
-    TabNavigationOptions,
-    TabNavigationEventMap
+    BottomTabNavigationOptions,
+    BottomTabNavigationEventMap
   >(TabRouter, {
-    children,
-    screenOptions,
     initialRouteName,
+    backBehavior,
+    children,
+    screenListeners,
+    screenOptions,
+    defaultScreenOptions,
   });
 
   return (
     <NavigationContent>
-      <View style={{ flexDirection: 'row', flex: 1 }}>
-        <View style={[{ flexDirection: 'column' }, tabBarStyle]}>
-          {state.routes.map((route) => (
-            <Pressable
-              key={route.key}
-              onPress={() => {
-                const event = navigation.emit({
-                  type: 'tabPress',
-                  target: route.key,
-                  canPreventDefault: true,
-                  data: {
-                    isAlreadyFocused:
-                      route.key === state.routes[state.index].key,
-                  },
-                });
-
-                if (!event.defaultPrevented) {
-                  navigation.dispatch({
-                    ...TabActions.jumpTo(route.name),
-                    target: state.key,
-                  });
-                }
-              }}
-              style={{ flex: 1 }}
-            >
-              <Text>{descriptors[route.key].options.title || route.name}</Text>
-            </Pressable>
-          ))}
-        </View>
-        <View style={[{ flex: 1 }, contentStyle]}>
-          {state.routes.map((route, i) => {
-            return (
-              <View
-                key={route.key}
-                style={[
-                  StyleSheet.absoluteFill,
-                  { display: i === state.index ? 'flex' : 'none' },
-                ]}
-              >
-                {descriptors[route.key].render()}
-              </View>
-            );
-          })}
-        </View>
-      </View>
+      <BottomTabView
+        {...rest}
+        state={state}
+        navigation={navigation}
+        descriptors={descriptors}
+        sceneContainerStyle={sceneContainerStyle}
+      />
     </NavigationContent>
   );
 }
 
 export default createNavigatorFactory<
   TabNavigationState<ParamListBase>,
-  TabNavigationOptions,
-  TabNavigationEventMap,
-  typeof TabNavigator
->(TabNavigator);
+  BottomTabNavigationOptions,
+  BottomTabNavigationEventMap,
+  typeof BottomTabNavigator
+>(BottomTabNavigator);

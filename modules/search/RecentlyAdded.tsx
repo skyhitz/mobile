@@ -26,10 +26,11 @@ export default observer((props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.recentText}>Recently Added</Text>
-
       {SearchingLoader(entriesSearchStore.loadingRecentlyAdded)}
       <ScrollView style={{ flex: 1 }}>
+        {!entriesSearchStore.recentlyAdded.isEmpty() && (
+          <Text style={styles.recentText}>Recently Added</Text>
+        )}
         {entriesSearchStore.recentlyAdded.map((entry: any) => {
           return renderItem(entry);
         })}
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   recentText: {
     color: Colors.defaultTextLight,
     fontSize: 18,
-    paddingTop: 14,
+    paddingTop: 0,
     paddingBottom: 12,
     paddingLeft: 20,
   },
