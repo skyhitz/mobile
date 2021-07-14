@@ -12,7 +12,6 @@ export default () => {
     <Nav
       style={{
         borderColor: '#000',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         height: 56,
         display: 'flex',
         flexDirection: 'row',
