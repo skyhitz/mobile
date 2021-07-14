@@ -27,6 +27,7 @@ import type {
 import BottomTabBarHeightCallbackContext from '@react-navigation/bottom-tabs/src/utils/BottomTabBarHeightCallbackContext';
 import useIsKeyboardShown from '@react-navigation/bottom-tabs/src/utils/useIsKeyboardShown';
 import BottomTabItem from '@react-navigation/bottom-tabs/src/views/BottomTabItem';
+import { useMediaQuery } from 'react-responsive';
 
 type Props = BottomTabBarProps & {
   style?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
@@ -250,6 +251,8 @@ export default function BottomTabBar({
 
   const tabBarBackgroundElement = tabBarBackground?.();
 
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+
   return (
     <Animated.View
       style={[
@@ -257,7 +260,6 @@ export default function BottomTabBar({
         {
           backgroundColor:
             tabBarBackgroundElement != null ? 'transparent' : colors.card,
-          borderTopColor: colors.border,
         },
         {
           transform: [
@@ -275,8 +277,10 @@ export default function BottomTabBar({
           // This is needed to avoid gap at bottom when the tab bar is hidden
           position: isTabBarHidden ? 'absolute' : (null as any),
         },
+        isDesktop
+          ? { width: tabBarHeight, borderTopWidth: 0 }
+          : { height: tabBarHeight, borderTopColor: colors.border },
         {
-          height: tabBarHeight,
           paddingBottom,
           paddingHorizontal: Math.max(insets.left, insets.right),
         },
@@ -288,7 +292,10 @@ export default function BottomTabBar({
       <View pointerEvents="none" style={StyleSheet.absoluteFill}>
         {tabBarBackgroundElement}
       </View>
-      <View accessibilityRole="tablist" style={styles.content}>
+      <View
+        accessibilityRole="tablist"
+        style={isDesktop ? styles.contentWeb : styles.content}
+      >
         {routes.map((route, index) => {
           const focused = index === state.index;
           const { options } = descriptors[route.key];
@@ -364,7 +371,12 @@ export default function BottomTabBar({
                   showLabel={tabBarShowLabel}
                   labelStyle={options.tabBarLabelStyle}
                   iconStyle={options.tabBarIconStyle}
-                  style={options.tabBarItemStyle}
+                  style={[
+                    options.tabBarItemStyle,
+                    isDesktop
+                      ? { maxHeight: tabBarHeight, marginVertical: 22 }
+                      : {},
+                  ]}
                 />
               </NavigationRouteContext.Provider>
             </NavigationContext.Provider>
@@ -386,5 +398,10 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: 'row',
+  },
+  contentWeb: {
+    flex: 1,
+    flexDirection: 'column',
+    marginTop: 68,
   },
 });

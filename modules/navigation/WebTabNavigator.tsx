@@ -18,6 +18,7 @@ import type {
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs/src/types';
 import BottomTabView from './BottomTabView';
+import { useMediaQuery } from 'react-responsive';
 
 type Props = DefaultNavigatorOptions<
   ParamListBase,
@@ -27,6 +28,19 @@ type Props = DefaultNavigatorOptions<
 > &
   TabRouterOptions &
   BottomTabNavigationConfig;
+
+function FlexRowReverseWrap(props) {
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+
+  if (isDesktop) {
+    return (
+      <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
+        {props.children}
+      </View>
+    );
+  }
+  return <>{props.children}</>;
+}
 
 function BottomTabNavigator({
   initialRouteName,
@@ -100,13 +114,15 @@ function BottomTabNavigator({
 
   return (
     <NavigationContent>
-      <BottomTabView
-        {...rest}
-        state={state}
-        navigation={navigation}
-        descriptors={descriptors}
-        sceneContainerStyle={sceneContainerStyle}
-      />
+      <FlexRowReverseWrap>
+        <BottomTabView
+          {...rest}
+          state={state}
+          navigation={navigation}
+          descriptors={descriptors}
+          sceneContainerStyle={sceneContainerStyle}
+        />
+      </FlexRowReverseWrap>
     </NavigationContent>
   );
 }
