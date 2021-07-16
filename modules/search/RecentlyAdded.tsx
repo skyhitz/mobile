@@ -27,9 +27,9 @@ export default observer((props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {SearchingLoader(entriesSearchStore.loadingRecentlyAdded)}
       <ScrollView style={{ flex: 1 }}>
         <ResponsiveLayout>
+          {SearchingLoader(entriesSearchStore.loadingRecentlyAdded)}
           {!entriesSearchStore.recentlyAdded.isEmpty() && (
             <Text style={styles.recentText}>Recently Added</Text>
           )}

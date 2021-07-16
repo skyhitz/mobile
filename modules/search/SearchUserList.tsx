@@ -6,6 +6,7 @@ import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import * as stores from 'app/skyhitz-common';
+import ResponsiveLayout from '../ui/ResponsiveLayout';
 type Stores = typeof stores;
 
 const UserSearchList = inject((stores: Stores) => ({
@@ -14,11 +15,13 @@ const UserSearchList = inject((stores: Stores) => ({
   query: stores.usersSearchStore.query,
 }))(({ users, searching, query }: any) => (
   <ScrollView style={{ backgroundColor: Colors.listItemBackground, flex: 1 }}>
-    {SearchingLoader(searching, query)}
-    {users.map((user: { id: string | number | undefined }) => (
-      <UserRow user={user} key={user.id} />
-    ))}
-    <BottomPlaceholder />
+    <ResponsiveLayout>
+      {SearchingLoader(searching, query)}
+      {users.map((user: { id: string | number | undefined }) => (
+        <UserRow user={user} key={user.id} />
+      ))}
+      <BottomPlaceholder />
+    </ResponsiveLayout>
   </ScrollView>
 ));
 
