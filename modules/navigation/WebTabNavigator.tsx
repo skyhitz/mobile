@@ -19,6 +19,7 @@ import type {
 } from '@react-navigation/bottom-tabs/src/types';
 import BottomTabView from './BottomTabView';
 import { useMediaQuery } from 'react-responsive';
+import NavBar from '../marketing/web/NavBar';
 
 type Props = DefaultNavigatorOptions<
   ParamListBase,
@@ -112,8 +113,12 @@ function BottomTabNavigator({
     defaultScreenOptions,
   });
 
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+
   return (
     <NavigationContent>
+      {isDesktop && <NavBar />}
+
       <FlexRowReverseWrap>
         <BottomTabView
           {...rest}

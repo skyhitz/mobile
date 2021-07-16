@@ -4,8 +4,12 @@ import SkyhitzLogo from './SkyhitzLogo';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import { observer } from 'mobx-react';
+import { Stores } from 'app/functions/Stores';
 
-export default () => {
+export default observer(() => {
+  const { sessionStore } = Stores();
+
   const linkTo = useLinkTo();
 
   return (
@@ -41,22 +45,26 @@ export default () => {
           paddingRight: 20,
         }}
       >
-        <Text
-          onPress={() => linkTo('/accounts/sign-in')}
-          style={styles.defaultText}
-        >
-          Log in
-        </Text>
-        <Pressable
-          onPress={() => linkTo('/accounts/sign-up')}
-          style={[styles.signUpWrap, cursorPointer]}
-        >
-          <Text style={[styles.signUpText, cursorPointer]}>Sign Up</Text>
-        </Pressable>
+        {sessionStore.user ? null : (
+          <>
+            <Text
+              onPress={() => linkTo('/accounts/sign-in')}
+              style={styles.defaultText}
+            >
+              Log in
+            </Text>
+            <Pressable
+              onPress={() => linkTo('/accounts/sign-up')}
+              style={[styles.signUpWrap, cursorPointer]}
+            >
+              <Text style={[styles.signUpText, cursorPointer]}>Sign Up</Text>
+            </Pressable>
+          </>
+        )}
       </View>
     </Nav>
   );
-};
+});
 
 let styles = StyleSheet.create({
   logo: {
