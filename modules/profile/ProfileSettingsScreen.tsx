@@ -4,13 +4,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import ProfileSettingsTopContainer from 'app/modules/profile/ProfileSettingsTopContainer';
-import EditBtn from 'app/modules/ui/EditBtn';
 import ShareAppBanner from 'app/modules/marketing/ShareAppBanner';
 import LikesScreen from 'app/modules/playlists/LikesScreen';
 import MyMusicScreen from 'app/modules/playlists/MyMusicScreen';
 import LikesRow from 'app/modules/playlists/LikesRow';
 import MyMusicRow from 'app/modules/playlists/MyMusicRow';
 import { Stores } from 'app/functions/Stores';
+import ResponsiveLayout from '../ui/ResponsiveLayout';
 
 const ProfileSettingsScreen = observer(() => {
   let { likesStore, userEntriesStore, paymentsStore } = Stores();
@@ -21,14 +21,16 @@ const ProfileSettingsScreen = observer(() => {
   });
 
   return (
-    <View style={styles.container}>
-      <ProfileSettingsTopContainer />
-      <View style={styles.settingsContainer}>
-        <LikesRow />
-        <MyMusicRow />
-        <ShareAppBanner />
+    <ResponsiveLayout>
+      <View style={styles.container}>
+        <ProfileSettingsTopContainer />
+        <View style={styles.settingsContainer}>
+          <LikesRow />
+          <MyMusicRow />
+          <ShareAppBanner />
+        </View>
       </View>
-    </View>
+    </ResponsiveLayout>
   );
 });
 
@@ -41,13 +43,12 @@ const ProfileSettingsNavigator = () => {
         name="ProfileSettingsScreen"
         component={ProfileSettingsScreen}
         options={{
-          title: 'Profile',
+          title: '',
           headerTintColor: Colors.tabIconSelected,
           headerStyle: {
             backgroundColor: Colors.headerBackground,
             borderBottomWidth: 0,
           },
-          headerRight: () => <EditBtn />,
         }}
       />
       <ProfileSettingsStack.Screen

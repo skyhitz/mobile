@@ -111,7 +111,12 @@ export const AppStack = createStackNavigator();
 
 export function LazyAppStackNavigator({ user, headerShown }) {
   return (
-    <AppStack.Navigator screenOptions={{ presentation: 'modal' }}>
+    <AppStack.Navigator
+      screenOptions={{
+        presentation: 'modal',
+        cardStyle: { backgroundColor: 'transparent' },
+      }}
+    >
       {user ? (
         <>
           <AppStack.Screen
@@ -207,6 +212,9 @@ export function LazyAppStackNavigator({ user, headerShown }) {
           },
           headerLeft: () => <CancelEditBtn />,
           headerRight: () => <DoneEditBtn />,
+          cardStyle: {
+            backgroundColor: 'transparent',
+          },
         }}
       />
       <AppStack.Screen

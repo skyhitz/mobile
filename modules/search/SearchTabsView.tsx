@@ -8,6 +8,7 @@ import SearchEntryView from 'app/modules/search/SearchEntryView';
 import SearchUserView from 'app/modules/search/SearchUserView';
 import Colors from 'app/constants/Colors';
 import SearchHeader from './SearchHeader';
+import ResponsiveLayout from '../ui/ResponsiveLayout';
 
 const labelStyle = ({ focused }) => ({
   fontSize: 14,
@@ -49,8 +50,10 @@ export default () => {
         <View
           style={{ paddingTop: 20, backgroundColor: Colors.tabsBackground }}
         >
-          <SearchHeader />
-          <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
+          <ResponsiveLayout>
+            <SearchHeader />
+            <MaterialTopTabBar {...props} indicatorStyle={indicatorStyle} />
+          </ResponsiveLayout>
         </View>
       )}
     >

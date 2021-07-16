@@ -5,6 +5,7 @@ import EntryRow from 'app/modules/ui/EntryRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
+import ResponsiveLayout from '../ui/ResponsiveLayout';
 
 export default observer((props) => {
   const { playerStore, entriesSearchStore } = Stores();
@@ -28,12 +29,14 @@ export default observer((props) => {
     <SafeAreaView style={styles.container}>
       {SearchingLoader(entriesSearchStore.loadingRecentlyAdded)}
       <ScrollView style={{ flex: 1 }}>
-        {!entriesSearchStore.recentlyAdded.isEmpty() && (
-          <Text style={styles.recentText}>Recently Added</Text>
-        )}
-        {entriesSearchStore.recentlyAdded.map((entry: any) => {
-          return renderItem(entry);
-        })}
+        <ResponsiveLayout>
+          {!entriesSearchStore.recentlyAdded.isEmpty() && (
+            <Text style={styles.recentText}>Recently Added</Text>
+          )}
+          {entriesSearchStore.recentlyAdded.map((entry: any) => {
+            return renderItem(entry);
+          })}
+        </ResponsiveLayout>
       </ScrollView>
     </SafeAreaView>
   );

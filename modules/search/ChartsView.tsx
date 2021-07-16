@@ -6,6 +6,7 @@ import * as stores from 'app/skyhitz-common';
 import { inject } from 'mobx-react';
 import SearchingLoader from '../ui/SearchingLoader';
 import EntryChartRow from '../ui/EntryChartRow';
+import ResponsiveLayout from '../ui/ResponsiveLayout';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -56,8 +57,10 @@ class TopEntries extends React.Component<any, any> {
 
 const ChartsView = () => (
   <ScrollView style={styles.scrollView}>
-    <TopEntries />
-    <BottomPlaceholder />
+    <ResponsiveLayout>
+      <TopEntries />
+      <BottomPlaceholder />
+    </ResponsiveLayout>
   </ScrollView>
 );
 
