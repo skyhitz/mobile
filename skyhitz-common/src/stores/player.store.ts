@@ -68,10 +68,18 @@ export class PlayerStore {
   seekPosition: number = 0;
 
   @observable
+  sliding: boolean = false;
+
+  @observable
   streamUrl: string =
     'https://res.cloudinary.com/skyhitz/video/upload/v1554330926/app/-LbM3m6WKdVQAsY3zrAd/videos/-Lb_KsQ7hbr0nquOTZee.mov';
 
   video: any;
+
+  @action
+  setSliding(sliding) {
+    this.sliding = sliding;
+  }
 
   mountVideo = (component) => {
     this.video = component;
@@ -405,6 +413,7 @@ export class PlayerStore {
   };
 
   onSeekBarTap = (evt: any) => {
+    if (this.sliding) return;
     if (
       !(
         this.playbackState === 'LOADING' ||

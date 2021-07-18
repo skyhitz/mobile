@@ -3,35 +3,49 @@ import { View, Image } from 'react-native';
 import { EvilIcons, Feather } from '@expo/vector-icons';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
-// import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
+import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
 import Colors from 'app/constants/Colors';
 import ChartsView from 'app/modules/search/ChartsView';
 import { Logo } from 'app/assets/images/Images';
 import BottomTabBar from './BottomTabBar';
-// import {
-//   createBottomTabNavigator,
-//   BottomTabBar,
-// } from '@react-navigation/bottom-tabs';
 
 import createBottomTabNavigator from './WebTabNavigator';
+import { useMediaQuery } from 'react-responsive';
+import MiniPlayerDesktop from '../player/player-bar/MiniPlayerDesktop';
 
 const Tab = createBottomTabNavigator();
 
 export default () => {
+  const isDesktop = useMediaQuery({ minWidth: 678 });
   return (
     <Tab.Navigator
       tabBar={(props) => {
+        if (isDesktop) {
+          return (
+            <>
+              <BottomTabBar
+                {...props}
+                style={{
+                  backgroundColor: Colors.tabsBackground,
+                  borderTopColor: Colors.lightBrandBlue,
+                  borderTopWidth: 1,
+                }}
+              />
+              <MiniPlayerDesktop />
+            </>
+          );
+        }
         return (
-          // <PlayerDrawer>
-          <BottomTabBar
-            {...props}
-            style={{
-              backgroundColor: Colors.tabsBackground,
-              borderTopColor: Colors.lightBrandBlue,
-              borderTopWidth: 1,
-            }}
-          />
-          // </PlayerDrawer>
+          <PlayerDrawer>
+            <BottomTabBar
+              {...props}
+              style={{
+                backgroundColor: Colors.tabsBackground,
+                borderTopColor: Colors.lightBrandBlue,
+                borderTopWidth: 1,
+              }}
+            />
+          </PlayerDrawer>
         );
       }}
       screenOptions={{
