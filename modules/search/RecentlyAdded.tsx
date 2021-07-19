@@ -45,8 +45,8 @@ export default observer((props) => {
 const styles = StyleSheet.create({
   recentText: {
     color: Colors.defaultTextLight,
-    fontSize: 18,
-    paddingTop: 0,
+    fontSize: 16,
+    paddingTop: 2,
     paddingBottom: 12,
     paddingLeft: 20,
   },

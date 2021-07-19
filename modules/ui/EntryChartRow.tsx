@@ -106,16 +106,17 @@ let styles = StyleSheet.create({
   },
   thumb: {
     width: 40,
-    height: 30,
+    height: 40,
   },
   infoWrap: {
     maxWidth: Layout.window.width - 80,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     paddingLeft: 0,
+    height: '100%',
   },
   title: {
-    fontSize: 12,
+    fontSize: 14,
     textAlign: 'left',
     fontWeight: 'bold',
     color: Colors.defaultTextDark,
@@ -123,7 +124,7 @@ let styles = StyleSheet.create({
   artistName: {
     fontSize: 12,
     textAlign: 'left',
-    marginTop: Platform.OS === 'ios' ? 3 : 0,
-    color: Colors.defaultTextLight,
+    marginTop: Platform.OS === 'ios' ? 3 : 2,
+    color: Colors.grey,
   },
 });

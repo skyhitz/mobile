@@ -5,11 +5,11 @@ import cursorPointer from 'app/constants/CursorPointer';
 
 var styles = StyleSheet.create({
   dot: {
-    width: 5,
-    height: 5,
-    borderRadius: 5,
+    width: 3,
+    height: 3,
+    borderRadius: 3,
     backgroundColor: Colors.white,
-    marginLeft: 5,
+    marginLeft: 4,
   },
   dots: {
     flexDirection: 'row',

@@ -28,7 +28,7 @@ export default observer(() => {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            paddingLeft: 15,
+            paddingLeft: 10,
           }}
         >
           <SkyhitzLogo />
@@ -71,7 +71,7 @@ let styles = StyleSheet.create({
     color: 'rgb(255,255,255)',
     fontSize: 18,
     letterSpacing: 12,
-    paddingLeft: 8,
+    paddingLeft: 20,
     fontFamily: 'Raleway-Light',
     fontWeight: '200',
   },

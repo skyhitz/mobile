@@ -374,7 +374,11 @@ export default function BottomTabBar({
                   style={[
                     options.tabBarItemStyle,
                     isDesktop
-                      ? { maxHeight: tabBarHeight, marginVertical: 22 }
+                      ? {
+                          maxHeight: tabBarHeight,
+                          marginBottom: 10,
+                          marginTop: index === 0 ? 0 : 10,
+                        }
                       : {},
                   ]}
                 />
@@ -402,6 +406,5 @@ const styles = StyleSheet.create({
   contentWeb: {
     flex: 1,
     flexDirection: 'column',
-    marginTop: 68,
   },
 });

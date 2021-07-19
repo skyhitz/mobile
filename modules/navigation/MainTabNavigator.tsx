@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { EvilIcons, Feather } from '@expo/vector-icons';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
 import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
 import Colors from 'app/constants/Colors';
 import ChartsView from 'app/modules/search/ChartsView';
-import { Logo } from 'app/assets/images/Images';
 import BottomTabBar from './BottomTabBar';
 
 import createBottomTabNavigator from './WebTabNavigator';
 import { useMediaQuery } from 'react-responsive';
 import MiniPlayerDesktop from '../player/player-bar/MiniPlayerDesktop';
+import SkyhitzLogo from '../marketing/web/SkyhitzLogo';
 
 const Tab = createBottomTabNavigator();
 
@@ -86,16 +86,10 @@ export default () => {
                 width: 34,
                 height: 34,
                 justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
-              <Image
-                style={{
-                  width: 14.7,
-                  height: 11.22,
-                  alignSelf: 'center',
-                }}
-                source={Logo}
-              />
+              <SkyhitzLogo width={16} />
             </View>
           ),
         }}

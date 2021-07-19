@@ -60,5 +60,7 @@ let styles = StyleSheet.create({
     right: 0,
     left: 0,
     bottom: 0,
+    borderTopColor: 'rgb(216, 216, 216)',
+    borderTopWidth: 1,
   },
 });
