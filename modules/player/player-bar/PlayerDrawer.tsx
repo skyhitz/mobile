@@ -26,30 +26,30 @@ const {
   Extrapolate,
 } = Animated;
 
+const { height } = Dimensions.get('window');
+const TABBAR_HEIGHT = getBottomSpace() + 50;
+
+let MINIMIZED_PLAYER_HEIGHT = 42;
+
+const SNAP_TOP = 0;
+const SNAP_BOTTOM = height - TABBAR_HEIGHT - MINIMIZED_PLAYER_HEIGHT;
+const config = {
+  damping: 15,
+  mass: 1,
+  stiffness: 150,
+  overshootClamping: false,
+  restSpeedThreshold: 0.1,
+  restDisplacementThreshold: 0.1,
+};
+const translationY = new Value(0);
+const velocityY = new Value(0);
+const goUp = new Value(0);
+const goDown = new Value(0);
+const state = new Value(State.UNDETERMINED);
+const offset = new Value(SNAP_BOTTOM);
+const clock = new Clock();
+
 export default observer(({ children }) => {
-  const { height } = Dimensions.get('window');
-  const TABBAR_HEIGHT = getBottomSpace() + 50;
-
-  let MINIMIZED_PLAYER_HEIGHT = 42;
-
-  const SNAP_TOP = 0;
-  const SNAP_BOTTOM = height - TABBAR_HEIGHT - MINIMIZED_PLAYER_HEIGHT;
-  const config = {
-    damping: 15,
-    mass: 1,
-    stiffness: 150,
-    overshootClamping: false,
-    restSpeedThreshold: 0.1,
-    restDisplacementThreshold: 0.1,
-  };
-  const translationY = new Value(0);
-  const velocityY = new Value(0);
-  const goUp = new Value(0);
-  const goDown = new Value(0);
-  const state = new Value(State.UNDETERMINED);
-  const offset = new Value(SNAP_BOTTOM);
-  const clock = new Clock();
-
   const { playerStore } = Stores();
 
   const translateY = withSpring({
