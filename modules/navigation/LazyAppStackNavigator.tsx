@@ -107,169 +107,172 @@ const TermsSuspense = (props) => (
   </SuspenseLoading>
 );
 
+const modalOptions = {
+  headerShown: false,
+  gestureEnabled: false,
+  cardStyle: { backgroundColor: 'transparent' },
+  cardOverlayEnabled: true,
+  cardStyleInterpolator: ({ current: { progress } }) => ({
+    cardStyle: {
+      opacity: progress.interpolate({
+        inputRange: [0, 0.5, 0.9, 1],
+        outputRange: [0, 0.1, 0.3, 1],
+      }),
+    },
+    overlayStyle: {
+      opacity: progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 0.6],
+        extrapolate: 'clamp',
+      }),
+    },
+  }),
+};
+
 export const AppStack = createStackNavigator();
 
 export function LazyAppStackNavigator({ user, headerShown }) {
   return (
     <AppStack.Navigator
       screenOptions={{
-        presentation: 'modal',
+        headerMode: 'screen',
         cardStyle: { backgroundColor: 'transparent' },
       }}
     >
-      {user ? (
-        <>
-          <AppStack.Screen
-            name="Main"
-            component={MainTabNavigatorSuspense}
-            options={{ headerShown: false }}
-          />
-        </>
-      ) : (
-        <>
-          {Platform.OS === 'web' ? (
+      <AppStack.Group>
+        {user ? (
+          <>
             <AppStack.Screen
-              name="WebApp"
-              component={WebAppSuspense}
+              name="Main"
+              component={MainTabNavigatorSuspense}
               options={{ headerShown: false }}
             />
-          ) : (
+          </>
+        ) : (
+          <>
+            {Platform.OS === 'web' ? (
+              <AppStack.Screen
+                name="WebApp"
+                component={WebAppSuspense}
+                options={{ headerShown: false }}
+              />
+            ) : (
+              <AppStack.Screen
+                name="AuthScreen"
+                component={AuthScreenSuspense}
+                options={{ headerShown: false, gestureEnabled: false }}
+              />
+            )}
             <AppStack.Screen
-              name="AuthScreen"
-              component={AuthScreenSuspense}
-              options={{ headerShown: false, gestureEnabled: false }}
+              name="SignUp"
+              component={SignUpScreenSuspense}
+              options={{
+                headerShown: headerShown,
+                headerTitleStyle: { color: Colors.white },
+                headerTintColor: Colors.white,
+                title: 'Sign Up',
+                headerTransparent: true,
+                headerStyle: {
+                  borderBottomWidth: 0,
+                },
+              }}
             />
-          )}
-          <AppStack.Screen
-            name="SignUp"
-            component={SignUpScreenSuspense}
-            options={{
-              headerShown: headerShown,
-              headerTitleStyle: { color: Colors.white },
-              headerTintColor: Colors.white,
-              title: 'Sign Up',
-              headerTransparent: true,
-              headerStyle: {
-                borderBottomWidth: 0,
-              },
-            }}
-          />
-          <AppStack.Screen
-            name="SignIn"
-            component={SignInScreenSuspense}
-            options={{
-              headerShown: headerShown,
-              headerTitleStyle: { color: Colors.white },
-              headerTintColor: Colors.white,
-              title: 'Log In',
-              headerTransparent: true,
-              headerStyle: {
-                borderBottomWidth: 0,
-              },
-            }}
-          />
-          <AppStack.Screen
-            name="Privacy"
-            component={PrivacySuspense}
-            options={{
-              headerShown: headerShown,
-              headerTitleStyle: { color: Colors.white },
-              headerTintColor: Colors.white,
-              title: 'Privacy',
-              headerTransparent: true,
-              headerStyle: {
-                borderBottomWidth: 0,
-              },
-            }}
-          />
-          <AppStack.Screen
-            name="Terms"
-            component={TermsSuspense}
-            options={{
-              headerShown: headerShown,
-              headerTitleStyle: { color: Colors.white },
-              headerTintColor: Colors.white,
-              title: 'Terms',
-              headerTransparent: true,
-              headerStyle: {
-                borderBottomWidth: 0,
-              },
-            }}
-          />
-        </>
-      )}
-      <AppStack.Screen
-        name="EditProfileModal"
-        component={EditProfileScreenSuspense}
-        options={{
-          gestureEnabled: false,
-          title: 'Edit Profile',
-          headerTitleStyle: { color: Colors.white },
-          headerStyle: {
-            backgroundColor: Colors.headerBackground,
-            borderBottomWidth: 0,
-            shadowColor: 'transparent',
-          },
-          headerLeft: () => <CancelEditBtn />,
-          headerRight: () => <DoneEditBtn />,
-          cardStyle: {
-            backgroundColor: 'transparent',
-          },
-        }}
-      />
-      <AppStack.Screen
-        name="UploadMusicModal"
-        component={UploadMusicModalSuspense}
-        options={{
-          headerShown: false,
-          gestureEnabled: false,
-          cardStyle: { backgroundColor: 'transparent' },
-        }}
-      />
-
-      <AppStack.Screen
-        name="PaymentModal"
-        component={PaymentModalSuspense}
-        options={{
-          headerShown: false,
-          gestureEnabled: false,
-          cardStyle: { backgroundColor: 'transparent' },
-        }}
-      />
-      <AppStack.Screen
-        name="WithdrawalModal"
-        component={WithdrawalModalSuspense}
-        options={{
-          headerShown: false,
-          gestureEnabled: false,
-          cardStyle: { backgroundColor: 'transparent' },
-        }}
-      />
-      <AppStack.Screen
-        name="BuyOptionsModal"
-        component={BuyOptionsModalSuspense}
-        options={{
-          headerShown: false,
-          gestureEnabled: false,
-          cardStyle: { backgroundColor: 'transparent' },
-        }}
-      />
-      <AppStack.Screen
-        name="EntryOptionsModal"
-        component={EntryOptionsModalSuspense}
-        options={{
-          headerShown: false,
-          cardStyle: { backgroundColor: 'transparent' },
-        }}
-      />
-      <AppStack.Screen
-        name="PricingOptionsModal"
-        component={PricingOptionsModalSuspense}
-        options={{
-          headerShown: false,
-          cardStyle: { backgroundColor: 'transparent' },
-        }}
-      />
+            <AppStack.Screen
+              name="SignIn"
+              component={SignInScreenSuspense}
+              options={{
+                headerShown: headerShown,
+                headerTitleStyle: { color: Colors.white },
+                headerTintColor: Colors.white,
+                title: 'Log In',
+                headerTransparent: true,
+                headerStyle: {
+                  borderBottomWidth: 0,
+                },
+              }}
+            />
+            <AppStack.Screen
+              name="Privacy"
+              component={PrivacySuspense}
+              options={{
+                headerShown: headerShown,
+                headerTitleStyle: { color: Colors.white },
+                headerTintColor: Colors.white,
+                title: 'Privacy',
+                headerTransparent: true,
+                headerStyle: {
+                  borderBottomWidth: 0,
+                },
+              }}
+            />
+            <AppStack.Screen
+              name="Terms"
+              component={TermsSuspense}
+              options={{
+                headerShown: headerShown,
+                headerTitleStyle: { color: Colors.white },
+                headerTintColor: Colors.white,
+                title: 'Terms',
+                headerTransparent: true,
+                headerStyle: {
+                  borderBottomWidth: 0,
+                },
+              }}
+            />
+          </>
+        )}
+      </AppStack.Group>
+      <AppStack.Group screenOptions={{ presentation: 'transparentModal' }}>
+        <AppStack.Screen
+          name="EditProfileModal"
+          component={EditProfileScreenSuspense}
+          options={{
+            gestureEnabled: false,
+            title: 'Edit Profile',
+            headerTitleStyle: { color: Colors.white },
+            headerStyle: {
+              backgroundColor: Colors.headerBackground,
+              borderBottomWidth: 0,
+              shadowColor: 'transparent',
+            },
+            headerLeft: () => <CancelEditBtn />,
+            headerRight: () => <DoneEditBtn />,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        />
+        <AppStack.Screen
+          name="UploadMusicModal"
+          component={UploadMusicModalSuspense}
+          options={modalOptions}
+        />
+        <AppStack.Screen
+          name="PaymentModal"
+          component={PaymentModalSuspense}
+          options={modalOptions}
+        />
+        <AppStack.Screen
+          name="WithdrawalModal"
+          component={WithdrawalModalSuspense}
+          options={modalOptions}
+        />
+        <AppStack.Screen
+          name="BuyOptionsModal"
+          component={BuyOptionsModalSuspense}
+          options={modalOptions}
+        />
+        <AppStack.Screen
+          name="EntryOptionsModal"
+          component={EntryOptionsModalSuspense}
+          options={modalOptions}
+        />
+        <AppStack.Screen
+          name="PricingOptionsModal"
+          component={PricingOptionsModalSuspense}
+          options={modalOptions}
+        />
+      </AppStack.Group>
     </AppStack.Navigator>
   );
 }
