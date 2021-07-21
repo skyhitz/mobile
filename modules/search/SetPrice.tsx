@@ -22,7 +22,7 @@ export default ({ entry }) => {
   return (
     <Pressable onPress={handleSetPrice}>
       <View style={[styles.field, cursorPointer]}>
-        <MaterialIcons name={'attach-money'} size={30} color={Colors.white} />
+        <MaterialIcons name={'attach-money'} size={20} color={Colors.white} />
         <Text style={styles.text}>Set Price</Text>
       </View>
     </Pressable>
@@ -36,7 +36,8 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     maxHeight: 50,
-    marginTop: 10,
+    height: 40,
+    marginBottom: 10,
     width: '100%',
   },
   text: {
