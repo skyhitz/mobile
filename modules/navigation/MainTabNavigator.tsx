@@ -16,7 +16,7 @@ import SkyhitzLogo from '../marketing/web/SkyhitzLogo';
 const Tab = createBottomTabNavigator();
 
 export default () => {
-  const isDesktop = useMediaQuery({ minWidth: 678 });
+  const isDesktop = useMediaQuery({ minWidth: 768 });
   return (
     <Tab.Navigator
       tabBar={(props) => {

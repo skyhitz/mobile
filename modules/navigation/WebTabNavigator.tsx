@@ -35,9 +35,12 @@ function FlexRowReverseWrap(props) {
 
   if (isDesktop) {
     return (
-      <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
-        {props.children}
-      </View>
+      <>
+        <NavBar />
+        <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
+          {props.children}
+        </View>
+      </>
     );
   }
   return <>{props.children}</>;
@@ -113,12 +116,8 @@ function BottomTabNavigator({
     defaultScreenOptions,
   });
 
-  const isDesktop = useMediaQuery({ minWidth: 768 });
-
   return (
     <NavigationContent>
-      {isDesktop && <NavBar />}
-
       <FlexRowReverseWrap>
         <BottomTabView
           {...rest}
