@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Video } from 'expo-av';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
