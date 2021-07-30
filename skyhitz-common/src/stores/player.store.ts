@@ -216,7 +216,7 @@ export class PlayerStore {
     return false;
   }
 
-  async loadAndPlay(entry: Entry) {
+  async loadAndPlay(entry: Entry, play = true) {
     if (!entry) {
       return null;
     }
@@ -241,8 +241,8 @@ export class PlayerStore {
     let optimizedVideo = '/upload/vc_auto/q_auto:good';
     videoUrl.replace('/upload', optimizedVideo);
     this.streamUrl = videoUrl;
-    await this.loadNewPlaybackInstance(true, videoUrl);
-    this.setPlaybackState('PLAYING');
+    await this.loadNewPlaybackInstance(play, videoUrl);
+    this.setPlaybackState(play ? 'PLAYING' : 'PAUSED');
     return;
   }
 

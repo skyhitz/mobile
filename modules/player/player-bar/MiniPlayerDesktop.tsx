@@ -10,22 +10,29 @@ import {
   DurationDisplay,
 } from '../player-screen/video-player/VideoTimeDisplay';
 import Slider from '../player-screen/slider/Slider';
+import VideoComponent from '../player-screen/video-player/VideoComponent';
 
 export default () => {
   return (
     <View style={styles.desktopWrap}>
-      <View style={styles.rowControls}>
-        <ShuffleBtn size={14} />
-        <PrevBtn size={18} />
-        <PlayBtn size={22} />
-        <ForwardBtn size={18} />
-        <LoopBtn size={14} />
+      <View style={styles.videoWrap}>
+        <VideoComponent dynamicHeight={50} desktop={true} />
       </View>
-      <View style={styles.sliderControls}>
-        <CurrentTimeDisplay />
-        <Slider />
-        <DurationDisplay />
+      <View style={styles.controlsWrap}>
+        <View style={styles.rowControls}>
+          <ShuffleBtn size={14} />
+          <PrevBtn size={18} />
+          <PlayBtn size={22} />
+          <ForwardBtn size={18} />
+          <LoopBtn size={14} />
+        </View>
+        <View style={styles.sliderControls}>
+          <CurrentTimeDisplay />
+          <Slider />
+          <DurationDisplay />
+        </View>
       </View>
+      <View style={styles.videoWrap} />
     </View>
   );
 };
@@ -48,14 +55,23 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  desktopWrap: {
-    display: 'flex',
+  controlsWrap: {
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: 'rgba(41, 43, 51, 0.9)',
-    height: 96,
-    paddingBottom: 4,
+    minWidth: 400,
+  },
+  videoWrap: {
+    margin: 15,
+    height: 50,
+  },
+  desktopWrap: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'rgba(41, 43, 51, 0.95)',
+    height: 80,
     position: 'absolute',
     right: 0,
     left: 0,
