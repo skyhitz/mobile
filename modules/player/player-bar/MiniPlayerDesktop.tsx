@@ -63,7 +63,7 @@ let styles = StyleSheet.create({
   },
   videoWrap: {
     margin: 15,
-    height: 50,
+    minWidth: 200,
   },
   desktopWrap: {
     display: 'flex',
