@@ -86,7 +86,7 @@ export class PlayerStore {
     this.loadNewPlaybackInstance(false);
   };
 
-  async loadNewPlaybackInstance(playing, streamUrl = '') {
+  async loadNewPlaybackInstance(playing, streamUrl = this.streamUrl) {
     if (this.playbackInstance != null) {
       await this.playbackInstance.unloadAsync();
       this.playbackInstance = null;
