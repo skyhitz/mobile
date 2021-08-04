@@ -7,14 +7,16 @@ import { useState } from 'react';
 
 export default observer(({ dynamicHeight, desktop = false }) => {
   let { playerStore } = Stores();
-  const [dynamicWidth, setDynamicWidth] = useState<number>();
+  const [dynamicWidth, setDynamicWidth] = useState<number>(dynamicHeight);
 
   return (
     <Video
       posterSource={{ uri: playerStore.entry?.imageUrl }}
+      usePoster={true}
       source={{
         uri: playerStore.streamUrl,
       }}
+      posterStyle={styles.poster}
       ref={(ref) => playerStore.mountVideo(ref)}
       onPlaybackStatusUpdate={(status) =>
         playerStore.onPlaybackStatusUpdate(status)
@@ -32,7 +34,9 @@ export default observer(({ dynamicHeight, desktop = false }) => {
         if (Platform.OS !== 'web') return;
         const { videoHeight, videoWidth } = res.target;
         const aspectRatio = videoWidth / videoHeight;
-
+        if (videoWidth === 0) {
+          return;
+        }
         setDynamicWidth(aspectRatio * dynamicHeight);
       }}
     />
@@ -46,5 +50,8 @@ let styles = StyleSheet.create({
   videoPlayerDesktop: {
     minHeight: 50,
     flex: 1,
+  },
+  poster: {
+    height: 50,
   },
 });

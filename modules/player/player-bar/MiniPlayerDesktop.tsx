@@ -51,9 +51,10 @@ let styles = StyleSheet.create({
     maxWidth: 400,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
   },
   controlsWrap: {
     flexDirection: 'column',
@@ -63,7 +64,7 @@ let styles = StyleSheet.create({
   },
   videoWrap: {
     margin: 15,
-    minWidth: 200,
+    width: 200,
   },
   desktopWrap: {
     display: 'flex',

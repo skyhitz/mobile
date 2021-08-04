@@ -16,10 +16,10 @@ export default observer(() => {
 
   const handleRecentlyAdded = async () => {
     await entriesSearchStore.getRecentlyAdded();
-    // await playerStore.loadAndPlay(
-    //   entriesSearchStore.recentlyAdded.first(),
-    //   false
-    // );
+    await playerStore.loadAndPlay(
+      entriesSearchStore.recentlyAdded.first(),
+      false
+    );
   };
 
   useEffect(() => {

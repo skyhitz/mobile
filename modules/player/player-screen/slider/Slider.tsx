@@ -7,13 +7,15 @@ import Slider from '@react-native-community/slider';
 
 export default observer(() => {
   const { playerStore } = Stores();
-
+  console.log(playerStore.seekPosition);
   return (
     <Pressable
       onPressOut={(evt) => {
         playerStore.onSeekBarTap(evt);
       }}
-      onLayout={(evt) => playerStore.onSliderLayout(evt)}
+      onLayout={(evt) => {
+        playerStore.onSliderLayout(evt);
+      }}
       style={{
         zIndex: 15,
         flex: 1,
