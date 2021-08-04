@@ -7,7 +7,6 @@ import Slider from '@react-native-community/slider';
 
 export default observer(() => {
   const { playerStore } = Stores();
-  console.log(playerStore.seekPosition);
   return (
     <Pressable
       onPressOut={(evt) => {

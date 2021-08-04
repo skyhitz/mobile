@@ -8,6 +8,7 @@ import { useState } from 'react';
 export default observer(({ dynamicHeight, desktop = false }) => {
   let { playerStore } = Stores();
   const [dynamicWidth, setDynamicWidth] = useState<number>(dynamicHeight);
+  const [dynamicOpacity, setDynamicOpacity] = useState<number>(0);
 
   return (
     <Video
@@ -23,8 +24,13 @@ export default observer(({ dynamicHeight, desktop = false }) => {
       }
       resizeMode={Video.RESIZE_MODE_CONTAIN}
       style={[
+        { opacity: dynamicOpacity },
         desktop
-          ? { width: dynamicWidth }
+          ? {
+              maxWidth: dynamicWidth,
+              width: dynamicWidth,
+              minWidth: dynamicWidth,
+            }
           : { height: dynamicHeight, maxHeight: 360 },
         desktop ? styles.videoPlayerDesktop : styles.videoPlayer,
       ]}
@@ -37,7 +43,9 @@ export default observer(({ dynamicHeight, desktop = false }) => {
         if (videoWidth === 0) {
           return;
         }
-        setDynamicWidth(aspectRatio * dynamicHeight);
+        setDynamicWidth(Math.ceil(aspectRatio * dynamicHeight));
+        // add delay or transition
+        setDynamicOpacity(1);
       }}
     />
   );

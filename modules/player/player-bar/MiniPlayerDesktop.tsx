@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, Platform } from 'react-native';
 import LoopBtn from '../player-screen/loop-btn/LoopBtn';
 import PrevBtn from '../player-screen/prev-btn/PrevBtn';
 import PlayBtn from '../player-screen/play-btn/PlayDesktopBtn';
@@ -11,12 +11,28 @@ import {
 } from '../player-screen/video-player/VideoTimeDisplay';
 import Slider from '../player-screen/slider/Slider';
 import VideoComponent from '../player-screen/video-player/VideoComponent';
+import Colors from 'app/constants/Colors';
+import { Stores } from 'app/functions/Stores';
+import { observer } from 'mobx-react';
 
-export default () => {
+export default observer(() => {
+  let { playerStore } = Stores();
   return (
     <View style={styles.desktopWrap}>
       <View style={styles.videoWrap}>
         <VideoComponent dynamicHeight={50} desktop={true} />
+        <View style={styles.infoWrap}>
+          <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
+            {playerStore.entry?.title}
+          </Text>
+          <Text
+            style={styles.artistName}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+          >
+            {playerStore.entry?.artist}
+          </Text>
+        </View>
       </View>
       <View style={styles.controlsWrap}>
         <View style={styles.rowControls}>
@@ -35,7 +51,7 @@ export default () => {
       <View style={styles.videoWrap} />
     </View>
   );
-};
+});
 
 let styles = StyleSheet.create({
   rowControls: {
@@ -63,8 +79,11 @@ let styles = StyleSheet.create({
     minWidth: 400,
   },
   videoWrap: {
-    margin: 15,
+    padding: 15,
     width: 200,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   desktopWrap: {
     display: 'flex',
@@ -79,5 +98,23 @@ let styles = StyleSheet.create({
     bottom: 0,
     borderTopColor: 'rgb(216, 216, 216)',
     borderTopWidth: 1,
+  },
+  infoWrap: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    height: '100%',
+    paddingLeft: 15,
+  },
+  title: {
+    fontSize: 14,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    color: Colors.defaultTextDark,
+  },
+  artistName: {
+    fontSize: 12,
+    textAlign: 'left',
+    marginTop: Platform.OS === 'ios' ? 3 : 2,
+    color: Colors.grey,
   },
 });
