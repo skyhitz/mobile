@@ -30,7 +30,7 @@ export default class RemoveFromMyMusicRow extends React.Component<any, any> {
         <View style={styles.field}>
           <MaterialIcons
             name={'remove-circle-outline'}
-            size={30}
+            size={20}
             color={Colors.white}
           />
           <Text style={styles.text}>Remove from platform</Text>
@@ -47,6 +47,8 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     maxHeight: 50,
+    height: 40,
+    marginBottom: 10,
     width: '100%',
   },
   text: {

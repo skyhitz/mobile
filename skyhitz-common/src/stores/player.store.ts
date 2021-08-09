@@ -3,10 +3,7 @@ import { Entry } from '../models';
 import { List } from 'immutable';
 import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
-import Animated from 'react-native-reanimated';
 import { Platform } from 'react-native';
-
-const { Value } = Animated;
 
 export class PlayerStore {
   constructor() {}
@@ -21,10 +18,6 @@ export class PlayerStore {
 
   @observable
   showMiniPlayer: boolean = false;
-  @observable
-  goUp: Animated.Value<0 | 1> = new Value(0);
-  @observable
-  goDown: Animated.Value<0 | 1> = new Value(0);
 
   @observable
   show: boolean = false;
@@ -75,17 +68,25 @@ export class PlayerStore {
   seekPosition: number = 0;
 
   @observable
+  sliding: boolean = false;
+
+  @observable
   streamUrl: string =
     'https://res.cloudinary.com/skyhitz/video/upload/v1554330926/app/-LbM3m6WKdVQAsY3zrAd/videos/-Lb_KsQ7hbr0nquOTZee.mov';
 
   video: any;
+
+  @action
+  setSliding(sliding) {
+    this.sliding = sliding;
+  }
 
   mountVideo = (component) => {
     this.video = component;
     this.loadNewPlaybackInstance(false);
   };
 
-  async loadNewPlaybackInstance(playing, streamUrl = '') {
+  async loadNewPlaybackInstance(playing, streamUrl = this.streamUrl) {
     if (this.playbackInstance != null) {
       await this.playbackInstance.unloadAsync();
       this.playbackInstance = null;
@@ -215,7 +216,7 @@ export class PlayerStore {
     return false;
   }
 
-  async loadAndPlay(entry: Entry) {
+  async loadAndPlay(entry: Entry, play = true) {
     if (!entry) {
       return null;
     }
@@ -240,8 +241,8 @@ export class PlayerStore {
     let optimizedVideo = '/upload/vc_auto/q_auto:good';
     videoUrl.replace('/upload', optimizedVideo);
     this.streamUrl = videoUrl;
-    await this.loadNewPlaybackInstance(true, videoUrl);
-    this.setPlaybackState('PLAYING');
+    await this.loadNewPlaybackInstance(play, videoUrl);
+    this.setPlaybackState(play ? 'PLAYING' : 'PAUSED');
     return;
   }
 
@@ -298,13 +299,11 @@ export class PlayerStore {
   @action
   hidePlayer() {
     this.show = false;
-    this.goDown.setValue(1);
   }
 
   @action
   showPlayer() {
     this.show = true;
-    this.goUp.setValue(1);
   }
 
   @computed
@@ -414,6 +413,7 @@ export class PlayerStore {
   };
 
   onSeekBarTap = (evt: any) => {
+    if (this.sliding) return;
     if (
       !(
         this.playbackState === 'LOADING' ||

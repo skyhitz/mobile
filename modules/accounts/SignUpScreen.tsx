@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
@@ -21,7 +21,7 @@ export default observer(() => {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const { navigate } = useNavigation();
+  const linkTo = useLinkTo();
 
   const updateUsername = ({ target }: any) => {
     setUsername(target.value);
@@ -47,9 +47,7 @@ export default observer(() => {
         email: email,
       });
       setLoading(false);
-      return navigate('Main', {
-        screen: 'ProfileSettings',
-      });
+      return linkTo('/');
     } catch (e) {
       signUpValidationStore.setBackendError(e);
     }

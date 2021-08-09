@@ -18,6 +18,30 @@ module.exports = withExpo(
       withFonts(
         withTM(
           withOffline({
+            webpack: (
+              config,
+              { buildId, dev, isServer, defaultLoaders, webpack }
+            ) => {
+              // Important: return the modified config
+              // if (!isServer) {
+              //   config.optimization.splitChunks = {
+              //     cacheGroups: {
+              //       reactNativeWebExports: {
+              //         test: /[\\/]node_modules[\\/]react-native-web[\\/]dist[\\/]exports[\\/]/,
+              //         name: 'react-native-web-exports',
+              //         chunks: 'all',
+              //       },
+              //       reactNativeWebVendor: {
+              //         test: /[\\/]node_modules[\\/](react-native-web)[\\/]dist[\\/]vendor[\\/]/,
+              //         name: 'react-native-web-vendor',
+              //         chunks: 'all',
+              //       },
+              //     },
+              //   };
+              // }
+
+              return config;
+            },
             webpack5: false,
             eslint: {
               ignoreDuringBuilds: true,

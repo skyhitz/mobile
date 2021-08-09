@@ -25,7 +25,7 @@ export default observer(({ entry }) => {
     return (
       <Pressable onPress={handleToggle}>
         <View style={[styles.field, cursorPointer]}>
-          <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
+          <EvilIcons name={'like'} size={28} color={Colors.brandBlue} />
           <Text style={styles.textLiked}>Like</Text>
         </View>
       </Pressable>
@@ -34,7 +34,7 @@ export default observer(({ entry }) => {
   return (
     <Pressable onPress={handleToggle}>
       <View style={[styles.field, cursorPointer]}>
-        <EvilIcons name={'like'} size={32} color={Colors.dividerBackground} />
+        <EvilIcons name={'like'} size={28} color={Colors.dividerBackground} />
         <Text style={styles.text}>Like</Text>
       </View>
     </Pressable>
@@ -48,6 +48,8 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     maxHeight: 50,
+    height: 40,
+    marginBottom: 10,
     width: '100%',
   },
   text: {

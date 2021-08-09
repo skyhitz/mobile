@@ -2,11 +2,11 @@ import React from 'react';
 import { Footer } from '@expo/html-elements';
 import SocialLinks from './SocialLinks';
 import Colors from 'app/constants/Colors';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { Text } from 'react-native';
 
 export default () => {
-  const { navigate } = useNavigation();
+  const linkTo = useLinkTo();
 
   return (
     <Footer
@@ -24,7 +24,7 @@ export default () => {
       }}
     >
       <Text
-        onPress={() => navigate('Terms')}
+        onPress={() => linkTo('/accounts/terms')}
         style={{
           color: Colors.white,
         }}
@@ -32,7 +32,7 @@ export default () => {
         Terms of Use
       </Text>
       <Text
-        onPress={() => navigate('Privacy')}
+        onPress={() => linkTo('/accounts/privacy')}
         style={{
           color: Colors.white,
           paddingHorizontal: 20,

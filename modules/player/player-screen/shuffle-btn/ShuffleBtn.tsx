@@ -10,14 +10,14 @@ type Stores = typeof stores;
 const ShuffleBtn = inject((stores: Stores) => ({
   toggleShuffle: stores.playerStore.toggleShuffle.bind(stores.playerStore),
   shuffle: stores.playerStore.shuffle,
-}))(({ toggleShuffle, shuffle }: any) => {
+}))(({ toggleShuffle, shuffle, size = 20 }: any) => {
   if (shuffle) {
     return (
       <Pressable
         style={[styles.controlTouch, cursorPointer]}
         onPress={() => toggleShuffle()}
       >
-        <Feather name="shuffle" size={20} color={Colors.lightBrandBlue} />
+        <Feather name="shuffle" size={size} color={Colors.lightBrandBlue} />
       </Pressable>
     );
   }
@@ -26,7 +26,7 @@ const ShuffleBtn = inject((stores: Stores) => ({
       style={[styles.controlTouch, cursorPointer]}
       onPress={() => toggleShuffle()}
     >
-      <Feather name="shuffle" size={20} color="white" />
+      <Feather name="shuffle" size={size} color="white" />
     </Pressable>
   );
 });
@@ -36,9 +36,5 @@ export default ShuffleBtn;
 var styles = StyleSheet.create({
   controlTouch: {
     alignSelf: 'center',
-  },
-  shuffleBtn: {
-    width: 21,
-    height: 18,
   },
 });

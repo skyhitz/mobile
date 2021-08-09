@@ -6,6 +6,7 @@ import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import * as stores from 'app/skyhitz-common';
+import ResponsiveLayout from '../ui/ResponsiveLayout';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -22,19 +23,21 @@ export default class LikesScreen extends React.Component<any, any> {
           flex: 1,
         }}
       >
-        {SearchingLoader(this.props.loading)}
-        {this.props.entries.map((entry: any) => (
-          <EntryRow
-            key={entry.id}
-            play={this.props.loadAndPlay}
-            entry={entry}
-            addRecentEntrySearch={null}
-            disablePlaylistMode={null}
-            options={null}
-            previousScreen={null}
-          />
-        ))}
-        <BottomPlaceholder />
+        <ResponsiveLayout>
+          {SearchingLoader(this.props.loading)}
+          {this.props.entries.map((entry: any) => (
+            <EntryRow
+              key={entry.id}
+              play={this.props.loadAndPlay}
+              entry={entry}
+              addRecentEntrySearch={null}
+              disablePlaylistMode={null}
+              options={null}
+              previousScreen={null}
+            />
+          ))}
+          <BottomPlaceholder />
+        </ResponsiveLayout>
       </ScrollView>
     );
   }

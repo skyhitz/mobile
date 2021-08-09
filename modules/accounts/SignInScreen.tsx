@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { Stores } from 'app/functions/Stores';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 import cursorPointer from 'app/constants/CursorPointer';
 import { openEmail } from './OpenEmail';
@@ -25,7 +25,7 @@ export default observer(({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
   const [showEmailLink, setShowEmailLink] = useState(false);
   const { token, uid } = route.params || {};
-  const { navigate } = useNavigation();
+  const linkTo = useLinkTo();
 
   const signIn = async () => {
     setLoading(true);
@@ -72,10 +72,9 @@ export default observer(({ route, navigation }) => {
     }
     const res = await sessionStore.signIn(token, uid);
     if (res) {
-      return navigate('Main', {
-        screen: 'ProfileSettings',
-      });
+      return linkTo('/');
     }
+
     navigation.setParams({ token: undefined, uid: undefined });
     return;
   };

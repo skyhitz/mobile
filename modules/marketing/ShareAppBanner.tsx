@@ -2,22 +2,28 @@ import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 
 export default (props) => {
-  let { navigate } = useNavigation();
+  const linkTo = useLinkTo();
+
   const onUpload = async () => {
-    navigate('UploadMusicModal');
+    linkTo('/upload');
   };
 
   const onBuyCredits = async () => {
-    navigate('PaymentModal');
+    linkTo('/payment');
   };
 
   return (
     <View style={styles.wrap}>
       <View style={styles.bannerWrap}>
-        <LargeBtn iconName="upload" onPress={onUpload} text="Upload Beat" />
+        <LargeBtn
+          iconName="upload"
+          iconSize={20}
+          onPress={onUpload}
+          text="Upload Beat"
+        />
       </View>
 
       {Platform.OS === 'web' ? (
@@ -26,6 +32,7 @@ export default (props) => {
             iconName="dollar-sign"
             onPress={onBuyCredits}
             text="Buy Credits"
+            iconSize={20}
           />
         </View>
       ) : null}
@@ -41,12 +48,13 @@ const styles = StyleSheet.create({
   },
   wrap: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   bannerWrap: {
-    flex: 1,
     backgroundColor: Colors.listItemBackground,
-    justifyContent: 'center',
-    alignItems: 'center',
     maxHeight: 120,
+    paddingVertical: 30,
   },
 });

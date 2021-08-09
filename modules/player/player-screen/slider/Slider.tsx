@@ -7,13 +7,14 @@ import Slider from '@react-native-community/slider';
 
 export default observer(() => {
   const { playerStore } = Stores();
-
   return (
     <Pressable
-      onPress={(evt) => {
+      onPressOut={(evt) => {
         playerStore.onSeekBarTap(evt);
       }}
-      onLayout={(evt) => playerStore.onSliderLayout(evt)}
+      onLayout={(evt) => {
+        playerStore.onSliderLayout(evt);
+      }}
       style={{
         zIndex: 15,
         flex: 1,
@@ -25,14 +26,16 @@ export default observer(() => {
         maximumValue={1}
         value={playerStore.seekPosition}
         onSlidingStart={(_) => {
+          playerStore.setSliding(true);
           playerStore.onSeekSliderValueChange();
         }}
         onSlidingComplete={(value) => {
+          playerStore.setSliding(false);
           playerStore.onSeekSliderSlidingComplete(value);
         }}
         minimumTrackTintColor={Colors.brandBlue}
         maximumTrackTintColor={Colors.backgroundTrackColor}
-        thumbTintColor={Colors.brandBlue}
+        thumbTintColor={Colors.white}
       />
     </Pressable>
   );

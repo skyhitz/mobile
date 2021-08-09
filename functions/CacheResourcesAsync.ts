@@ -1,5 +1,4 @@
 import {
-  Ionicons,
   FontAwesome,
   EvilIcons,
   MaterialIcons,
@@ -29,7 +28,6 @@ export default function useCachedResources() {
       try {
         // Load fonts
         await Font.loadAsync({
-          ...Ionicons.font,
           ...FontAwesome.font,
           ...EvilIcons.font,
           ...MaterialIcons.font,

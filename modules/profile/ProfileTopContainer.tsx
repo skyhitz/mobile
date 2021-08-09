@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    width: Layout.window.width,
     height: 100,
   },
   overlay: {

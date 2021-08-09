@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import cursorPointer from 'app/constants/CursorPointer';
 
@@ -10,7 +10,7 @@ const Placeholder = () => <View style={styles.placeholder} />;
 
 export default observer(() => {
   const { playerStore, paymentsStore } = Stores();
-  const { navigate } = useNavigation();
+  const { dispatch } = useNavigation();
 
   const [priceInfo, setPriceInfo] = useState({
     price: playerStore.entry ? playerStore.entry.price : 0,
@@ -18,10 +18,15 @@ export default observer(() => {
   });
 
   const showBuyOptionsModal = () => {
-    navigate('BuyOptionsModal', {
-      entry: playerStore.entry,
-      priceInfo: priceInfo,
-    });
+    dispatch(
+      CommonActions.navigate({
+        name: 'BuyOptionsModal',
+        params: {
+          entry: playerStore.entry,
+          priceInfo: priceInfo,
+        },
+      })
+    );
   };
 
   const getPriceInfo = async () => {

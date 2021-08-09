@@ -12,12 +12,12 @@ const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
 export default observer(({ route }) => {
   const { sessionStore } = Stores();
-  const { entry,previousScreen } = route.params;
+  const { entry, previousScreen } = route.params;
   const { goBack } = useNavigation();
 
   const renderRemoveFromMyMusic = (entry) => {
     if (!sessionStore.user) return;
-    if (sessionStore.user.id === adminId ) {
+    if (sessionStore.user.id === adminId) {
       return <RemoveFromMyMusicRow entry={entry} />;
     }
     return null;
@@ -25,7 +25,10 @@ export default observer(({ route }) => {
 
   const renderSetPrice = (entry: any) => {
     if (!sessionStore.user) return;
-    if (sessionStore.user.id === adminId|| previousScreen === "MyMusicScreen") {
+    if (
+      sessionStore.user.id === adminId ||
+      previousScreen === 'MyMusicScreen'
+    ) {
       return <SetPrice entry={entry} />;
     }
     return null;
@@ -44,8 +47,8 @@ export default observer(({ route }) => {
       </View>
       <View style={styles.options}>
         <LikeOptionRow entry={entry} />
-        {renderRemoveFromMyMusic(entry)}
         {renderSetPrice(entry)}
+        {renderRemoveFromMyMusic(entry)}
       </View>
       <View style={styles.bottomWrap}>
         <Pressable style={cursorPointer} onPress={() => goBack()}>

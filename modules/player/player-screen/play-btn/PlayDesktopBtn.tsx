@@ -9,7 +9,7 @@ import {
 import { Stores } from 'app/functions/Stores';
 import cursorPointer from 'app/constants/CursorPointer';
 
-export default observer(() => {
+export default observer(({ size = 28 }) => {
   let { playerStore } = Stores();
 
   if (playerStore.playbackState === 'PAUSED') {
@@ -23,7 +23,7 @@ export default observer(() => {
             <Feather
               style={{ paddingLeft: 6 }}
               name="play"
-              size={28}
+              size={size}
               color="white"
             />
           </View>
@@ -42,7 +42,7 @@ export default observer(() => {
             <Feather
               style={{ paddingLeft: 1, textAlign: 'center' }}
               name="pause"
-              size={28}
+              size={size}
               color="white"
             />
           </View>
@@ -58,7 +58,7 @@ export default observer(() => {
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <ReplayIcon />
+            <ReplayIcon size={size} />
           </View>
         </View>
       </Pressable>
@@ -67,7 +67,7 @@ export default observer(() => {
   return (
     <View style={styles.containerWrap}>
       <View style={styles.loadingSpinner}>
-        <Spinner />
+        <Spinner size={size} />
       </View>
     </View>
   );
@@ -78,14 +78,12 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
   containerWrap: {
-    width: 104,
-    height: 90.4,
     alignItems: 'center',
     justifyContent: 'center',
   },
   playBtnCircle: {
-    width: 65,
-    height: 65,
+    width: 22,
+    height: 22,
     borderWidth: 1,
     borderColor: 'transparent',
     borderRadius: 60,
@@ -94,8 +92,8 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
   },
   loadingSpinner: {
-    width: 65,
-    height: 65,
+    width: 22,
+    height: 22,
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 60,

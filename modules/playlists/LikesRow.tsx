@@ -4,15 +4,15 @@ import Colors from 'app/constants/Colors';
 import { EvilIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 
 export default observer(() => {
   let { likesStore, playerStore } = Stores();
-  let { navigate } = useNavigation();
+  let linkTo = useLinkTo();
 
   const handleLikesNavigation = () => {
-    navigate('LikesScreen');
+    linkTo('/dashboard/profile/likes');
     playerStore.setPlaylistMode(likesStore.userLikes);
   };
 
