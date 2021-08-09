@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
-import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';

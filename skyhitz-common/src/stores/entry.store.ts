@@ -89,7 +89,7 @@ export class EntryStore {
         uri: video.uri,
         name: video.uri.split('/').pop(),
         type: 'video/mp4',
-      });
+      } as any);
     }
     xhr.send(data);
   }
