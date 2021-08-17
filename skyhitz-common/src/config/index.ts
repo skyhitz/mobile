@@ -3,9 +3,10 @@ import { ProductionConfig } from './config.production';
 import { StagingConfig } from './config.staging';
 import { DevelopmentConfig } from './config.development';
 
-const testingModeOn = process.env.EXPO_SKYHITZ_ENV === 'test';
+const testingModeOn = process.env.NEXT_PUBLIC_EXPO_SKYHITZ_ENV === 'test';
 
-const testingStagingModeOn = process.env.EXPO_SKYHITZ_ENV === 'development';
+const testingStagingModeOn =
+  process.env.NEXT_PUBLIC_EXPO_SKYHITZ_ENV === 'development';
 
 const testingEnv = testingModeOn || testingStagingModeOn;
 
@@ -21,6 +22,6 @@ if (testingStagingModeOn) {
   config = StagingConfig;
 }
 
-console.log('Env: ', process.env.NEXT_PUBLIC_EXPO_SKYHITZ_ENV);
+console.log('Env:', process.env.NEXT_PUBLIC_EXPO_SKYHITZ_ENV);
 
 export const Config = config;
