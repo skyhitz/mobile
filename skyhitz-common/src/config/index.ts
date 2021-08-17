@@ -21,4 +21,6 @@ if (testingStagingModeOn) {
   config = StagingConfig;
 }
 
+console.log('Env: ', process.env.EXPO_SKYHITZ_ENV);
+
 export const Config = config;
