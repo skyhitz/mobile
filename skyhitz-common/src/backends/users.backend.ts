@@ -1,5 +1,3 @@
-import { client } from './apollo-client.backend';
-import gql from 'graphql-tag';
 import { User } from '../models/user.model';
 import { usersIndex } from '../algolia/algolia';
 import { isTesting } from '../config/index';

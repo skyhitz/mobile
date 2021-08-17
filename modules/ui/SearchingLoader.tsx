@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
-import Divider from 'app/modules/ui/Divider';
 import Colors from 'app/constants/Colors';
 
 const SearchingText = (query: any) => {

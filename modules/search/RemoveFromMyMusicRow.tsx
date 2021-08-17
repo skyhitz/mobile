@@ -3,7 +3,6 @@ import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { inject } from 'mobx-react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
-import Layout from 'app/constants/Layout';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -31,7 +30,7 @@ export default class RemoveFromMyMusicRow extends React.Component<any, any> {
         <View style={styles.field}>
           <MaterialIcons
             name={'remove-circle-outline'}
-            size={30}
+            size={20}
             color={Colors.white}
           />
           <Text style={styles.text}>Remove from platform</Text>
@@ -48,6 +47,8 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     maxHeight: 50,
+    height: 40,
+    marginBottom: 10,
     width: '100%',
   },
   text: {

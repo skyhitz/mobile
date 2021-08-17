@@ -1,17 +1,17 @@
 import React from 'react';
-import { H1, Main, P, A } from '@expo/html-elements';
-import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
+import { H1, Main, P } from '@expo/html-elements';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
 import ScreenShots from './Screenshots';
 import { useMediaQuery } from 'react-responsive';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 
 // https://apps.apple.com/us/app/skyhitz/id1105406020
 
 export default function MainWrapper() {
   const isTablet = useMediaQuery({ query: '(max-width: 800px)' });
-  const { navigate } = useNavigation();
+  const linkTo = useLinkTo();
 
   return (
     <Main
@@ -33,7 +33,7 @@ export default function MainWrapper() {
           Upload exclusive beats for sale and buy fresh songwriting ideas from
           other music producers. Join a music community of beatmakers!
         </P>
-        <Pressable onPress={() => navigate('SignUp')}>
+        <Pressable onPress={() => linkTo('/accounts/sign-up')}>
           <View
             style={[
               {

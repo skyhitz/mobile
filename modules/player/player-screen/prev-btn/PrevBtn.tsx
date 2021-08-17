@@ -9,12 +9,12 @@ type Stores = typeof stores;
 
 const PrevBtn = inject((stores: Stores) => ({
   playPrev: stores.playerStore.playPrev.bind(stores.playerStore),
-}))(({ playPrev }: any) => (
+}))(({ playPrev, size = 24 }: any) => (
   <Pressable
     style={[styles.controlTouch, cursorPointer]}
     onPress={() => playPrev()}
   >
-    <Feather name="rewind" size={24} color="white" />
+    <Feather name="skip-back" size={size} color="white" />
   </Pressable>
 ));
 

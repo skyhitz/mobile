@@ -1,40 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { StatusBar, Platform } from 'react-native';
+import React, { useState, useEffect, lazy } from 'react';
+import { StatusBar } from 'react-native';
 import { observer } from 'mobx-react';
 import { useMediaQuery } from 'react-responsive';
-import MainTabNavigator from 'app/modules/navigation/MainTabNavigator';
-import EditProfileScreen from 'app/modules/profile/EditProfileScreen';
-import EntryOptionsModal from 'app/modules/search/EntryOptionsModal';
-import PricingOptionsModal from 'app/modules/search/PricingOptionsModal';
-import UploadMusicModal from 'app/modules/profile/UploadMusicModal';
-import PaymentModal from 'app/modules/profile/PaymentModal';
-import WithdrawalModal from 'app/modules/profile/WithdrawalModal';
-import BuyOptionsModal from 'app/modules/ui/BuyOptionsModal';
-import LoadingScreen from 'app/modules/accounts/LoadingScreen';
 import { Stores } from 'app/functions/Stores';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import CancelEditBtn from 'app/modules/ui/CancelEditBtn';
-import DoneEditBtn from 'app/modules/ui/DoneEditBtn';
-import Colors from 'app/constants/Colors';
-import LinkingConfiguration from './LinkingConfiguration';
-import AuthScreen from 'app/modules/accounts/AuthScreen';
-import SignUpScreen from 'app/modules/accounts/SignUpScreen';
-import SignInScreen from 'app/modules/accounts/SignInScreen';
-import WebApp from 'app/modules/marketing/web/Home';
-import Privacy from 'app/modules/marketing/web/Privacy';
-import Terms from 'app/modules/marketing/web/Terms';
+import LoadingScreen from 'app/modules/accounts/LoadingScreen';
+import { SuspenseLoading } from './SuspenseLoading';
 
-const Theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    card: Colors.darkBlue,
-    background: Colors.darkBlue,
-  },
-};
+const LazyAppStackNavigator = lazy(() =>
+  import('app/modules/navigation/LazyAppStackNavigator').then((mod) => ({
+    default: mod.LazyAppStackNavigator,
+  }))
+);
 
-const AppStack = createStackNavigator();
+export const LazyAppStackNavigatorSuspense = (props) => (
+  <SuspenseLoading>
+    <LazyAppStackNavigator {...props} />
+  </SuspenseLoading>
+);
+
+const LazyNavigationContainer = lazy(() =>
+  import('app/modules/navigation/LazyNavigationContainer')
+);
+
+const LazyNavigationContainerSuspense = (props) => (
+  <SuspenseLoading>
+    <LazyNavigationContainer {...props} />
+  </SuspenseLoading>
+);
 
 export default observer(() => {
   const [loaded, setLoaded] = useState(false);
@@ -61,160 +53,12 @@ export default observer(() => {
 
   if (loaded) {
     return (
-      <NavigationContainer linking={LinkingConfiguration} theme={Theme}>
-        <AppStack.Navigator mode="modal">
-          {sessionStore.user ? (
-            <>
-              <AppStack.Screen
-                name="Main"
-                component={MainTabNavigator}
-                options={{ headerShown: false }}
-              />
-            </>
-          ) : (
-            <>
-              {Platform.OS === 'web' ? (
-                <AppStack.Screen
-                  name="WebApp"
-                  component={WebApp}
-                  options={{ headerShown: false }}
-                />
-              ) : (
-                <AppStack.Screen
-                  name="AuthScreen"
-                  component={AuthScreen}
-                  options={{ headerShown: false, gestureEnabled: false }}
-                />
-              )}
-              <AppStack.Screen
-                name="SignUp"
-                component={SignUpScreen}
-                options={{
-                  headerShown: headerShown,
-                  headerTitleStyle: { color: Colors.white },
-                  headerTintColor: Colors.white,
-                  title: 'Sign Up',
-                  headerTransparent: true,
-                  headerStyle: {
-                    borderBottomWidth: 0,
-                  },
-                }}
-              />
-              <AppStack.Screen
-                name="SignIn"
-                component={SignInScreen}
-                options={{
-                  headerShown: headerShown,
-                  headerTitleStyle: { color: Colors.white },
-                  headerTintColor: Colors.white,
-                  title: 'Log In',
-                  headerTransparent: true,
-                  headerStyle: {
-                    borderBottomWidth: 0,
-                  },
-                }}
-              />
-              <AppStack.Screen
-                name="Privacy"
-                component={Privacy}
-                options={{
-                  headerShown: headerShown,
-                  headerTitleStyle: { color: Colors.white },
-                  headerTintColor: Colors.white,
-                  title: 'Privacy',
-                  headerTransparent: true,
-                  headerStyle: {
-                    borderBottomWidth: 0,
-                  },
-                }}
-              />
-              <AppStack.Screen
-                name="Terms"
-                component={Terms}
-                options={{
-                  headerShown: headerShown,
-                  headerTitleStyle: { color: Colors.white },
-                  headerTintColor: Colors.white,
-                  title: 'Terms',
-                  headerTransparent: true,
-                  headerStyle: {
-                    borderBottomWidth: 0,
-                  },
-                }}
-              />
-            </>
-          )}
-          <AppStack.Screen
-            name="EditProfileModal"
-            component={EditProfileScreen}
-            options={{
-              gestureEnabled: false,
-              title: 'Edit Profile',
-              headerTitleStyle: { color: Colors.white },
-              headerStyle: {
-                backgroundColor: Colors.headerBackground,
-                borderBottomWidth: 0,
-                shadowColor: 'transparent',
-              },
-              headerLeft: () => <CancelEditBtn />,
-              headerRight: () => <DoneEditBtn />,
-            }}
-          />
-          <AppStack.Screen
-            name="UploadMusicModal"
-            component={UploadMusicModal}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-
-          <AppStack.Screen
-            name="PaymentModal"
-            component={PaymentModal}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-          <AppStack.Screen
-            name="WithdrawalModal"
-            component={WithdrawalModal}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-          <AppStack.Screen
-            name="BuyOptionsModal"
-            component={BuyOptionsModal}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-          <AppStack.Screen
-            name="EntryOptionsModal"
-            component={EntryOptionsModal}
-            options={{
-              headerShown: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-          <AppStack.Screen
-            name="PricingOptionsModal"
-            component={PricingOptionsModal}
-            options={{
-              headerShown: false,
-              cardStyle: { backgroundColor: 'transparent' },
-            }}
-          />
-        </AppStack.Navigator>
-      </NavigationContainer>
+      <LazyNavigationContainerSuspense>
+        <LazyAppStackNavigatorSuspense
+          user={sessionStore.user}
+          headerShown={headerShown}
+        />
+      </LazyNavigationContainerSuspense>
     );
   }
   return <LoadingScreen />;

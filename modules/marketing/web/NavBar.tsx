@@ -2,30 +2,33 @@ import React from 'react';
 import { Nav } from '@expo/html-elements';
 import SkyhitzLogo from './SkyhitzLogo';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import { observer } from 'mobx-react';
+import { Stores } from 'app/functions/Stores';
 
-export default () => {
-  const { navigate } = useNavigation();
+export default observer(() => {
+  const { sessionStore } = Stores();
+
+  const linkTo = useLinkTo();
 
   return (
     <Nav
       style={{
         borderColor: '#000',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         height: 56,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}
     >
-      <Pressable onPress={() => navigate('WebApp')} style={styles.logoWrap}>
+      <Pressable onPress={() => linkTo('/')} style={styles.logoWrap}>
         <View
           style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            paddingLeft: 15,
+            paddingLeft: 10,
           }}
         >
           <SkyhitzLogo />
@@ -42,26 +45,33 @@ export default () => {
           paddingRight: 20,
         }}
       >
-        <Text onPress={() => navigate('SignIn')} style={styles.defaultText}>
-          Log in
-        </Text>
-        <Pressable
-          onPress={() => navigate('SignUp')}
-          style={[styles.signUpWrap, cursorPointer]}
-        >
-          <Text style={[styles.signUpText, cursorPointer]}>Sign Up</Text>
-        </Pressable>
+        {sessionStore.user ? null : (
+          <>
+            <Text
+              onPress={() => linkTo('/accounts/sign-in')}
+              style={styles.defaultText}
+            >
+              Log in
+            </Text>
+            <Pressable
+              onPress={() => linkTo('/accounts/sign-up')}
+              style={[styles.signUpWrap, cursorPointer]}
+            >
+              <Text style={[styles.signUpText, cursorPointer]}>Sign Up</Text>
+            </Pressable>
+          </>
+        )}
       </View>
     </Nav>
   );
-};
+});
 
 let styles = StyleSheet.create({
   logo: {
     color: 'rgb(255,255,255)',
     fontSize: 18,
     letterSpacing: 12,
-    paddingLeft: 8,
+    paddingLeft: 20,
     fontFamily: 'Raleway-Light',
     fontWeight: '200',
   },

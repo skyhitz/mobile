@@ -6,7 +6,7 @@ import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import cursorPointer from 'app/constants/CursorPointer';
 
-export default observer(() => {
+export default observer(({ size = 20 }) => {
   let { playerStore } = Stores();
 
   if (playerStore.loop) {
@@ -15,7 +15,7 @@ export default observer(() => {
         style={[styles.controlTouch, cursorPointer]}
         onPress={() => playerStore.toggleLoop()}
       >
-        <Feather name="repeat" size={20} color={Colors.lightBrandBlue} />
+        <Feather name="repeat" size={size} color={Colors.lightBrandBlue} />
       </Pressable>
     );
   }
@@ -24,7 +24,7 @@ export default observer(() => {
       style={[styles.controlTouch, cursorPointer]}
       onPress={() => playerStore.toggleLoop()}
     >
-      <Feather name="repeat" size={20} color={Colors.white} />
+      <Feather name="repeat" size={size} color={Colors.white} />
     </Pressable>
   );
 });
@@ -32,9 +32,5 @@ export default observer(() => {
 var styles = StyleSheet.create({
   controlTouch: {
     alignSelf: 'center',
-  },
-  loopBtn: {
-    width: 21,
-    height: 16.5,
   },
 });

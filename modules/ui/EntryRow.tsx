@@ -10,7 +10,7 @@ import {
 import Layout from 'app/constants/Layout';
 import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 
 export default ({
@@ -21,7 +21,7 @@ export default ({
   disablePlaylistMode,
   previousScreen,
 }) => {
-  const { navigate } = useNavigation();
+  const { dispatch } = useNavigation();
   return (
     <View key={entry.id} style={styles.rowWrap}>
       <Pressable
@@ -54,11 +54,16 @@ export default ({
       </Pressable>
       <ThreeDots
         onPress={() =>
-          navigate('EntryOptionsModal', {
-            entry: entry,
-            options: options,
-            previousScreen: previousScreen,
-          })
+          dispatch(
+            CommonActions.navigate({
+              name: 'EntryOptionsModal',
+              params: {
+                entry: entry,
+                options: options,
+                previousScreen: previousScreen,
+              },
+            })
+          )
         }
       />
     </View>
@@ -85,16 +90,17 @@ let styles = StyleSheet.create({
   },
   thumb: {
     width: 40,
-    height: 30,
+    height: 40,
   },
   infoWrap: {
     maxWidth: Layout.window.width - 80,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     paddingLeft: 10,
+    height: '100%',
   },
   title: {
-    fontSize: 12,
+    fontSize: 14,
     textAlign: 'left',
     fontWeight: 'bold',
     paddingLeft: 10,
@@ -104,7 +110,7 @@ let styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'left',
     paddingLeft: 10,
-    marginTop: Platform.OS === 'ios' ? 3 : 0,
-    color: Colors.defaultTextLight,
+    marginTop: Platform.OS === 'ios' ? 3 : 2,
+    color: Colors.grey,
   },
 });

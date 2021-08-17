@@ -126,3 +126,5 @@ sa.json
 /.pnp
 .pnp.js
 # @end @expo/next-adapter
+
+.vercel

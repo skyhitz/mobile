@@ -4,11 +4,11 @@ import Colors from 'app/constants/Colors';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
 import { Stores } from 'app/functions/Stores';
 import { observer } from 'mobx-react';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 
 export default observer(({ user }) => {
   const { profileStore, playerStore } = Stores();
-  const { navigate } = useNavigation();
+  const { dispatch } = useNavigation();
   return (
     <View style={styles.rowWrap}>
       <View style={styles.rowWrap}>
@@ -17,9 +17,14 @@ export default observer(({ user }) => {
             profileStore.getProfileInfo(user).then((entries: any) => {
               playerStore.setPlaylistMode(entries);
             });
-            navigate('UserProfile', {
-              username: user.username,
-            });
+            dispatch(
+              CommonActions.navigate({
+                name: 'UserProfile',
+                params: {
+                  username: user.username,
+                },
+              })
+            );
           }}
         >
           <View style={styles.row}>

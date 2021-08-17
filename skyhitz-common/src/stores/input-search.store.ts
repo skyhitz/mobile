@@ -1,15 +1,12 @@
 import { observable } from 'mobx';
-import { Query } from '../types/index';
 
 export class InputSearchStore {
   public query = observable({
     type: 'entries',
-    q: ''
+    q: '',
   });
 
-  constructor (
-  ) {
-  }
+  constructor() {}
 
   public search(query: string) {
     this.query.q = query;
@@ -19,6 +16,3 @@ export class InputSearchStore {
     this.query.type = type;
   }
 }
-
-
-

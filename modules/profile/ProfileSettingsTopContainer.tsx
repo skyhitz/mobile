@@ -6,6 +6,7 @@ import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
+import EditBtn from '../ui/EditBtn';
 
 export default observer((props) => {
   const { paymentsStore, sessionStore } = Stores();
@@ -48,6 +49,7 @@ export default observer((props) => {
               <Text style={styles.text}>{sessionStore.user?.displayName}</Text>
               {renderCreditsSection()}
             </View>
+            <EditBtn />
           </View>
         </View>
       </View>
@@ -86,15 +88,16 @@ const styles = StyleSheet.create({
   topHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     paddingLeft: 5,
   },
   profileInfo: {
     flexDirection: 'row',
-    flex: 1,
     height: 75,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    marginLeft: 10,
+    marginRight: 30,
   },
   text: {
     color: 'white',

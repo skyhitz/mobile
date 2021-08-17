@@ -82,10 +82,6 @@ export default observer((props) => {
     }
   };
 
-  const handleOptionChange = (changeEvent) => {
-    setSelectedOption(changeEvent.target.value);
-  };
-
   const handleAmountChange = ({ target }) => {
     let tar = parseInt(target.value);
     if (tar > 2000) {

@@ -25,18 +25,18 @@ export const DurationDisplay = observer(() => {
 let styles = StyleSheet.create({
   currentTimeText: {
     color: '#FFFFFF',
-    fontSize: 12,
+    fontSize: 10,
     backgroundColor: 'transparent',
-    marginLeft: 15,
-    marginRight: 20,
-    width: 36,
+    marginRight: 10,
+    width: 30,
+    textAlign: 'center',
   },
   text: {
     color: '#FFFFFF',
-    fontSize: 12,
+    fontSize: 10,
     backgroundColor: 'transparent',
-    marginLeft: 20,
-    marginRight: 0,
-    width: 36,
+    marginLeft: 10,
+    width: 30,
+    textAlign: 'center',
   },
 });

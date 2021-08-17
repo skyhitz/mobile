@@ -3,11 +3,12 @@
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["es6"],
+    "lib": ["DOM", "ESNext"],
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
@@ -23,5 +24,11 @@
     "noImplicitAny": false
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "node_modules/react-native-redash/lib/typescript/v1/index.d.ts"
+  ],
+  "extends": "expo/tsconfig.base"
 }

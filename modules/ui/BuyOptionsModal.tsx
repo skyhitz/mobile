@@ -7,7 +7,6 @@ import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/core';
 
 export default observer(({ route }) => {
-  const router = useNavigation();
   const { entry, priceInfo } = route.params;
   const [submitting, setSubmitting] = useState(false);
   const { goBack } = useNavigation();

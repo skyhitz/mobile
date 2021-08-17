@@ -111,7 +111,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
           <View style={styles.inputContainerTop}>
             <View style={styles.field}>
               <MaterialCommunityIcons
-                name="account-card-details"
+                name="account-details"
                 size={20}
                 color={Colors.dividerBackground}
                 style={styles.placeholderIcon}

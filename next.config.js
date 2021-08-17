@@ -8,39 +8,68 @@ const withOffline = require('next-offline');
 const withTM = require('next-transpile-modules')([
   'expo-next-react-navigation',
 ]);
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.EXPO_ANALYZE === 'true',
+});
 
 module.exports = withExpo(
-  withImages(
-    withFonts(
-      withTM(
-        withOffline({
-          webpack5: false,
-          eslint: {
-            ignoreDuringBuilds: true,
-          },
-          projectRoot: __dirname,
-          target: 'serverless',
-          workboxOpts: {
-            swDest: 'static/service-worker.js',
-            runtimeCaching: [
-              {
-                urlPattern: /^https?.*/,
-                handler: 'NetworkFirst',
-                options: {
-                  cacheName: 'https-calls',
-                  networkTimeoutSeconds: 15,
-                  expiration: {
-                    maxEntries: 150,
-                    maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
-                  },
-                  cacheableResponse: {
-                    statuses: [0, 200],
+  withBundleAnalyzer(
+    withImages(
+      withFonts(
+        withTM(
+          withOffline({
+            webpack: (
+              config,
+              { buildId, dev, isServer, defaultLoaders, webpack }
+            ) => {
+              // Important: return the modified config
+              // if (!isServer) {
+              //   config.optimization.splitChunks = {
+              //     cacheGroups: {
+              //       reactNativeWebExports: {
+              //         test: /[\\/]node_modules[\\/]react-native-web[\\/]dist[\\/]exports[\\/]/,
+              //         name: 'react-native-web-exports',
+              //         chunks: 'all',
+              //       },
+              //       reactNativeWebVendor: {
+              //         test: /[\\/]node_modules[\\/](react-native-web)[\\/]dist[\\/]vendor[\\/]/,
+              //         name: 'react-native-web-vendor',
+              //         chunks: 'all',
+              //       },
+              //     },
+              //   };
+              // }
+
+              return config;
+            },
+            webpack5: false,
+            eslint: {
+              ignoreDuringBuilds: true,
+            },
+            projectRoot: __dirname,
+            target: 'serverless',
+            workboxOpts: {
+              swDest: 'static/service-worker.js',
+              runtimeCaching: [
+                {
+                  urlPattern: /^https?.*/,
+                  handler: 'NetworkFirst',
+                  options: {
+                    cacheName: 'https-calls',
+                    networkTimeoutSeconds: 15,
+                    expiration: {
+                      maxEntries: 150,
+                      maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
+                    },
+                    cacheableResponse: {
+                      statuses: [0, 200],
+                    },
                   },
                 },
-              },
-            ],
-          },
-        })
+              ],
+            },
+          })
+        )
       )
     )
   )

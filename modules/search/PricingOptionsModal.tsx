@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import Layout from 'app/constants/Layout';
 import {
   MaterialCommunityIcons,
   MaterialIcons,

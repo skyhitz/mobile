@@ -8,12 +8,12 @@ type Stores = typeof stores;
 
 const ForwardBtn = inject((stores: Stores) => ({
   playNext: stores.playerStore.playNext.bind(stores.playerStore),
-}))(({ playNext }: any) => (
+}))(({ playNext, size = 24 }: any) => (
   <Pressable
     style={[styles.controlTouch, cursorPointer]}
     onPress={() => playNext()}
   >
-    <Feather name="fast-forward" size={24} color="white" />
+    <Feather name="skip-forward" size={size} color="white" />
   </Pressable>
 ));
 

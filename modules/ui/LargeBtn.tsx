@@ -23,7 +23,7 @@ export default class LargeBtn extends React.Component<any, any> {
           <Feather
             name={this.props.iconName}
             style={{ paddingLeft: 12 }}
-            size={24}
+            size={this.props.iconSize ? this.props.iconSize : 24}
             color="white"
           />
         ) : null}

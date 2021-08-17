@@ -4,17 +4,33 @@ import { StyleSheet, Dimensions } from 'react-native';
 import Animated from 'react-native-reanimated';
 import PlayerScreen from '../player-screen/PlayerScreen';
 import MiniPlayer from './MiniPlayer';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { State } from 'react-native-gesture-handler';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
-import { clamp, onGestureEvent, timing, withSpring } from 'react-native-redash';
+import { clamp, timing, withSpring } from 'react-native-redash/lib/module/v1';
 import { Stores } from 'app/functions/Stores';
 import Colors from 'app/constants/Colors';
+import { useEffect } from 'react';
 
 let tabNavBottom = 89;
 
+const {
+  Clock,
+  Value,
+  cond,
+  useCode,
+  set,
+  block,
+  not,
+  clockRunning,
+  interpolateNode,
+  Extrapolate,
+} = Animated;
+
 const { height } = Dimensions.get('window');
 const TABBAR_HEIGHT = getBottomSpace() + 50;
-const MINIMIZED_PLAYER_HEIGHT = 42;
+
+let MINIMIZED_PLAYER_HEIGHT = 42;
+
 const SNAP_TOP = 0;
 const SNAP_BOTTOM = height - TABBAR_HEIGHT - MINIMIZED_PLAYER_HEIGHT;
 const config = {
@@ -25,21 +41,10 @@ const config = {
   restSpeedThreshold: 0.1,
   restDisplacementThreshold: 0.1,
 };
-const {
-  Clock,
-  Value,
-  cond,
-  useCode,
-  set,
-  block,
-  not,
-  clockRunning,
-  interpolate,
-  Extrapolate,
-} = Animated;
-
 const translationY = new Value(0);
 const velocityY = new Value(0);
+const goUp = new Value(0);
+const goDown = new Value(0);
 const state = new Value(State.UNDETERMINED);
 const offset = new Value(SNAP_BOTTOM);
 const clock = new Clock();
@@ -47,11 +52,6 @@ const clock = new Clock();
 export default observer(({ children }) => {
   const { playerStore } = Stores();
 
-  const gestureHandler = onGestureEvent({
-    state,
-    translationY,
-    velocityY,
-  });
   const translateY = withSpring({
     value: clamp(translationY, SNAP_TOP, SNAP_BOTTOM),
     velocity: velocityY,
@@ -60,23 +60,23 @@ export default observer(({ children }) => {
     snapPoints: [SNAP_TOP, SNAP_BOTTOM],
     config,
   });
-  const translateBottomTab = interpolate(translateY, {
+  const translateBottomTab = interpolateNode(translateY, {
     inputRange: [SNAP_TOP, SNAP_BOTTOM],
     outputRange: [TABBAR_HEIGHT, 0],
     extrapolate: Extrapolate.CLAMP,
   });
-  const opacity = interpolate(translateY, {
+  const opacity = interpolateNode(translateY, {
     inputRange: [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
     outputRange: [0, 1],
     extrapolate: Extrapolate.CLAMP,
   });
-  const opacityInverted = interpolate(translateY, {
+  const opacityInverted = interpolateNode(translateY, {
     inputRange: [SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT, SNAP_BOTTOM],
     outputRange: [1, 0],
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const opacity2 = interpolate(translateY, {
+  const opacity2 = interpolateNode(translateY, {
     inputRange: [
       SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT * 2,
       SNAP_BOTTOM - MINIMIZED_PLAYER_HEIGHT,
@@ -85,10 +85,18 @@ export default observer(({ children }) => {
     extrapolate: Extrapolate.CLAMP,
   });
 
+  useEffect(() => {
+    if (playerStore.show) {
+      goUp.setValue(1 as any);
+    } else {
+      goDown.setValue(1 as any);
+    }
+  }, [playerStore.show]);
+
   useCode(
     () =>
       block([
-        cond(playerStore.goUp, [
+        cond(goUp, [
           set(
             offset,
             timing({
@@ -97,9 +105,9 @@ export default observer(({ children }) => {
               to: SNAP_TOP,
             })
           ),
-          cond(not(clockRunning(clock)), [set(playerStore.goUp, 0)]),
+          cond(not(clockRunning(clock)), [set(goUp, 0)]),
         ]),
-        cond(playerStore.goDown, [
+        cond(goDown, [
           set(
             offset,
             timing({
@@ -108,7 +116,7 @@ export default observer(({ children }) => {
               to: SNAP_BOTTOM,
             })
           ),
-          cond(not(clockRunning(clock)), [set(playerStore.goDown, 0)]),
+          cond(not(clockRunning(clock)), [set(goDown, 0)]),
         ]),
       ]),
     []
@@ -116,47 +124,45 @@ export default observer(({ children }) => {
 
   return (
     <>
-      <PanGestureHandler {...gestureHandler}>
+      <Animated.View
+        style={[
+          styles.playerSheet,
+          { opacity: playerStore.entry ? 1 : 0 },
+          {
+            transform: [{ translateY }],
+          },
+        ]}
+      >
         <Animated.View
-          style={[
-            styles.playerSheet,
-            { opacity: playerStore.entry ? 1 : 0 },
-            {
-              transform: [{ translateY }],
-            },
-          ]}
-        >
-          <Animated.View
-            pointerEvents="none"
-            style={{
-              opacity: opacity2,
-              backgroundColor: '#272829',
-              ...StyleSheet.absoluteFillObject,
-            }}
-          />
+          pointerEvents="none"
+          style={{
+            opacity: opacity2,
+            backgroundColor: '#272829',
+            ...StyleSheet.absoluteFillObject,
+          }}
+        />
 
-          <Animated.View
-            style={{
-              opacity,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              zIndex: opacity,
-            }}
-          >
-            <MiniPlayer />
-          </Animated.View>
-          <Animated.View
-            style={{
-              opacity: opacityInverted,
-              flex: 1,
-            }}
-          >
-            <PlayerScreen />
-          </Animated.View>
+        <Animated.View
+          style={{
+            opacity,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: opacity,
+          }}
+        >
+          <MiniPlayer />
         </Animated.View>
-      </PanGestureHandler>
+        <Animated.View
+          style={{
+            opacity: opacityInverted,
+            flex: 1,
+          }}
+        >
+          <PlayerScreen />
+        </Animated.View>
+      </Animated.View>
 
       <Animated.View
         style={{ transform: [{ translateY: translateBottomTab }] }}

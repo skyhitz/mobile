@@ -33,8 +33,8 @@ export const LoadingCircle = () => (
   />
 );
 
-export const Spinner = () => (
-  <ActivityIndicator color={ICON_COLOR} size={CENTER_ICON_SIZE} />
+export const Spinner = ({ size = CENTER_ICON_SIZE }) => (
+  <ActivityIndicator color={ICON_COLOR} size={size} />
 );
 
 export const FullscreenEnterIcon = () => (
@@ -55,10 +55,10 @@ export const FullscreenExitIcon = () => (
   />
 );
 
-export const ReplayIcon = () => (
+export const ReplayIcon = ({ size = CENTER_ICON_SIZE }) => (
   <MaterialIcons
     name={'replay'}
-    size={CENTER_ICON_SIZE}
+    size={size}
     color={ICON_COLOR}
     style={{ textAlign: 'center' }}
   />
