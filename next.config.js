@@ -68,6 +68,31 @@ module.exports = withExpo(
                 },
               ],
             },
+            exportPathMap: async function (
+              defaultPathMap,
+              { dev, dir, outDir, distDir, buildId }
+            ) {
+              return {
+                '/': { page: '/' },
+                '/accounts': { page: '/' },
+                '/accounts/sign-in': { page: '/' },
+                '/accounts/sign-up': { page: '/' },
+                '/accounts/privacy': { page: '/' },
+                '/accounts/terms': { page: '/' },
+                '/dashboard': { page: '/' },
+                '/dashboard/search': { page: '/' },
+                '/dashboard/search/beats': { page: '/' },
+                '/dashboard/search/beatmakers': { page: '/' },
+                '/dashboard/charts': { page: '/' },
+                '/dashboard/profile': { page: '/' },
+                '/dashboard/profile/settings': { page: '/' },
+                '/dashboard/profile/likes': { page: '/' },
+                '/dashboard/profile/my-music': { page: '/' },
+                '/upload': { page: '/' },
+                '/edit-profile': { page: '/' },
+                '/payment': { page: '/' },
+              };
+            },
           })
         )
       )
