@@ -87,11 +87,6 @@ class CustomDocument extends Document {
             href="https://res.cloudinary.com/skyhitz/image/upload/c_scale,q_auto:good,w_1313/v1582299226/web/live-push.jpg"
           />
           <link
-            href="https://connect.facebook.net"
-            rel="preconnect"
-            crossOrigin="true"
-          />
-          <link
             href="https://www.googletagmanager.com"
             rel="preconnect"
             crossOrigin="true"
