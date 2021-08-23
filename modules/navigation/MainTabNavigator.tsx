@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { View } from 'react-native';
 import { EvilIcons, Feather } from '@expo/vector-icons';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
-import PlayerDrawer from 'app/modules/player/player-bar/PlayerDrawer';
 import Colors from 'app/constants/Colors';
 import ChartsView from 'app/modules/search/ChartsView';
 import BottomTabBar from './BottomTabBar';
@@ -12,6 +11,17 @@ import createBottomTabNavigator from './WebTabNavigator';
 import { useMediaQuery } from 'react-responsive';
 import MiniPlayerDesktop from '../player/player-bar/MiniPlayerDesktop';
 import SkyhitzLogo from '../marketing/web/SkyhitzLogo';
+import { SuspenseLoading } from './SuspenseLoading';
+
+const PlayerDrawer = lazy(() =>
+  import('app/modules/player/player-bar/PlayerDrawer')
+);
+
+const PlayerDrawerSuspense = (props) => (
+  <SuspenseLoading>
+    <PlayerDrawer {...props} />
+  </SuspenseLoading>
+);
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +46,7 @@ export default () => {
           );
         }
         return (
-          <PlayerDrawer>
+          <PlayerDrawerSuspense>
             <BottomTabBar
               {...props}
               style={{
@@ -45,7 +55,7 @@ export default () => {
                 borderTopWidth: 1,
               }}
             />
-          </PlayerDrawer>
+          </PlayerDrawerSuspense>
         );
       }}
       screenOptions={{

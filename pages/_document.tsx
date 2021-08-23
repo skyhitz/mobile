@@ -82,6 +82,11 @@ class CustomDocument extends Document {
             type="image/x-icon"
           />
           <link
+            rel="preload"
+            as="image"
+            href="https://res.cloudinary.com/skyhitz/image/upload/c_scale,q_auto:good,w_1313/v1582299226/web/live-push.jpg"
+          />
+          <link
             href="https://connect.facebook.net"
             rel="preconnect"
             crossOrigin="true"
@@ -114,7 +119,7 @@ CustomDocument.getInitialProps = getInitialProps;
 
 // OR...
 
-CustomDocument.getInitialProps = async props => {
+CustomDocument.getInitialProps = async (props) => {
   const result = await getInitialProps(props);
   // Mutate result...
   return result;
