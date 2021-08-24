@@ -3,14 +3,14 @@
 import { getInitialProps } from '@expo/next-adapter/document';
 import Document, { Head, Html, NextScript, Main } from 'next/document';
 import React from 'react';
-const GoogleTagManagerId = 'GTM-5HR7H3L';
+// const GoogleTagManagerId = 'GTM-5HR7H3L';
 
 class CustomDocument extends Document {
   render() {
     return (
       <Html lang="en">
         <Head>
-          <script
+          {/* <script
             async
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -19,7 +19,7 @@ class CustomDocument extends Document {
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','${GoogleTagManagerId}');`,
             }}
-          ></script>
+          ></script> */}
           <meta
             name="title"
             content="Skyhitz - Beats market for music creators"
@@ -86,21 +86,21 @@ class CustomDocument extends Document {
             as="image"
             href="https://res.cloudinary.com/skyhitz/image/upload/c_scale,q_auto:good,w_1313/v1582299226/web/live-push.jpg"
           />
-          <link
+          {/* <link
             href="https://www.googletagmanager.com"
             rel="preconnect"
             crossOrigin="true"
-          />
+          /> */}
         </Head>
         <body>
-          <noscript>
+          {/* <noscript>
             <iframe
               src={`https://www.googletagmanager.com/ns.html?id=${GoogleTagManagerId}`}
               height="0"
               width="0"
               style={{ display: 'none', visibility: 'hidden' }}
             ></iframe>
-          </noscript>
+          </noscript> */}
           <Main />
           <NextScript />
         </body>
