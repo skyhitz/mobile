@@ -1,7 +1,8 @@
 import { Entry } from '../models/entry.model';
 import { entriesBackend } from '../backends/entries.backend';
 import { observable, observe, computed } from 'mobx';
-import { List } from 'immutable';
+import * as L from 'list';
+
 const debounce = require('lodash.debounce');
 
 export class EntriesSearchStore {
@@ -12,11 +13,11 @@ export class EntriesSearchStore {
   @observable load: boolean = false;
   @observable loadingTopChart: boolean = false;
   @observable query: string = '';
-  @observable public entries: List<Entry> = List([]);
-  @observable public recentSearches: List<Entry> = List([]);
-  @observable public recentlyAdded: List<Entry> = List([]);
-  @observable public topSearches: List<Entry> = List([]);
-  @observable topChart: List<Entry> = List([]);
+  @observable public entries: L.List<Entry> = L.from([]);
+  @observable public recentSearches: L.List<Entry> = L.from([]);
+  @observable public recentlyAdded: L.List<Entry> = L.from([]);
+  @observable public topSearches: L.List<Entry> = L.from([]);
+  @observable topChart: L.List<Entry> = L.from([]);
   disposer: any;
 
   @computed get active() {
@@ -36,37 +37,37 @@ export class EntriesSearchStore {
   public searchEntries(q: string) {
     return entriesBackend.search(q).then((results) => {
       let entries: Entry[] = results.map((result: any) => new Entry(result));
-      this.setEntries(List(entries));
+      this.setEntries(L.from(entries));
       this.searching = false;
     });
   }
 
   public debouncedSearch = debounce(this.searchEntries, 400);
 
-  public setEntries(entries: List<Entry>) {
+  public setEntries(entries: L.List<Entry>) {
     this.entries = entries;
   }
 
-  public setRecentSearches(entries: List<Entry>) {
+  public setRecentSearches(entries: L.List<Entry>) {
     this.recentSearches = entries;
   }
 
-  public setTopChart(entries: List<Entry>) {
+  public setTopChart(entries: L.List<Entry>) {
     this.topChart = entries;
   }
 
-  public setRecentlyAdded(entries: List<Entry>) {
+  public setRecentlyAdded(entries: L.List<Entry>) {
     this.recentlyAdded = entries;
   }
 
-  public setTopSearches(entries: List<Entry>) {
+  public setTopSearches(entries: L.List<Entry>) {
     this.topSearches = entries;
   }
 
   public getTopChart() {
     this.loadingTopChart = true;
     return entriesBackend.getTopChart().then((entries) => {
-      this.setTopChart(List(entries));
+      this.setTopChart(L.from(entries));
       this.loadingTopChart = false;
     });
   }
@@ -74,7 +75,7 @@ export class EntriesSearchStore {
   public getRecentSearches() {
     this.loadingRecentSearches = true;
     return entriesBackend.getRecentSearches().then((entries) => {
-      this.setRecentSearches(List(entries));
+      this.setRecentSearches(L.from(entries));
       this.loadingRecentSearches = false;
     });
   }
@@ -82,7 +83,7 @@ export class EntriesSearchStore {
   public getRecentlyAdded() {
     this.loadingRecentlyAdded = true;
     return entriesBackend.getRecentlyAdded().then((entries) => {
-      this.setRecentlyAdded(List(entries));
+      this.setRecentlyAdded(L.from(entries));
       this.loadingRecentlyAdded = false;
     });
   }
@@ -90,7 +91,7 @@ export class EntriesSearchStore {
   public getTopSearches() {
     this.loadingTopSearches = true;
     return entriesBackend.getTopSearches().then((entries) => {
-      this.setTopSearches(List(entries));
+      this.setTopSearches(L.from(entries));
       this.loadingTopSearches = false;
     });
   }

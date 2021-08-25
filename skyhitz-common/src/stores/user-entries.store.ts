@@ -1,11 +1,11 @@
 import { observable } from 'mobx';
-import { List } from 'immutable';
+import * as L from 'list';
 import { entriesBackend } from '../backends/entries.backend';
 import { Entry } from '../models';
 import { SessionStore } from './session.store';
 
 export class UserEntriesStore {
-  @observable entries: List<Entry> = List([]);
+  @observable entries: L.List<Entry> = L.from([]);
   @observable loading: boolean = false;
 
   constructor(private sessionStore: SessionStore) {}
@@ -21,10 +21,10 @@ export class UserEntriesStore {
 
     const entries = await entriesBackend.getByUserId(this.sessionStore.user.id);
     this.loading = false;
-    this.entries = List(entries);
+    this.entries = L.from(entries);
   }
 
   get entriesCount() {
-    return this.entries.size;
+    return this.entries.length;
   }
 }

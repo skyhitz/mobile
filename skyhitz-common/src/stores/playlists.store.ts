@@ -1,12 +1,12 @@
 import { observable, computed, action } from 'mobx';
-import { List } from 'immutable';
+import * as L from 'list';
 import { playlistsBackend } from '../backends/playlists.backend';
 import { Entry, Playlist } from '../models';
 import { preBase64String, cloudinaryApiPath } from '../constants/constants';
 import { SessionStore } from './session.store';
 
 export class PlaylistsStore {
-  @observable playlists: List<Playlist> = List([]);
+  @observable playlists: L.List<Playlist> = L.from([]);
   @observable loading: boolean = false;
   @observable editMode: boolean = false;
   @observable playlistIndex: number = 0;
@@ -21,7 +21,7 @@ export class PlaylistsStore {
   constructor(private sessionStore: SessionStore) {}
 
   public clearPlaylists() {
-    this.playlists = List([]);
+    this.playlists = L.from([]);
   }
 
   public setPlaylistIndex(index: number) {
@@ -41,25 +41,26 @@ export class PlaylistsStore {
     }
     const playlists = userPlaylists.map((playlist) => new Playlist(playlist));
     this.loading = false;
-    this.playlists = List(playlists);
+    this.playlists = L.from(playlists);
   }
 
   get playlistsCount() {
-    return this.playlists.size;
+    return this.playlists.length;
   }
 
   @computed
   get playlistToBeRemoved() {
-    return this.playlists.get(this.removePlaylistIndex);
+    return L.nth(this.removePlaylistIndex, this.playlists);
   }
 
   @computed
   get playlist() {
-    return this.playlists.get(this.playlistIndex);
+    return L.nth(this.playlistIndex, this.playlists);
   }
 
   @computed
   get entries() {
+    if (!this.playlist) return L.from([]);
     return this.playlist.entries;
   }
 
@@ -126,6 +127,7 @@ export class PlaylistsStore {
   };
 
   async remove() {
+    if (!this.playlistToBeRemoved) return;
     await playlistsBackend.removePlaylist(
       this.playlistToBeRemoved.id as string
     );

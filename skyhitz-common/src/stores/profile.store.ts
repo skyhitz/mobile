@@ -1,12 +1,12 @@
 import { observable } from 'mobx';
 import { User, Entry } from '../models';
-import { List } from 'immutable';
+import * as L from 'list';
 import { entriesBackend } from '../backends/entries.backend';
 
 export class ProfileStore {
   @observable
   user!: User;
-  @observable entries: List<Entry> = List([]);
+  @observable entries: L.List<Entry> = L.from([]);
   @observable loadingEntries: boolean = false;
   constructor() {}
 
@@ -18,13 +18,13 @@ export class ProfileStore {
 
   public async getUserEntries(userId: string) {
     this.loadingEntries = true;
-    this.entries = List([]);
+    this.entries = L.from([]);
     const entries = await entriesBackend.getByUserId(userId);
     this.loadingEntries = false;
-    return this.setEntries(List(entries));
+    return this.setEntries(L.from(entries));
   }
 
-  public setEntries(entries: List<Entry>) {
+  public setEntries(entries: L.List<Entry>) {
     return (this.entries = entries);
   }
 }

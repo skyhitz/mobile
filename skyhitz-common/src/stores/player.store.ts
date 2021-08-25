@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx';
 import { Entry } from '../models';
-import { List } from 'immutable';
+import * as L from 'list';
 import { entriesBackend } from '../backends/entries.backend';
 import { PlaybackState, SeekState, ControlsState } from '../types/index';
 import { Platform } from 'react-native';
@@ -54,7 +54,7 @@ export class PlayerStore {
   @observable
   sliderWidth: number = 0;
   @observable
-  cueList: List<Entry> = List([]);
+  cueList: L.List<Entry> = L.from([]);
   @observable
   currentIndex: number = 0;
   @observable
@@ -115,14 +115,14 @@ export class PlayerStore {
     }
   }
 
-  setPlaylistMode(entries: List<Entry>) {
+  setPlaylistMode(entries: L.List<Entry>) {
     this.playlistMode = true;
     this.cueList = entries;
   }
 
   disablePlaylistMode() {
     this.playlistMode = false;
-    this.cueList = List([]);
+    this.cueList = L.from([]);
   }
 
   setPlaybackInstance(playbackInstance: any) {
@@ -221,10 +221,11 @@ export class PlayerStore {
       return null;
     }
     if (
-      this.cueList.findIndex((item) => !!item && item.id === entry.id) !== -1
+      L.findIndex((item) => !!item && item.id === entry.id, this.cueList) !== -1
     ) {
-      this.currentIndex = this.cueList.findIndex(
-        (item) => !!item && item.id === entry.id
+      this.currentIndex = L.findIndex(
+        (item) => !!item && item.id === entry.id,
+        this.cueList
       );
     }
 
@@ -254,26 +255,28 @@ export class PlayerStore {
       // Override the value if playlistMode was set to true, it will loop through the
       // list instead of playing a related video.
       if (this.playlistMode) {
-        let entry = this.cueList.get(0);
+        let entry = L.nth(0, this.cueList);
         this.currentIndex = 0;
+        if (!entry) return;
         return this.loadAndPlay(entry);
       }
     }
 
     this.currentIndex++;
-    let nextEntry = this.cueList.get(this.currentIndex);
+    let nextEntry = L.nth(this.currentIndex, this.cueList);
+    if (!nextEntry) return;
     this.loadAndPlay(nextEntry);
   }
 
   async loadPlayAndPushToCueList(entry: Entry) {
     this.loadAndPlay(entry);
-    this.cueList = this.cueList.push(this.entry);
-    this.currentIndex = this.cueList.size - 1;
+    this.cueList = L.append(this.entry, this.cueList);
+    this.currentIndex = this.cueList.length - 1;
   }
 
   async loadPlayAndUnshiftToCueList(entry: Entry) {
     this.loadAndPlay(entry);
-    this.cueList = this.cueList.unshift(this.entry);
+    this.cueList = L.prepend(this.entry, this.cueList);
     this.currentIndex = 0;
   }
 
@@ -313,7 +316,7 @@ export class PlayerStore {
 
   @computed
   get isCurrentIndexAtTheEndOfCue() {
-    return this.currentIndex === this.cueList.size - 1;
+    return this.currentIndex === this.cueList.length - 1;
   }
 
   @action
@@ -336,9 +339,10 @@ export class PlayerStore {
       // Override the value if playlistMode was set to true, it will loop through the
       // list instead of playing a related video.
       if (this.playlistMode) {
-        let lastIndexInCueList = this.cueList.size - 1;
-        let entry = this.cueList.get(lastIndexInCueList);
+        let lastIndexInCueList = this.cueList.length - 1;
+        let entry = L.nth(lastIndexInCueList, this.cueList);
         this.currentIndex = lastIndexInCueList;
+        if (!entry) return;
         return this.loadAndPlay(entry);
       }
 
@@ -346,7 +350,8 @@ export class PlayerStore {
     }
 
     this.currentIndex--;
-    let prevEntry = this.cueList.get(this.currentIndex);
+    let prevEntry = L.nth(this.currentIndex, this.cueList);
+    if (!prevEntry) return;
     this.loadAndPlay(prevEntry);
   }
 
@@ -451,7 +456,7 @@ export class PlayerStore {
       let pause = await this.pauseAsync();
       if (pause) {
         if (this.shuffle) {
-          this.currentIndex = this.generateRandomNumber(this.cueList.size);
+          this.currentIndex = this.generateRandomNumber(this.cueList.length);
         }
         return this.playNext();
       }

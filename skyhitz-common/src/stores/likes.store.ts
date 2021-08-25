@@ -1,16 +1,16 @@
 import { observable, observe, IObservableObject } from 'mobx';
-import { Set, List } from 'immutable';
+import * as L from 'list';
 import { likesBackend } from '../backends/likes.backend';
 import { Entry, User } from '../models';
 
 export class LikesStore {
-  @observable ids: Set<string> = Set([]);
+  @observable ids: Set<string> = new Set([]);
   @observable loading: boolean = false;
   @observable loadingEntryLikes: boolean = false;
   @observable entry!: Entry;
-  @observable entryLikes: List<User> = List([]);
+  @observable entryLikes: L.List<User> = L.from([]);
   @observable entryLikesCount!: number;
-  @observable userLikes: List<Entry> = List([]);
+  @observable userLikes: L.List<Entry> = L.from([]);
   @observable userLikesCount!: number;
   @observable user!: User;
 
@@ -51,8 +51,8 @@ export class LikesStore {
   }
 
   public clearLikes() {
-    this.entryLikes = List([]);
-    this.userLikes = List([]);
+    this.entryLikes = L.from([]);
+    this.userLikes = L.from([]);
   }
 
   public refreshEntryLikes(id: string) {
@@ -63,7 +63,7 @@ export class LikesStore {
         let users = payload.users.map(
           (userPayload: any) => new User(userPayload)
         );
-        this.entryLikes = List(users);
+        this.entryLikes = L.from(users);
       }
 
       this.loadingEntryLikes = false;
@@ -78,9 +78,9 @@ export class LikesStore {
       } else {
         let ids = userLikes.map((like: any) => like.id);
         let entries = userLikes.map((like: any) => new Entry(like));
-        this.ids = Set(ids);
-        this.userLikes = List(entries);
-        this.userLikesCount = this.userLikes.size;
+        this.ids = new Set(ids);
+        this.userLikes = L.from(entries);
+        this.userLikesCount = this.userLikes.length;
       }
 
       this.loading = false;
@@ -88,47 +88,47 @@ export class LikesStore {
   }
 
   async unlike(entry: Entry) {
-    this.ids = this.ids.delete(entry.id);
-    let index = this.userLikes.findIndex((like) => {
+    this.ids.delete(entry.id);
+    let index = L.findIndex((like) => {
       if (like) {
         return like.id === entry.id;
       }
       return false;
-    });
-    this.userLikes = this.userLikes.delete(index);
+    }, this.userLikes);
+    this.userLikes = L.remove(index, 1, this.userLikes);
     let unliked = await likesBackend.like(entry.id, false);
     if (!unliked) {
       this.ids = this.ids.add(entry.id);
-      this.userLikes = this.userLikes.push(entry);
+      this.userLikes = L.append(entry, this.userLikes);
     }
-    this.userLikesCount = this.userLikes.size;
+    this.userLikesCount = this.userLikes.length;
 
-    let userIndex = this.entryLikes.findIndex((like) => {
+    let userIndex = L.findIndex((like) => {
       if (like) {
         return like.id === this.user.id;
       }
       return false;
-    });
-    this.entryLikes = this.entryLikes.delete(userIndex);
+    }, this.entryLikes);
+    this.entryLikes = L.remove(userIndex, 1, this.entryLikes);
   }
 
   async like(entry: Entry) {
     this.ids = this.ids.add(entry.id);
-    this.userLikes = this.userLikes.push(entry);
+    this.userLikes = L.append(entry, this.userLikes);
     let liked = await likesBackend.like(entry.id);
     if (!liked) {
-      this.ids = this.ids.remove(entry.id);
-      let index = this.userLikes.findIndex((like) => {
+      this.ids.delete(entry.id);
+      let index = L.findIndex((like) => {
         if (like) {
           return like.id === entry.id;
         }
         return false;
-      });
-      this.userLikes = this.userLikes.delete(index);
+      }, this.userLikes);
+      this.userLikes = L.remove(index, 1, this.userLikes);
     }
-    this.userLikesCount = this.userLikes.size;
+    this.userLikesCount = this.userLikes.length;
 
-    this.entryLikes = this.entryLikes.push(this.user);
+    this.entryLikes = L.append(this.user, this.entryLikes);
   }
 
   public toggleLike(entry: Entry) {
