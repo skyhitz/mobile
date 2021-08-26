@@ -1,10 +1,20 @@
-import { Video } from 'expo-av';
+import { Video, Audio } from 'expo-av';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
 import { Platform, StyleSheet } from 'react-native';
 import { videoWidth } from './VideoConstants';
 import { useState } from 'react';
 import BlurImageBackground from './BlurImageBackground';
+
+Audio.setAudioModeAsync({
+  playsInSilentModeIOS: true,
+  allowsRecordingIOS: false,
+  staysActiveInBackground: true,
+  interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+  interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+  shouldDuckAndroid: false,
+  playThroughEarpieceAndroid: false,
+});
 
 export default observer(({ dynamicHeight, desktop = false }) => {
   let { playerStore } = Stores();
