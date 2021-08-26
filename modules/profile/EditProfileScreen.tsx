@@ -9,11 +9,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { inject } from 'mobx-react';
-import {
-  MaterialIcons,
-  MaterialCommunityIcons,
-  FontAwesome,
-} from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import {
   UserAvatarMedium,
@@ -110,8 +106,8 @@ export default class EditProfileScreen extends React.Component<any, any> {
 
           <View style={styles.inputContainerTop}>
             <View style={styles.field}>
-              <MaterialCommunityIcons
-                name="account-details"
+              <MaterialIcons
+                name="account-box"
                 size={20}
                 color={Colors.dividerBackground}
                 style={styles.placeholderIcon}
@@ -220,7 +216,7 @@ export default class EditProfileScreen extends React.Component<any, any> {
               onPress={this.handleLogOut.bind(this)}
             >
               <View>
-                <MaterialCommunityIcons
+                <MaterialIcons
                   name="logout"
                   size={22}
                   color={Colors.dividerBackground}

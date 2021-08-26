@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "dev": "EXPO_SKYHITZ_ENV=test expo start",
-    "staging": "EXPO_SKYHITZ_ENV=development expo start",
+    "dev": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=test expo start",
+    "staging": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=development expo start",
     "start:prod": "expo start --no-dev",
-    "start:dev": "EXPO_SKYHITZ_ENV=test yarn next dev",
-    "start:staging": "EXPO_SKYHITZ_ENV=development yarn next dev",
+    "start:dev": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=test yarn next dev",
+    "start:staging": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=development yarn next dev",
     "expo:publish": "expo publish",
     "eject": "expo eject",
     "android": "expo start --android --no-dev",
@@ -16,8 +16,10 @@
     "expo:install": "expo install",
     "build:ios-simulator": "expo build:ios -t simulator",
     "build": "next build",
+    "build:staging": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=development next build",
     "build:analyze": "EXPO_ANALYZE=true next build",
-    "next:serve": "next start"
+    "next:serve": "next start",
+    "next:serve:staging": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=development next start"
   },
   "name": "app",
   "version": "0.3.9",

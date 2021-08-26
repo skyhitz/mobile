@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Pressable, StyleSheet } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
@@ -13,7 +13,7 @@ export default observer(() => {
   };
   return (
     <Pressable style={styles.btn} onPress={handleLogOut}>
-      <Ionicons name={'ios-log-out'} size={24} color={Colors.white} />
+      <MaterialIcons name={'logout'} size={24} color={Colors.white} />
     </Pressable>
   );
 });
