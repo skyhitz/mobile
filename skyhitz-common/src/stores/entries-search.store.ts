@@ -95,9 +95,4 @@ export class EntriesSearchStore {
       this.loadingTopSearches = false;
     });
   }
-
-  public async addRecentEntrySearch(id: string) {
-    await entriesBackend.addRecentEntrySearch(id);
-    this.getRecentSearches();
-  }
 }

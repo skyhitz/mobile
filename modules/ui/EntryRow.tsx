@@ -16,7 +16,6 @@ import cursorPointer from 'app/constants/CursorPointer';
 export default ({
   play,
   entry,
-  addRecentEntrySearch,
   options,
   disablePlaylistMode,
   previousScreen,
@@ -31,9 +30,6 @@ export default ({
             disablePlaylistMode();
           }
           play(entry);
-          if (addRecentEntrySearch) {
-            addRecentEntrySearch(entry.id);
-          }
         }}
       >
         <View style={[styles.row, cursorPointer]}>

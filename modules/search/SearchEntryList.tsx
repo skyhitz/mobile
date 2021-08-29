@@ -17,9 +17,6 @@ const SearchEntryList = inject((stores: Stores) => ({
   entries: stores.entriesSearchStore.entries,
   searching: stores.entriesSearchStore.searching,
   query: stores.entriesSearchStore.query,
-  addRecentEntrySearch: stores.entriesSearchStore.addRecentEntrySearch.bind(
-    stores.entriesSearchStore
-  ),
   disablePlaylistMode: stores.playerStore.disablePlaylistMode.bind(
     stores.playerStore
   ),
@@ -29,7 +26,6 @@ const SearchEntryList = inject((stores: Stores) => ({
     entries,
     searching,
     query,
-    addRecentEntrySearch,
     disablePlaylistMode,
   }: any) => (
     <ScrollView
@@ -47,7 +43,6 @@ const SearchEntryList = inject((stores: Stores) => ({
               key={entry.id}
               play={loadPlayAndPushToCueList}
               entry={entry}
-              addRecentEntrySearch={addRecentEntrySearch}
               options={null}
               disablePlaylistMode={disablePlaylistMode}
               previousScreen={null}

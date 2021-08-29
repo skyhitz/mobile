@@ -16,7 +16,6 @@ export default observer((props) => {
         key={item.id}
         play={() => playerStore.loadAndPlay(item)}
         entry={item}
-        addRecentEntrySearch={null}
         options={null}
         disablePlaylistMode={() =>
           playerStore.setPlaylistMode(entriesSearchStore.recentlyAdded)
