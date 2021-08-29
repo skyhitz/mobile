@@ -12,7 +12,8 @@ import {
   Pressable,
 } from 'react-native';
 import Colors from 'app/constants/Colors';
-import Ionicon from 'react-native-vector-icons/Ionicons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+
 import Input from 'app/modules/ui/Input';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -79,7 +80,7 @@ class SearchBar extends Component {
     const { hasFocus, isEmpty } = this.state;
     const { style: loadingStyle, ...otherLoadingProps } = loadingProps;
     const searchIcon = (
-      <Ionicon size={20} name={'ios-search'} color={IOS_GRAY} />
+      <MaterialIcons size={20} name={'search'} color={IOS_GRAY} />
     );
     return (
       <View style={styles.container}>
@@ -117,8 +118,8 @@ class SearchBar extends Component {
                 />
               )}
               {clearIcon && !isEmpty && (
-                <Ionicon
-                  name={'ios-close-circle'}
+                <FontAwesome
+                  name={'times-circle'}
                   size={20}
                   color={IOS_GRAY}
                   onPress={() => this.clear()}

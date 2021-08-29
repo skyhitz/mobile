@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import LikeBtn from 'app/modules/player/player-screen/like-btn/LikeBtn';
 import Divider from 'app/modules/ui/Divider';
 import { UserAvatar } from 'app/modules/ui/UserAvatar';
+import * as L from 'list';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -13,19 +14,6 @@ type Stores = typeof stores;
   plusLikers: stores.likesStore.plusLikers,
 }))
 export default class LikersSection extends React.Component<any, any> {
-  renderLikers() {
-    if (!this.props.likers) {
-      return null;
-    }
-    return this.props.likers.map(
-      (liker: any, i: string | number | undefined) => (
-        <View style={styles.liker} key={i}>
-          <UserAvatar user={liker} />
-        </View>
-      )
-    );
-  }
-
   renderMoreLikersBtn() {
     if (!this.props.hasMoreLikers) {
       return null;
@@ -48,7 +36,15 @@ export default class LikersSection extends React.Component<any, any> {
         </View>
         <Divider />
         <View style={styles.likers}>
-          {this.renderLikers()}
+          {this.props.likers &&
+            L.map(
+              (liker: any) => (
+                <View style={styles.liker} key={liker.id}>
+                  <UserAvatar user={liker} />
+                </View>
+              ),
+              this.props.likers
+            )}
           {this.renderMoreLikersBtn()}
         </View>
       </View>

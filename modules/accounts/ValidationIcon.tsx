@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 
-const validationIcon = props => {
+const validationIcon = (props) => {
   if (props.isFieldValid) {
     return (
-      <Ionicons
-        name="ios-checkmark-circle-outline"
+      <MaterialIcons
+        name="check-circle"
         size={24}
         color={Colors.valid}
         style={styles.icon}
@@ -16,8 +16,8 @@ const validationIcon = props => {
   }
   if (props.isFieldValid === false) {
     return (
-      <Ionicons
-        name="ios-close-circle-outline"
+      <FontAwesome
+        name="times-circle"
         size={24}
         color={Colors.errorBackground}
         style={styles.icon}

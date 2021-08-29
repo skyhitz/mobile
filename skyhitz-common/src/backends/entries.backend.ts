@@ -104,19 +104,6 @@ export class EntriesBackend {
       });
   }
 
-  async addRecentEntrySearch(id: string) {
-    return client
-      .mutate({
-        mutation: gql`
-    mutation {
-      addRecentEntrySearch(id: "${id}")
-    }
-    `,
-      })
-      .then((data: any) => data.data)
-      .then(({ addRecentEntrySearch }) => addRecentEntrySearch);
-  }
-
   async buyEntry(id: string, amount: number, price: number) {
     return client
       .mutate({

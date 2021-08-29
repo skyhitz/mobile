@@ -6,6 +6,7 @@ import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
+import * as L from 'list';
 
 export default observer((props) => {
   const { playerStore, entriesSearchStore } = Stores();
@@ -15,7 +16,6 @@ export default observer((props) => {
         key={item.id}
         play={() => playerStore.loadAndPlay(item)}
         entry={item}
-        addRecentEntrySearch={null}
         options={null}
         disablePlaylistMode={() =>
           playerStore.setPlaylistMode(entriesSearchStore.recentlyAdded)
@@ -30,12 +30,12 @@ export default observer((props) => {
       <ScrollView style={{ flex: 1 }}>
         <ResponsiveLayout>
           {SearchingLoader(entriesSearchStore.loadingRecentlyAdded)}
-          {!entriesSearchStore.recentlyAdded.isEmpty() && (
+          {!L.isEmpty(entriesSearchStore.recentlyAdded) && (
             <Text style={styles.recentText}>Recently Added</Text>
           )}
-          {entriesSearchStore.recentlyAdded.map((entry: any) => {
+          {L.map((entry: any) => {
             return renderItem(entry);
-          })}
+          }, entriesSearchStore.recentlyAdded)}
         </ResponsiveLayout>
       </ScrollView>
     </SafeAreaView>

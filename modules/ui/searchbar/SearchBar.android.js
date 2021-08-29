@@ -7,10 +7,9 @@ import {
   Text,
   Platform,
 } from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import Input from 'app/modules/ui/Input';
 import Colors from 'app/constants/Colors';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 
 class SearchBar extends Component {
   focus = () => {
@@ -71,9 +70,9 @@ class SearchBar extends Component {
     const { style: loadingStyle, ...otherLoadingProps } = loadingProps;
 
     const searchIcon = (
-      <Ionicon
+      <MaterialIcons
         size={20}
-        name={'ios-search'}
+        name={'search'}
         color={Colors.searchTextColor}
         onPress={hasFocus ? this.cancel : null}
       />
@@ -108,7 +107,7 @@ class SearchBar extends Component {
                 />
               )}
               {clearIcon && !isEmpty && (
-                <MaterialIcon
+                <MaterialIcons
                   name={'close'}
                   size={25}
                   color={Colors.searchTextColor}

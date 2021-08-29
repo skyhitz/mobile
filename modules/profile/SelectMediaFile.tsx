@@ -11,11 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import { observer } from 'mobx-react';
-import {
-  MaterialIcons,
-  FontAwesome,
-  MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
@@ -256,9 +252,9 @@ export default observer(() => {
           />
         </View>
         <View style={styles.field}>
-          <MaterialCommunityIcons
-            name="circle-medium"
-            size={24}
+          <MaterialIcons
+            name="circle"
+            size={10}
             color={
               entryStore.availableForSale
                 ? Colors.lightBrandBlue

@@ -11,15 +11,18 @@ export class LikesBackend {
               imageUrl
               description
               title
-              id
               artist
+              id
+              videoUrl
+              price
+              forSale
             }
           }
         `,
       })
       .then((data: any) => data.data)
       .then(({ userLikes }: any) => userLikes)
-      .catch(e => console.error(e));
+      .catch((e) => console.error(e));
   }
   async entryLikes(id: string) {
     return client
@@ -40,7 +43,7 @@ export class LikesBackend {
       })
       .then((data: any) => data.data)
       .then(({ entryLikes }: any) => entryLikes)
-      .catch(e => console.error(e));
+      .catch((e) => console.error(e));
   }
   async like(id: string, like = true) {
     return client
@@ -53,7 +56,7 @@ export class LikesBackend {
       })
       .then((data: any) => data.data)
       .then(({ likeEntry }: any) => likeEntry)
-      .catch(e => console.error(e));
+      .catch((e) => console.error(e));
   }
 }
 
