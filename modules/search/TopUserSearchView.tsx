@@ -20,7 +20,7 @@ export default class TopUserSearchView extends React.Component<any, any> {
     this.props.getTopSearches();
   }
   render() {
-    if (!this.props.loadingTopSearches && !this.props.topSearches.size) {
+    if (!this.props.loadingTopSearches && !this.props.topSearches.length) {
       return null;
     }
     return (
