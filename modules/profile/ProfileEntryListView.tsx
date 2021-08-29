@@ -22,7 +22,6 @@ const ProfileEntryListView = inject((stores: Stores) => ({
           key={entry.id}
           play={loadAndPlay}
           entry={entry}
-          addRecentEntrySearch={null}
           disablePlaylistMode={null}
           options={null}
           previousScreen={null}

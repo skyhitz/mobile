@@ -40,7 +40,6 @@ class TopEntries extends React.Component<any, any> {
             key={entry.id}
             play={this.props.loadAndPlay}
             entry={entry}
-            addRecentEntrySearch={null}
             options={null}
             disablePlaylistMode={() => this.setRecentlyAdded()}
             previousScreen={null}

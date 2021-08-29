@@ -32,7 +32,6 @@ export default class LikesScreen extends React.Component<any, any> {
                 key={entry.id}
                 play={this.props.loadAndPlay}
                 entry={entry}
-                addRecentEntrySearch={null}
                 disablePlaylistMode={null}
                 options={null}
                 previousScreen={null}
