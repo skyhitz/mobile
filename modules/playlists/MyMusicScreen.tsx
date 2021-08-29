@@ -6,6 +6,7 @@ import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import * as stores from 'app/skyhitz-common';
+import * as L from 'list';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
 type Stores = typeof stores;
 
@@ -25,17 +26,20 @@ export default class MyMusicScreen extends React.Component<any, any> {
       >
         <ResponsiveLayout>
           {SearchingLoader(this.props.loading)}
-          {this.props.entries.map((entry: any) => (
-            <EntryRow
-              key={entry.id}
-              play={this.props.loadAndPlay}
-              entry={entry}
-              addRecentEntrySearch={null}
-              options={null}
-              disablePlaylistMode={null}
-              previousScreen={'MyMusicScreen'}
-            />
-          ))}
+          {L.map(
+            (entry: any) => (
+              <EntryRow
+                key={entry.id}
+                play={this.props.loadAndPlay}
+                entry={entry}
+                addRecentEntrySearch={null}
+                options={null}
+                disablePlaylistMode={null}
+                previousScreen={'MyMusicScreen'}
+              />
+            ),
+            this.props.entries
+          )}
           <BottomPlaceholder />
         </ResponsiveLayout>
       </ScrollView>

@@ -21,10 +21,10 @@ export class UserEntriesStore {
 
     const entries = await entriesBackend.getByUserId(this.sessionStore.user.id);
     this.loading = false;
-    this.entries = L.from(entries);
+    this.entries = L.from(entries ? entries : []);
   }
 
   get entriesCount() {
-    return this.entries.length;
+    return this.entries ? this.entries.length : 0;
   }
 }

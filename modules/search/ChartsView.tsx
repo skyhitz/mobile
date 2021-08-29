@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
+import * as L from 'list';
 import { inject } from 'mobx-react';
 import SearchingLoader from '../ui/SearchingLoader';
 import EntryChartRow from '../ui/EntryChartRow';
@@ -25,31 +26,27 @@ class TopEntries extends React.Component<any, any> {
   componentDidMount() {
     this.props.getTopChart();
   }
-  renderEntryRow(entry: any, index: number) {
-    return (
-      <EntryChartRow
-        key={entry.id}
-        play={this.props.loadAndPlay}
-        entry={entry}
-        addRecentEntrySearch={null}
-        options={null}
-        disablePlaylistMode={() => this.setRecentlyAdded()}
-        previousScreen={null}
-        position={index + 1}
-      />
-    );
-  }
+
   render() {
-    if (!this.props.loadingTopChart && !this.props.topChart.size) {
+    if (!this.props.loadingTopChart && !this.props.topChart.length) {
       return null;
     }
     return (
       <View>
         <Text style={styles.recentText}>Top Beats</Text>
         {SearchingLoader(this.props.loadingTopChart)}
-        {this.props.topChart.map((entry: any, index: number) =>
-          this.renderEntryRow(entry, index)
-        )}
+        {L.toArray(this.props.topChart).map((entry: any, index: number) => (
+          <EntryChartRow
+            key={entry.id}
+            play={this.props.loadAndPlay}
+            entry={entry}
+            addRecentEntrySearch={null}
+            options={null}
+            disablePlaylistMode={() => this.setRecentlyAdded()}
+            previousScreen={null}
+            position={index + 1}
+          />
+        ))}
       </View>
     );
   }
