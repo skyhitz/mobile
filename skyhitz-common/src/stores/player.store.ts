@@ -93,6 +93,7 @@ export class PlayerStore {
     }
 
     if (!streamUrl) return;
+    if (!this.video) return;
     await this.video.loadAsync(
       { uri: streamUrl },
       {
