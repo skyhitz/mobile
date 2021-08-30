@@ -1,18 +1,12 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableHighlight,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import Layout from 'app/constants/Layout';
-import { Logo } from 'app/assets/images/Images';
 import TextWithLetterSpacing from 'app/modules/ui/TextWithLetterSpacing';
 import Colors from 'app/constants/Colors';
 import { NavStatelessComponent } from 'app/interfaces/Interfaces';
 import { useLinkTo } from '@react-navigation/native';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
+import SkyhitzLogo from '../marketing/web/SkyhitzLogo';
 
 const AuthScreen: NavStatelessComponent = (props) => {
   const linkTo = useLinkTo();
@@ -21,7 +15,9 @@ const AuthScreen: NavStatelessComponent = (props) => {
     <BackgroundImage authBackground={true}>
       <View style={styles.contentWrap}>
         <View style={styles.brand}>
-          <Image style={styles.logo} source={Logo} />
+          <View style={styles.logo}>
+            <SkyhitzLogo width={69} />
+          </View>
           <TextWithLetterSpacing
             spacing={16}
             viewStyle={styles.titleView}
@@ -89,8 +85,6 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
   logo: {
-    width: 69,
-    height: 53,
     marginTop: 8,
   },
   titleText: {

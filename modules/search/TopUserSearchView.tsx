@@ -4,6 +4,7 @@ import { inject } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import UserRow from 'app/modules/ui/UserRow';
 import SearchingLoader from 'app/modules/ui/SearchingLoader';
+import * as L from 'list';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
 
@@ -19,17 +20,18 @@ export default class TopUserSearchView extends React.Component<any, any> {
     this.props.getTopSearches();
   }
   render() {
-    if (!this.props.loadingTopSearches && !this.props.topSearches.size) {
+    if (!this.props.loadingTopSearches && !this.props.topSearches.length) {
       return null;
     }
     return (
       <View>
         <Text style={styles.recentText}>TOP</Text>
         {SearchingLoader(this.props.loadingTopSearches)}
-        {this.props.topSearches.map(
+        {L.map(
           (user: { id: string | number | undefined }) => (
             <UserRow user={user} key={user.id} />
-          )
+          ),
+          this.props.topSearches
         )}
       </View>
     );

@@ -10,11 +10,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import {
-  MaterialCommunityIcons,
-  MaterialIcons,
-  FontAwesome,
-} from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import cursorPointer from 'app/constants/CursorPointer';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
@@ -55,9 +51,9 @@ export default observer(({ route }) => {
         </Text>
       </View>
       <View style={styles.field}>
-        <MaterialCommunityIcons
-          name="circle-medium"
-          size={24}
+        <MaterialIcons
+          name="circle"
+          size={10}
           color={
             entryStore.availableForSale
               ? Colors.lightBrandBlue

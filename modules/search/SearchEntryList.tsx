@@ -6,6 +6,7 @@ import SearchingLoader from 'app/modules/ui/SearchingLoader';
 import Colors from 'app/constants/Colors';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import * as stores from 'app/skyhitz-common';
+import * as L from 'list';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
 type Stores = typeof stores;
 
@@ -16,9 +17,6 @@ const SearchEntryList = inject((stores: Stores) => ({
   entries: stores.entriesSearchStore.entries,
   searching: stores.entriesSearchStore.searching,
   query: stores.entriesSearchStore.query,
-  addRecentEntrySearch: stores.entriesSearchStore.addRecentEntrySearch.bind(
-    stores.entriesSearchStore
-  ),
   disablePlaylistMode: stores.playerStore.disablePlaylistMode.bind(
     stores.playerStore
   ),
@@ -28,7 +26,6 @@ const SearchEntryList = inject((stores: Stores) => ({
     entries,
     searching,
     query,
-    addRecentEntrySearch,
     disablePlaylistMode,
   }: any) => (
     <ScrollView
@@ -40,17 +37,19 @@ const SearchEntryList = inject((stores: Stores) => ({
       <ResponsiveLayout>
         {SearchingLoader(searching, query)}
 
-        {entries.map((entry: any) => (
-          <EntryRow
-            key={entry.id}
-            play={loadPlayAndPushToCueList}
-            entry={entry}
-            addRecentEntrySearch={addRecentEntrySearch}
-            options={null}
-            disablePlaylistMode={disablePlaylistMode}
-            previousScreen={null}
-          />
-        ))}
+        {L.map(
+          (entry: any) => (
+            <EntryRow
+              key={entry.id}
+              play={loadPlayAndPushToCueList}
+              entry={entry}
+              options={null}
+              disablePlaylistMode={disablePlaylistMode}
+              previousScreen={null}
+            />
+          ),
+          entries
+        )}
         <BottomPlaceholder />
       </ResponsiveLayout>
     </ScrollView>
