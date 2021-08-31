@@ -78,7 +78,7 @@ class CustomDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
           <link
             rel="shortcut icon"
-            href="https://res.cloudinary.com/skyhitz/image/upload/v1512780194/web/favicon.ico"
+            href="/img/favicon.ico"
             type="image/x-icon"
           />
           {/* <link

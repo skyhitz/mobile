@@ -1,12 +1,10 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
+import { SliderOverlay, LivePush } from 'assets/images/Images';
 
 export default (props: any) => (
   <ImageBackground
-    source={{
-      uri:
-        'https://res.cloudinary.com/skyhitz/image/upload/c_scale,q_auto:good,w_1313/v1582299226/web/live-push.jpg',
-    }}
+    source={LivePush}
     style={{
       width: '100%',
       height: '100%',
@@ -14,10 +12,7 @@ export default (props: any) => (
     resizeMode="cover"
   >
     <ImageBackground
-      source={{
-        uri:
-          'https://res.cloudinary.com/skyhitz/image/upload/v1512424999/web/slider-overlay_jojxwg.png',
-      }}
+      source={SliderOverlay}
       style={[
         {
           width: '100%',
