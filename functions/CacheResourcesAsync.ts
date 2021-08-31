@@ -7,6 +7,8 @@ import {
 import * as Font from 'expo-font';
 import * as React from 'react';
 import RalewayLight from 'app/assets/fonts/Raleway-Light.ttf';
+import { Images } from 'app/assets/images/Images';
+import { useAssets } from 'expo-asset';
 
 enum FontDisplay {
   AUTO = 'auto',
@@ -18,7 +20,7 @@ enum FontDisplay {
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-
+  const [assets] = useAssets(Images);
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
@@ -46,5 +48,5 @@ export default function useCachedResources() {
     loadResourcesAndDataAsync();
   }, []);
 
-  return isLoadingComplete;
+  return isLoadingComplete && assets;
 }

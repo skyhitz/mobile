@@ -1,4 +1,4 @@
-const algoliasearch = require('algoliasearch');
+import algoliasearch from 'algoliasearch/lite';
 import { Config } from '../config/index';
 const client = algoliasearch(Config.ALGOLIA_APP_ID, Config.ALGOLIA_SEARCH_KEY);
 export const entriesIndex = client.initIndex('entries');

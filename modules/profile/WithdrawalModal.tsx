@@ -7,7 +7,7 @@ import {
   TextInput,
   Platform,
 } from 'react-native';
-import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
@@ -83,8 +83,8 @@ export default observer((props) => {
           />
         </View>
         <View style={styles.field}>
-          <FontAwesome5
-            name="coins"
+          <FontAwesome
+            name="money"
             size={22}
             color={Colors.white}
             style={styles.placeholderIcon}
