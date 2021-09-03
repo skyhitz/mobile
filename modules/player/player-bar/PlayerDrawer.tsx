@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { StyleSheet, Dimensions } from 'react-native';
-import Animated from 'react-native-reanimated';
 import PlayerScreen from '../player-screen/PlayerScreen';
 import MiniPlayer from './MiniPlayer';
 import { State } from 'react-native-gesture-handler';
@@ -9,7 +8,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { clamp, timing, withSpring } from 'react-native-redash/lib/module/v1';
 import { Stores } from 'app/functions/Stores';
 import Colors from 'app/constants/Colors';
-import { useEffect } from 'react';
+import Animated from 'react-native-reanimated';
 
 let tabNavBottom = 89;
 

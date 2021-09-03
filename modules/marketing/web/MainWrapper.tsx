@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { H1, Main, P } from '@expo/html-elements';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
-import ScreenShots from './Screenshots';
 import { useMediaQuery } from 'react-responsive';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import LoadingScreen from 'app/modules/accounts/LoadingScreen';
+
+const ScreenShots = lazy(() => import('./Screenshots'));
+const SuspenseLoading = (props) => (
+  <Suspense fallback={<LoadingScreen />}>{props.children}</Suspense>
+);
 
 // https://apps.apple.com/us/app/skyhitz/id1105406020
 
@@ -63,7 +68,9 @@ export default function MainWrapper() {
             </Text>
           </View>
         </Pressable>
-        <ScreenShots />
+        <SuspenseLoading>
+          <ScreenShots />
+        </SuspenseLoading>
       </View>
     </Main>
   );
