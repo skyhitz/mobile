@@ -1,13 +1,13 @@
 import React from 'react';
 
-function Icon({ size = 24 }) {
+function Icon({ size = 24, color }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
       fill="none"
-      stroke="currentColor"
+      stroke={color ? color : 'currentColor'}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"

@@ -4,6 +4,7 @@ import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
 import SkipForwardIcon from 'app/modules/ui/icons/skip-forward';
 import cursorPointer from 'app/constants/CursorPointer';
+import Colors from 'app/constants/Colors';
 type Stores = typeof stores;
 
 const ForwardBtn = inject((stores: Stores) => ({
@@ -13,7 +14,7 @@ const ForwardBtn = inject((stores: Stores) => ({
     style={[styles.controlTouch, cursorPointer]}
     onPress={() => playNext()}
   >
-    <SkipForwardIcon size={size} />
+    <SkipForwardIcon size={size} color={Colors.white} />
   </Pressable>
 ));
 
