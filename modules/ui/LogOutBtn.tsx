@@ -1,9 +1,9 @@
 import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
 import { Pressable, StyleSheet } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import { observer } from 'mobx-react';
+import LogOutIcon from 'app/modules/ui/icons/logout';
 
 export default observer(() => {
   const { sessionStore, likesStore } = Stores();
@@ -13,7 +13,7 @@ export default observer(() => {
   };
   return (
     <Pressable style={styles.btn} onPress={handleLogOut}>
-      <MaterialIcons name={'logout'} size={24} color={Colors.white} />
+      <LogOutIcon size={24} color={Colors.white} />
     </Pressable>
   );
 });

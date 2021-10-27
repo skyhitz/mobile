@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
-import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import LikeIcon from 'app/modules/ui/icons/like';
 
 export default observer(({ entry }) => {
   const { likesStore } = Stores();
@@ -25,7 +25,7 @@ export default observer(({ entry }) => {
     return (
       <Pressable onPress={handleToggle}>
         <View style={[styles.field, cursorPointer]}>
-          <EvilIcons name={'like'} size={28} color={Colors.brandBlue} />
+          <LikeIcon size={28} color={Colors.brandBlue} />
           <Text style={styles.textLiked}>Like</Text>
         </View>
       </Pressable>
@@ -34,7 +34,7 @@ export default observer(({ entry }) => {
   return (
     <Pressable onPress={handleToggle}>
       <View style={[styles.field, cursorPointer]}>
-        <EvilIcons name={'like'} size={28} color={Colors.dividerBackground} />
+        <LikeIcon size={28} color={Colors.dividerBackground} />
         <Text style={styles.text}>Like</Text>
       </View>
     </Pressable>

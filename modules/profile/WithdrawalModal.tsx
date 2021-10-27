@@ -7,13 +7,15 @@ import {
   TextInput,
   Platform,
 } from 'react-native';
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import CloseIcon from 'app/modules/ui/icons/x';
+import WalletIcon from 'app/modules/ui/icons/wallet';
+import MoneyIcon from 'app/modules/ui/icons/money';
 
 export default observer((props) => {
   const { paymentsStore } = Stores();
@@ -46,7 +48,7 @@ export default observer((props) => {
           style={[styles.closeBtn, cursorPointer]}
           onPress={() => goBack()}
         >
-          <MaterialIcons name="close" size={28} color={Colors.white} />
+          <CloseIcon size={28} color={Colors.white} />
         </Pressable>
         <View>
           <Text style={styles.modalTitle}>Withdraw credits</Text>
@@ -57,12 +59,10 @@ export default observer((props) => {
           </Text>
         </View>
         <View style={styles.field}>
-          <MaterialIcons
-            name="account-balance-wallet"
-            size={22}
-            color={Colors.white}
-            style={styles.placeholderIcon}
-          />
+          <View style={styles.placeholderIcon}>
+            <WalletIcon size={22} color={Colors.white} />
+          </View>
+
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -83,12 +83,9 @@ export default observer((props) => {
           />
         </View>
         <View style={styles.field}>
-          <FontAwesome
-            name="money"
-            size={22}
-            color={Colors.white}
-            style={styles.placeholderIcon}
-          />
+          <View style={styles.placeholderIcon}>
+            <MoneyIcon size={22} color={Colors.white} />
+          </View>
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"

@@ -12,7 +12,6 @@ import {
   profileStore,
   editProfileStore,
   likesStore,
-  playlistsStore,
   entryStore,
   userEntriesStore,
   paymentsStore,
@@ -33,7 +32,6 @@ export default class Providers extends React.Component<any, any> {
         profileStore={profileStore}
         editProfileStore={editProfileStore}
         likesStore={likesStore}
-        playlistsStore={playlistsStore}
         entryStore={entryStore}
         userEntriesStore={userEntriesStore}
         paymentsStore={paymentsStore}

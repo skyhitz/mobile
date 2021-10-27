@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { inject } from 'mobx-react';
-import { MaterialIcons } from '@expo/vector-icons';
+import RemoveIcon from 'app/modules/ui/icons/remove';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
 type Stores = typeof stores;
@@ -28,11 +28,7 @@ export default class RemoveFromMyMusicRow extends React.Component<any, any> {
     return (
       <Pressable onPress={this.handleRemoveEntry.bind(this)}>
         <View style={styles.field}>
-          <MaterialIcons
-            name={'remove-circle-outline'}
-            size={20}
-            color={Colors.white}
-          />
+          <RemoveIcon size={20} color={Colors.white} />
           <Text style={styles.text}>Remove from platform</Text>
         </View>
       </Pressable>

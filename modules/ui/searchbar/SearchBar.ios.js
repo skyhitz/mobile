@@ -12,7 +12,8 @@ import {
   Pressable,
 } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import CloseIcon from 'app/modules/ui/icons/x';
+import SearchIcon from 'app/modules/ui/icons/search';
 
 import Input from 'app/modules/ui/Input';
 
@@ -79,9 +80,7 @@ class SearchBar extends Component {
     } = this.props;
     const { hasFocus, isEmpty } = this.state;
     const { style: loadingStyle, ...otherLoadingProps } = loadingProps;
-    const searchIcon = (
-      <MaterialIcons size={20} name={'search'} color={IOS_GRAY} />
-    );
+    const searchIcon = <SearchIcon size={20} color={IOS_GRAY} />;
     return (
       <View style={styles.container}>
         <Input
@@ -118,8 +117,7 @@ class SearchBar extends Component {
                 />
               )}
               {clearIcon && !isEmpty && (
-                <FontAwesome
-                  name={'times-circle'}
+                <CloseIcon
                   size={20}
                   color={IOS_GRAY}
                   onPress={() => this.clear()}

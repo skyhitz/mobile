@@ -9,7 +9,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { inject } from 'mobx-react';
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import {
   UserAvatarMedium,
@@ -20,6 +19,13 @@ import EditProfilePhotoBtn from 'app/modules/profile/EditProfilePhotoBtn';
 import * as stores from 'app/skyhitz-common';
 import LargeBtn from '../ui/LargeBtn';
 import cursorPointer from 'app/constants/CursorPointer';
+import AccountBoxIcon from 'app/modules/ui/icons/account-box';
+import PersonOutlineIcon from 'app/modules/ui/icons/person-outline';
+import MailOutlineIcon from 'app/modules/ui/icons/mail-outline';
+import PhoneIcon from 'app/modules/ui/icons/phone';
+import LogoutIcon from 'app/modules/ui/icons/logout';
+import InfoCirlceIcon from 'app/modules/ui/icons/info-circle';
+
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -106,12 +112,9 @@ export default class EditProfileScreen extends React.Component<any, any> {
 
           <View style={styles.inputContainerTop}>
             <View style={styles.field}>
-              <MaterialIcons
-                name="account-box"
-                size={20}
-                color={Colors.dividerBackground}
-                style={styles.placeholderIcon}
-              />
+              <View style={styles.placeholderIcon}>
+                <AccountBoxIcon size={20} color={Colors.dividerBackground} />
+              </View>
               <TextInput
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
@@ -129,12 +132,9 @@ export default class EditProfileScreen extends React.Component<any, any> {
               />
             </View>
             <View style={styles.field}>
-              <FontAwesome
-                name="info-circle"
-                size={24}
-                color={Colors.dividerBackground}
-                style={styles.placeholderIcon}
-              />
+              <View style={styles.placeholderIcon}>
+                <InfoCirlceIcon size={24} color={Colors.dividerBackground} />
+              </View>
               <TextInput
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
@@ -148,12 +148,9 @@ export default class EditProfileScreen extends React.Component<any, any> {
               />
             </View>
             <View style={styles.fieldWithoutBorder}>
-              <MaterialIcons
-                name="person-outline"
-                size={24}
-                color={Colors.dividerBackground}
-                style={styles.placeholderIcon}
-              />
+              <View style={styles.placeholderIcon}>
+                <PersonOutlineIcon size={24} color={Colors.dividerBackground} />
+              </View>
               <TextInput
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
@@ -170,12 +167,10 @@ export default class EditProfileScreen extends React.Component<any, any> {
           <Text style={styles.privateInfo}>Private Information</Text>
           <View style={styles.inputContainerMiddle}>
             <View style={styles.field}>
-              <MaterialIcons
-                name="mail-outline"
-                size={22}
-                color={Colors.dividerBackground}
-                style={styles.placeholderIcon}
-              />
+              <View style={styles.placeholderIcon}>
+                <MailOutlineIcon size={22} color={Colors.dividerBackground} />
+              </View>
+
               <TextInput
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
@@ -189,12 +184,9 @@ export default class EditProfileScreen extends React.Component<any, any> {
               />
             </View>
             <View style={styles.fieldWithoutBorder}>
-              <MaterialIcons
-                name="phone-iphone"
-                size={22}
-                color={Colors.dividerBackground}
-                style={styles.placeholderIcon}
-              />
+              <View style={styles.placeholderIcon}>
+                <PhoneIcon size={22} color={Colors.dividerBackground} />
+              </View>
               <TextInput
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
@@ -215,13 +207,10 @@ export default class EditProfileScreen extends React.Component<any, any> {
               style={[styles.fieldWithoutBorder, cursorPointer]}
               onPress={this.handleLogOut.bind(this)}
             >
-              <View>
-                <MaterialIcons
-                  name="logout"
-                  size={22}
-                  color={Colors.dividerBackground}
-                  style={styles.placeholderIcon}
-                />
+              <View style={styles.placeholderIcon}>
+                <View style={styles.placeholderIcon}>
+                  <LogoutIcon size={22} color={Colors.dividerBackground} />
+                </View>
                 <Text style={styles.input}>Log Out</Text>
               </View>
             </Pressable>

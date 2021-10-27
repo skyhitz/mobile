@@ -7,9 +7,10 @@ import {
   Text,
   Platform,
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import Input from 'app/modules/ui/Input';
 import Colors from 'app/constants/Colors';
+import SearchIcon from 'app/modules/ui/icons/search';
+import CloseIcon from 'app/modules/ui/icons/x';
 
 class SearchBar extends Component {
   focus = () => {
@@ -70,9 +71,8 @@ class SearchBar extends Component {
     const { style: loadingStyle, ...otherLoadingProps } = loadingProps;
 
     const searchIcon = (
-      <MaterialIcons
+      <SearchIcon
         size={20}
-        name={'search'}
         color={Colors.searchTextColor}
         onPress={hasFocus ? this.cancel : null}
       />
@@ -107,8 +107,7 @@ class SearchBar extends Component {
                 />
               )}
               {clearIcon && !isEmpty && (
-                <MaterialIcons
-                  name={'close'}
+                <CloseIcon
                   size={25}
                   color={Colors.searchTextColor}
                   onPress={() => this.clear()}

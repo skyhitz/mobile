@@ -1,6 +1,5 @@
 import React, { lazy } from 'react';
 import { View } from 'react-native';
-import { EvilIcons, Feather } from '@expo/vector-icons';
 import ProfileSettingsScreen from 'app/modules/profile/ProfileSettingsScreen';
 import SearchNavigator from 'app/modules/search/SearchNavigator';
 import Colors from 'app/constants/Colors';
@@ -12,6 +11,8 @@ import { useMediaQuery } from 'react-responsive';
 import MiniPlayerDesktop from '../player/player-bar/MiniPlayerDesktop';
 import SkyhitzLogo from '../marketing/web/SkyhitzLogo';
 import { SuspenseLoading } from './SuspenseLoading';
+import SearchIcon from 'app/modules/ui/icons/search';
+import UserIcon from 'app/modules/ui/icons/user';
 
 const PlayerDrawer = lazy(() =>
   import('app/modules/player/player-bar/PlayerDrawer')
@@ -72,14 +73,7 @@ export default () => {
         component={SearchNavigator}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <EvilIcons
-              name={'search'}
-              size={24}
-              style={{ marginBottom: -3 }}
-              color={color}
-            />
-          ),
+          tabBarIcon: ({ color }) => <SearchIcon color={color} />,
         }}
       />
       <Tab.Screen
@@ -109,9 +103,7 @@ export default () => {
         component={ProfileSettingsScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Feather name={'user'} size={24} color={color} />
-          ),
+          tabBarIcon: ({ color }) => <UserIcon color={color} />,
         }}
       />
     </Tab.Navigator>

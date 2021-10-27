@@ -3,7 +3,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
-import { Feather } from '@expo/vector-icons';
+import EditIcon from 'app/modules/ui/icons/edit';
 
 export default () => {
   const linkTo = useLinkTo();
@@ -13,7 +13,7 @@ export default () => {
   };
   return (
     <Pressable style={[styles.btn, cursorPointer]} onPress={handleOnPress}>
-      <Feather name={'edit'} size={16} color={Colors.defaultTextLight} />
+      <EditIcon size={16} color={Colors.defaultTextLight} />
     </Pressable>
   );
 };

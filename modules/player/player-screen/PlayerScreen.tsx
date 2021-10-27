@@ -6,7 +6,7 @@ import {
   View,
   Pressable,
 } from 'react-native';
-import { Feather as Icon } from '@expo/vector-icons';
+import ChevronDown from 'app/modules/ui/icons/chevron-down';
 import VideoPlayer from './video-player/VideoPlayer';
 import PlayerEntryInfo from './PlayerEntryInfo';
 import BuyBtn from 'app/modules/ui/buy-btn/BuyBtn';
@@ -72,7 +72,7 @@ export default observer(() => {
           style={[styles.button, cursorPointer]}
           onPress={() => playerStore.hidePlayer()}
         >
-          <Icon name="chevron-down" color="white" size={24} />
+          <ChevronDown size={24} />
         </Pressable>
       </View>
       <VideoPlayer />

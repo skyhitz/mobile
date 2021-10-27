@@ -1,7 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { Feather } from '@expo/vector-icons';
 import cursorPointer from 'app/constants/CursorPointer';
 
 export default class LargeBtn extends React.Component<any, any> {
@@ -19,14 +18,7 @@ export default class LargeBtn extends React.Component<any, any> {
         disabled={this.props.disabled}
       >
         <Text style={styles.white}>{this.props.text}</Text>
-        {this.props.iconName ? (
-          <Feather
-            name={this.props.iconName}
-            style={{ paddingLeft: 12 }}
-            size={this.props.iconSize ? this.props.iconSize : 24}
-            color="white"
-          />
-        ) : null}
+        {this.props.icon ? this.props.icon() : null}
       </Pressable>
     );
   }

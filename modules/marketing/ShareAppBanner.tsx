@@ -3,6 +3,8 @@ import { StyleSheet, View, Platform } from 'react-native';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import { useLinkTo } from '@react-navigation/native';
+import UploadIcon from 'app/modules/ui/icons/upload';
+import DollarIcon from 'app/modules/ui/icons/dollar';
 
 export default (props) => {
   const linkTo = useLinkTo();
@@ -19,8 +21,7 @@ export default (props) => {
     <View style={styles.wrap}>
       <View style={styles.bannerWrap}>
         <LargeBtn
-          iconName="upload"
-          iconSize={20}
+          icon={() => <UploadIcon size={20} color={Colors.white} />}
           onPress={onUpload}
           text="Upload Beat"
         />
@@ -29,10 +30,9 @@ export default (props) => {
       {Platform.OS === 'web' ? (
         <View style={styles.bannerWrap}>
           <LargeBtn
-            iconName="dollar-sign"
+            icon={() => <DollarIcon size={20} color={Colors.white} />}
             onPress={onBuyCredits}
             text="Buy Credits"
-            iconSize={20}
           />
         </View>
       ) : null}
