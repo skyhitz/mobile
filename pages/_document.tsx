@@ -81,6 +81,13 @@ class CustomDocument extends Document {
             href="/img/favicon.ico"
             type="image/x-icon"
           />
+          <link
+            rel="preload"
+            href="/fonts/Raleway-Light.ttf"
+            as="font"
+            crossOrigin=""
+          />
+          <link href="/fonts/fonts.css" rel="stylesheet" />
           {/* <link
             rel="preload"
             as="image"
