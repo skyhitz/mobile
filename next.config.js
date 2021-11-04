@@ -22,12 +22,13 @@ module.exports = withExpo(
           ) => {
             return config;
           },
-          // webpack5: false,
           eslint: {
             ignoreDuringBuilds: true,
           },
           projectRoot: __dirname,
-          target: 'serverless',
+          images: {
+            disableStaticImages: true,
+          },
         })
       )
     )

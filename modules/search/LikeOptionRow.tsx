@@ -25,7 +25,7 @@ export default observer(({ entry }) => {
     return (
       <Pressable onPress={handleToggle}>
         <View style={[styles.field, cursorPointer]}>
-          <LikeIcon size={28} color={Colors.brandBlue} />
+          <LikeIcon size={24} color={Colors.brandBlue} />
           <Text style={styles.textLiked}>Like</Text>
         </View>
       </Pressable>
@@ -34,7 +34,7 @@ export default observer(({ entry }) => {
   return (
     <Pressable onPress={handleToggle}>
       <View style={[styles.field, cursorPointer]}>
-        <LikeIcon size={28} color={Colors.dividerBackground} />
+        <LikeIcon size={24} color={Colors.dividerBackground} />
         <Text style={styles.text}>Like</Text>
       </View>
     </Pressable>

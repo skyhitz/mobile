@@ -32,12 +32,12 @@ export default observer(() => {
         <Pressable style={cursorPointer} onPress={handleNavigation}>
           <View style={styles.row}>
             <View style={styles.leftSection}>
-              <StarBorderIcon size={30} color={Colors.brandBlue} />
-              <Text style={styles.likesText}>My Music</Text>
+              <StarBorderIcon color={Colors.brandBlue} />
+              <Text style={styles.likesText}>My Beats</Text>
             </View>
             <View style={styles.rightSection}>
               <Text style={styles.videosText}>{copy()}</Text>
-              <ChevronRightIcon size={36} color={Colors.defaultTextLight} />
+              <ChevronRightIcon size={28} color={Colors.defaultTextLight} />
             </View>
           </View>
         </Pressable>
@@ -64,7 +64,6 @@ let styles = StyleSheet.create({
     backgroundColor: Colors.listItemBackground,
   },
   leftSection: {
-    width: 100,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'nowrap',
@@ -86,5 +85,6 @@ let styles = StyleSheet.create({
   videosText: {
     color: Colors.defaultTextDark,
     paddingLeft: 5,
+    marginRight: 5,
   },
 });

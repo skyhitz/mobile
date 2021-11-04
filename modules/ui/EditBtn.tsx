@@ -13,7 +13,7 @@ export default () => {
   };
   return (
     <Pressable style={[styles.btn, cursorPointer]} onPress={handleOnPress}>
-      <EditIcon size={16} color={Colors.defaultTextLight} />
+      <EditIcon size={18} color={Colors.defaultTextLight} />
     </Pressable>
   );
 };
