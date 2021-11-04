@@ -2,8 +2,9 @@ import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
-import { Feather } from '@expo/vector-icons';
+import SkipForwardIcon from 'app/modules/ui/icons/skip-forward';
 import cursorPointer from 'app/constants/CursorPointer';
+import Colors from 'app/constants/Colors';
 type Stores = typeof stores;
 
 const ForwardBtn = inject((stores: Stores) => ({
@@ -13,7 +14,7 @@ const ForwardBtn = inject((stores: Stores) => ({
     style={[styles.controlTouch, cursorPointer]}
     onPress={() => playNext()}
   >
-    <Feather name="skip-forward" size={size} color="white" />
+    <SkipForwardIcon size={size} color={Colors.white} />
   </Pressable>
 ));
 

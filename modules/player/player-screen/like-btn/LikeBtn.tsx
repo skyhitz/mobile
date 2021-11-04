@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
 import { inject } from 'mobx-react';
-import { EvilIcons } from '@expo/vector-icons';
+import LikeIcon from 'app/modules/ui/icons/like';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
 import cursorPointer from 'app/constants/CursorPointer';
@@ -23,7 +23,7 @@ export default class LikeBtn extends React.Component<any, any> {
           style={[styles.controlTouch, cursorPointer]}
           onPress={() => this.props.toggleLike(this.props.entry)}
         >
-          <EvilIcons name={'like'} size={32} color={Colors.brandBlue} />
+          <LikeIcon size={32} color={Colors.brandBlue} />
         </Pressable>
       );
     }
@@ -32,7 +32,7 @@ export default class LikeBtn extends React.Component<any, any> {
         style={[styles.controlTouch, cursorPointer]}
         onPress={() => this.props.toggleLike(this.props.entry)}
       >
-        <EvilIcons name={'like'} size={32} color={Colors.dividerBackground} />
+        <LikeIcon size={32} color={Colors.dividerBackground} />
       </Pressable>
     );
   }

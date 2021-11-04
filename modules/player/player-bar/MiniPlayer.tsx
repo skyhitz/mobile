@@ -3,9 +3,9 @@ import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Stores } from 'app/functions/Stores';
 import Colors from 'app/constants/Colors';
-import { EvilIcons } from '@expo/vector-icons';
 import PlayBtnSmall from './play-btn-small/PlayBtnSmall';
 import cursorPointer from 'app/constants/CursorPointer';
+import ChevronUpIcon from 'app/modules/ui/icons/chevron-up';
 
 export default observer(() => {
   let { playerStore } = Stores();
@@ -17,12 +17,9 @@ export default observer(() => {
         style={[cursorPointer]}
       >
         <View style={styles.section}>
-          <EvilIcons
-            name={'chevron-up'}
-            size={36}
-            color={Colors.white}
-            style={styles.arrowUp}
-          />
+          <View style={styles.icon}>
+            <ChevronUpIcon color={Colors.white} />
+          </View>
           <Text
             style={styles.entryTitle}
             ellipsizeMode="tail"
@@ -89,5 +86,9 @@ let styles = StyleSheet.create({
   },
   arrowUp: {
     alignSelf: 'center',
+  },
+  icon: {
+    marginLeft: 10,
+    marginRight: 10,
   },
 });

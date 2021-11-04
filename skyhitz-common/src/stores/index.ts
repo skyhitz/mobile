@@ -9,7 +9,6 @@ import { UsersSearchStore } from './users-search.store';
 import { ProfileStore } from './profile.store';
 import { EditProfileStore } from './edit-profile.store';
 import { LikesStore } from './likes.store';
-import { PlaylistsStore } from './playlists.store';
 import { PaymentsStore } from './payments.store';
 import { EntryStore } from './entry.store';
 import { UserEntriesStore } from './user-entries.store';
@@ -30,7 +29,6 @@ export const likesStore = new LikesStore(
   playerStore.observables,
   sessionStore.session
 );
-export const playlistsStore = new PlaylistsStore(sessionStore);
 export const paymentsStore = new PaymentsStore();
 export const entryStore = new EntryStore(sessionStore);
 export const userEntriesStore = new UserEntriesStore(sessionStore);
@@ -47,7 +45,6 @@ export type Stores = {
   profileStore: ProfileStore;
   editProfileStore: EditProfileStore;
   likesStore: LikesStore;
-  playlistsStore: PlaylistsStore;
   paymentsStore: PaymentsStore;
   entryStore: EntryStore;
   userEntriesStore: UserEntriesStore;

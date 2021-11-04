@@ -1,6 +1,5 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View, Platform } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
@@ -9,6 +8,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Config } from 'app/skyhitz-common/src/config/index';
 import PaymentStep from './PaymentStep';
 import cursorPointer from 'app/constants/CursorPointer';
+import CloseIcon from 'app/modules/ui/icons/x';
 
 let stripePromise;
 
@@ -28,7 +28,7 @@ export default observer((props) => {
             props.navigation.goBack();
           }}
         >
-          <MaterialIcons name="close" size={28} color={Colors.white} />
+          <CloseIcon size={28} color={Colors.white} />
         </Pressable>
         <View>
           <Text style={styles.modalTitle}>Buy Credits</Text>

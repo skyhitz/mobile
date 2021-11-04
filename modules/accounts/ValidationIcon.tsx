@@ -1,36 +1,16 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
+import CheckIcon from 'app/modules/ui/icons/check';
+import CloseIcon from 'app/modules/ui/icons/x';
 
 const validationIcon = (props) => {
   if (props.isFieldValid) {
-    return (
-      <MaterialIcons
-        name="check-circle"
-        size={24}
-        color={Colors.valid}
-        style={styles.icon}
-      />
-    );
+    return <CheckIcon color={Colors.valid} />;
   }
   if (props.isFieldValid === false) {
-    return (
-      <FontAwesome
-        name="times-circle"
-        size={24}
-        color={Colors.errorBackground}
-        style={styles.icon}
-      />
-    );
+    return <CloseIcon size={24} color={Colors.errorBackground} />;
   }
   return null;
 };
-
-let styles = StyleSheet.create({
-  icon: {
-    backgroundColor: Colors.transparent,
-  },
-});
 
 export default validationIcon;

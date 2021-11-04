@@ -10,11 +10,15 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import cursorPointer from 'app/constants/CursorPointer';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
+import DollarIcon from 'app/modules/ui/icons/dollar';
+import PieIcon from 'app/modules/ui/icons/pie';
+import CircleIcon from 'app/modules/ui/icons/circle';
+
+const SwitchWeb: any = Switch;
 
 export default observer(({ route }) => {
   const { entryStore, userEntriesStore } = Stores();
@@ -51,15 +55,13 @@ export default observer(({ route }) => {
         </Text>
       </View>
       <View style={styles.field}>
-        <MaterialIcons
-          name="circle"
+        <CircleIcon
           size={10}
           color={
             entryStore.availableForSale
               ? Colors.lightBrandBlue
               : Colors.dividerBackground
           }
-          style={styles.placeholderIcon}
         />
         <Text
           style={styles.priceDescription}
@@ -68,26 +70,22 @@ export default observer(({ route }) => {
         >
           {'Available for Sale: '}
         </Text>
-        <Switch
+        <SwitchWeb
           onValueChange={(forSale) =>
             entryStore.updateAvailableForSale(forSale)
           }
           value={entryStore.availableForSale}
           style={styles.switch}
+          activeThumbColor={Colors.defaultTextLight}
           trackColor={{
             false: Colors.defaultTextLight,
             true: Colors.lightBrandBlue,
           }}
-          thumbColor={Colors.lightGrey}
+          thumbColor={Colors.defaultTextLight}
         />
       </View>
       <View style={styles.field}>
-        <MaterialIcons
-          name={'attach-money'}
-          size={20}
-          color={Colors.dividerBackground}
-          style={styles.placeholderIcon}
-        />
+        <DollarIcon size={20} color={Colors.dividerBackground} />
         <Text
           style={styles.priceDescription}
           ellipsizeMode="tail"
@@ -113,12 +111,7 @@ export default observer(({ route }) => {
         />
       </View>
       <View style={styles.field}>
-        <FontAwesome
-          name="pie-chart"
-          size={24}
-          color={Colors.dividerBackground}
-          style={styles.placeholderIcon}
-        />
+        <PieIcon size={24} color={Colors.dividerBackground} />
         <Text
           style={styles.equityDescription}
           ellipsizeMode="tail"

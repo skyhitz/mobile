@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
-import { Feather } from '@expo/vector-icons';
+import PlayIcon from 'app/modules/ui/icons/play';
+import PauseIcon from 'app/modules/ui/icons/pause';
+
 import {
   ReplayIcon,
   Spinner,
@@ -20,12 +22,7 @@ export default observer(({ size = 28 }) => {
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <Feather
-              style={{ paddingLeft: 6 }}
-              name="play"
-              size={size}
-              color="white"
-            />
+            <PlayIcon size={size} color="white" />
           </View>
         </View>
       </Pressable>
@@ -39,12 +36,7 @@ export default observer(({ size = 28 }) => {
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <Feather
-              style={{ paddingLeft: 1, textAlign: 'center' }}
-              name="pause"
-              size={size}
-              color="white"
-            />
+            <PauseIcon size={size} color="white" />
           </View>
         </View>
       </Pressable>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
-import { EvilIcons } from '@expo/vector-icons';
+import ChevronDown from 'app/modules/ui/icons/chevron-down';
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 
@@ -11,12 +11,7 @@ export default observer(({ onPress }) => {
   return (
     <View style={styles.playerNav}>
       <Pressable {...{ onPress }} style={styles.arrowDownTouchableArea}>
-        <EvilIcons
-          name={'chevron-down'}
-          size={36}
-          color={Colors.white}
-          style={styles.arrowDown}
-        />
+        <ChevronDown size={36} color={Colors.white} />
       </Pressable>
       <Text style={styles.header}>{playerStore.entry?.artist}</Text>
       <View style={styles.rightOptions} />

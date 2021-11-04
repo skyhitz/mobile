@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { StyleSheet, Pressable } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import Play from 'app/modules/ui/icons/play';
+import Pause from 'app/modules/ui/icons/pause';
 import { Stores } from 'app/functions/Stores';
 import cursorPointer from 'app/constants/CursorPointer';
 
@@ -14,7 +15,7 @@ export default observer(() => {
         style={[styles.playBtnWrapper, cursorPointer]}
         onPress={() => playerStore.pauseAsync()}
       >
-        <Feather name="pause" size={18} color="white" />
+        <Pause size={22} color={'white'} />
       </Pressable>
     );
   }
@@ -23,21 +24,13 @@ export default observer(() => {
       style={[styles.playBtnWrapper, cursorPointer]}
       onPress={() => playerStore.playAsync()}
     >
-      <Feather name="play" size={18} color="white" />
+      <Play size={22} color={'white'} />
     </Pressable>
   );
 });
 
 let styles = StyleSheet.create({
   playBtnWrapper: {
-    width: 39,
-    height: 39,
-    justifyContent: 'center',
-  },
-  playBtn: {
-    width: 15,
-    height: 15,
-    marginLeft: 10,
     marginRight: 10,
   },
 });

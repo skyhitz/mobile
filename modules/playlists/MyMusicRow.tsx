@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
-import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react';
+
 import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import ChevronRightIcon from 'app/modules/ui/icons/chevron-right';
+import StarBorderIcon from 'app/modules/ui/icons/star-border';
 
 export default observer(() => {
   let { userEntriesStore } = Stores();
@@ -30,20 +32,12 @@ export default observer(() => {
         <Pressable style={cursorPointer} onPress={handleNavigation}>
           <View style={styles.row}>
             <View style={styles.leftSection}>
-              <MaterialIcons
-                name="star-border"
-                size={30}
-                color={Colors.brandBlue}
-              />
-              <Text style={styles.likesText}>My Music</Text>
+              <StarBorderIcon color={Colors.brandBlue} />
+              <Text style={styles.likesText}>My Beats</Text>
             </View>
             <View style={styles.rightSection}>
               <Text style={styles.videosText}>{copy()}</Text>
-              <EvilIcons
-                name={'chevron-right'}
-                size={36}
-                color={Colors.defaultTextLight}
-              />
+              <ChevronRightIcon size={28} color={Colors.defaultTextLight} />
             </View>
           </View>
         </Pressable>
@@ -70,7 +64,6 @@ let styles = StyleSheet.create({
     backgroundColor: Colors.listItemBackground,
   },
   leftSection: {
-    width: 100,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'nowrap',
@@ -92,5 +85,6 @@ let styles = StyleSheet.create({
   videosText: {
     color: Colors.defaultTextDark,
     paddingLeft: 5,
+    marginRight: 5,
   },
 });

@@ -1,13 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
-import { Feather } from '@expo/vector-icons';
 import {
   ReplayIcon,
   Spinner,
 } from 'app/modules/player/player-screen/video-player/VideoIcons';
 import { Stores } from 'app/functions/Stores';
 import cursorPointer from 'app/constants/CursorPointer';
+import PlayIcon from 'app/modules/ui/icons/play';
+import PauseIcon from 'app/modules/ui/icons/pause';
 
 export default observer(() => {
   let { playerStore } = Stores();
@@ -20,12 +21,7 @@ export default observer(() => {
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <Feather
-              style={{ paddingLeft: 6 }}
-              name="play"
-              size={28}
-              color="white"
-            />
+            <PlayIcon size={28} color="white" />
           </View>
         </View>
       </Pressable>
@@ -39,12 +35,7 @@ export default observer(() => {
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
-            <Feather
-              style={{ paddingLeft: 1, textAlign: 'center' }}
-              name="pause"
-              size={28}
-              color="white"
-            />
+            <PauseIcon size={28} color="white" />
           </View>
         </View>
       </Pressable>

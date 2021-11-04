@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Pressable, View, Text } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import DollarIcon from 'app/modules/ui/icons/dollar';
 
 export default ({ entry }) => {
   const { dispatch, goBack } = useNavigation();
@@ -22,7 +22,7 @@ export default ({ entry }) => {
   return (
     <Pressable onPress={handleSetPrice}>
       <View style={[styles.field, cursorPointer]}>
-        <MaterialIcons name={'attach-money'} size={20} color={Colors.white} />
+        <DollarIcon size={20} color={Colors.white} />
         <Text style={styles.text}>Set Price</Text>
       </View>
     </Pressable>

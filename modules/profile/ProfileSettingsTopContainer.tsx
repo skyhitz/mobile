@@ -3,10 +3,10 @@ import { View, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
 import Layout from 'app/constants/Layout';
 import { UserAvatarMedium } from 'app/modules/ui/UserAvatar';
-import { MaterialIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
 import EditBtn from '../ui/EditBtn';
+import DollarIcon from 'app/modules/ui/icons/dollar';
 
 export default observer((props) => {
   const { paymentsStore, sessionStore } = Stores();
@@ -14,12 +14,9 @@ export default observer((props) => {
   const renderDollarSign = () => {
     if (paymentsStore.credits > 0) {
       return (
-        <MaterialIcons
-          size={22}
-          style={styles.starsIcon}
-          name={'attach-money'}
-          color={Colors.white}
-        />
+        <View style={styles.starsIcon}>
+          <DollarIcon size={22} color={Colors.white} />
+        </View>
       );
     }
     return null;

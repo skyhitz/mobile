@@ -1,9 +1,12 @@
 import React from 'react';
-import { FontAwesome } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { A } from '@expo/html-elements';
 import { View } from 'react-native';
 let Anchor: React.ComponentType<any> = A;
+import Github from 'app/modules/ui/icons/github';
+import Insta from 'app/modules/ui/icons/instagram';
+import Discord from 'app/modules/ui/icons/discord';
+import Twitter from 'app/modules/ui/icons/twitter';
 
 export default () => {
   return (
@@ -15,31 +18,22 @@ export default () => {
       >
         <Anchor
           target="_blank"
-          href="https://twitter.com/skyhitzio"
+          href="https://twitter.com/skyhitz"
           aria-label="Read more about Skyhitz on twitter"
-          style={[{ fontSize: 16 }]}
+          style={[{ fontSize: 16, color: Colors.white }]}
         >
-          <FontAwesome name="twitter" size={16} color={Colors.white} />
+          <Twitter />
         </Anchor>
       </View>
+
       <View style={{ marginRight: 10 }}>
         <Anchor
           target="_blank"
-          href="https://medium.com/skyhitz"
-          aria-label="Read more about Skyhitz on medium"
+          href="https://discord.gg/A7kxDyC5"
+          aria-label="Join our server on Discord"
           style={[{ fontSize: 16, color: Colors.white }]}
         >
-          <FontAwesome name="medium" size={16} color={Colors.white} />
-        </Anchor>
-      </View>
-      <View style={{ marginRight: 10 }}>
-        <Anchor
-          target="_blank"
-          href="https://www.facebook.com/skyhitzio"
-          aria-label="Read more about Skyhitz on facebook"
-          style={[{ fontSize: 16, color: Colors.white }]}
-        >
-          <FontAwesome name="facebook" size={16} color={Colors.white} />
+          <Discord />
         </Anchor>
       </View>
       <View style={{ marginRight: 10 }}>
@@ -49,17 +43,17 @@ export default () => {
           aria-label="Read more about Skyhitz on instagram"
           style={[{ fontSize: 16, color: Colors.white }]}
         >
-          <FontAwesome name="instagram" size={16} color={Colors.white} />
+          <Insta />
         </Anchor>
       </View>
       <View style={{ marginRight: 10 }}>
         <Anchor
           target="_blank"
-          href="https://angel.co/skyhitz"
-          aria-label="Read more about Skyhitz on angellist"
+          href="https://github.com/skyhitz"
+          aria-label="Audit the code of Skyhitz on github"
           style={[{ fontSize: 16, color: Colors.white }]}
         >
-          <FontAwesome name="angellist" size={16} color={Colors.white} />
+          <Github />
         </Anchor>
       </View>
     </View>

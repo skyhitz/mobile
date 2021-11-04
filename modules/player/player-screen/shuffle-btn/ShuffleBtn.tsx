@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
-import { Feather } from '@expo/vector-icons';
+import ShuffleIcon from 'app/modules/ui/icons/shuffle';
 import Colors from 'app/constants/Colors';
 import cursorPointer from 'app/constants/CursorPointer';
 type Stores = typeof stores;
@@ -17,7 +17,7 @@ const ShuffleBtn = inject((stores: Stores) => ({
         style={[styles.controlTouch, cursorPointer]}
         onPress={() => toggleShuffle()}
       >
-        <Feather name="shuffle" size={size} color={Colors.lightBrandBlue} />
+        <ShuffleIcon size={size} color={Colors.lightBrandBlue} />
       </Pressable>
     );
   }
@@ -26,7 +26,7 @@ const ShuffleBtn = inject((stores: Stores) => ({
       style={[styles.controlTouch, cursorPointer]}
       onPress={() => toggleShuffle()}
     >
-      <Feather name="shuffle" size={size} color="white" />
+      <ShuffleIcon size={size} color={Colors.white} />
     </Pressable>
   );
 });
