@@ -7,8 +7,8 @@ function Icon({ color, size = 24 }) {
       fill="none"
       stroke={color ? color : 'currentColor'}
       viewBox="0 0 24 24"
-      width={'6%'}
-      height={'6%'}
+      width={size}
+      height={size}
     >
       <path
         strokeLinecap="round"

@@ -72,7 +72,7 @@ export default observer(() => {
           style={[styles.button, cursorPointer]}
           onPress={() => playerStore.hidePlayer()}
         >
-          <ChevronDown size={24} />
+          <ChevronDown size={24} color={Colors.white} />
         </Pressable>
       </View>
       <VideoPlayer />

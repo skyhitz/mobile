@@ -17,7 +17,9 @@ export default observer(() => {
         style={[cursorPointer]}
       >
         <View style={styles.section}>
-          <ChevronUpIcon color={Colors.white} />
+          <View style={styles.icon}>
+            <ChevronUpIcon color={Colors.white} />
+          </View>
           <Text
             style={styles.entryTitle}
             ellipsizeMode="tail"
@@ -84,5 +86,9 @@ let styles = StyleSheet.create({
   },
   arrowUp: {
     alignSelf: 'center',
+  },
+  icon: {
+    marginLeft: 10,
+    marginRight: 10,
   },
 });

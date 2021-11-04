@@ -32,7 +32,7 @@ export default observer(() => {
         <Pressable style={cursorPointer} onPress={handleLikesNavigation}>
           <View style={styles.row}>
             <View style={styles.leftSection}>
-              <LikeIcon size={28} color={Colors.brandBlue} />
+              <LikeIcon size={24} color={Colors.brandBlue} />
               <Text style={styles.likesText}>Likes</Text>
             </View>
             <View style={styles.rightSection}>
