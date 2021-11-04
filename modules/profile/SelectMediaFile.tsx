@@ -167,7 +167,7 @@ export default observer(() => {
     await entryStore.create();
     await userEntriesStore.refreshEntries();
     entryStore.clearStore();
-    linkTo('/profile');
+    linkTo('/dashboard/profile');
   };
 
   if (entryStore.uploadingError) {
