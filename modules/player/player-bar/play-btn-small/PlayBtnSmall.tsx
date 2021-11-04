@@ -15,7 +15,7 @@ export default observer(() => {
         style={[styles.playBtnWrapper, cursorPointer]}
         onPress={() => playerStore.pauseAsync()}
       >
-        <Pause size={24} color={'white'} />
+        <Pause size={22} color={'white'} />
       </Pressable>
     );
   }
@@ -24,13 +24,13 @@ export default observer(() => {
       style={[styles.playBtnWrapper, cursorPointer]}
       onPress={() => playerStore.playAsync()}
     >
-      <Play size={24} color={'white'} />
+      <Play size={22} color={'white'} />
     </Pressable>
   );
 });
 
 let styles = StyleSheet.create({
   playBtnWrapper: {
-    marginRight: 5,
+    marginRight: 10,
   },
 });
