@@ -18,6 +18,8 @@ import DollarIcon from 'app/modules/ui/icons/dollar';
 import PieIcon from 'app/modules/ui/icons/pie';
 import CircleIcon from 'app/modules/ui/icons/circle';
 
+const SwitchWeb: any = Switch;
+
 export default observer(({ route }) => {
   const { entryStore, userEntriesStore } = Stores();
   const { goBack } = useNavigation();
@@ -68,17 +70,18 @@ export default observer(({ route }) => {
         >
           {'Available for Sale: '}
         </Text>
-        <Switch
+        <SwitchWeb
           onValueChange={(forSale) =>
             entryStore.updateAvailableForSale(forSale)
           }
           value={entryStore.availableForSale}
           style={styles.switch}
+          activeThumbColor={Colors.defaultTextLight}
           trackColor={{
             false: Colors.defaultTextLight,
             true: Colors.lightBrandBlue,
           }}
-          thumbColor={Colors.lightGrey}
+          thumbColor={Colors.defaultTextLight}
         />
       </View>
       <View style={styles.field}>

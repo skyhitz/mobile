@@ -1,40 +1,35 @@
 import React from 'react';
 import { StyleSheet, Pressable, View, Text } from 'react-native';
-import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import RemoveIcon from 'app/modules/ui/icons/remove';
 import Colors from 'app/constants/Colors';
 import * as stores from 'app/skyhitz-common';
+import { Stores } from 'app/functions/Stores';
+import { useNavigation } from '@react-navigation/native';
+
 type Stores = typeof stores;
 
-@inject((stores: Stores) => ({
-  remove: stores.entryStore.remove.bind(stores.entryStore),
-  refreshUserEntries: stores.userEntriesStore.refreshEntries.bind(
-    stores.userEntriesStore
-  ),
-}))
-export default class RemoveFromMyMusicRow extends React.Component<any, any> {
-  async handleRemoveEntry() {
-    await this.props.remove(
-      this.props.entry.id,
-      this.props.entry.cloudinaryPublicId
-    );
-    await this.props.refreshUserEntries();
-    this.props.navigation.goBack();
+export default observer(({ entry }) => {
+  const { userEntriesStore, entryStore } = Stores();
+  const { goBack } = useNavigation();
+
+  const handleRemoveEntry = async () => {
+    await entryStore.remove(entry.id, entry.cloudinaryPublicId);
+    await userEntriesStore.refreshEntries();
+    goBack();
+  };
+  if (!entry) {
+    return null;
   }
-  render() {
-    if (!this.props.entry) {
-      return null;
-    }
-    return (
-      <Pressable onPress={this.handleRemoveEntry.bind(this)}>
-        <View style={styles.field}>
-          <RemoveIcon size={20} color={Colors.white} />
-          <Text style={styles.text}>Remove from platform</Text>
-        </View>
-      </Pressable>
-    );
-  }
-}
+  return (
+    <Pressable onPress={handleRemoveEntry}>
+      <View style={styles.field}>
+        <RemoveIcon size={20} color={Colors.white} />
+        <Text style={styles.text}>Remove from platform</Text>
+      </View>
+    </Pressable>
+  );
+});
 
 var styles = StyleSheet.create({
   field: {
