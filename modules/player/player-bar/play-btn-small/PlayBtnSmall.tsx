@@ -31,8 +31,6 @@ export default observer(() => {
 
 let styles = StyleSheet.create({
   playBtnWrapper: {
-    // width: 39,
-    // height: 39,
-    // justifyContent: 'center',
+    marginRight: 5,
   },
 });
