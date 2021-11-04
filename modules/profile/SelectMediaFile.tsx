@@ -359,7 +359,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btn: {
-    marginTop: 30,
+    marginTop: 20,
+    marginBottom: 20,
   },
   imageLoader: {
     borderRadius: circleBorderRadius,
