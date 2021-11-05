@@ -1,9 +1,9 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
+import CloseIcon from 'app/modules/ui/icons/x';
 
 export default observer((props) => {
   let { entryStore } = Stores();
@@ -17,7 +17,7 @@ export default observer((props) => {
             props.navigation.goBack();
           }}
         >
-          <MaterialIcons name="close" size={28} color={Colors.white} />
+          <CloseIcon color={Colors.white} />
         </Pressable>
         <View>
           <Text style={styles.modalTitle}>Buy Credits</Text>

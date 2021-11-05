@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { EvilIcons } from '@expo/vector-icons';
+import LikeIcon from 'app/modules/ui/icons/like';
+import ChevronRight from 'app/modules/ui/icons/chevron-right';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
@@ -31,16 +32,12 @@ export default observer(() => {
         <Pressable style={cursorPointer} onPress={handleLikesNavigation}>
           <View style={styles.row}>
             <View style={styles.leftSection}>
-              <EvilIcons name={'like'} size={30} color={Colors.brandBlue} />
+              <LikeIcon size={24} color={Colors.brandBlue} />
               <Text style={styles.likesText}>Likes</Text>
             </View>
             <View style={styles.rightSection}>
               <Text style={styles.videosText}>{likesCopy()}</Text>
-              <EvilIcons
-                name={'chevron-right'}
-                size={36}
-                color={Colors.defaultTextLight}
-              />
+              <ChevronRight size={28} color={Colors.defaultTextLight} />
             </View>
           </View>
         </Pressable>
@@ -88,5 +85,6 @@ let styles = StyleSheet.create({
   videosText: {
     color: Colors.defaultTextDark,
     paddingLeft: 5,
+    marginRight: 5,
   },
 });

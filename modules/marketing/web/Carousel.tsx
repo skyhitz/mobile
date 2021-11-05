@@ -78,7 +78,7 @@ export type ScrollEvent = {
 //   contentContainerStyle?: any;
 // };
 
-declare type CarouselGestureState = {
+type CarouselGestureState = {
   stateID: number;
   moveX: number;
   moveY: number;
@@ -91,7 +91,7 @@ declare type CarouselGestureState = {
   numberActiveTouches: number;
 };
 
-declare type CarouselRenderProps<T> = {
+type CarouselRenderProps<T> = {
   /**
    * index of item in data collection.
    */
@@ -118,7 +118,7 @@ declare type CarouselRenderProps<T> = {
   animatedValue: Animated.Value;
 };
 
-declare type CarouselProps<T> = {
+type CarouselProps<T> = {
   /**
    * applied to the content container within FlatList.
    * ```
@@ -241,8 +241,6 @@ declare type CarouselProps<T> = {
    */
   useNativeDriver?: boolean;
 };
-
-declare class Carousel<T> extends Component<CarouselProps<T>> {}
 
 const { width: screenWidth } = Dimensions.get('window');
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);

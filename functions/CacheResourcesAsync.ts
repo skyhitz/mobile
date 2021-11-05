@@ -1,9 +1,3 @@
-import {
-  FontAwesome,
-  EvilIcons,
-  MaterialIcons,
-  Feather,
-} from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import * as React from 'react';
 import RalewayLight from 'app/assets/fonts/Raleway-Light.ttf';
@@ -27,10 +21,6 @@ export default function useCachedResources() {
       try {
         // Load fonts
         await Font.loadAsync({
-          ...FontAwesome.font,
-          ...EvilIcons.font,
-          ...MaterialIcons.font,
-          ...Feather.font,
           'Raleway-Light': {
             uri: RalewayLight,
             display: FontDisplay.SWAP,

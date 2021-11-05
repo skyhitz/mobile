@@ -68,7 +68,7 @@ const ProfileSettingsNavigator = () => {
         name="MyMusicScreen"
         component={MyMusicScreen}
         options={{
-          title: 'My Music',
+          title: 'My Beats',
           headerTitleStyle: { color: Colors.white },
           headerStyle: {
             backgroundColor: Colors.headerBackground,

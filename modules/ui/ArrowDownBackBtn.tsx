@@ -1,9 +1,9 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { EvilIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import ChevronDownIcon from 'app/modules/ui/icons/chevron-down';
 
 export default () => {
   const { goBack } = useNavigation();
@@ -12,12 +12,7 @@ export default () => {
       onPress={() => goBack()}
       style={[styles.arrowDownTouchableArea, cursorPointer]}
     >
-      <EvilIcons
-        name={'chevron-down'}
-        size={36}
-        color={Colors.white}
-        style={styles.arrowDown}
-      />
+      <ChevronDownIcon size={36} color={Colors.white} />
     </Pressable>
   );
 };

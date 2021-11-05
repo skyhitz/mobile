@@ -1,11 +1,11 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import Colors from 'app/constants/Colors';
 import SelectMediaFile from 'app/modules/profile/SelectMediaFile';
 import { inject } from 'mobx-react';
 import * as stores from 'app/skyhitz-common';
 import cursorPointer from 'app/constants/CursorPointer';
+import CloseIcon from 'app/modules/ui/icons/x';
 type Stores = typeof stores;
 
 @inject((stores: Stores) => ({
@@ -25,7 +25,7 @@ export default class UploadMusicModal extends React.Component<any, any> {
               this.props.navigation.goBack();
             }}
           >
-            <MaterialIcons name="close" size={28} color={Colors.white} />
+            <CloseIcon size={28} color={Colors.white} />
           </Pressable>
           <View>
             <Text style={styles.modalTitle}>New Beat</Text>

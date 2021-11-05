@@ -11,7 +11,6 @@ import {
   Alert,
 } from 'react-native';
 import { observer } from 'mobx-react';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
@@ -20,6 +19,10 @@ import cursorPointer from 'app/constants/CursorPointer';
 import { Stores } from 'app/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
+import PieChartIcon from 'app/modules/ui/icons/pie';
+import InfoIcon from 'app/modules/ui/icons/info-circle';
+import DollarIcon from 'app/modules/ui/icons/dollar';
+import CircleIcon from 'app/modules/ui/icons/circle';
 
 const SwitchWeb: any = Switch;
 
@@ -164,7 +167,7 @@ export default observer(() => {
     await entryStore.create();
     await userEntriesStore.refreshEntries();
     entryStore.clearStore();
-    linkTo('/profile');
+    linkTo('/dashboard/profile');
   };
 
   if (entryStore.uploadingError) {
@@ -185,12 +188,7 @@ export default observer(() => {
     <View style={styles.wrap}>
       <View style={styles.inputContainerTop}>
         <View style={styles.field}>
-          <FontAwesome
-            name="info-circle"
-            size={24}
-            color={Colors.dividerBackground}
-            style={styles.placeholderIcon}
-          />
+          <InfoIcon size={24} color={Colors.dividerBackground} />
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -208,12 +206,7 @@ export default observer(() => {
           />
         </View>
         <View style={styles.field}>
-          <FontAwesome
-            name="info-circle"
-            size={24}
-            color={Colors.dividerBackground}
-            style={styles.placeholderIcon}
-          />
+          <InfoIcon size={24} color={Colors.dividerBackground} />
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -230,12 +223,7 @@ export default observer(() => {
           />
         </View>
         <View style={styles.field}>
-          <MaterialIcons
-            name="description"
-            size={22}
-            color={Colors.dividerBackground}
-            style={styles.placeholderIcon}
-          />
+          <InfoIcon size={22} color={Colors.dividerBackground} />
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -252,15 +240,13 @@ export default observer(() => {
           />
         </View>
         <View style={styles.field}>
-          <MaterialIcons
-            name="circle"
+          <CircleIcon
             size={10}
             color={
               entryStore.availableForSale
                 ? Colors.lightBrandBlue
                 : Colors.dividerBackground
             }
-            style={styles.placeholderIcon}
           />
           <Text
             style={styles.priceDescription}
@@ -289,12 +275,7 @@ export default observer(() => {
         {entryStore.availableForSale ? (
           <>
             <View style={styles.field}>
-              <MaterialIcons
-                name={'attach-money'}
-                size={20}
-                color={Colors.dividerBackground}
-                style={styles.placeholderIcon}
-              />
+              <DollarIcon size={20} color={Colors.dividerBackground} />
 
               <Text
                 style={styles.priceUSDDescription}
@@ -323,12 +304,7 @@ export default observer(() => {
               />
             </View>
             <View style={styles.field}>
-              <FontAwesome
-                name="pie-chart"
-                size={24}
-                color={Colors.dividerBackground}
-                style={styles.placeholderIcon}
-              />
+              <PieChartIcon size={24} color={Colors.dividerBackground} />
               <Text
                 style={styles.priceDescription}
                 ellipsizeMode="tail"
@@ -383,7 +359,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btn: {
-    marginTop: 30,
+    marginTop: 20,
+    marginBottom: 20,
   },
   imageLoader: {
     borderRadius: circleBorderRadius,
