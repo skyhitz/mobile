@@ -1,4 +1,3 @@
-/// <reference path="_document.d.ts" />
 // @generated: @expo/next-adapter@2.0.6
 import { getInitialProps } from '@expo/next-adapter/document';
 import Document, { Head, Html, NextScript, Main } from 'next/document';
