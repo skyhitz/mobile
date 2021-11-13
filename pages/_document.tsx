@@ -74,7 +74,6 @@ class CustomDocument extends Document {
           <meta name="theme-color" content="#000" />
           <title>Skyhitz - Beats market for music creators</title>
           <link rel="canonical" href="https://skyhitz.io" />
-          <link rel="manifest" href="/manifest.json" />
           <link
             rel="shortcut icon"
             href="/img/favicon.ico"
