@@ -1,4 +1,5 @@
 @font-face {
   font-family: 'Raleway-Light';
   src: url('/fonts/Raleway-Light.ttf');
+  font-display: swap;
 }

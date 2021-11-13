@@ -81,8 +81,9 @@ class CustomDocument extends Document {
           />
           <link
             rel="preload"
-            href="/fonts/Raleway-Light.ttf"
             as="font"
+            href="/fonts/Raleway-Light.ttf"
+            type="font/ttf"
             crossOrigin=""
           />
           <link href="/fonts/fonts.css" rel="stylesheet" />
