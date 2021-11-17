@@ -1,0 +1,23 @@
+VERSION="2.1.0"
+
+NETWORK_PASSPHRASE="Public Global Stellar Network ; September 2015"
+
+ACCOUNTS=[
+"GBGNRA46ZTWAO3L2QWBQBUMFKXELI3DWOB2PZAVL6YIFQQTFFQXQMQCJ",
+]
+
+[DOCUMENTATION]
+ORG_NAME="Skyhitz"
+ORG_URL="https://skyhitz.io"
+ORG_LOGO="https://skyhitz.io/assets/icon-512.png"
+ORG_DESCRIPTION="Music NFT Marketplace on Stellar and IPFS"
+ORG_TWITTER="Skyhitz"
+ORG_OFFICIAL_EMAIL="alejandro@skyhitzmusic.com"
+ORG_SUPPORT_EMAIL="alejandro@skyhitzmusic.com"
+
+[[PRINCIPALS]]
+name="Alejo Skyhitz"
+email="alejandro@skyhitzmusic.com"
+keybase="alejomendoza"
+twitter="alejoskyhitz"
+github="alejomendoza"
