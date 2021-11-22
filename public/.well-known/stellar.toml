@@ -9,7 +9,7 @@ ACCOUNTS=[
 [DOCUMENTATION]
 ORG_NAME="Skyhitz"
 ORG_URL="https://skyhitz.io"
-ORG_LOGO="https://skyhitz.io/assets/icon-512.png"
+ORG_LOGO="https://skyhitz.io/img/icon-512.png"
 ORG_DESCRIPTION="Music NFT Marketplace on Stellar and IPFS"
 ORG_TWITTER="Skyhitz"
 ORG_OFFICIAL_EMAIL="alejandro@skyhitzmusic.com"
@@ -21,3 +21,10 @@ email="alejandro@skyhitzmusic.com"
 keybase="alejomendoza"
 twitter="alejoskyhitz"
 github="alejomendoza"
+
+[[CURRENCIES]]
+code="SKYHITZ"
+issuer="GBGNRA46ZTWAO3L2QWBQBUMFKXELI3DWOB2PZAVL6YIFQQTFFQXQMQCJ"
+name="Skyhitz"
+desc="Utility token for Skyhitz products."
+image="https://res.cloudinary.com/skyhitz/image/upload/v1637602817/web/skyhitz-token.png"
