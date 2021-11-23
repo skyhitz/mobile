@@ -9,16 +9,6 @@ class CustomDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${GoogleTagManagerId}');`,
-            }}
-          ></script> */}
           <meta
             name="title"
             content="Skyhitz - Beats market for music creators"
@@ -74,39 +64,16 @@ class CustomDocument extends Document {
           <meta name="theme-color" content="#000" />
           <title>Skyhitz - Beats market for music creators</title>
           <link rel="canonical" href="https://skyhitz.io" />
-          <link
-            rel="shortcut icon"
-            href="/img/favicon.ico"
-            type="image/x-icon"
-          />
+          <link rel="icon" href="/img/favicon.ico" />
           <link
             rel="preload"
             as="font"
             href="/fonts/Raleway-Light.ttf"
             type="font/ttf"
-            crossOrigin=""
           />
           <link href="/fonts/fonts.css" rel="stylesheet" />
-          {/* <link
-            rel="preload"
-            as="image"
-            href="https://res.cloudinary.com/skyhitz/image/upload/c_scale,q_auto:good,w_1313/v1582299226/web/live-push.jpg"
-          /> */}
-          {/* <link
-            href="https://www.googletagmanager.com"
-            rel="preconnect"
-            crossOrigin="true"
-          /> */}
         </Head>
         <body>
-          {/* <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${GoogleTagManagerId}`}
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
-            ></iframe>
-          </noscript> */}
           <Main />
           <NextScript />
         </body>
