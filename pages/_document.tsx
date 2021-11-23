@@ -72,6 +72,7 @@ class CustomDocument extends Document {
             type="font/ttf"
             crossOrigin=""
           />
+          <link rel="preload" href="/fonts/fonts.css" as="style" />
           <link href="/fonts/fonts.css" rel="stylesheet" />
         </Head>
         <body>
