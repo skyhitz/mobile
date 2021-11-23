@@ -22,15 +22,15 @@ export default function MainWrapper() {
     >
       <View style={{ alignItems: 'center' }}>
         <H1 style={isTablet ? styles.titleTablet : styles.titleDesktop}>
-          Beats market for music creators
+          Music NFTs on Stellar
         </H1>
         <P
           style={
             isTablet ? styles.descriptionTablet : styles.descriptionDesktop
           }
         >
-          Upload exclusive beats for sale and buy fresh songwriting ideas from
-          other music producers. Join a music community of beatmakers!
+          Upload, buy or sell music NFTs on the Stellar Network. Join a
+          community of beatmakers!
         </P>
         <Pressable onPress={() => linkTo('/accounts/sign-up')}>
           <View

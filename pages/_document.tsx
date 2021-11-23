@@ -11,15 +11,15 @@ class CustomDocument extends Document {
         <Head>
           <meta
             name="title"
-            content="Skyhitz - Beats market for music creators"
+            content="Skyhitz - Music NFT marketplace on Stellar"
           />
           <meta
             name="description"
-            content="Upload exclusive beats for sale and buy fresh songwriting ideas from other music producers. Join a music community of beatmakers!"
+            content="Upload, buy or sell music NFTs on the Stellar Network. Join a music community of beatmakers!"
           />
           <meta
             name="keywords"
-            content="beats market, beats website, lofi beats, fresh beats, music creators, exclusive beats for sale"
+            content="music nfts, beats market, beats website, lofi beats, fresh beats, music creators, exclusive beats for sale"
           />
           <meta name="twitter:card" content="app" />
           <meta name="twitter:site" content="@skyhitzio" />
