@@ -70,6 +70,7 @@ class CustomDocument extends Document {
             as="font"
             href="/fonts/Raleway-Light.ttf"
             type="font/ttf"
+            crossOrigin=""
           />
           <link href="/fonts/fonts.css" rel="stylesheet" />
         </Head>
