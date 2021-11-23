@@ -82,6 +82,8 @@ export class PlayerStore {
   }
 
   mountVideo = (component) => {
+    if (!component) return;
+
     this.video = component;
     this.loadNewPlaybackInstance(false);
   };
@@ -102,6 +104,7 @@ export class PlayerStore {
         progressUpdateIntervalMillis: 50,
       }
     );
+    console.log(this.video);
     this.playbackInstance = this.video;
     if (playing && !this.isPlaying) {
       this.playAsync();
@@ -140,14 +143,14 @@ export class PlayerStore {
   async playAsync() {
     if (this.playbackInstanceExists) {
       this.setPlaybackState('PLAYING');
-      return await this.playbackInstance.playAsync();
+      return await this.playbackInstance.setStatusAsync({ shouldPlay: true });
     }
   }
 
   async pauseAsync() {
     if (this.playbackInstanceExists) {
       this.setPlaybackState('PAUSED');
-      await this.playbackInstance.pauseAsync();
+      await this.playbackInstance.setStatusAsync({ shouldPlay: false });
       this.setPlaybackState('PAUSED');
       return true;
     }
@@ -156,7 +159,10 @@ export class PlayerStore {
   async stopAsync() {
     if (this.playbackInstanceExists) {
       this.setPlaybackState('PAUSED');
-      return await this.playbackInstance.stopAsync();
+      return await this.playbackInstance.setStatusAsync({
+        shouldPlay: false,
+        positionMillis: 0,
+      });
     }
   }
 
