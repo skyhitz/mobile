@@ -104,7 +104,6 @@ export class PlayerStore {
         progressUpdateIntervalMillis: 50,
       }
     );
-    console.log(this.video);
     this.playbackInstance = this.video;
     if (playing && !this.isPlaying) {
       this.playAsync();
