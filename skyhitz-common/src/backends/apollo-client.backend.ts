@@ -1,86 +1,52 @@
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  from,
+  createHttpLink,
+} from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+import { setContext } from '@apollo/client/link/context';
+
 import { observable } from 'mobx';
 import { Config } from '../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-let networkInterface = createNetworkInterface({
+export let forceSignOut = observable.box(false);
+
+const httpLink = createHttpLink({
   uri: Config.GRAPHQL_URL,
 });
 
-export let forceSignOut = observable.box(false);
-
-/**
- * Gets the JWT token from local storage and passes it
- * on the authorization headers for each request.
- */
-networkInterface.use([
-  {
-    async applyMiddleware(req: any, next: any) {
-      if (!req.options.headers) {
-        req.options.headers = {};
-      }
-      const userData = await AsyncStorage.getItem('userData');
-      if (userData) {
-        const { jwt } = JSON.parse(userData);
-        if (jwt) {
-          req.options.headers.authorization = `Bearer ${jwt}`;
-        }
-      }
-
-      next();
+const authLink = setContext(async (_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const userData = await AsyncStorage.getItem('userData');
+  if (userData) {
+    const { jwt } = JSON.parse(userData);
+    if (jwt) {
+      return {
+        headers: {
+          ...headers,
+          authorization: jwt ? `Bearer ${jwt}` : '',
+        },
+      };
+    }
+  }
+  return {
+    headers: {
+      ...headers,
     },
-  },
-]);
+  };
+});
 
-/**
- * Loggs out the user when making unauthorized requests.
- */
-networkInterface.useAfter([
-  {
-    applyAfterware({ response }: any, next: any) {
-      let isUnauthorized = false;
-
-      if (!response.ok) {
-        response
-          .clone()
-          .text()
-          .then((bodyText: any) => {
-            console.info(
-              `Network Error: ${response.status} (${response.statusText}) - ${bodyText}`
-            );
-            if (response.statusText === 'Unauthorized') {
-              forceSignOut.set(true);
-              return;
-            }
-
-            next();
-          });
-      } else {
-        response
-          .clone()
-          .json()
-          .then(({ errors }: any) => {
-            if (errors) {
-              console.info('GraphQL Errors:', errors);
-              errors.some((error: any) => {
-                if (error.message === 'Unauthorized User') {
-                  return (isUnauthorized = true);
-                }
-              });
-            }
-          })
-          .then(() => {
-            if (isUnauthorized) {
-              forceSignOut.set(true);
-              return;
-            }
-            next();
-          });
-      }
-    },
-  },
-]);
+const logoutLink = onError(({ networkError }: any) => {
+  if (
+    (networkError && networkError.statusCode === 401) ||
+    networkError.statusText === 'Unauthorized'
+  )
+    forceSignOut.set(true);
+});
 
 export const client = new ApolloClient({
-  networkInterface: networkInterface,
+  link: from([authLink, logoutLink, httpLink]),
+  cache: new InMemoryCache(),
 });
