@@ -3,7 +3,7 @@
     "dev": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=test expo start",
     "staging": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=development expo start",
     "start:dev": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=test yarn next dev",
-    "start:staging": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=staging yarn next dev",
+    "start:staging": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=development yarn next dev",
     "start:prod": "NEXT_PUBLIC_EXPO_SKYHITZ_ENV=production yarn next dev",
     "expo:publish": "expo publish",
     "eject": "expo eject",

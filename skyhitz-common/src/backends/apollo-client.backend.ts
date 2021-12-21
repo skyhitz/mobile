@@ -15,6 +15,9 @@ export let forceSignOut = observable.box(false);
 
 const httpLink = createHttpLink({
   uri: Config.GRAPHQL_URL,
+  fetchOptions: {
+    mode: 'no-cors',
+  },
 });
 
 const authLink = setContext(async (_, { headers }) => {
