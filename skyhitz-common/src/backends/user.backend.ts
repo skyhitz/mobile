@@ -69,7 +69,6 @@ export class UserBackend {
         return data;
       })
       .catch(({ graphQLErrors }) => {
-        console.log(graphQLErrors);
         let [{ message }] = graphQLErrors;
         throw message;
       });

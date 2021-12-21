@@ -1,16 +1,10 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { H1, Main, P } from '@expo/html-elements';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Colors from 'app/constants/Colors';
 import { useMediaQuery } from 'react-responsive';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
-import LoadingScreen from 'app/modules/accounts/LoadingScreen';
-
-const ScreenShots = lazy(() => import('./Screenshots'));
-const SuspenseLoading = (props) => (
-  <Suspense fallback={<LoadingScreen />}>{props.children}</Suspense>
-);
 
 // https://apps.apple.com/us/app/skyhitz/id1105406020
 
@@ -28,15 +22,15 @@ export default function MainWrapper() {
     >
       <View style={{ alignItems: 'center' }}>
         <H1 style={isTablet ? styles.titleTablet : styles.titleDesktop}>
-          Beats market for music creators
+          Music NFTs on Stellar
         </H1>
         <P
           style={
             isTablet ? styles.descriptionTablet : styles.descriptionDesktop
           }
         >
-          Upload exclusive beats for sale and buy fresh songwriting ideas from
-          other music producers. Join a music community of beatmakers!
+          Upload, buy or sell music NFTs on the Stellar Network. Join a
+          community of beatmakers!
         </P>
         <Pressable onPress={() => linkTo('/accounts/sign-up')}>
           <View
@@ -68,9 +62,6 @@ export default function MainWrapper() {
             </Text>
           </View>
         </Pressable>
-        <SuspenseLoading>
-          <ScreenShots />
-        </SuspenseLoading>
       </View>
     </Main>
   );

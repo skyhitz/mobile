@@ -144,7 +144,7 @@ export function LazyAppStackNavigator({ user, headerShown }) {
           <>
             <AppStack.Screen
               name="Main"
-              component={MainTabNavigatorSuspense}
+              getComponent={() => MainTabNavigatorSuspense}
               options={{ headerShown: false }}
             />
           </>
@@ -153,19 +153,19 @@ export function LazyAppStackNavigator({ user, headerShown }) {
             {Platform.OS === 'web' ? (
               <AppStack.Screen
                 name="WebApp"
-                component={WebAppSuspense}
+                getComponent={() => WebAppSuspense}
                 options={{ headerShown: false }}
               />
             ) : (
               <AppStack.Screen
                 name="AuthScreen"
-                component={AuthScreenSuspense}
+                getComponent={() => AuthScreenSuspense}
                 options={{ headerShown: false, gestureEnabled: false }}
               />
             )}
             <AppStack.Screen
               name="SignUp"
-              component={SignUpScreenSuspense}
+              getComponent={() => SignUpScreenSuspense}
               options={{
                 headerShown: headerShown,
                 headerTitleStyle: { color: Colors.white },
@@ -179,7 +179,7 @@ export function LazyAppStackNavigator({ user, headerShown }) {
             />
             <AppStack.Screen
               name="SignIn"
-              component={SignInScreenSuspense}
+              getComponent={() => SignInScreenSuspense}
               options={{
                 headerShown: headerShown,
                 headerTitleStyle: { color: Colors.white },
@@ -193,7 +193,7 @@ export function LazyAppStackNavigator({ user, headerShown }) {
             />
             <AppStack.Screen
               name="Privacy"
-              component={PrivacySuspense}
+              getComponent={() => PrivacySuspense}
               options={{
                 headerShown: headerShown,
                 headerTitleStyle: { color: Colors.white },
@@ -207,7 +207,7 @@ export function LazyAppStackNavigator({ user, headerShown }) {
             />
             <AppStack.Screen
               name="Terms"
-              component={TermsSuspense}
+              getComponent={() => TermsSuspense}
               options={{
                 headerShown: headerShown,
                 headerTitleStyle: { color: Colors.white },
@@ -225,7 +225,7 @@ export function LazyAppStackNavigator({ user, headerShown }) {
       <AppStack.Group screenOptions={{ presentation: 'transparentModal' }}>
         <AppStack.Screen
           name="EditProfileModal"
-          component={EditProfileScreenSuspense}
+          getComponent={() => EditProfileScreenSuspense}
           options={{
             gestureEnabled: false,
             title: 'Edit Profile',
@@ -244,32 +244,32 @@ export function LazyAppStackNavigator({ user, headerShown }) {
         />
         <AppStack.Screen
           name="UploadMusicModal"
-          component={UploadMusicModalSuspense}
+          getComponent={() => UploadMusicModalSuspense}
           options={modalOptions}
         />
         <AppStack.Screen
           name="PaymentModal"
-          component={PaymentModalSuspense}
+          getComponent={() => PaymentModalSuspense}
           options={modalOptions}
         />
         <AppStack.Screen
           name="WithdrawalModal"
-          component={WithdrawalModalSuspense}
+          getComponent={() => WithdrawalModalSuspense}
           options={modalOptions}
         />
         <AppStack.Screen
           name="BuyOptionsModal"
-          component={BuyOptionsModalSuspense}
+          getComponent={() => BuyOptionsModalSuspense}
           options={modalOptions}
         />
         <AppStack.Screen
           name="EntryOptionsModal"
-          component={EntryOptionsModalSuspense}
+          getComponent={() => EntryOptionsModalSuspense}
           options={modalOptions}
         />
         <AppStack.Screen
           name="PricingOptionsModal"
-          component={PricingOptionsModalSuspense}
+          getComponent={() => PricingOptionsModalSuspense}
           options={modalOptions}
         />
       </AppStack.Group>
