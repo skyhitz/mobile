@@ -1,5 +1,5 @@
 import { client } from './apollo-client.backend';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { Entry } from '../models/entry.model';
 import { entriesIndex } from '../algolia/algolia';
 import { isTesting } from '../config/index';
@@ -158,7 +158,9 @@ export class EntriesBackend {
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", artist: "${artist}", id: "${id}", forSale: ${forSale}, price: ${price}, equityForSale: ${equityForSale}){
+        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", artist: "${artist}", id: "${id}", forSale: ${forSale}, price: ${price}, equityForSale: ${
+          equityForSale / 100
+        }){
           videoUrl
           imageUrl
           description

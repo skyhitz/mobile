@@ -1,5 +1,5 @@
 import { client } from './apollo-client.backend';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { SignUpForm } from '../types';
 import { isTesting } from '../config/index';
 
