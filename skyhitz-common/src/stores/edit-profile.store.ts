@@ -2,10 +2,10 @@ import { User } from '../models/user.model';
 import { observable, observe, action } from 'mobx';
 import { userBackend } from '../backends/user.backend';
 import { SessionStore } from './session.store';
-import { preBase64String, cloudinaryApiPath } from '../constants/constants';
+import { preBase64String, nftStorageApi } from '../constants/constants';
 
 export class EditProfileStore {
-  @observable error: string | undefined;
+  @observable error: string | undefined | unknown;
   @observable avatarUrl: string | undefined;
   @observable displayName: string | undefined;
   @observable description: string | undefined;
@@ -44,8 +44,7 @@ export class EditProfileStore {
     this.loadingAvatar = true;
     let data = new FormData();
     data.append('file', `${preBase64String}${image.base64}`);
-    data.append('folder', `/app/${this.sessionStore.user.username}/images`);
-    let res = await fetch(cloudinaryApiPath, { method: 'POST', body: data });
+    let res = await fetch(nftStorageApi, { method: 'POST', body: data });
     let { secure_url } = await res.json();
     this.updateAvatarUrl(secure_url);
     this.loadingAvatar = false;
