@@ -53,7 +53,6 @@ export default {
   },
   assetBundlePatterns: ['assets/images/*', 'assets/fonts/*'],
   extra: {
-    nftStorageKey: process.env.NFT_STORAGE_API_KEY,
     bugsnag: {
       apiKey: 'cf69bb38defd14395a7340170c8e41f6',
     },

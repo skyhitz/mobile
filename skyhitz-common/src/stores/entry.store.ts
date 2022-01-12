@@ -8,7 +8,6 @@ import { SessionStore } from './session.store';
 import { entriesBackend } from '../backends/entries.backend';
 import UniqueIdGenerator from '../utils/unique-id-generator';
 import { Platform } from 'react-native';
-import Constants from 'expo-constants';
 
 export class EntryStore {
   @observable uploadingVideo: boolean = false;
@@ -67,7 +66,7 @@ export class EntryStore {
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader(
       'Authorization',
-      'Bearer ' + Constants.manifest?.extra?.nftStorageKey
+      'Bearer ' + process.env.NFT_STORAGE_API_KEY
     );
 
     this.updateUploadingVideo(true);
