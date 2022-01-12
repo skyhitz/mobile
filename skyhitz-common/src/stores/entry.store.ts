@@ -66,7 +66,7 @@ export class EntryStore {
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader(
       'Authorization',
-      'Bearer ' + process.env.NFT_STORAGE_API_KEY
+      'Bearer ' + process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY
     );
 
     this.updateUploadingVideo(true);
