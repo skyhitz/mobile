@@ -134,7 +134,7 @@ export default observer(() => {
     let video: any;
     try {
       video = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: false,
         base64: true,
         quality: 1,
@@ -145,7 +145,7 @@ export default observer(() => {
     }
 
     if (video && !video.cancelled) {
-      await entryStore.uploadVideo(video);
+      await entryStore.webVideoUpload(video);
     }
   };
 
