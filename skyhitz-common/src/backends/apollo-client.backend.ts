@@ -41,7 +41,7 @@ const authLink = setContext(async (_, { headers }) => {
 const logoutLink = onError(({ networkError }: any) => {
   if (
     (networkError && networkError.statusCode === 401) ||
-    networkError.statusText === 'Unauthorized'
+    networkError?.statusText === 'Unauthorized'
   )
     forceSignOut.set(true);
 });

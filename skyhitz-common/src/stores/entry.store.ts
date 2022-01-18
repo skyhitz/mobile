@@ -226,7 +226,7 @@ export class EntryStore {
       this.artist,
       this.availableForSale,
       this.price,
-      this.equityForSale
+      this.availableForSale ? this.equityForSale : 0
     );
   }
 
