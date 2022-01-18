@@ -28,7 +28,7 @@ export default class UploadMusicModal extends React.Component<any, any> {
             <CloseIcon size={28} color={Colors.white} />
           </Pressable>
           <View>
-            <Text style={styles.modalTitle}>New Beat</Text>
+            <Text style={styles.modalTitle}>New NFT</Text>
           </View>
           <SelectMediaFile />
         </View>
@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
   modalWrap: {
     flex: 1,
     flexDirection: 'column',
-    maxHeight: 500,
     maxWidth: 600,
     width: '100%',
     backgroundColor: Colors.overlayBackground,

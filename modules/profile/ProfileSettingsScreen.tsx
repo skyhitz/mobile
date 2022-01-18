@@ -11,6 +11,7 @@ import LikesRow from 'app/modules/playlists/LikesRow';
 import MyMusicRow from 'app/modules/playlists/MyMusicRow';
 import { Stores } from 'app/functions/Stores';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
+import MintNFT from './MintNFT';
 
 const ProfileSettingsScreen = observer(() => {
   let { likesStore, userEntriesStore, paymentsStore } = Stores();
@@ -69,6 +70,19 @@ const ProfileSettingsNavigator = () => {
         component={MyMusicScreen}
         options={{
           title: 'My Beats',
+          headerTitleStyle: { color: Colors.white },
+          headerStyle: {
+            backgroundColor: Colors.headerBackground,
+            borderBottomWidth: 0,
+          },
+          headerTintColor: Colors.tabIconSelected,
+        }}
+      />
+      <ProfileSettingsStack.Screen
+        name="MintNFT"
+        component={MintNFT}
+        options={{
+          title: 'Mint NFT',
           headerTitleStyle: { color: Colors.white },
           headerStyle: {
             backgroundColor: Colors.headerBackground,

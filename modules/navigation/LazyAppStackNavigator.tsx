@@ -42,14 +42,7 @@ const PricingOptionsModalSuspense = (props) => (
     <PricingOptionsModal {...props} />
   </SuspenseLoading>
 );
-const UploadMusicModal = lazy(() =>
-  import('app/modules/profile/UploadMusicModal')
-);
-const UploadMusicModalSuspense = (props) => (
-  <SuspenseLoading>
-    <UploadMusicModal {...props} />
-  </SuspenseLoading>
-);
+
 const PaymentModal = lazy(() => import('app/modules/profile/PaymentModal'));
 const PaymentModalSuspense = (props) => (
   <SuspenseLoading>
@@ -242,11 +235,7 @@ export function LazyAppStackNavigator({ user, headerShown }) {
             },
           }}
         />
-        <AppStack.Screen
-          name="UploadMusicModal"
-          getComponent={() => UploadMusicModalSuspense}
-          options={modalOptions}
-        />
+
         <AppStack.Screen
           name="PaymentModal"
           getComponent={() => PaymentModalSuspense}

@@ -4,11 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
   Switch,
   Platform,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import * as ImagePicker from 'expo-image-picker';
@@ -23,80 +23,49 @@ import PieChartIcon from 'app/modules/ui/icons/pie';
 import InfoIcon from 'app/modules/ui/icons/info-circle';
 import DollarIcon from 'app/modules/ui/icons/dollar';
 import CircleIcon from 'app/modules/ui/icons/circle';
+import UploadIcon from 'app/modules/ui/icons/upload';
+import CheckIcon from 'app/modules/ui/icons/check';
 
 const SwitchWeb: any = Switch;
 
-const CircleWrap = (props) => (
-  <View
-    style={[
-      styles.imageLoader,
-      styles.activityIndicatorOffset,
-      { backgroundColor: Colors.overlayBackground },
-    ]}
-  >
-    {props.children}
-  </View>
-);
-
-const UploadView = ({ uploadingVideo, progress, selectVideo }) => {
-  if (uploadingVideo) {
-    return (
-      <CircleWrap>
-        <Text style={{ color: Colors.white, fontSize: progress ? 32 : 14 }}>
-          {progress ? progress + ' %' : 'Uploading'}
-        </Text>
-      </CircleWrap>
-    );
+const UploadView = ({ selectVideo, videoSelected, loadingVideo }) => {
+  if (loadingVideo) {
+    return <ActivityIndicator size="small" color={Colors.white} />;
+  }
+  if (videoSelected) {
+    return <CheckIcon size={30} color={Colors.white} />;
   }
   return (
     <Pressable style={cursorPointer} onPress={selectVideo}>
-      <CircleWrap>
-        <Text style={{ color: Colors.white }}>Select Video</Text>
-      </CircleWrap>
+      <UploadIcon size={30} color={Colors.white} />
     </Pressable>
   );
 };
 
-const UploadViewWrap = ({ uploadingVideo, progress, selectVideo }) => (
-  <View style={styles.wrap}>
-    <UploadView
-      uploadingVideo={uploadingVideo}
-      progress={progress}
-      selectVideo={selectVideo}
-    />
-    <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
-      Only original video music related material will be uploaded. We take
-      copyright law very seriously. Maximum file size allowed: 50MB
-    </Text>
-  </View>
-);
-
 const UploadErrorView = ({ uploadingError }) => (
   <View style={styles.wrap}>
-    <Text style={{ color: Colors.white, marginLeft: 20, marginRight: 20 }}>
+    <Text
+      style={{
+        color: Colors.white,
+        marginLeft: 20,
+        marginRight: 20,
+        fontSize: 16,
+      }}
+    >
       {uploadingError}
     </Text>
   </View>
 );
 
-const ArtworkSection = ({ loadingArtwork, artworkUrl, selectArtwork }) => {
-  if (loadingArtwork) {
-    return (
-      <CircleWrap>
-        <Text style={{ color: Colors.white }}>Uploading...</Text>
-      </CircleWrap>
-    );
-  }
-  if (!artworkUrl) {
+const ArtworkSection = ({ imageSelected, selectArtwork }) => {
+  if (!imageSelected) {
     return (
       <Pressable style={cursorPointer} onPress={selectArtwork}>
-        <CircleWrap>
-          <Text style={{ color: Colors.white }}>Select Artwork</Text>
-        </CircleWrap>
+        <UploadIcon size={30} color={Colors.white} />
       </Pressable>
     );
   }
-  return <Image source={{ uri: artworkUrl }} style={styles.imageLoader} />;
+  return <CheckIcon size={30} color={Colors.white} />;
 };
 
 export default observer(() => {
@@ -108,7 +77,7 @@ export default observer(() => {
 
   const getPermissionAsync = async () => {
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
       if (status !== 'granted') {
         Alert.alert(
           'Camera Permission',
@@ -134,7 +103,7 @@ export default observer(() => {
     let video: any;
     try {
       video = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: false,
         base64: true,
         quality: 1,
@@ -142,10 +111,21 @@ export default observer(() => {
       });
     } catch (e) {
       console.log('error', e);
+      entryStore.setUploadingError('Error picking file!');
     }
 
     if (video && !video.cancelled) {
-      await entryStore.webVideoUpload(video);
+      entryStore.setLoadingVideo(true);
+      const isMp4 = video.uri.startsWith('data:video/mp4');
+      if (!isMp4) {
+        entryStore.setUploadingError('Only mp4 files supported!');
+        return;
+      }
+
+      const res = await fetch(video.uri);
+      const file = await res.blob();
+      entryStore.setLoadingVideo(false);
+      entryStore.setVideoBlob(file);
     }
   };
 
@@ -159,7 +139,9 @@ export default observer(() => {
       exif: true,
     });
     if (image && !image.cancelled) {
-      await entryStore.uploadArtwork(image);
+      const res = await fetch(image.uri);
+      const file = await res.blob();
+      entryStore.setImageBlob(file);
     }
   };
 
@@ -174,202 +156,205 @@ export default observer(() => {
     return <UploadErrorView uploadingError={entryStore.uploadingError} />;
   }
 
-  if (entryStore.currentView == 'upload') {
-    return (
-      <UploadViewWrap
-        selectVideo={selectVideo}
-        progress={entryStore.progress}
-        uploadingVideo={entryStore.uploadingVideo}
-      />
-    );
-  }
-
   return (
     <View style={styles.wrap}>
-      <View style={styles.inputContainerTop}>
-        <View style={styles.field}>
-          <InfoIcon size={24} color={Colors.dividerBackground} />
-          <TextInput
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            placeholder="Artist"
-            autoCorrect={false}
-            autoFocus={true}
-            style={[
-              styles.input,
-              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-            ]}
-            placeholderTextColor="white"
-            value={entryStore.artist}
-            onChangeText={(t) => entryStore.updateArtist(t)}
-            maxLength={34}
-          />
-        </View>
-        <View style={styles.field}>
-          <InfoIcon size={24} color={Colors.dividerBackground} />
-          <TextInput
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            placeholder="Title"
-            autoCorrect={false}
-            style={[
-              styles.input,
-              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-            ]}
-            placeholderTextColor="white"
-            value={entryStore.title}
-            onChangeText={(t) => entryStore.updateTitle(t)}
-            maxLength={34}
-          />
-        </View>
-        <View style={styles.field}>
-          <InfoIcon size={22} color={Colors.dividerBackground} />
-          <TextInput
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            placeholder="Description"
-            autoCorrect={false}
-            style={[
-              styles.input,
-              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-            ]}
-            placeholderTextColor="white"
-            value={entryStore.description}
-            onChangeText={(t) => entryStore.updateDescription(t)}
-            maxLength={60}
-          />
-        </View>
-        <View style={styles.field}>
-          <CircleIcon
-            size={10}
-            color={
-              entryStore.availableForSale
-                ? Colors.lightBrandBlue
-                : Colors.dividerBackground
-            }
-          />
-          <Text
-            style={styles.priceDescription}
-            ellipsizeMode="tail"
-            numberOfLines={1}
-          >
-            {'Available for Sale: '}
-          </Text>
-          <SwitchWeb
-            onValueChange={(forSale) =>
-              entryStore.updateAvailableForSale(forSale)
-            }
-            value={entryStore.availableForSale}
-            style={[
-              styles.switch,
-              Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-            ]}
-            activeThumbColor={Colors.defaultTextLight}
-            trackColor={{
-              false: Colors.defaultTextLight,
-              true: Colors.lightBrandBlue,
-            }}
-            thumbColor={Colors.defaultTextLight}
-          />
-        </View>
-        {entryStore.availableForSale ? (
-          <>
-            <View style={styles.field}>
-              <DollarIcon size={20} color={Colors.dividerBackground} />
-
-              <Text
-                style={styles.priceUSDDescription}
-                ellipsizeMode="tail"
-                numberOfLines={1}
-              >
-                {'Price USD: '}
-              </Text>
-              <TextInput
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-                returnKeyType={'done'}
-                placeholder=""
-                keyboardType={'numeric'}
-                autoCorrect={false}
-                style={[
-                  styles.priceInput,
-                  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-                ]}
-                placeholderTextColor="white"
-                value={entryStore.price ? entryStore.price.toString() : ''}
-                onChangeText={(price) =>
-                  entryStore.updatePrice(parseInt(price))
-                }
-                maxLength={30}
-              />
-            </View>
-            <View style={styles.field}>
-              <PieChartIcon size={24} color={Colors.dividerBackground} />
-              <Text
-                style={styles.priceDescription}
-                ellipsizeMode="tail"
-                numberOfLines={1}
-              >
-                {'Equity for Sale: '}
-                {entryStore.equityForSalePercentage}
-              </Text>
-
-              <Slider
-                style={{ flex: 1 }}
-                minimumValue={1}
-                maximumValue={100}
-                value={equityForSaleValue}
-                onValueChange={(target) => {
-                  entryStore.updateEquityForSalePercentage(target);
-                }}
-                step={1}
-                minimumTrackTintColor={Colors.brandBlue}
-                maximumTrackTintColor={Colors.backgroundTrackColor}
-                thumbTintColor={Colors.brandBlue}
-              />
-            </View>
-          </>
-        ) : (
-          <View style={styles.emptyField}></View>
-        )}
+      <View style={styles.field}>
+        <InfoIcon size={24} color={Colors.dividerBackground} />
+        <TextInput
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          placeholder="Artist"
+          autoCorrect={false}
+          autoFocus={true}
+          style={[
+            styles.input,
+            Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+          ]}
+          placeholderTextColor="white"
+          value={entryStore.artist}
+          onChangeText={(t) => entryStore.updateArtist(t)}
+          maxLength={34}
+        />
       </View>
-      <ArtworkSection
-        loadingArtwork={entryStore.loadingArtwork}
-        artworkUrl={entryStore.artworkUrl}
-        selectArtwork={selectArtwork}
-      />
+      <View style={styles.field}>
+        <InfoIcon size={24} color={Colors.dividerBackground} />
+        <TextInput
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          placeholder="Title"
+          autoCorrect={false}
+          style={[
+            styles.input,
+            Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+          ]}
+          placeholderTextColor="white"
+          value={entryStore.title}
+          onChangeText={(t) => entryStore.updateTitle(t)}
+          maxLength={34}
+        />
+      </View>
+      <View style={styles.field}>
+        <InfoIcon size={22} color={Colors.dividerBackground} />
+        <TextInput
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          placeholder="Description"
+          autoCorrect={false}
+          style={[
+            styles.input,
+            Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+          ]}
+          placeholderTextColor="white"
+          value={entryStore.description}
+          onChangeText={(t) => entryStore.updateDescription(t)}
+          maxLength={60}
+        />
+      </View>
+      <View style={styles.field}>
+        <CircleIcon
+          size={10}
+          color={
+            entryStore.availableForSale
+              ? Colors.lightBrandBlue
+              : Colors.dividerBackground
+          }
+        />
+        <Text
+          style={styles.priceDescription}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {'Available for Sale: '}
+        </Text>
+        <SwitchWeb
+          onValueChange={(forSale) =>
+            entryStore.updateAvailableForSale(forSale)
+          }
+          value={entryStore.availableForSale}
+          style={[
+            styles.switch,
+            Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+          ]}
+          activeThumbColor={Colors.defaultTextLight}
+          trackColor={{
+            false: Colors.defaultTextLight,
+            true: Colors.lightBrandBlue,
+          }}
+          thumbColor={Colors.defaultTextLight}
+        />
+      </View>
+      {entryStore.availableForSale && (
+        <>
+          <View style={styles.field}>
+            <DollarIcon size={20} color={Colors.dividerBackground} />
+
+            <Text
+              style={styles.priceUSDDescription}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {'Price USD: '}
+            </Text>
+            <TextInput
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+              returnKeyType={'done'}
+              placeholder=""
+              keyboardType={'numeric'}
+              autoCorrect={false}
+              style={[
+                styles.priceInput,
+                Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+              ]}
+              placeholderTextColor="white"
+              value={entryStore.price ? entryStore.price.toString() : ''}
+              onChangeText={(price) => entryStore.updatePrice(parseInt(price))}
+              maxLength={30}
+            />
+          </View>
+          <View style={styles.field}>
+            <PieChartIcon size={24} color={Colors.dividerBackground} />
+            <Text
+              style={styles.priceDescription}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {'Equity for Sale: '}
+              {entryStore.equityForSalePercentage}
+            </Text>
+
+            <Slider
+              style={{ flex: 1 }}
+              minimumValue={1}
+              maximumValue={100}
+              value={equityForSaleValue}
+              onValueChange={(target) => {
+                entryStore.updateEquityForSalePercentage(target);
+              }}
+              step={1}
+              minimumTrackTintColor={Colors.brandBlue}
+              maximumTrackTintColor={Colors.backgroundTrackColor}
+              thumbTintColor={Colors.brandBlue}
+            />
+          </View>
+        </>
+      )}
+      <View style={styles.field}>
+        <InfoIcon size={22} color={Colors.dividerBackground} />
+        <Text
+          style={styles.priceUSDDescription}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {'Artwork: '}
+        </Text>
+        <ArtworkSection
+          imageSelected={!!entryStore.imageBlob}
+          selectArtwork={selectArtwork}
+        />
+      </View>
+      <View style={styles.field}>
+        <InfoIcon size={22} color={Colors.dividerBackground} />
+        <Text
+          style={styles.priceUSDDescription}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {'MP4: '}
+        </Text>
+
+        <UploadView
+          videoSelected={!!entryStore.videoBlob}
+          selectVideo={selectVideo}
+          loadingVideo={entryStore.loadingVideo}
+        />
+      </View>
+      <View style={styles.field}>
+        <Text style={{ color: Colors.white }}>
+          Only original video music related material will be uploaded. We take
+          copyright law very seriously. Maximum file size allowed: 100MB
+        </Text>
+      </View>
+
       <View style={styles.btn}>
         <LargeBtn
           disabled={!entryStore.canCreate}
           onPress={onCreate}
-          text={entryStore.creating ? 'Creating...' : 'Done'}
+          text={entryStore.creating ? 'Creating...' : 'Mint'}
         />
       </View>
     </View>
   );
 });
 
-const circleSize = 120;
-const circleBorderRadius = circleSize / 2;
-
 const styles = StyleSheet.create({
   wrap: {
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flex: 1,
+    marginBottom: 100,
   },
   btn: {
-    marginTop: 20,
+    marginTop: 40,
     marginBottom: 20,
-  },
-  imageLoader: {
-    borderRadius: circleBorderRadius,
-    width: circleSize,
-    height: circleSize,
-    borderWidth: 2,
-    borderColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   activityIndicatorOffset: {
     paddingTop: 2,
@@ -379,11 +364,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 50,
-    flex: 1,
+    height: 70,
     borderBottomColor: Colors.dividerBackground,
     borderBottomWidth: 1,
-    minWidth: 367,
   },
   emptyField: {
     minHeight: 73,
@@ -396,8 +379,9 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: Colors.transparent,
     color: Colors.white,
-    fontSize: 14,
+    fontSize: 16,
     paddingLeft: 10,
+    flexGrow: 1,
   },
   priceInput: {
     backgroundColor: Colors.white,
@@ -414,7 +398,6 @@ const styles = StyleSheet.create({
   },
   inputContainerTop: {
     flex: 1,
-    maxHeight: 250,
     marginBottom: 30,
   },
   priceDescription: {
@@ -431,6 +414,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 20,
     maxWidth: 190,
-    width: 110,
+    flexGrow: 1,
   },
 });

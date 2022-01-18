@@ -30,7 +30,7 @@ export const likesStore = new LikesStore(
   sessionStore.session
 );
 export const paymentsStore = new PaymentsStore();
-export const entryStore = new EntryStore(sessionStore);
+export const entryStore = new EntryStore();
 export const userEntriesStore = new UserEntriesStore(sessionStore);
 
 export type Stores = {

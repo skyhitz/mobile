@@ -12,6 +12,7 @@ class UserPayload extends Payload {
   jwt?: string;
   phone?: string;
   description?: string;
+  pk?: string;
 }
 
 export class User extends UserPayload {
