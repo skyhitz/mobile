@@ -15,7 +15,7 @@ type Stores = typeof stores;
   entries: stores.userEntriesStore.entries,
   loading: stores.userEntriesStore.loading,
 }))
-export default class MyMusicScreen extends React.Component<any, any> {
+export default class CollectionScreen extends React.Component<any, any> {
   render() {
     return (
       <ScrollView
@@ -34,7 +34,7 @@ export default class MyMusicScreen extends React.Component<any, any> {
                 entry={entry}
                 options={null}
                 disablePlaylistMode={null}
-                previousScreen={'MyMusicScreen'}
+                previousScreen={'CollectionScreen'}
               />
             ),
             this.props.entries

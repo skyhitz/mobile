@@ -6,7 +6,7 @@ import Colors from 'app/constants/Colors';
 import ProfileSettingsTopContainer from 'app/modules/profile/ProfileSettingsTopContainer';
 import ShareAppBanner from 'app/modules/marketing/ShareAppBanner';
 import LikesScreen from 'app/modules/playlists/LikesScreen';
-import MyMusicScreen from 'app/modules/playlists/MyMusicScreen';
+import CollectionScreen from 'app/modules/playlists/CollectionScreen';
 import LikesRow from 'app/modules/playlists/LikesRow';
 import MyMusicRow from 'app/modules/playlists/MyMusicRow';
 import { Stores } from 'app/functions/Stores';
@@ -82,10 +82,10 @@ const ProfileSettingsNavigator = () => {
         }}
       />
       <ProfileSettingsStack.Screen
-        name="MyMusicScreen"
-        getComponent={() => MyMusicScreen}
+        name="CollectionScreen"
+        getComponent={() => CollectionScreen}
         options={{
-          title: 'My Beats',
+          title: 'Collection',
           headerTitleStyle: { color: Colors.white },
           headerStyle: {
             backgroundColor: Colors.headerBackground,

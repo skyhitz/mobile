@@ -31,7 +31,7 @@ const config = {
             screens: {
               ProfileSettingsScreen: '',
               LikesScreen: 'likes',
-              MyMusicScreen: 'my-music',
+              CollectionScreen: 'collection',
               MintNFT: 'mint-nft',
             },
           },
