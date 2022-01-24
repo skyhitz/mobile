@@ -30,7 +30,7 @@ export default observer(({ dynamicHeight, desktop = false }) => {
     >
       <Video
         posterSource={{ uri: playerStore.entry?.imageSrc }}
-        usePoster={true}
+        usePoster={desktop ? true : false}
         source={{
           uri: playerStore.streamUrl,
         }}
