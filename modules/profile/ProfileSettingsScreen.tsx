@@ -12,6 +12,8 @@ import MyMusicRow from 'app/modules/playlists/MyMusicRow';
 import { Stores } from 'app/functions/Stores';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
 import MintNFT from './MintNFT';
+import { useLinkTo } from '@react-navigation/native';
+import { HeaderBackButton } from '@react-navigation/elements';
 
 const ProfileSettingsScreen = observer(() => {
   let { likesStore, userEntriesStore, paymentsStore } = Stores();
@@ -38,11 +40,24 @@ const ProfileSettingsScreen = observer(() => {
 const ProfileSettingsStack = createStackNavigator();
 
 const ProfileSettingsNavigator = () => {
+  let linkTo = useLinkTo();
+
   return (
-    <ProfileSettingsStack.Navigator>
+    <ProfileSettingsStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerLeft: () => (
+          <HeaderBackButton
+            onPress={() => {
+              linkTo('/dashboard/profile');
+            }}
+            tintColor={Colors.white}
+          />
+        ),
+      })}
+    >
       <ProfileSettingsStack.Screen
         name="ProfileSettingsScreen"
-        component={ProfileSettingsScreen}
+        getComponent={() => ProfileSettingsScreen}
         options={{
           title: '',
           headerTintColor: Colors.tabIconSelected,
@@ -50,11 +65,12 @@ const ProfileSettingsNavigator = () => {
             backgroundColor: Colors.headerBackground,
             borderBottomWidth: 0,
           },
+          headerShown: false,
         }}
       />
       <ProfileSettingsStack.Screen
         name="LikesScreen"
-        component={LikesScreen}
+        getComponent={() => LikesScreen}
         options={{
           title: 'Likes',
           headerTitleStyle: { color: Colors.white },
@@ -67,7 +83,7 @@ const ProfileSettingsNavigator = () => {
       />
       <ProfileSettingsStack.Screen
         name="MyMusicScreen"
-        component={MyMusicScreen}
+        getComponent={() => MyMusicScreen}
         options={{
           title: 'My Beats',
           headerTitleStyle: { color: Colors.white },
@@ -80,7 +96,7 @@ const ProfileSettingsNavigator = () => {
       />
       <ProfileSettingsStack.Screen
         name="MintNFT"
-        component={MintNFT}
+        getComponent={() => MintNFT}
         options={{
           title: 'Mint NFT',
           headerTitleStyle: { color: Colors.white },

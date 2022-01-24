@@ -166,7 +166,7 @@ export default observer(() => {
     await entryStore.create();
     await userEntriesStore.refreshEntries();
     entryStore.clearStore();
-    linkTo('/dashboard/profile/settings');
+    linkTo('/dashboard/profile');
   };
 
   if (entryStore.uploadingError) {
@@ -380,6 +380,7 @@ export default observer(() => {
 const styles = StyleSheet.create({
   wrap: {
     marginBottom: 100,
+    paddingHorizontal: 20,
   },
   errorView: {
     flexDirection: 'row',

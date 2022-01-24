@@ -29,7 +29,7 @@ const config = {
           ProfileSettings: {
             path: 'profile',
             screens: {
-              ProfileSettingsScreen: 'settings',
+              ProfileSettingsScreen: '',
               LikesScreen: 'likes',
               MyMusicScreen: 'my-music',
               MintNFT: 'mint-nft',
