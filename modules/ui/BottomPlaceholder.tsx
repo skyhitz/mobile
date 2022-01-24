@@ -1,23 +1,19 @@
 import React from 'react';
 import { View } from 'react-native';
-import Layout from 'app/constants/Layout';
-import { inject } from 'mobx-react';
-import * as stores from 'app/skyhitz-common';
-type Stores = typeof stores;
+import { useMediaQuery } from 'react-responsive';
 
-@inject((stores:Stores) => ({
-  hideTabPlayer: stores.playerStore.hideTabPlayer,
-}))
-export default class BottomPlaceholder extends React.Component<any, any> {
-  render() {
-    return (
-      <View
-        style={{
-          height: this.props.hideTabPlayer ? 0 : 40,
-          backgroundColor: 'transparent',
-          width: Layout.window.width,
-        }}
-      />
-    );
-  }
+function BottomPlaceholder() {
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+
+  return (
+    <View
+      style={{
+        height: isDesktop ? 80 : 40,
+        backgroundColor: 'transparent',
+        width: '100%',
+      }}
+    />
+  );
 }
+
+export default BottomPlaceholder;

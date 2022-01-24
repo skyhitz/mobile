@@ -7,6 +7,7 @@ import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
 import * as L from 'list';
+import BottomPlaceholder from '../ui/BottomPlaceholder';
 
 export default observer((props) => {
   const { playerStore, entriesSearchStore } = Stores();
@@ -36,6 +37,7 @@ export default observer((props) => {
           {L.map((entry: any) => {
             return renderItem(entry);
           }, entriesSearchStore.recentlyAdded)}
+          <BottomPlaceholder />
         </ResponsiveLayout>
       </ScrollView>
     </SafeAreaView>

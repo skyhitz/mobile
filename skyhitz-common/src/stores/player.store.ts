@@ -331,14 +331,6 @@ export class PlayerStore {
     this.tabBarBottomPosition = bottom;
   }
 
-  @computed
-  get hideTabPlayer() {
-    if (!this.entry) {
-      return true;
-    }
-    return false;
-  }
-
   async playPrev() {
     this.setPlaybackState('LOADING');
     this.pauseAsync();
