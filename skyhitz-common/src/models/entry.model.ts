@@ -1,9 +1,10 @@
+import {
+  ipfsProtocol,
+  videosGateway,
+  imagesGateway,
+  skyhitzCdn,
+} from '../constants/constants';
 import { Payload } from './payload.model';
-
-const imagesGateway = 'https://cloudflare-ipfs.com/ipfs';
-const skyhitzCdn = 'https://skyhitz.io/cdn-cgi/image';
-const videosGateway = 'https://ipfs.io/ipfs';
-const ipfsProtocol = 'ipfs://';
 
 export class EntryPayload extends Payload {
   imageUrl?: string;

@@ -114,7 +114,6 @@ export class UserBackend {
       displayName
       username
       id
-      jwt
       publishedAt
       email
       description
@@ -124,23 +123,6 @@ export class UserBackend {
       })
       .then((data: any) => data.data)
       .then(({ updateUser }) => updateUser)
-      .catch(({ graphQLErrors }) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
-
-  async updateAlgoliaEntriesWithUser() {
-    return client
-      .mutate({
-        mutation: gql`
-          mutation {
-            updateAlgoliaEntriesWithUser
-          }
-        `,
-      })
-      .then((data: any) => data.data)
-      .then(({ updateAlgoliaEntriesWithUser }) => updateAlgoliaEntriesWithUser)
       .catch(({ graphQLErrors }) => {
         let [{ message }] = graphQLErrors;
         throw message;

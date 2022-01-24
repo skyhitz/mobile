@@ -2,7 +2,7 @@ import { User } from '../models/user.model';
 import { observable, observe, action } from 'mobx';
 import { userBackend } from '../backends/user.backend';
 import { SessionStore } from './session.store';
-import { preBase64String, nftStorageApi } from '../constants/constants';
+import { nftStorageApi, imagesGateway } from '../constants/constants';
 
 export class EditProfileStore {
   @observable error: string | undefined | unknown;
@@ -37,13 +37,30 @@ export class EditProfileStore {
   }
 
   async uploadProfilePhoto(image: any) {
+    const isPng = image.uri.startsWith('data:image/png');
+    if (!isPng) {
+      this.error = 'Only png files supported!';
+      return;
+    }
+    if (image.height !== image.width) {
+      return (this.error = 'Only square images supported!');
+    }
+    const blobRes = await fetch(image.uri);
+    const file = await blobRes.blob();
     if (!this.sessionStore.user) return;
     this.loadingAvatar = true;
-    let data = new FormData();
-    data.append('file', `${preBase64String}${image.base64}`);
-    let res = await fetch(nftStorageApi, { method: 'POST', body: data });
-    let { secure_url } = await res.json();
-    this.updateAvatarUrl(secure_url);
+    let res = await fetch(`${nftStorageApi}/upload`, {
+      method: 'POST',
+      body: file,
+      headers: new Headers({
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY}`,
+      }),
+    });
+    let { value, ok } = await res.json();
+
+    if (ok) {
+      this.updateAvatarUrl(`${imagesGateway}/${value.cid}`);
+    }
     this.loadingAvatar = false;
   }
 
@@ -116,7 +133,6 @@ export class EditProfileStore {
         this.username as string,
         this.email as string
       );
-      await userBackend.updateAlgoliaEntriesWithUser();
     } catch (e) {
       this.error = e;
       return;
