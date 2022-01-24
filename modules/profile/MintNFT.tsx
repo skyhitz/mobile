@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
-import SelectMediaFile from './SelectMediaFile';
+import MediaUpload from './MediaUpload';
 
 const NewNFT = () => {
   return (
@@ -11,7 +11,7 @@ const NewNFT = () => {
       }}
     >
       <ResponsiveLayout>
-        <SelectMediaFile />
+        <MediaUpload />
       </ResponsiveLayout>
     </ScrollView>
   );

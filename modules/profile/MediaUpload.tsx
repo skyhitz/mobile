@@ -25,6 +25,7 @@ import DollarIcon from 'app/modules/ui/icons/dollar';
 import CircleIcon from 'app/modules/ui/icons/circle';
 import UploadIcon from 'app/modules/ui/icons/upload';
 import CheckIcon from 'app/modules/ui/icons/check';
+import CloseIcon from 'app/modules/ui/icons/x';
 
 const SwitchWeb: any = Switch;
 
@@ -33,7 +34,7 @@ const UploadView = ({ selectVideo, videoSelected, loadingVideo }) => {
     return <ActivityIndicator size="small" color={Colors.white} />;
   }
   if (videoSelected) {
-    return <CheckIcon size={30} color={Colors.white} />;
+    return <CheckIcon size={30} color={Colors.lightGreen} />;
   }
   return (
     <Pressable style={cursorPointer} onPress={selectVideo}>
@@ -42,8 +43,8 @@ const UploadView = ({ selectVideo, videoSelected, loadingVideo }) => {
   );
 };
 
-const UploadErrorView = ({ uploadingError }) => (
-  <View style={styles.wrap}>
+const UploadErrorView = ({ uploadingError, clearUploadingError }) => (
+  <View style={styles.errorView}>
     <Text
       style={{
         color: Colors.white,
@@ -54,6 +55,9 @@ const UploadErrorView = ({ uploadingError }) => (
     >
       {uploadingError}
     </Text>
+    <Pressable style={cursorPointer} onPress={clearUploadingError}>
+      <CloseIcon size={30} color={Colors.errorBackground} />
+    </Pressable>
   </View>
 );
 
@@ -65,7 +69,7 @@ const ArtworkSection = ({ imageSelected, selectArtwork }) => {
       </Pressable>
     );
   }
-  return <CheckIcon size={30} color={Colors.white} />;
+  return <CheckIcon size={30} color={Colors.lightGreen} />;
 };
 
 export default observer(() => {
@@ -139,6 +143,19 @@ export default observer(() => {
       exif: true,
     });
     if (image && !image.cancelled) {
+      const isPng = image.uri.startsWith('data:image/png');
+      if (!isPng) {
+        entryStore.setUploadingError('Only png files supported!');
+        return;
+      }
+      if (image.height !== image.width) {
+        return entryStore.setUploadingError('Only square images supported!');
+      }
+      if (image.width < 3000) {
+        return entryStore.setUploadingError(
+          'Image should be at least 3000px wide!'
+        );
+      }
       const res = await fetch(image.uri);
       const file = await res.blob();
       entryStore.setImageBlob(file);
@@ -149,11 +166,16 @@ export default observer(() => {
     await entryStore.create();
     await userEntriesStore.refreshEntries();
     entryStore.clearStore();
-    linkTo('/dashboard/profile');
+    linkTo('/dashboard/profile/settings');
   };
 
   if (entryStore.uploadingError) {
-    return <UploadErrorView uploadingError={entryStore.uploadingError} />;
+    return (
+      <UploadErrorView
+        uploadingError={entryStore.uploadingError}
+        clearUploadingError={() => entryStore.clearUploadingError()}
+      />
+    );
   }
 
   return (
@@ -340,7 +362,15 @@ export default observer(() => {
         <LargeBtn
           disabled={!entryStore.canCreate}
           onPress={onCreate}
-          text={entryStore.creating ? 'Creating...' : 'Mint'}
+          text={
+            entryStore.creating
+              ? entryStore.currentUpload === 'video'
+                ? `Uploading Files ${entryStore.progress}%`
+                : entryStore.currentUpload === 'meta'
+                ? `Uploading Meta`
+                : 'Uploading'
+              : 'Mint'
+          }
         />
       </View>
     </View>
@@ -350,6 +380,10 @@ export default observer(() => {
 const styles = StyleSheet.create({
   wrap: {
     marginBottom: 100,
+  },
+  errorView: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   btn: {
     marginTop: 40,

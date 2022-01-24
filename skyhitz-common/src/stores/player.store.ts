@@ -238,7 +238,7 @@ export class PlayerStore {
     this.setPlaybackState('LOADING');
     this.observables.entry = entry;
     this.showPlayer();
-    let { videoUrl } = entry;
+    let { videoUrl, isIpfs, videoSrc } = entry;
 
     if (!videoUrl) {
       return;
@@ -247,7 +247,8 @@ export class PlayerStore {
     videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
     let optimizedVideo = '/upload/vc_auto/q_auto:good';
     videoUrl.replace('/upload', optimizedVideo);
-    this.streamUrl = videoUrl;
+
+    this.streamUrl = isIpfs && videoSrc ? videoSrc : videoUrl;
     await this.loadNewPlaybackInstance(play, videoUrl);
     this.setPlaybackState(play ? 'PLAYING' : 'PAUSED');
     return;

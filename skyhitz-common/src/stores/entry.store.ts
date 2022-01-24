@@ -131,7 +131,6 @@ export class EntryStore {
       xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
           let { value, ok } = JSON.parse(xhr.responseText);
-          console.log(value);
           if (!ok) {
             this.uploadingError = 'Something went wrong!';
             reject();
@@ -196,6 +195,18 @@ export class EntryStore {
     this.updatePrice(0);
     this.updateEquityForSalePercentage(1);
     this.creating = false;
+  }
+
+  get currentUpload() {
+    return Object.keys(this.filesProgress).includes('video')
+      ? 'video'
+      : Object.keys(this.filesProgress).includes('meta')
+      ? 'meta'
+      : 'none';
+  }
+
+  get progress() {
+    return Math.min(...Object.values(this.filesProgress));
   }
 
   @computed
