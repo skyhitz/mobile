@@ -10,7 +10,6 @@ class UserPayload extends Payload {
   id?: string;
   userType?: number;
   jwt?: string;
-  phone?: string;
   description?: string;
   pk?: string;
 }
@@ -27,7 +26,6 @@ export class User extends UserPayload {
     this.id = payload.id;
     this.userType = payload.userType;
     this.jwt = payload.jwt;
-    this.phone = payload.phone;
     this.description = payload.description;
   }
 

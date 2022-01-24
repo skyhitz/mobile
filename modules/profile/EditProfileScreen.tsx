@@ -22,7 +22,6 @@ import cursorPointer from 'app/constants/CursorPointer';
 import AccountBoxIcon from 'app/modules/ui/icons/account-box';
 import PersonOutlineIcon from 'app/modules/ui/icons/person-outline';
 import MailOutlineIcon from 'app/modules/ui/icons/mail-outline';
-import PhoneIcon from 'app/modules/ui/icons/phone';
 import LogoutIcon from 'app/modules/ui/icons/logout';
 import InfoCirlceIcon from 'app/modules/ui/icons/info-circle';
 
@@ -36,7 +35,6 @@ type Stores = typeof stores;
   description: stores.editProfileStore.description,
   username: stores.editProfileStore.username,
   email: stores.editProfileStore.email,
-  phone: stores.editProfileStore.phone,
   updateDisplayName: stores.editProfileStore.updateDisplayName.bind(
     stores.editProfileStore
   ),
@@ -47,9 +45,6 @@ type Stores = typeof stores;
     stores.editProfileStore
   ),
   updateEmail: stores.editProfileStore.updateEmail.bind(
-    stores.editProfileStore
-  ),
-  updatePhone: stores.editProfileStore.updatePhone.bind(
     stores.editProfileStore
   ),
   logOut: stores.sessionStore.signOut.bind(stores.sessionStore),
@@ -183,22 +178,6 @@ export default class EditProfileScreen extends React.Component<any, any> {
                 maxLength={34}
               />
             </View>
-            <View style={styles.fieldWithoutBorder}>
-              <View style={styles.placeholderIcon}>
-                <PhoneIcon size={22} color={Colors.dividerBackground} />
-              </View>
-              <TextInput
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-                placeholder="Phone Number"
-                autoCorrect={false}
-                style={styles.input}
-                placeholderTextColor="white"
-                value={this.props.phone}
-                onChangeText={(t) => this.props.updatePhone(t)}
-                maxLength={15}
-              />
-            </View>
           </View>
           {this.renderWithdrawalXLM()}
           <Text style={styles.privateInfo}>More</Text>
@@ -250,7 +229,7 @@ const styles = StyleSheet.create({
     paddingRight: formPadding,
     marginTop: 0,
     flex: 1,
-    maxHeight: maxHeight * 2,
+    maxHeight: maxHeight,
     borderBottomColor: Colors.transparent,
     borderBottomWidth: 1,
     borderTopColor: Colors.transparent,

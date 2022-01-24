@@ -18,7 +18,6 @@ export class UserBackend {
               publishedAt
               email
               description
-              phone
             }
           }
         `,
@@ -43,7 +42,6 @@ export class UserBackend {
           publishedAt
           email
           description
-          phone
         }
       }
       `,
@@ -88,7 +86,6 @@ export class UserBackend {
           publishedAt
           email
           description
-          phone
         }
       }
       `,
@@ -106,14 +103,13 @@ export class UserBackend {
     displayName: string,
     description: string,
     username: string,
-    email: string,
-    phone: string
+    email: string
   ) {
     return client
       .mutate({
         mutation: gql`
   mutation {
-    updateUser(avatarUrl: "${avatarUrl}", displayName: "${displayName}", description: "${description}", username: "${username}", email: "${email}", phone: "${phone}"){
+    updateUser(avatarUrl: "${avatarUrl}", displayName: "${displayName}", description: "${description}", username: "${username}", email: "${email}"){
       avatarUrl
       displayName
       username
@@ -122,7 +118,6 @@ export class UserBackend {
       publishedAt
       email
       description
-      phone
     }
   }
   `,

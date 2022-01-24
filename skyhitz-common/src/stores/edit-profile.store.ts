@@ -11,7 +11,6 @@ export class EditProfileStore {
   @observable description: string | undefined;
   @observable username: string | undefined;
   @observable email: string | undefined;
-  @observable phone: string | undefined;
   @observable profile: User | undefined;
   @observable loadingAvatar: boolean | undefined;
   disposer;
@@ -28,14 +27,12 @@ export class EditProfileStore {
         description,
         username,
         email,
-        phone,
       } = this.profile;
       this.avatarUrl = avatarUrl;
       this.displayName = displayName;
       this.description = description;
       this.username = username;
       this.email = email;
-      this.phone = phone;
     });
   }
 
@@ -73,11 +70,6 @@ export class EditProfileStore {
   @action
   updateEmail = (text: string) => {
     this.email = text;
-  };
-
-  @action
-  updatePhone = (text: string) => {
-    this.phone = text;
   };
 
   get validationError() {
@@ -122,8 +114,7 @@ export class EditProfileStore {
         this.displayName as string,
         this.description as string,
         this.username as string,
-        this.email as string,
-        this.phone as string
+        this.email as string
       );
       await userBackend.updateAlgoliaEntriesWithUser();
     } catch (e) {
