@@ -124,6 +124,8 @@ const modalOptions = {
 
 export const AppStack = createStackNavigator();
 
+const appTitle = 'Skyhitz - Music NFTs on Stellar';
+
 export function LazyAppStackNavigator({ user, headerShown }) {
   return (
     <AppStack.Navigator
@@ -147,13 +149,20 @@ export function LazyAppStackNavigator({ user, headerShown }) {
               <AppStack.Screen
                 name="WebApp"
                 getComponent={() => WebAppSuspense}
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: false,
+                  title: appTitle,
+                }}
               />
             ) : (
               <AppStack.Screen
                 name="AuthScreen"
                 getComponent={() => AuthScreenSuspense}
-                options={{ headerShown: false, gestureEnabled: false }}
+                options={{
+                  headerShown: false,
+                  gestureEnabled: false,
+                  title: appTitle,
+                }}
               />
             )}
             <AppStack.Screen
