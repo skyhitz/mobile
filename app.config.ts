@@ -52,9 +52,4 @@ export default {
     image: './assets/images/icon-1024x1024.png',
   },
   assetBundlePatterns: ['assets/images/*', 'assets/fonts/*'],
-  extra: {
-    bugsnag: {
-      apiKey: 'cf69bb38defd14395a7340170c8e41f6',
-    },
-  },
 };
