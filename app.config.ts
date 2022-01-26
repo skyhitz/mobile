@@ -7,7 +7,7 @@ export default {
   privacy: 'public',
   githubUrl: 'https://github.com/skyhitz/mobile',
   platforms: ['ios', 'android', 'web'],
-  version: '0.3.9',
+  version: '0.4.0',
   orientation: 'portrait',
   primaryColor: '#1A1B1F',
   icon: './assets/images/icon.png',
@@ -17,7 +17,7 @@ export default {
   },
   ios: {
     bundleIdentifier: 'com.skyhitz.skyhitz',
-    buildNumber: '0.3.9',
+    buildNumber: '0.4.0',
     icon: './assets/images/icon-1024x1024.png',
     appStoreUrl: 'https://itunes.apple.com/us/app/skyhitz/id1105406020',
     associatedDomains: ['applinks:v9nr.app.link'],
@@ -31,7 +31,7 @@ export default {
   },
   android: {
     package: 'com.skyhitz.skyhitz',
-    versionCode: 39,
+    versionCode: 40,
     icon: './assets/images/icon-1024x1024.png',
     adaptiveIcon: {
       backgroundColor: '#1A1B20',
