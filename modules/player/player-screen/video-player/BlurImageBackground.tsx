@@ -5,7 +5,7 @@ function BlurImageBackground(props) {
   return (
     <ImageBackground
       source={{
-        uri: props.imageUrl,
+        uri: props.image,
       }}
       style={{
         opacity: props.opacity,

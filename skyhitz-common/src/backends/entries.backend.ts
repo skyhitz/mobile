@@ -1,5 +1,5 @@
 import { client } from './apollo-client.backend';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { Entry } from '../models/entry.model';
 import { entriesIndex } from '../algolia/algolia';
 import { isTesting } from '../config/index';
@@ -143,13 +143,13 @@ export class EntriesBackend {
   }
 
   async createFromUpload(
-    etag: string,
+    cid: string,
     imageUrl: string,
     videoUrl: string,
+    code: string,
     description: string,
     title: string,
     artist: string,
-    id: string,
     forSale: boolean = false,
     price: number = 0,
     equityForSale: number = 0
@@ -158,13 +158,10 @@ export class EntriesBackend {
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(etag: "${etag}", imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", description: "${description}", title: "${title}", artist: "${artist}", id: "${id}", forSale: ${forSale}, price: ${price}, equityForSale: ${equityForSale}){
-          videoUrl
-          imageUrl
-          description
-          title
-          artist
-          id
+        createEntry(cid: "${cid}",imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", code: "${code}", description: "${description}", title: "${title}", artist: "${artist}", forSale: ${forSale}, price: ${price}, equityForSale: ${
+          equityForSale / 100
+        }){
+          xdr
         }
       }
       `,
@@ -258,21 +255,17 @@ export class EntriesBackend {
       .then((data: any) => data.data);
   }
 
-  youtubeUpload(
-    videoUrl: string,
-    description: string,
-    title: string,
-    id: string
-  ) {
+  generateIssuer() {
     return client
       .mutate({
         mutation: gql`
-      mutation {
-        youtubeUpload(videoUrl: "${videoUrl}", description: "${description}", title: "${title}", id: "${id}")
-      }
-      `,
+          mutation {
+            generateIssuer
+          }
+        `,
       })
-      .then((data: any) => data.data);
+      .then((data: any) => data.data)
+      .then(({ generateIssuer }) => generateIssuer);
   }
 
   updatePricing(

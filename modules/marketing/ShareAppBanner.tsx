@@ -10,7 +10,7 @@ export default (props) => {
   const linkTo = useLinkTo();
 
   const onUpload = async () => {
-    linkTo('/upload');
+    linkTo('/dashboard/profile/mint-nft');
   };
 
   const onBuyCredits = async () => {
@@ -23,7 +23,7 @@ export default (props) => {
         <LargeBtn
           icon={() => <UploadIcon size={20} color={Colors.white} />}
           onPress={onUpload}
-          text="Upload Beat"
+          text="Mint New NFT"
         />
       </View>
 

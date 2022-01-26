@@ -66,7 +66,7 @@ export default observer((props) => {
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
-            placeholder="Stellar or AnchorUSD Address"
+            placeholder="Stellar Address"
             autoCorrect={false}
             autoFocus={true}
             style={[
@@ -106,10 +106,9 @@ export default observer((props) => {
         </View>
         <View style={styles.fieldWithoutBorder}>
           <Text style={styles.smallText}>
-            Withdraw to an AnchorUSD's address, or
-          </Text>
-          <Text style={styles.smallText}>
-            a Stellar address that trusts AnchorUSD.
+            Withdraw to a Stellar Public Network address only. The equivalent
+            will be sent in XLM. Don't send if a Memo is required, funds will be
+            lost if you send to a wallet that require a Memo.
           </Text>
         </View>
         <LargeBtn
@@ -228,7 +227,6 @@ const styles = StyleSheet.create({
   },
   placeholderIcon: {
     position: 'absolute',
-    bottom: 14,
     left: 0,
     backgroundColor: Colors.transparent,
   },

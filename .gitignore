@@ -126,7 +126,10 @@ sa.json
 /.pnp
 .pnp.js
 # @end @expo/next-adapter
-
+.env
+.env.development
+.env.staging
+.env.production
 .vercel
 
 # @generated: @expo/next-adapter@3.1.6

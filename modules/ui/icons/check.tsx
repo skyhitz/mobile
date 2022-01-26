@@ -1,13 +1,14 @@
 import React from 'react';
 
-function Icon({ color }) {
+function Icon({ color, size = 24 }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       stroke={color ? color : 'currentColor'}
-      className="h-6 w-6"
       viewBox="0 0 24 24"
+      width={size}
+      height={size}
     >
       <path
         strokeLinecap="round"

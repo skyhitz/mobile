@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   thumb: {
     width: 224,
-    height: 168,
+    height: 224,
   },
   title: {
     fontSize: 14,

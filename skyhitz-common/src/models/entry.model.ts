@@ -1,3 +1,9 @@
+import {
+  ipfsProtocol,
+  videosGateway,
+  imagesGateway,
+  skyhitzCdn,
+} from '../constants/constants';
 import { Payload } from './payload.model';
 
 export class EntryPayload extends Payload {
@@ -34,11 +40,40 @@ export class Entry extends EntryPayload {
     this.price = payload.price;
   }
 
+  get isIpfs() {
+    return (
+      !!this.videoUrl?.startsWith(ipfsProtocol) &&
+      !!this.imageUrl?.startsWith(ipfsProtocol)
+    );
+  }
+
+  get videoSrc() {
+    if (this.videoUrl?.startsWith(ipfsProtocol))
+      return `${videosGateway}/${this.videoUrl.replace(ipfsProtocol, '')}`;
+    return this.videoUrl;
+  }
+
+  get imageSrc() {
+    if (this.imageUrl?.startsWith(ipfsProtocol))
+      return `${imagesGateway}/${this.imageUrl.replace(ipfsProtocol, '')}`;
+    return this.imageUrl;
+  }
+
   get imageUrlSmall() {
+    if (this.isIpfs)
+      return this.imageUrl?.replace(
+        ipfsProtocol,
+        `${skyhitzCdn}/width=80/${imagesGateway}/`
+      );
     return this.imageUrl?.split('/upload/').join('/upload/w_80/');
   }
 
   get imageUrlMedium() {
+    if (this.isIpfs)
+      return this.imageUrl?.replace(
+        ipfsProtocol,
+        `${skyhitzCdn}/width=500/${imagesGateway}/`
+      );
     return this.imageUrl?.split('/upload/').join('/upload/w_500/');
   }
 

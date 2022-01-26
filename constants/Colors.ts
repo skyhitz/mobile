@@ -3,6 +3,7 @@ const darkBlue = '#1A1B20';
 const darkBlueTransparent = 'rgba(41, 43, 51, 0.9)';
 const darkBlueFieldTransparent = 'rgba(41, 43, 51, 0.3)';
 const lightRed = '#d9544f';
+const lightGreen = '#5CE67E';
 const lightGrey = '#dbdbdb';
 const darkGrey = 'rgb(43, 48, 51)';
 const grey = '#858586';
@@ -15,6 +16,7 @@ export default {
   darkBlueTransparent,
   darkBlueFieldTransparent,
   darkGrey,
+  lightGreen,
   grey,
   lightBrandBlue: lightBrandBlue,
   backgroundTrackColor: backgroundTrackColor,

@@ -1,13 +1,6 @@
 import { observable, action, computed } from 'mobx';
-import {
-  preBase64String,
-  cloudinaryApiPath,
-  cloudinaryPreset,
-} from '../constants/constants';
-import { SessionStore } from './session.store';
+import { nftStorageApi } from '../constants/constants';
 import { entriesBackend } from '../backends/entries.backend';
-import UniqueIdGenerator from '../utils/unique-id-generator';
-import { Platform } from 'react-native';
 
 export class EntryStore {
   @observable uploadingVideo: boolean = false;
@@ -15,167 +8,63 @@ export class EntryStore {
   uploadingError!: string;
   @observable loadingVideo: boolean = false;
   @observable
-  artworkUrl!: string;
-  @observable
-  videoUrl!: string;
-  @observable
-  eTag!: string;
-  @observable
-  loadingArtwork!: boolean;
+  loadingImage!: boolean;
   @observable
   description!: string;
+  @observable
+  issuer!: string;
   @observable
   title!: string;
   @observable
   artist!: string;
-  @observable
-  id!: string;
   @observable
   availableForSale!: boolean;
   @observable
   price: number | undefined;
   @observable
   equityForSale: number | undefined;
-
   @observable
   equityForSalePercentage: string = '1 %';
-
   @observable
-  progress: number = 0;
+  filesProgress: { [key: string]: number } = {};
 
   @observable
   creating: boolean = false;
 
-  constructor(private sessionStore: SessionStore) {}
+  @observable
+  imageBlob: Blob | undefined;
 
-  @computed
-  get currentView() {
-    if (this.videoUrl && this.eTag) {
-      return 'info';
-    }
-    return 'upload';
-  }
-
-  async webVideoUpload(video: any) {
-    if (!this.sessionStore.user) return;
-
-    let id = UniqueIdGenerator.generate();
-    let xhr = new XMLHttpRequest();
-    let data = new FormData();
-    xhr.open('POST', cloudinaryApiPath, true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    this.updateUploadingVideo(true);
-    xhr.upload.addEventListener('progress', (e) => {
-      this.progress = Math.round((e.loaded * 100.0) / e.total);
-    });
-
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        let { secure_url, etag } = JSON.parse(xhr.responseText);
-        this.updateUploadingVideo(false);
-        this.updateId(id);
-        this.updateEtag(etag);
-        this.updateVideoUrl(secure_url);
-      }
-    };
-    data.append('folder', `/app/${this.sessionStore.user.id}/videos`);
-    data.append('public_id', id);
-    data.append('upload_preset', cloudinaryPreset);
-
-    if (Platform.OS === 'web') {
-      data.append('file', video.uri);
-    } else {
-      data.append('file', {
-        uri: video.uri,
-        name: video.uri.split('/').pop(),
-        type: 'video/mp4',
-      } as any);
-    }
-    xhr.send(data);
-  }
-
-  async mobileVideoUpload(video: any) {
-    if (!this.sessionStore.user) return;
-
-    this.updateUploadingVideo(true);
-    let id = UniqueIdGenerator.generate();
-    let data: any = new FormData();
-    data.append('upload_preset', cloudinaryPreset);
-    data.append('file', {
-      uri: video.uri,
-      name: video.uri.split('/').pop(),
-      type: 'video/mp4',
-    });
-    data.append('folder', `/app/${this.sessionStore.user.id}/videos`);
-    data.append('public_id', id);
-    let res;
-    try {
-      res = await fetch(cloudinaryApiPath, {
-        method: 'POST',
-        body: data,
-      });
-      let { secure_url, etag } = await res.json();
-      this.updateUploadingVideo(false);
-      this.updateId(id);
-      this.updateEtag(etag);
-      this.updateVideoUrl(secure_url);
-    } catch (e) {
-      this.uploadingError = 'Error uploading video, please try again!';
-    }
-  }
-
-  async uploadVideo(video: any) {
-    return this.webVideoUpload(video);
-  }
+  @observable
+  videoBlob: Blob | undefined;
 
   @action
   clearUploadingError() {
     this.uploadingError = '';
   }
 
-  async uploadArtwork(image: any) {
-    if (!this.sessionStore.user) return;
-
-    this.updateLoadingArtwork(true);
-    let data = new FormData();
-    data.append('file', image.uri);
-    if (Platform.OS === 'web') {
-      data.append('file', image.uri);
-    } else {
-      data.append('file', `${preBase64String}${image.base64}`);
-    }
-
-    data.append('folder', `/app/${this.sessionStore.user.id}/images`);
-    data.append('upload_preset', cloudinaryPreset);
-    let res = await fetch(cloudinaryApiPath, { method: 'POST', body: data });
-    let { secure_url } = await res.json();
-    this.updateArtworkUrl(secure_url);
-    this.updateLoadingArtwork(false);
+  @action
+  setIssuer(issuer) {
+    this.issuer = issuer;
   }
 
   @action
-  updateLoadingArtwork = (state: boolean) => {
-    this.loadingArtwork = state;
+  setUploadingError(error) {
+    this.uploadingError = error;
+  }
+
+  @action
+  setLoadingVideo(loading: boolean) {
+    this.loadingVideo = loading;
+  }
+
+  @action
+  updateLoadingImage = (state: boolean) => {
+    this.loadingImage = state;
   };
 
   @action
   updateUploadingVideo = (state: boolean) => {
     this.uploadingVideo = state;
-  };
-
-  @action
-  updateArtworkUrl = (text: string) => {
-    this.artworkUrl = text;
-  };
-
-  @action
-  updateVideoUrl = (text: string) => {
-    this.videoUrl = text;
-  };
-
-  @action
-  updateEtag = (text: string) => {
-    this.eTag = text;
   };
 
   @action
@@ -194,11 +83,6 @@ export class EntryStore {
   };
 
   @action
-  updateId = (text: string) => {
-    this.id = text;
-  };
-
-  @action
   updateAvailableForSale = (state: boolean) => {
     this.availableForSale = state;
   };
@@ -214,48 +98,146 @@ export class EntryStore {
     this.equityForSalePercentage = `${value ? value : 0} %`;
   };
 
+  constructor() {}
+
+  setImageBlob(imageBlob) {
+    this.imageBlob = imageBlob;
+  }
+
+  setVideoBlob(videoBlob) {
+    this.videoBlob = videoBlob;
+  }
+
+  async uploadFile(file: any, id: string) {
+    return new Promise((resolve: (value: string) => void, reject) => {
+      this.filesProgress[id] = 0;
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', `${nftStorageApi}/upload`, true);
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      xhr.setRequestHeader(
+        'Authorization',
+        `Bearer ${process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY}`
+      );
+
+      xhr.upload.addEventListener('progress', (e) => {
+        const progress = Math.round((e.loaded * 100.0) / e.total);
+
+        this.filesProgress[id] = progress;
+        if (progress === 100) {
+          delete this.filesProgress[id];
+        }
+      });
+
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let { value, ok } = JSON.parse(xhr.responseText);
+          if (!ok) {
+            this.uploadingError = 'Something went wrong!';
+            reject();
+            return;
+          }
+          resolve(value.cid);
+        }
+      };
+
+      xhr.send(file);
+    });
+  }
+
+  async storeNFT() {
+    const issuer = await entriesBackend.generateIssuer();
+    if (!issuer) throw 'could not generate issuer';
+    const name = `${this.artist} - ${this.title}`;
+    const ipfsProtocol = 'ipfs://';
+
+    const code = `${this.title}${this.artist}`
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .replace(/ /g, '')
+      .replace(/-/g, '')
+      .replace(/[^0-9a-z]/gi, '')
+      .substr(0, 12)
+      .toUpperCase();
+
+    const [imageCid, videoCid] = [
+      await this.uploadFile(this.imageBlob, 'image'),
+      await this.uploadFile(this.videoBlob, 'video'),
+    ];
+
+    const imageUrl = `${ipfsProtocol}${imageCid}`;
+    const videoUrl = `${ipfsProtocol}${videoCid}`;
+
+    const json = {
+      name: name,
+      description: this.description,
+      code: code,
+      issuer: issuer,
+      domain: 'skyhitz.io',
+      supply: 1,
+      image: imageUrl,
+      animation_url: videoUrl,
+      video: videoUrl,
+    };
+
+    const blob = new Blob([JSON.stringify(json)], { type: 'application/json' });
+
+    const nftCid = await this.uploadFile(blob, 'meta');
+    return { nftCid, imageUrl, videoUrl, code };
+  }
+
   clearStore() {
     this.updateUploadingVideo(false);
-    this.updateLoadingArtwork(false);
-    this.updateArtworkUrl('');
-    this.updateVideoUrl('');
-    this.updateEtag('');
+    this.updateLoadingImage(false);
     this.updateDescription('');
     this.updateTitle('');
     this.updateArtist('');
-    this.updateId('');
     this.updateAvailableForSale(false);
     this.updatePrice(0);
     this.updateEquityForSalePercentage(1);
     this.creating = false;
   }
 
+  get currentUpload() {
+    return Object.keys(this.filesProgress).includes('video')
+      ? 'video'
+      : Object.keys(this.filesProgress).includes('meta')
+      ? 'meta'
+      : 'none';
+  }
+
+  get progress() {
+    return Math.min(...Object.values(this.filesProgress));
+  }
+
   @computed
   get canCreate() {
     return (
-      this.eTag &&
-      this.artworkUrl &&
-      this.videoUrl &&
+      this.imageBlob &&
+      this.videoBlob &&
       this.description &&
       this.title &&
-      this.id &&
       this.artist
     );
   }
 
   async create() {
     this.creating = true;
+    const { nftCid, imageUrl, videoUrl, code } = await this.storeNFT();
+    if (!nftCid || !imageUrl || !videoUrl) {
+      this.setUploadingError('Could not store NFT');
+      return;
+    }
     await entriesBackend.createFromUpload(
-      this.eTag,
-      this.artworkUrl,
-      this.videoUrl,
+      nftCid,
+      imageUrl,
+      videoUrl,
+      code,
       this.description,
       this.title,
       this.artist,
-      this.id,
       this.availableForSale,
       this.price,
-      this.equityForSale
+      this.availableForSale ? this.equityForSale : 0
     );
   }
 

@@ -2,16 +2,15 @@ import { User } from '../models/user.model';
 import { observable, observe, action } from 'mobx';
 import { userBackend } from '../backends/user.backend';
 import { SessionStore } from './session.store';
-import { preBase64String, cloudinaryApiPath } from '../constants/constants';
+import { nftStorageApi, imagesGateway } from '../constants/constants';
 
 export class EditProfileStore {
-  @observable error: string | undefined;
+  @observable error: string | undefined | unknown;
   @observable avatarUrl: string | undefined;
   @observable displayName: string | undefined;
   @observable description: string | undefined;
   @observable username: string | undefined;
   @observable email: string | undefined;
-  @observable phone: string | undefined;
   @observable profile: User | undefined;
   @observable loadingAvatar: boolean | undefined;
   disposer;
@@ -28,26 +27,40 @@ export class EditProfileStore {
         description,
         username,
         email,
-        phone,
       } = this.profile;
       this.avatarUrl = avatarUrl;
       this.displayName = displayName;
       this.description = description;
       this.username = username;
       this.email = email;
-      this.phone = phone;
     });
   }
 
   async uploadProfilePhoto(image: any) {
+    const isPng = image.uri.startsWith('data:image/png');
+    if (!isPng) {
+      this.error = 'Only png files supported!';
+      return;
+    }
+    if (image.height !== image.width) {
+      return (this.error = 'Only square images supported!');
+    }
+    const blobRes = await fetch(image.uri);
+    const file = await blobRes.blob();
     if (!this.sessionStore.user) return;
     this.loadingAvatar = true;
-    let data = new FormData();
-    data.append('file', `${preBase64String}${image.base64}`);
-    data.append('folder', `/app/${this.sessionStore.user.username}/images`);
-    let res = await fetch(cloudinaryApiPath, { method: 'POST', body: data });
-    let { secure_url } = await res.json();
-    this.updateAvatarUrl(secure_url);
+    let res = await fetch(`${nftStorageApi}/upload`, {
+      method: 'POST',
+      body: file,
+      headers: new Headers({
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY}`,
+      }),
+    });
+    let { value, ok } = await res.json();
+
+    if (ok) {
+      this.updateAvatarUrl(`${imagesGateway}/${value.cid}`);
+    }
     this.loadingAvatar = false;
   }
 
@@ -74,11 +87,6 @@ export class EditProfileStore {
   @action
   updateEmail = (text: string) => {
     this.email = text;
-  };
-
-  @action
-  updatePhone = (text: string) => {
-    this.phone = text;
   };
 
   get validationError() {
@@ -123,10 +131,8 @@ export class EditProfileStore {
         this.displayName as string,
         this.description as string,
         this.username as string,
-        this.email as string,
-        this.phone as string
+        this.email as string
       );
-      await userBackend.updateAlgoliaEntriesWithUser();
     } catch (e) {
       this.error = e;
       return;

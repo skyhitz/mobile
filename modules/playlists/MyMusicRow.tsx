@@ -14,7 +14,7 @@ export default observer(() => {
   let linkTo = useLinkTo();
 
   const handleNavigation = () => {
-    linkTo('/dashboard/profile/my-music');
+    linkTo('/dashboard/profile/collection');
   };
 
   const copy = () => {
@@ -33,7 +33,7 @@ export default observer(() => {
           <View style={styles.row}>
             <View style={styles.leftSection}>
               <StarBorderIcon color={Colors.brandBlue} />
-              <Text style={styles.likesText}>My Beats</Text>
+              <Text style={styles.likesText}>Collection</Text>
             </View>
             <View style={styles.rightSection}>
               <Text style={styles.videosText}>{copy()}</Text>

@@ -24,13 +24,13 @@ export default observer(({ dynamicHeight, desktop = false }) => {
 
   return (
     <BlurImageBackground
-      imageUrl={playerStore.entry?.imageUrl}
+      image={playerStore.entry?.imageSrc}
       opacity={dynamicOpacity}
       intensity={blur}
     >
       <Video
-        posterSource={{ uri: playerStore.entry?.imageUrl }}
-        usePoster={true}
+        posterSource={{ uri: playerStore.entry?.imageSrc }}
+        usePoster={desktop ? true : false}
         source={{
           uri: playerStore.streamUrl,
         }}

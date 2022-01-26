@@ -29,15 +29,15 @@ const config = {
           ProfileSettings: {
             path: 'profile',
             screens: {
-              ProfileSettingsScreen: 'settings',
+              ProfileSettingsScreen: '',
               LikesScreen: 'likes',
-              MyMusicScreen: 'my-music',
+              CollectionScreen: 'collection',
+              MintNFT: 'mint-nft',
             },
           },
         },
       },
       EditProfileModal: 'edit-profile',
-      UploadMusicModal: 'upload',
       EntryOptionsModal: 'options',
       PricingOptionsModal: 'pricing-options',
       PaymentModal: 'payment',

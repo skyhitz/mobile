@@ -36,8 +36,11 @@ export default observer((props) => {
     );
   };
 
-  const renderBlurSection = () => {
-    return (
+  if (!sessionStore.user) {
+    return null;
+  }
+  return (
+    <View style={styles.container}>
       <View style={styles.overlay}>
         <View style={styles.topContainer}>
           <View style={styles.topHeader}>
@@ -50,20 +53,8 @@ export default observer((props) => {
           </View>
         </View>
       </View>
-    );
-  };
-
-  if (!sessionStore.user) {
-    return null;
-  }
-  let source;
-  if (sessionStore.user.avatarUrl) {
-    source = { uri: sessionStore.user.avatarUrl };
-  }
-  if (source) {
-    return <View style={styles.container}>{renderBlurSection()}</View>;
-  }
-  return <View style={styles.container}>{renderBlurSection()}</View>;
+    </View>
+  );
 });
 
 const styles = StyleSheet.create({

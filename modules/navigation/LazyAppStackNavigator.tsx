@@ -42,14 +42,7 @@ const PricingOptionsModalSuspense = (props) => (
     <PricingOptionsModal {...props} />
   </SuspenseLoading>
 );
-const UploadMusicModal = lazy(() =>
-  import('app/modules/profile/UploadMusicModal')
-);
-const UploadMusicModalSuspense = (props) => (
-  <SuspenseLoading>
-    <UploadMusicModal {...props} />
-  </SuspenseLoading>
-);
+
 const PaymentModal = lazy(() => import('app/modules/profile/PaymentModal'));
 const PaymentModalSuspense = (props) => (
   <SuspenseLoading>
@@ -131,6 +124,8 @@ const modalOptions = {
 
 export const AppStack = createStackNavigator();
 
+const appTitle = 'Skyhitz - Music NFTs on Stellar';
+
 export function LazyAppStackNavigator({ user, headerShown }) {
   return (
     <AppStack.Navigator
@@ -154,13 +149,20 @@ export function LazyAppStackNavigator({ user, headerShown }) {
               <AppStack.Screen
                 name="WebApp"
                 getComponent={() => WebAppSuspense}
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: false,
+                  title: appTitle,
+                }}
               />
             ) : (
               <AppStack.Screen
                 name="AuthScreen"
                 getComponent={() => AuthScreenSuspense}
-                options={{ headerShown: false, gestureEnabled: false }}
+                options={{
+                  headerShown: false,
+                  gestureEnabled: false,
+                  title: appTitle,
+                }}
               />
             )}
             <AppStack.Screen
@@ -242,11 +244,7 @@ export function LazyAppStackNavigator({ user, headerShown }) {
             },
           }}
         />
-        <AppStack.Screen
-          name="UploadMusicModal"
-          getComponent={() => UploadMusicModalSuspense}
-          options={modalOptions}
-        />
+
         <AppStack.Screen
           name="PaymentModal"
           getComponent={() => PaymentModalSuspense}
