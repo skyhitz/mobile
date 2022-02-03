@@ -8,10 +8,6 @@ const testingModeOn = process.env.NEXT_PUBLIC_EXPO_SKYHITZ_ENV === 'test';
 const testingStagingModeOn =
   process.env.NEXT_PUBLIC_EXPO_SKYHITZ_ENV === 'development';
 
-const testingEnv = testingModeOn || testingStagingModeOn;
-
-export const isTesting = testingEnv ? 1 : 0;
-
 let config: ConfigInterface = ProductionConfig;
 
 if (testingModeOn) {

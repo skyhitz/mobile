@@ -13,6 +13,7 @@ export type SignUpForm = {
   username: string;
   displayName: string;
   email: string;
+  publicKey?: string;
 };
 export type SignInForm = {
   usernameOrEmail: string;

@@ -76,13 +76,4 @@ export class Entry extends EntryPayload {
       );
     return this.imageUrl?.split('/upload/').join('/upload/w_500/');
   }
-
-  get cloudinaryPublicId() {
-    let prefix = 'app';
-    let popSection = this.videoUrl
-      ? this.videoUrl.split(`/${prefix}`).pop()
-      : '';
-    let lastSection = popSection ? popSection.split('.')[0] : '';
-    return `${prefix}${lastSection}`;
-  }
 }

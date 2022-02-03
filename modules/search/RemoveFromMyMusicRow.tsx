@@ -14,7 +14,7 @@ export default observer(({ entry }) => {
   const { goBack } = useNavigation();
 
   const handleRemoveEntry = async () => {
-    await entryStore.remove(entry.id, entry.cloudinaryPublicId);
+    await entryStore.remove(entry.id);
     await userEntriesStore.refreshEntries();
     goBack();
   };

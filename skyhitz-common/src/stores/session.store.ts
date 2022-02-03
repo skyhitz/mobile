@@ -21,8 +21,8 @@ export class SessionStore {
     return (this.session.user = new User(userPayload));
   }
 
-  async requestToken(usernameOrEmail: string) {
-    await userBackend.requestToken(usernameOrEmail);
+  async requestToken(usernameOrEmail: string, publicKey: string) {
+    await userBackend.requestToken(usernameOrEmail, publicKey);
     return;
   }
 

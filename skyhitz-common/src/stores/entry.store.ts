@@ -260,7 +260,7 @@ export class EntryStore {
     this.clearStore();
   }
 
-  async remove(entryId: string, cloudinaryPublicId: string) {
-    await entriesBackend.remove(entryId, cloudinaryPublicId);
+  async remove(entryId: string) {
+    await entriesBackend.remove(entryId);
   }
 }

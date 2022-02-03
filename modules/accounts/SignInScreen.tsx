@@ -18,6 +18,7 @@ import { openEmail } from './OpenEmail';
 import * as Linking from 'expo-linking';
 import { Config } from 'app/skyhitz-common/src/config';
 import * as Device from 'expo-device';
+import WalletConnectBtn from 'app/modules/accounts/WalletConnectBtn';
 
 export default observer(({ route, navigation }) => {
   const { signInValidationStore, sessionStore } = Stores();
@@ -30,13 +31,28 @@ export default observer(({ route, navigation }) => {
   const signIn = async () => {
     setLoading(true);
     try {
-      await sessionStore.requestToken(usernameOrEmail);
+      await sessionStore.requestToken(usernameOrEmail, '');
       // check your email to access your account
       setLoading(false);
       setShowEmailLink(true);
       return;
     } catch (e) {
-      signInValidationStore.setBackendError(e);
+      signInValidationStore.setBackendError(e as any);
+    }
+    return setLoading(false);
+  };
+
+  const signInWithPublicKey = async (publicKey) => {
+    setLoading(true);
+    try {
+      await sessionStore.requestToken('', publicKey);
+      // check your email to access your account
+      setLoading(false);
+      setShowEmailLink(true);
+      return;
+    } catch (e) {
+      signInValidationStore.setBackendError(e as any);
+      linkTo('/accounts/sign-up');
     }
     return setLoading(false);
   };
@@ -97,7 +113,7 @@ export default observer(({ route, navigation }) => {
       ) : showEmailLink ? (
         <View style={styles.inputContainer}>
           <View style={styles.field}>
-            <Text style={styles.emailSent}>
+            <Text style={styles.signingIn}>
               We sent you an email to access your account!
             </Text>
           </View>
@@ -121,63 +137,91 @@ export default observer(({ route, navigation }) => {
           </TouchableHighlight>
         </View>
       ) : (
-        <View style={styles.inputContainer}>
-          <View style={styles.field}>
-            <TextInput
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-              placeholder="Email address"
-              autoCorrect={false}
-              style={[
-                styles.input,
-                Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
-              ]}
-              autoFocus={true}
-              placeholderTextColor="white"
-              value={usernameOrEmail}
-              onChange={updateUsernameOrEmail}
-              onChangeText={(value) =>
-                updateUsernameOrEmail({ target: { value: value } })
-              }
-              onKeyPress={onSubmit}
-            />
+        <>
+          <View style={styles.inputContainer}>
+            <WalletConnectBtn signInWithPublicKey={signInWithPublicKey} />
+            <View style={styles.orDivider}>
+              <View style={styles.line} />
+              <Text style={styles.orText}>or</Text>
+              <View style={styles.line} />
+            </View>
           </View>
-          <View style={styles.errorContainer}>
-            <Text
-              style={[
-                styles.error,
-                { opacity: signInValidationStore.error ? 1 : 0 },
-              ]}
-            >
-              {signInValidationStore.error}
-            </Text>
-          </View>
-          <TouchableHighlight
-            style={[
-              styles.joinBtn,
-              { opacity: signInValidationStore.validForm ? 1 : 0.5 },
-            ]}
-            onPress={signIn}
-            underlayColor={Colors.underlayColor}
-            disabled={!signInValidationStore.validForm}
-          >
-            {loading ? (
-              <ActivityIndicator
-                size="small"
-                style={styles.loadingIndicator}
-                color={Colors.white}
+          <View style={styles.inputContainer}>
+            <View style={styles.field}>
+              <TextInput
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+                placeholder="Email address"
+                autoCorrect={false}
+                style={[
+                  styles.input,
+                  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+                ]}
+                autoFocus={true}
+                placeholderTextColor="white"
+                value={usernameOrEmail}
+                onChange={updateUsernameOrEmail}
+                onChangeText={(value) =>
+                  updateUsernameOrEmail({ target: { value: value } })
+                }
+                onKeyPress={onSubmit}
               />
-            ) : (
-              <Text style={[styles.joinTextBtn, cursorPointer]}>Log In</Text>
-            )}
-          </TouchableHighlight>
-        </View>
+            </View>
+            <View style={styles.errorContainer}>
+              <Text
+                style={[
+                  styles.error,
+                  { opacity: signInValidationStore.error ? 1 : 0 },
+                ]}
+              >
+                {signInValidationStore.error}
+              </Text>
+            </View>
+            <TouchableHighlight
+              style={[
+                styles.joinBtn,
+                { opacity: signInValidationStore.validForm ? 1 : 0.5 },
+              ]}
+              onPress={signIn}
+              underlayColor={Colors.underlayColor}
+              disabled={!signInValidationStore.validForm}
+            >
+              {loading ? (
+                <ActivityIndicator
+                  size="small"
+                  style={styles.loadingIndicator}
+                  color={Colors.white}
+                />
+              ) : (
+                <Text style={[styles.joinTextBtn, cursorPointer]}>Log In</Text>
+              )}
+            </TouchableHighlight>
+          </View>
+        </>
       )}
     </BackgroundImage>
   );
 });
 
 let styles = StyleSheet.create({
+  line: {
+    flexGrow: 1,
+    height: 1,
+    backgroundColor: Colors.white,
+  },
+  orDivider: {
+    width: '100%',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  orText: {
+    backgroundColor: Colors.transparent,
+    color: Colors.white,
+    fontSize: 16,
+    padding: 10,
+  },
   inputContainer: {
     alignSelf: 'center',
     marginTop: 0,
@@ -198,13 +242,6 @@ let styles = StyleSheet.create({
     backgroundColor: Colors.transparent,
     color: Colors.white,
     fontSize: 14,
-    padding: 10,
-    width: '100%',
-  },
-  emailSent: {
-    backgroundColor: Colors.transparent,
-    color: Colors.white,
-    fontSize: 16,
     padding: 10,
     width: '100%',
   },

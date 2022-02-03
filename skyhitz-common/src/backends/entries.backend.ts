@@ -2,7 +2,6 @@ import { client } from './apollo-client.backend';
 import { gql } from '@apollo/client';
 import { Entry } from '../models/entry.model';
 import { entriesIndex } from '../algolia/algolia';
-import { isTesting } from '../config/index';
 
 export class EntriesBackend {
   async search(q: string) {
@@ -10,9 +9,7 @@ export class EntriesBackend {
       return [];
     }
 
-    const { hits } = await entriesIndex.search(q, {
-      filters: `testing = ${isTesting}`,
-    });
+    const { hits } = await entriesIndex.search(q);
     return hits;
   }
 
@@ -243,12 +240,12 @@ export class EntriesBackend {
     return [];
   }
 
-  remove(id: string, cloudinaryPublicId: string) {
+  remove(id: string) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        removeEntry(id: "${id}", cloudinaryPublicId: "${cloudinaryPublicId}")
+        removeEntry(id: "${id}")
       }
       `,
       })
