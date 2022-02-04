@@ -40,18 +40,22 @@ export class WalletConnectStore {
       // storageOptions: {
       //   asyncStorage: AsyncStorage as any,
       // },
-    }).then(async (result) => {
-      this.client = result;
-      const itemsStored = await this.client?.storage.keyValueStorage.getItem(
-        'wc@2:client:0.2//session:settled'
-      );
-      if (itemsStored) {
-        const [session] = itemsStored;
-        this.setSession(session);
-      }
+    })
+      .then(async (result) => {
+        this.client = result;
+        const itemsStored = await this.client?.storage.keyValueStorage.getItem(
+          'wc@2:client:0.2//session:settled'
+        );
+        if (itemsStored) {
+          const [session] = itemsStored;
+          this.setSession(session);
+        }
 
-      this.subscribeToEvents();
-    });
+        this.subscribeToEvents();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   clearState() {
