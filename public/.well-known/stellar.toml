@@ -22,4 +22,9 @@ keybase="alejomendoza"
 twitter="alejoskyhitz"
 github="alejomendoza"
 
-
+[[CURRENCIES]]
+code="NEWNEW"
+issuer="GCNJVYZ33QDAIQZI7BGD5V7CBSYFZHT2JLNAIQY4F2EUTWDPN2E3OX6S"
+name="Test"
+desc="test"
+image="https://skyhitz.io/cdn-cgi/image/width=200/https://cloudflare-ipfs.com/ipfs/bafybeichbfvwy265nueqr4r5zmjfrtbyicgkdwt6hjsocp7pyxizf5ii7m"
