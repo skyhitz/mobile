@@ -46,7 +46,7 @@ export class WalletConnectStore {
         const itemsStored = await this.client?.storage.keyValueStorage.getItem(
           'wc@2:client:0.2//session:settled'
         );
-        if (itemsStored) {
+        if (itemsStored && itemsStored.length) {
           const [session] = itemsStored;
           this.setSession(session);
         }
