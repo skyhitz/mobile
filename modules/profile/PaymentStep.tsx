@@ -20,13 +20,15 @@ async function timeout(ms) {
 }
 
 export default observer((props) => {
-  const [selectedOption, setSelectedOption] = useState('subscription');
   const [amount, setAmount] = useState(200);
   const stripe = useStripe();
   const elements = useElements();
   const { goBack } = useNavigation();
 
   const { paymentsStore } = Stores();
+  const [selectedOption, setSelectedOption] = useState(
+    paymentsStore.subscribed ? 'one-time' : 'subscription'
+  );
 
   useEffect(() => {
     paymentsStore.refreshXLMPrice();
@@ -118,25 +120,27 @@ export default observer((props) => {
   return (
     <View style={styles.checkoutWrap}>
       <View style={styles.options}>
-        <TouchableHighlight onPress={changeToSubscription}>
-          <View
-            style={[
-              styles.radio,
-              selectedOption === 'subscription' ? styles.selected : {},
-            ]}
-          >
-            <View>
-              <H3 style={styles.priceHeaders}>
-                {paymentsStore.xlmPrice &&
-                  (7.99 / paymentsStore.xlmPriceWithFees).toFixed(2)}
-              </H3>
-              <P style={styles.description}>Monthly XLM plan</P>
-              <View style={styles.priceSection}>
-                <P style={styles.perMonth}>$7.99 per month</P>
+        {!paymentsStore.subscribed && (
+          <TouchableHighlight onPress={changeToSubscription}>
+            <View
+              style={[
+                styles.radio,
+                selectedOption === 'subscription' ? styles.selected : {},
+              ]}
+            >
+              <View>
+                <H3 style={styles.priceHeaders}>
+                  {paymentsStore.xlmPrice &&
+                    (7.99 / paymentsStore.xlmPriceWithFees).toFixed(2)}
+                </H3>
+                <P style={styles.description}>Monthly XLM plan</P>
+                <View style={styles.priceSection}>
+                  <P style={styles.perMonth}>$7.99 per month</P>
+                </View>
               </View>
             </View>
-          </View>
-        </TouchableHighlight>
+          </TouchableHighlight>
+        )}
         <TouchableHighlight onPress={changeToOneTime}>
           <View
             style={[
