@@ -22,9 +22,4 @@ keybase="alejomendoza"
 twitter="alejoskyhitz"
 github="alejomendoza"
 
-[[CURRENCIES]]
-code="SKYHITZ"
-issuer="GBGNRA46ZTWAO3L2QWBQBUMFKXELI3DWOB2PZAVL6YIFQQTFFQXQMQCJ"
-name="Skyhitz"
-desc="Utility token for Skyhitz products"
-image="https://res.cloudinary.com/skyhitz/image/upload/v1637602817/web/skyhitz-token.png"
+
