@@ -91,7 +91,7 @@ export default observer(({ route }) => {
           ellipsizeMode="tail"
           numberOfLines={1}
         >
-          {'Price USD: '}
+          {'Price (XLM): '}
         </Text>
         <TextInput
           underlineColorAndroid="transparent"
