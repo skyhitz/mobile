@@ -49,8 +49,7 @@ export class SessionStore {
 
   async signOut() {
     this.session.user = null;
-
-    return await AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
+    return await AsyncStorage.removeItem('userData');
   }
 
   async loadSession() {

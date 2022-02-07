@@ -1,6 +1,6 @@
 import WalletConnect, { CLIENT_EVENTS } from '@walletconnect/client';
 
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { observable } from 'mobx';
 
 const stellarMeta = {
@@ -37,9 +37,9 @@ export class WalletConnectStore {
         url: 'https://skyhitz.io',
         icons: ['https://skyhitz.io/img/icon-512.png'],
       },
-      // storageOptions: {
-      //   asyncStorage: AsyncStorage as any,
-      // },
+      storageOptions: {
+        asyncStorage: AsyncStorage as any,
+      },
     })
       .then(async (result) => {
         this.client = result;
