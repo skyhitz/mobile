@@ -15,6 +15,8 @@ export class PaymentsStore {
   submittingWithdraw: boolean = false;
   @observable
   loadingBalance: boolean = false;
+  @observable
+  xlmPrice: number = 0;
 
   constructor() {}
 
@@ -70,5 +72,15 @@ export class PaymentsStore {
 
   public getPriceInfo(id: string) {
     return entriesBackend.getPriceInfo(id);
+  }
+
+  get xlmPriceWithFees() {
+    return this.xlmPrice * 1.06;
+  }
+
+  public async refreshXLMPrice() {
+    const price = await paymentsBackend.getXLMPrice();
+
+    this.xlmPrice = parseFloat(price);
   }
 }

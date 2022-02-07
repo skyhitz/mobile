@@ -31,7 +31,7 @@ export default observer((props) => {
           <CloseIcon size={28} color={Colors.white} />
         </Pressable>
         <View>
-          <Text style={styles.modalTitle}>Buy Credits</Text>
+          <Text style={styles.modalTitle}>Buy XLM</Text>
           {Platform.OS === 'web' ? (
             <Elements stripe={stripePromise}>
               <PaymentStep />
