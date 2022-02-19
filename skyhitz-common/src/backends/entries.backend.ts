@@ -50,8 +50,6 @@ export class EntriesBackend {
           artist
           id
           videoUrl
-          price
-          forSale
         }
       }
       `,
@@ -81,8 +79,6 @@ export class EntriesBackend {
           artist
           id
           videoUrl
-          price
-          forSale
         }
       }
       `,
@@ -182,8 +178,6 @@ export class EntriesBackend {
               artist
               id
               videoUrl
-              price
-              forSale
             }
           }
         `,
@@ -217,8 +211,6 @@ export class EntriesBackend {
               artist
               id
               videoUrl
-              price
-              forSale
             }
           }
         `,
