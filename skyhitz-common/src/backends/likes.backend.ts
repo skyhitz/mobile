@@ -14,8 +14,6 @@ export class LikesBackend {
               artist
               id
               videoUrl
-              price
-              forSale
             }
           }
         `,
