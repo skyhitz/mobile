@@ -244,17 +244,17 @@ export class EntriesBackend {
       .then((data: any) => data.data);
   }
 
-  generateIssuer() {
+  getIssuer(cid: string) {
     return client
-      .mutate({
-        mutation: gql`
-          mutation {
-            generateIssuer
+      .query({
+        query: gql`
+          {
+            getIssuer(cid: "${cid}")
           }
         `,
       })
       .then((data: any) => data.data)
-      .then(({ generateIssuer }) => generateIssuer);
+      .then(({ getIssuer }) => getIssuer);
   }
 
   updatePricing(

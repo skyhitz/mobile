@@ -145,8 +145,6 @@ export class EntryStore {
   }
 
   async storeNFT() {
-    const issuer = await entriesBackend.generateIssuer();
-    if (!issuer) throw 'could not generate issuer';
     const name = `${this.artist} - ${this.title}`;
     const ipfsProtocol = 'ipfs://';
 
@@ -166,6 +164,9 @@ export class EntryStore {
 
     const imageUrl = `${ipfsProtocol}${imageCid}`;
     const videoUrl = `${ipfsProtocol}${videoCid}`;
+
+    const issuer = await entriesBackend.getIssuer(videoCid);
+    if (!issuer) throw 'could not generate issuer';
 
     const json = {
       name: name,
