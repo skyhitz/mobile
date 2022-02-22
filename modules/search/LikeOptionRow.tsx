@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 import LikeIcon from 'app/modules/ui/icons/like';
 
-export default observer(({ entry }) => {
+export default observer(({ entry, iconOnly = false, size = 24 }) => {
   const { likesStore } = Stores();
   const { goBack } = useNavigation();
 
@@ -24,18 +24,25 @@ export default observer(({ entry }) => {
   if (isLiked()) {
     return (
       <Pressable onPress={handleToggle}>
-        <View style={[styles.field, cursorPointer]}>
-          <LikeIcon size={24} color={Colors.brandBlue} />
-          <Text style={styles.textLiked}>Like</Text>
+        <View
+          style={[
+            iconOnly ? styles.iconOnlyfield : styles.field,
+            cursorPointer,
+          ]}
+        >
+          <LikeIcon fill={true} size={size} color={Colors.brandBlue} />
+          {!iconOnly && <Text style={styles.textLiked}>Unlike</Text>}
         </View>
       </Pressable>
     );
   }
   return (
     <Pressable onPress={handleToggle}>
-      <View style={[styles.field, cursorPointer]}>
-        <LikeIcon size={24} color={Colors.dividerBackground} />
-        <Text style={styles.text}>Like</Text>
+      <View
+        style={[iconOnly ? styles.iconOnlyfield : styles.field, cursorPointer]}
+      >
+        <LikeIcon size={size} color={Colors.dividerBackground} />
+        {!iconOnly && <Text style={styles.text}>Like</Text>}
       </View>
     </Pressable>
   );
@@ -51,6 +58,12 @@ var styles = StyleSheet.create({
     height: 40,
     marginBottom: 10,
     width: '100%',
+  },
+  iconOnlyfield: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     fontSize: 14,

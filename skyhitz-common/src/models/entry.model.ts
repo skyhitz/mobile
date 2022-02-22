@@ -20,6 +20,8 @@ export class EntryPayload extends Payload {
   videoUrl?: string;
   forSale?: boolean;
   price?: number;
+  issuer?: string;
+  code?: string;
 }
 
 export class Entry extends EntryPayload {
@@ -38,6 +40,8 @@ export class Entry extends EntryPayload {
     this.videoUrl = payload.videoUrl;
     this.forSale = payload.forSale;
     this.price = payload.price;
+    this.issuer = payload.issuer;
+    this.code = payload.code;
   }
 
   get isIpfs() {

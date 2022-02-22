@@ -12,6 +12,8 @@ import Colors from 'app/constants/Colors';
 import ThreeDots from 'app/modules/ui/ThreeDots';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import EntryPrice from './EntryPrice';
+import LikeOptionRow from '../search/LikeOptionRow';
 
 export default ({
   play,
@@ -48,25 +50,34 @@ export default ({
           </View>
         </View>
       </Pressable>
-      <ThreeDots
-        onPress={() =>
-          dispatch(
-            CommonActions.navigate({
-              name: 'EntryOptionsModal',
-              params: {
-                entry: entry,
-                options: options,
-                previousScreen: previousScreen,
-              },
-            })
-          )
-        }
-      />
+      <View style={styles.endSection}>
+        <LikeOptionRow size={20} iconOnly entry={entry} />
+        <EntryPrice issuer={entry.issuer} code={entry.code} />
+        <ThreeDots
+          onPress={() =>
+            dispatch(
+              CommonActions.navigate({
+                name: 'EntryOptionsModal',
+                params: {
+                  entry: entry,
+                  options: options,
+                  previousScreen: previousScreen,
+                },
+              })
+            )
+          }
+        />
+      </View>
     </View>
   );
 };
 
 let styles = StyleSheet.create({
+  endSection: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   rowWrap: {
     flex: 1,
     backgroundColor: Colors.listItemBackground,

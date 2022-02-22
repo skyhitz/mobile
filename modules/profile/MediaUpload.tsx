@@ -73,7 +73,7 @@ const ArtworkSection = ({ imageSelected, selectArtwork }) => {
 };
 
 export default observer(() => {
-  const { entryStore, userEntriesStore } = Stores();
+  const { entryStore, userEntriesStore, walletConnectStore } = Stores();
   const linkTo = useLinkTo();
   let equityForSaleValue = entryStore.equityForSale
     ? entryStore.equityForSale
@@ -163,10 +163,12 @@ export default observer(() => {
   };
 
   const onCreate = async () => {
-    await entryStore.create();
-    await userEntriesStore.refreshEntries();
-    entryStore.clearStore();
-    linkTo('/dashboard/profile');
+    const xdr = await entryStore.create();
+    await walletConnectStore.signXdr(xdr);
+
+    // await userEntriesStore.refreshEntries();
+    // entryStore.clearStore();
+    // linkTo('/dashboard/profile');
   };
 
   if (entryStore.uploadingError) {

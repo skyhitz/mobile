@@ -228,7 +228,7 @@ export class EntryStore {
       this.setUploadingError('Could not store NFT');
       return;
     }
-    await entriesBackend.createFromUpload(
+    return await entriesBackend.createFromUpload(
       nftCid,
       imageUrl,
       videoUrl,

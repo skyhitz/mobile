@@ -151,7 +151,7 @@ export class EntriesBackend {
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(cid: "${cid}",imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", code: "${code}", description: "${description}", title: "${title}", artist: "${artist}", forSale: ${forSale}, price: ${price}, equityForSale: ${
+        createEntry(cid: "${cid}", code: "${code}", forSale: ${forSale}, price: ${price}, equityForSale: ${
           equityForSale / 100
         }){
           xdr
@@ -159,7 +159,8 @@ export class EntriesBackend {
       }
       `,
       })
-      .then((data: any) => data.data)
+      .then(({ data }) => data.createEntry)
+      .then(({ xdr }: { xdr: string }) => xdr)
       .catch((e) => {
         console.info(e);
         return null;

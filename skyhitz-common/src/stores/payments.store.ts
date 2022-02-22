@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
 import { paymentsBackend } from '../backends/payments.backend';
 import { entriesBackend } from '../backends/entries.backend';
+import { Config } from '../config';
 
 export class PaymentsStore {
   @observable
@@ -17,6 +18,9 @@ export class PaymentsStore {
   loadingBalance: boolean = false;
   @observable
   xlmPrice: number = 0;
+
+  @observable
+  entryPrices: Map<string, { price: number; amount: number }> = new Map();
 
   constructor() {}
 
@@ -82,5 +86,25 @@ export class PaymentsStore {
     const price = await paymentsBackend.getXLMPrice();
 
     this.xlmPrice = parseFloat(price);
+  }
+
+  public async fetchPriceFromHorizon(code: string, issuer: string) {
+    let { asks } = await fetch(
+      `${Config.HORIZON_URL}/order_book?selling_asset_type=credit_alphanum12&selling_asset_code=${code}&selling_asset_issuer=${issuer}&buying_asset_type=native`
+    ).then((res: any) => res.data);
+
+    let { price, amount }: { price: number; amount: number } = asks[0];
+    return { price, amount };
+  }
+
+  public async fetchAndCachePrice(code: string, issuer: string) {
+    const identifier = `${code}-${issuer}`;
+    const val = this.entryPrices.get(identifier);
+    if (val) {
+      return val;
+    }
+    const newval = await this.fetchPriceFromHorizon(code, issuer);
+    this.entryPrices.set(identifier, newval);
+    return newval;
   }
 }
