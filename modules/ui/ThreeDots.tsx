@@ -15,7 +15,6 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 30,
     height: 30,
   },
 });

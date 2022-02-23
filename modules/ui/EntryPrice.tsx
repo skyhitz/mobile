@@ -20,7 +20,7 @@ function EntryPrice({ code, issuer }) {
 
   return (
     <View style={styles.endSection}>
-      <Text style={styles.price}>{value.price}</Text>
+      {value.price > 0 && <Text style={styles.price}>{value.price}</Text>}
       <DollarIcon size={12} color={Colors.white} />
     </View>
   );
@@ -35,7 +35,7 @@ let styles = StyleSheet.create({
   },
   price: {
     color: Colors.white,
-    marginHorizontal: 5,
+    marginHorizontal: 10,
   },
 });
 
