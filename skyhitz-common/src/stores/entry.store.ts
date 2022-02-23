@@ -12,7 +12,7 @@ export class EntryStore {
   @observable
   description!: string;
   @observable
-  issuer!: string;
+  issuer = '';
   @observable
   title!: string;
   @observable
@@ -22,7 +22,7 @@ export class EntryStore {
   @observable
   price: number | undefined;
   @observable
-  equityForSale: number | undefined;
+  equityForSale: number = 1;
   @observable
   equityForSalePercentage: string = '1 %';
   @observable
@@ -166,6 +166,7 @@ export class EntryStore {
     const videoUrl = `${ipfsProtocol}${videoCid}`;
 
     const issuer = await entriesBackend.getIssuer(videoCid);
+    this.setIssuer(issuer);
     if (!issuer) throw 'could not generate issuer';
 
     const json = {
@@ -221,6 +222,11 @@ export class EntryStore {
     );
   }
 
+  async indexEntry() {
+    if (!this.issuer) return false;
+    return await entriesBackend.indexEntry(this.issuer);
+  }
+
   async create() {
     this.creating = true;
     const { nftCid, imageUrl, videoUrl, code } = await this.storeNFT();
@@ -230,12 +236,7 @@ export class EntryStore {
     }
     return await entriesBackend.createFromUpload(
       nftCid,
-      imageUrl,
-      videoUrl,
       code,
-      this.description,
-      this.title,
-      this.artist,
       this.availableForSale,
       this.price,
       this.availableForSale ? this.equityForSale : 0
