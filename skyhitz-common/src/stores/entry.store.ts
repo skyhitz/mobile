@@ -145,8 +145,6 @@ export class EntryStore {
   }
 
   async storeNFT() {
-    const issuer = await entriesBackend.generateIssuer();
-    if (!issuer) throw 'could not generate issuer';
     const name = `${this.artist} - ${this.title}`;
     const ipfsProtocol = 'ipfs://';
 
@@ -166,6 +164,9 @@ export class EntryStore {
 
     const imageUrl = `${ipfsProtocol}${imageCid}`;
     const videoUrl = `${ipfsProtocol}${videoCid}`;
+
+    const issuer = await entriesBackend.getIssuer(videoCid);
+    if (!issuer) throw 'could not generate issuer';
 
     const json = {
       name: name,
@@ -227,7 +228,7 @@ export class EntryStore {
       this.setUploadingError('Could not store NFT');
       return;
     }
-    await entriesBackend.createFromUpload(
+    return await entriesBackend.createFromUpload(
       nftCid,
       imageUrl,
       videoUrl,
@@ -260,7 +261,7 @@ export class EntryStore {
     this.clearStore();
   }
 
-  async remove(entryId: string, cloudinaryPublicId: string) {
-    await entriesBackend.remove(entryId, cloudinaryPublicId);
+  async remove(entryId: string) {
+    await entriesBackend.remove(entryId);
   }
 }

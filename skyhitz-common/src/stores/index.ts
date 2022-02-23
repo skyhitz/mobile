@@ -12,6 +12,7 @@ import { LikesStore } from './likes.store';
 import { PaymentsStore } from './payments.store';
 import { EntryStore } from './entry.store';
 import { UserEntriesStore } from './user-entries.store';
+import { WalletConnectStore } from './wallet-connect.store';
 
 export const sessionStore = new SessionStore();
 export const signUpValidationStore = new SignUpValidationStore();
@@ -32,6 +33,7 @@ export const likesStore = new LikesStore(
 export const paymentsStore = new PaymentsStore();
 export const entryStore = new EntryStore();
 export const userEntriesStore = new UserEntriesStore(sessionStore);
+export const walletConnectStore = new WalletConnectStore();
 
 export type Stores = {
   sessionStore: SessionStore;
@@ -48,4 +50,5 @@ export type Stores = {
   paymentsStore: PaymentsStore;
   entryStore: EntryStore;
   userEntriesStore: UserEntriesStore;
+  walletConnectStore: WalletConnectStore;
 };

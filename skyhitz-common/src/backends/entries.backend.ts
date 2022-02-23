@@ -2,7 +2,6 @@ import { client } from './apollo-client.backend';
 import { gql } from '@apollo/client';
 import { Entry } from '../models/entry.model';
 import { entriesIndex } from '../algolia/algolia';
-import { isTesting } from '../config/index';
 
 export class EntriesBackend {
   async search(q: string) {
@@ -10,9 +9,7 @@ export class EntriesBackend {
       return [];
     }
 
-    const { hits } = await entriesIndex.search(q, {
-      filters: `testing = ${isTesting}`,
-    });
+    const { hits } = await entriesIndex.search(q);
     return hits;
   }
 
@@ -53,8 +50,6 @@ export class EntriesBackend {
           artist
           id
           videoUrl
-          price
-          forSale
         }
       }
       `,
@@ -84,8 +79,6 @@ export class EntriesBackend {
           artist
           id
           videoUrl
-          price
-          forSale
         }
       }
       `,
@@ -158,7 +151,7 @@ export class EntriesBackend {
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(cid: "${cid}",imageUrl: "${imageUrl}", videoUrl: "${videoUrl}", code: "${code}", description: "${description}", title: "${title}", artist: "${artist}", forSale: ${forSale}, price: ${price}, equityForSale: ${
+        createEntry(cid: "${cid}", code: "${code}", forSale: ${forSale}, price: ${price}, equityForSale: ${
           equityForSale / 100
         }){
           xdr
@@ -166,7 +159,8 @@ export class EntriesBackend {
       }
       `,
       })
-      .then((data: any) => data.data)
+      .then(({ data }) => data.createEntry)
+      .then(({ xdr }: { xdr: string }) => xdr)
       .catch((e) => {
         console.info(e);
         return null;
@@ -185,8 +179,6 @@ export class EntriesBackend {
               artist
               id
               videoUrl
-              price
-              forSale
             }
           }
         `,
@@ -220,8 +212,6 @@ export class EntriesBackend {
               artist
               id
               videoUrl
-              price
-              forSale
             }
           }
         `,
@@ -243,29 +233,29 @@ export class EntriesBackend {
     return [];
   }
 
-  remove(id: string, cloudinaryPublicId: string) {
+  remove(id: string) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        removeEntry(id: "${id}", cloudinaryPublicId: "${cloudinaryPublicId}")
+        removeEntry(id: "${id}")
       }
       `,
       })
       .then((data: any) => data.data);
   }
 
-  generateIssuer() {
+  getIssuer(cid: string) {
     return client
-      .mutate({
-        mutation: gql`
-          mutation {
-            generateIssuer
+      .query({
+        query: gql`
+          {
+            getIssuer(cid: "${cid}")
           }
         `,
       })
       .then((data: any) => data.data)
-      .then(({ generateIssuer }) => generateIssuer);
+      .then(({ getIssuer }) => getIssuer);
   }
 
   updatePricing(

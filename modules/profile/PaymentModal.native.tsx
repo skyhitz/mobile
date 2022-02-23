@@ -20,7 +20,7 @@ export default observer((props) => {
           <CloseIcon color={Colors.white} />
         </Pressable>
         <View>
-          <Text style={styles.modalTitle}>Buy Credits</Text>
+          <Text style={styles.modalTitle}>Buy XLM</Text>
         </View>
       </View>
     </View>

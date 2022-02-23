@@ -17,7 +17,7 @@ import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import cursorPointer from 'app/constants/CursorPointer';
 import { Stores } from 'app/functions/Stores';
-import { useLinkTo } from '@react-navigation/native';
+// import { useLinkTo } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import PieChartIcon from 'app/modules/ui/icons/pie';
 import InfoIcon from 'app/modules/ui/icons/info-circle';
@@ -73,8 +73,10 @@ const ArtworkSection = ({ imageSelected, selectArtwork }) => {
 };
 
 export default observer(() => {
-  const { entryStore, userEntriesStore } = Stores();
-  const linkTo = useLinkTo();
+  // const { entryStore, userEntriesStore, walletConnectStore } = Stores();
+  const { entryStore, walletConnectStore } = Stores();
+
+  // const linkTo = useLinkTo();
   let equityForSaleValue = entryStore.equityForSale
     ? entryStore.equityForSale
     : 0;
@@ -163,10 +165,13 @@ export default observer(() => {
   };
 
   const onCreate = async () => {
-    await entryStore.create();
-    await userEntriesStore.refreshEntries();
-    entryStore.clearStore();
-    linkTo('/dashboard/profile');
+    const xdr = await entryStore.create();
+    const res = await walletConnectStore.signXdr(xdr);
+    console.log(res);
+
+    // await userEntriesStore.refreshEntries();
+    // entryStore.clearStore();
+    // linkTo('/dashboard/profile');
   };
 
   if (entryStore.uploadingError) {
@@ -275,7 +280,7 @@ export default observer(() => {
               ellipsizeMode="tail"
               numberOfLines={1}
             >
-              {'Price USD: '}
+              {'Price (XLM):'}
             </Text>
             <TextInput
               underlineColorAndroid="transparent"

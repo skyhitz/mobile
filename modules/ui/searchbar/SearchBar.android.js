@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Text,
   Platform,
+  Pressable,
 } from 'react-native';
 import Input from 'app/modules/ui/Input';
 import Colors from 'app/constants/Colors';
@@ -107,11 +108,9 @@ class SearchBar extends Component {
                 />
               )}
               {clearIcon && !isEmpty && (
-                <CloseIcon
-                  size={25}
-                  color={Colors.searchTextColor}
-                  onPress={() => this.clear()}
-                />
+                <Pressable onPress={() => this.clear()}>
+                  <CloseIcon size={25} color={Colors.searchTextColor} />
+                </Pressable>
               )}
             </View>
           }

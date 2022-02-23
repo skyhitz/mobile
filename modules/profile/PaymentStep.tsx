@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
@@ -20,13 +20,19 @@ async function timeout(ms) {
 }
 
 export default observer((props) => {
-  const [selectedOption, setSelectedOption] = useState('subscription');
-  const [amount, setAmount] = useState(50);
+  const [amount, setAmount] = useState(200);
   const stripe = useStripe();
   const elements = useElements();
   const { goBack } = useNavigation();
 
   const { paymentsStore } = Stores();
+  const [selectedOption, setSelectedOption] = useState(
+    paymentsStore.subscribed ? 'one-time' : 'subscription'
+  );
+
+  useEffect(() => {
+    paymentsStore.refreshXLMPrice();
+  }, []);
 
   const refreshSubscription = async () => {
     paymentsStore.setLoadingBalance(true);
@@ -66,7 +72,10 @@ export default observer((props) => {
     if (!token) return;
     const { id } = token;
     if (selectedOption === 'one-time') {
-      const purchased = await paymentsStore.buyCredits(id, amount * 1.03);
+      const purchased = await paymentsStore.buyCredits(
+        id,
+        amount * paymentsStore.xlmPriceWithFees
+      );
 
       if (purchased) {
         goBack();
@@ -111,22 +120,27 @@ export default observer((props) => {
   return (
     <View style={styles.checkoutWrap}>
       <View style={styles.options}>
-        <TouchableHighlight onPress={changeToSubscription}>
-          <View
-            style={[
-              styles.radio,
-              selectedOption === 'subscription' ? styles.selected : {},
-            ]}
-          >
-            <View>
-              <H3 style={styles.priceHeaders}>7.75</H3>
-              <P style={styles.description}>Monthly credit plan</P>
-              <View style={styles.priceSection}>
-                <P style={styles.perMonth}>$7.99 per month</P>
+        {!paymentsStore.subscribed && (
+          <TouchableHighlight onPress={changeToSubscription}>
+            <View
+              style={[
+                styles.radio,
+                selectedOption === 'subscription' ? styles.selected : {},
+              ]}
+            >
+              <View>
+                <H3 style={styles.priceHeaders}>
+                  {paymentsStore.xlmPrice &&
+                    (7.99 / paymentsStore.xlmPriceWithFees).toFixed(2)}
+                </H3>
+                <P style={styles.description}>Monthly XLM plan</P>
+                <View style={styles.priceSection}>
+                  <P style={styles.perMonth}>$7.99 per month</P>
+                </View>
               </View>
             </View>
-          </View>
-        </TouchableHighlight>
+          </TouchableHighlight>
+        )}
         <TouchableHighlight onPress={changeToOneTime}>
           <View
             style={[
@@ -150,10 +164,13 @@ export default observer((props) => {
                 ]}
                 onKeyPress={onSubmit}
               />
-              <P style={styles.description}>Buy credits</P>
+              <P style={styles.description}>Buy XLM</P>
               <View style={styles.priceSection}>
                 <P style={styles.perMonth}>
-                  ${(amount * 1.03).toFixed(2)} one time
+                  $
+                  {paymentsStore.xlmPrice &&
+                    (amount * paymentsStore.xlmPriceWithFees).toFixed(2)}{' '}
+                  one time
                 </P>
               </View>
             </View>

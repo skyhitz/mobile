@@ -1,7 +1,6 @@
 import { client } from './apollo-client.backend';
 import { gql } from '@apollo/client';
 import { SignUpForm } from '../types';
-import { isTesting } from '../config/index';
 
 export class UserBackend {
   async getAuthenticatedUser() {
@@ -26,14 +25,12 @@ export class UserBackend {
       .then(({ authenticatedUser }) => authenticatedUser);
   }
 
-  async signUp({ displayName, email, username }: SignUpForm) {
+  async signUp({ displayName, email, username, publicKey }: SignUpForm) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        createUserWithEmail(displayName: "${displayName}", email: "${email}", username: "${username}", testing:${
-          isTesting ? true : false
-        }){
+        createUserWithEmail(displayName: "${displayName}", email: "${email}", username: "${username}",publicKey: "${publicKey}"){
           avatarUrl
           displayName
           username
@@ -54,12 +51,12 @@ export class UserBackend {
       });
   }
 
-  async requestToken(usernameOrEmail) {
+  async requestToken(usernameOrEmail, publicKey) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        requestToken(usernameOrEmail: "${usernameOrEmail}")
+        requestToken(usernameOrEmail: "${usernameOrEmail}", publicKey: "${publicKey}")
       }
       `,
       })

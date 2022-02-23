@@ -9,10 +9,10 @@ var styles = StyleSheet.create({
     height: 3,
     borderRadius: 3,
     backgroundColor: Colors.white,
-    marginLeft: 4,
+    marginVertical: 2,
   },
   dots: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     width: 30,

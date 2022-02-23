@@ -4,6 +4,7 @@ NETWORK_PASSPHRASE="Public Global Stellar Network ; September 2015"
 
 ACCOUNTS=[
 "GBGNRA46ZTWAO3L2QWBQBUMFKXELI3DWOB2PZAVL6YIFQQTFFQXQMQCJ",
+"GCAETBNBFKVGLYFXKCLMKT6ZVHFXHRSDFSEW7ODIUJYC6R7H2QJ6OKGU"
 ]
 
 [DOCUMENTATION]
@@ -22,9 +23,3 @@ keybase="alejomendoza"
 twitter="alejoskyhitz"
 github="alejomendoza"
 
-[[CURRENCIES]]
-code="SKYHITZ"
-issuer="GBGNRA46ZTWAO3L2QWBQBUMFKXELI3DWOB2PZAVL6YIFQQTFFQXQMQCJ"
-name="Skyhitz"
-desc="Utility token for Skyhitz products"
-image="https://res.cloudinary.com/skyhitz/image/upload/v1637602817/web/skyhitz-token.png"

@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
 import CloseIcon from 'app/modules/ui/icons/x';
 import WalletIcon from 'app/modules/ui/icons/wallet';
-import MoneyIcon from 'app/modules/ui/icons/money';
+import DollarIcon from 'app/modules/ui/icons/dollar';
 
 export default observer((props) => {
   const { paymentsStore } = Stores();
@@ -66,7 +66,7 @@ export default observer((props) => {
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
-            placeholder="Stellar Address"
+            placeholder="Stellar Address (Without Memo)"
             autoCorrect={false}
             autoFocus={true}
             style={[
@@ -84,12 +84,12 @@ export default observer((props) => {
         </View>
         <View style={styles.field}>
           <View style={styles.placeholderIcon}>
-            <MoneyIcon size={22} color={Colors.white} />
+            <DollarIcon size={22} color={Colors.white} />
           </View>
           <TextInput
             underlineColorAndroid="transparent"
             autoCapitalize="none"
-            placeholder="USD to withdraw"
+            placeholder="XLM to withdraw"
             autoCorrect={false}
             autoFocus={true}
             style={[
@@ -106,9 +106,9 @@ export default observer((props) => {
         </View>
         <View style={styles.fieldWithoutBorder}>
           <Text style={styles.smallText}>
-            Withdraw to a Stellar Public Network address only. The equivalent
-            will be sent in XLM. Don't send if a Memo is required, funds will be
-            lost if you send to a wallet that require a Memo.
+            Withdraw to a Stellar Public Network address only. Don't send if a
+            Memo is required, funds will be lost if you send to a wallet that
+            requires a Memo.
           </Text>
         </View>
         <LargeBtn
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   smallText: {
     backgroundColor: Colors.transparent,
     color: Colors.white,
-    fontSize: 10,
+    fontSize: 12,
     width: 270,
     bottom: 0,
   },

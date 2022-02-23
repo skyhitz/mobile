@@ -1,6 +1,5 @@
 import { User } from '../models/user.model';
 import { usersIndex } from '../algolia/algolia';
-import { isTesting } from '../config/index';
 
 export class UsersBackend {
   async search(q: string) {
@@ -8,9 +7,7 @@ export class UsersBackend {
       return [];
     }
 
-    const { hits } = await usersIndex.search(q, {
-      filters: `testing = ${isTesting}`,
-    });
+    const { hits } = await usersIndex.search(q);
     return hits.map((user: any) => new User(user));
   }
 

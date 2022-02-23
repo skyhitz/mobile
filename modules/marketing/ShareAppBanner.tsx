@@ -32,7 +32,7 @@ export default (props) => {
           <LargeBtn
             icon={() => <DollarIcon size={20} color={Colors.white} />}
             onPress={onBuyCredits}
-            text="Buy Credits"
+            text="Buy XLM"
           />
         </View>
       ) : null}

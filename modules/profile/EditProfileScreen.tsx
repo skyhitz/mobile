@@ -24,6 +24,7 @@ import PersonOutlineIcon from 'app/modules/ui/icons/person-outline';
 import MailOutlineIcon from 'app/modules/ui/icons/mail-outline';
 import LogoutIcon from 'app/modules/ui/icons/logout';
 import InfoCirlceIcon from 'app/modules/ui/icons/info-circle';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Stores = typeof stores;
 
@@ -54,6 +55,7 @@ type Stores = typeof stores;
 export default class EditProfileScreen extends React.Component<any, any> {
   async handleLogOut() {
     await this.props.logOut();
+    await AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
     this.props.navigation.navigate(
       Platform.OS === 'web' ? 'WebApp' : 'AuthScreen'
     );

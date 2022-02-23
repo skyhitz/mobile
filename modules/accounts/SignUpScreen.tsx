@@ -14,9 +14,10 @@ import { useLinkTo } from '@react-navigation/native';
 import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
+import WalletConnectBtn from 'app/modules/accounts/WalletConnectBtn';
 
 export default observer(() => {
-  const { signUpValidationStore, sessionStore } = Stores();
+  const { signUpValidationStore, sessionStore, walletConnectStore } = Stores();
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -45,11 +46,14 @@ export default observer(() => {
         username: username,
         displayName: displayName,
         email: email,
+        publicKey: walletConnectStore.publicKey,
       });
       setLoading(false);
       return linkTo('/');
     } catch (e) {
-      signUpValidationStore.setBackendError(e);
+      if (typeof e === 'string') {
+        signUpValidationStore.setBackendError(e);
+      }
     }
     return setLoading(false);
   };
@@ -63,6 +67,10 @@ export default observer(() => {
   return (
     <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
+        <WalletConnectBtn />
+        <View style={styles.orDivider}>
+          <View style={styles.line} />
+        </View>
         <View style={styles.field}>
           <TextInput
             underlineColorAndroid="transparent"
@@ -155,6 +163,24 @@ export default observer(() => {
 });
 
 var styles = StyleSheet.create({
+  line: {
+    flexGrow: 1,
+    height: 1,
+    backgroundColor: Colors.white,
+  },
+  orDivider: {
+    width: '100%',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  orText: {
+    backgroundColor: Colors.transparent,
+    color: Colors.white,
+    fontSize: 16,
+    padding: 10,
+  },
   field: {
     height: 50,
     width: '100%',

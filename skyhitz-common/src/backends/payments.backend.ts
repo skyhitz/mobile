@@ -26,6 +26,19 @@ export class PaymentsBackend {
       .then((data: any) => data.data)
       .then(({ buyCredits }) => buyCredits);
   }
+  async getXLMPrice() {
+    return client
+      .query({
+        query: gql`
+          {
+            xlmPrice
+          }
+        `,
+        fetchPolicy: 'network-only',
+      })
+      .then((data: any) => data.data)
+      .then(({ xlmPrice }) => xlmPrice);
+  }
   async withdrawToExternalWallet(address: string, amount: number) {
     return client
       .mutate({
