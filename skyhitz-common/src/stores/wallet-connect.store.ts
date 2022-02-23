@@ -124,7 +124,7 @@ export class WalletConnectStore {
   }
 
   async signXdr(xdr) {
-    const res = await this.client?.request({
+    return await this.client?.request({
       topic: this.session.topic,
       chainId: stellarMeta.chainName,
       request: {
@@ -136,6 +136,5 @@ export class WalletConnectStore {
         },
       } as any,
     });
-    console.log(res);
   }
 }

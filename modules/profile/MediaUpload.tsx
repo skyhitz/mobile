@@ -164,7 +164,8 @@ export default observer(() => {
 
   const onCreate = async () => {
     const xdr = await entryStore.create();
-    await walletConnectStore.signXdr(xdr);
+    const res = await walletConnectStore.signXdr(xdr);
+    console.log(res);
 
     // await userEntriesStore.refreshEntries();
     // entryStore.clearStore();
