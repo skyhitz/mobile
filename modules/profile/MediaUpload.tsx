@@ -17,7 +17,7 @@ import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import cursorPointer from 'app/constants/CursorPointer';
 import { Stores } from 'app/functions/Stores';
-import { useLinkTo } from '@react-navigation/native';
+// import { useLinkTo } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import PieChartIcon from 'app/modules/ui/icons/pie';
 import InfoIcon from 'app/modules/ui/icons/info-circle';
@@ -73,8 +73,10 @@ const ArtworkSection = ({ imageSelected, selectArtwork }) => {
 };
 
 export default observer(() => {
-  const { entryStore, userEntriesStore, walletConnectStore } = Stores();
-  const linkTo = useLinkTo();
+  // const { entryStore, userEntriesStore, walletConnectStore } = Stores();
+  const { entryStore, walletConnectStore } = Stores();
+
+  // const linkTo = useLinkTo();
   let equityForSaleValue = entryStore.equityForSale
     ? entryStore.equityForSale
     : 0;
