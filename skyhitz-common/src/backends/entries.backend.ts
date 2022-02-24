@@ -137,12 +137,28 @@ export class EntriesBackend {
           equityForSale / 100
         }){
           xdr
+          success
+          submitted
         }
       }
       `,
       })
       .then(({ data }) => data.createEntry)
-      .then(({ xdr }: { xdr: string }) => xdr)
+      .then(
+        ({
+          xdr,
+          success,
+          submitted,
+        }: {
+          xdr: string;
+          success: boolean;
+          submitted: boolean;
+        }) => ({
+          xdr,
+          success,
+          submitted,
+        })
+      )
       .catch((e) => {
         console.info(e);
         return null;

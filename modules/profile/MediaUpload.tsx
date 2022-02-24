@@ -161,22 +161,39 @@ export default observer(() => {
   };
 
   const onCreate = async () => {
-    const xdr = await entryStore.create();
-    const { status } = await walletConnectStore.signAndSubmitXdr(xdr);
-    if (status === 'success') {
-      const indexed = await entryStore.indexEntry();
-      if (!indexed) {
+    const res = await entryStore.create();
+    if (!res) {
+      return entryStore.setUploadingError(
+        'Something went wrong. Please try again!'
+      );
+    }
+    let { xdr, submitted, success } = res;
+
+    if (!success) {
+      return entryStore.setUploadingError(
+        'Something went very wrong. Please contact us!'
+      );
+    }
+
+    if (!submitted) {
+      const { status } = await walletConnectStore.signAndSubmitXdr(xdr);
+      if (status !== 'success') {
         return entryStore.setUploadingError(
           'Something went very wrong. Please contact us!'
         );
       }
-      await userEntriesStore.refreshEntries();
-      entryStore.clearStore();
-      linkTo('/dashboard/profile');
-      return;
     }
 
-    entryStore.setUploadingError('Something went wrong. Please try again!');
+    const indexed = await entryStore.indexEntry();
+    if (!indexed) {
+      return entryStore.setUploadingError(
+        'Something went very wrong. Please contact us!'
+      );
+    }
+    await userEntriesStore.refreshEntries();
+    entryStore.clearStore();
+    linkTo('/dashboard/profile');
+    return;
   };
 
   if (entryStore.uploadingError) {
