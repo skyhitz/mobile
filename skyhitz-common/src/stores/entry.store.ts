@@ -184,7 +184,7 @@ export class EntryStore {
     const blob = new Blob([JSON.stringify(json)], { type: 'application/json' });
 
     const nftCid = await this.uploadFile(blob, 'meta');
-    return { nftCid, imageUrl, videoUrl, code };
+    return { videoCid, nftCid, imageUrl, videoUrl, code };
   }
 
   clearStore() {
@@ -229,12 +229,19 @@ export class EntryStore {
 
   async create() {
     this.creating = true;
-    const { nftCid, imageUrl, videoUrl, code } = await this.storeNFT();
+    const {
+      videoCid,
+      nftCid,
+      imageUrl,
+      videoUrl,
+      code,
+    } = await this.storeNFT();
     if (!nftCid || !imageUrl || !videoUrl) {
       this.setUploadingError('Could not store NFT');
       return;
     }
     return await entriesBackend.createFromUpload(
+      videoCid,
       nftCid,
       code,
       this.availableForSale,
