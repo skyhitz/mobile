@@ -93,8 +93,12 @@ export class PaymentsStore {
       `${Config.HORIZON_URL}/order_book?selling_asset_type=credit_alphanum12&selling_asset_code=${code}&selling_asset_issuer=${issuer}&buying_asset_type=native`
     ).then((res: any) => res.data);
 
-    let { price, amount }: { price: number; amount: number } = asks[0];
-    return { price, amount };
+    if (asks[0]) {
+      let { price, amount }: { price: number; amount: number } = asks[0];
+      return { price, amount };
+    }
+
+    return null;
   }
 
   public async fetchAndCachePrice(code: string, issuer: string) {
@@ -104,7 +108,10 @@ export class PaymentsStore {
       return val;
     }
     const newval = await this.fetchPriceFromHorizon(code, issuer);
-    this.entryPrices.set(identifier, newval);
-    return newval;
+    if (newval) {
+      this.entryPrices.set(identifier, newval);
+      return newval;
+    }
+    return { price: 0, amount: 0 };
   }
 }
