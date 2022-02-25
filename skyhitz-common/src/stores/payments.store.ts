@@ -93,7 +93,7 @@ export class PaymentsStore {
       `${Config.HORIZON_URL}/order_book?selling_asset_type=credit_alphanum12&selling_asset_code=${code}&selling_asset_issuer=${issuer}&buying_asset_type=native`
     ).then((res: any) => res.data);
 
-    if (asks[0]) {
+    if (asks && asks[0]) {
       let { price, amount }: { price: number; amount: number } = asks[0];
       return { price, amount };
     }
