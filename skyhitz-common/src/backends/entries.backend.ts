@@ -50,6 +50,8 @@ export class EntriesBackend {
           artist
           id
           videoUrl
+          code
+          issuer
         }
       }
       `,
@@ -79,6 +81,8 @@ export class EntriesBackend {
           artist
           id
           videoUrl
+          code
+          issuer
         }
       }
       `,
@@ -177,6 +181,8 @@ export class EntriesBackend {
               artist
               id
               videoUrl
+              code
+              issuer
             }
           }
         `,
@@ -210,6 +216,8 @@ export class EntriesBackend {
               artist
               id
               videoUrl
+              code
+              issuer
             }
           }
         `,
