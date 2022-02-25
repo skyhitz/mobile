@@ -127,7 +127,8 @@ export class EntriesBackend {
   }
 
   async createFromUpload(
-    cid: string,
+    fileCid: string,
+    metaCid: string,
     code: string,
     forSale: boolean = false,
     price: number = 0,
@@ -137,7 +138,7 @@ export class EntriesBackend {
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(cid: "${cid}", code: "${code}", forSale: ${forSale}, price: ${price}, equityForSale: ${
+        createEntry(fileCid: "${fileCid}",metaCid: "${metaCid}", code: "${code}", forSale: ${forSale}, price: ${price}, equityForSale: ${
           equityForSale / 100
         }){
           xdr
