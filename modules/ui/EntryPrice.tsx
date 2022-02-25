@@ -27,9 +27,15 @@ function EntryPrice({ code, issuer }) {
     }
   }, []);
 
+  const getAvailablePrice = () => {
+    return value.amount * value.price;
+  };
+
   return (
     <View style={styles.endSection}>
-      {value.price > 0 && <Text style={styles.price}>{value.price}</Text>}
+      {value.price > 0 && (
+        <Text style={styles.price}>{getAvailablePrice()}</Text>
+      )}
       <A
         target="_blank"
         href={stellarExpertLink(code, issuer)}
