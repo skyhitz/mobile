@@ -51,8 +51,10 @@ export default ({
         </View>
       </Pressable>
       <View style={styles.endSection}>
-        <LikeOptionRow size={20} iconOnly entry={entry} />
         <EntryPrice issuer={entry.issuer} code={entry.code} />
+        <View style={styles.likeSpace}>
+          <LikeOptionRow size={20} iconOnly entry={entry} />
+        </View>
         <ThreeDots
           onPress={() =>
             dispatch(
@@ -75,8 +77,11 @@ export default ({
 let styles = StyleSheet.create({
   endSection: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  likeSpace: {
+    paddingHorizontal: 10,
   },
   rowWrap: {
     flex: 1,

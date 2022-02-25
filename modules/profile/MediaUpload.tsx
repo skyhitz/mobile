@@ -17,7 +17,7 @@ import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
 import cursorPointer from 'app/constants/CursorPointer';
 import { Stores } from 'app/functions/Stores';
-// import { useLinkTo } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import PieChartIcon from 'app/modules/ui/icons/pie';
 import InfoIcon from 'app/modules/ui/icons/info-circle';
@@ -73,14 +73,10 @@ const ArtworkSection = ({ imageSelected, selectArtwork }) => {
 };
 
 export default observer(() => {
-  // const { entryStore, userEntriesStore, walletConnectStore } = Stores();
-  const { entryStore, walletConnectStore } = Stores();
+  const { entryStore, userEntriesStore, walletConnectStore } = Stores();
 
-  // const linkTo = useLinkTo();
-  let equityForSaleValue = entryStore.equityForSale
-    ? entryStore.equityForSale
-    : 0;
-
+  const linkTo = useLinkTo();
+  let equityForSaleValue = entryStore.equityForSale;
   const getPermissionAsync = async () => {
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
       const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
@@ -165,13 +161,39 @@ export default observer(() => {
   };
 
   const onCreate = async () => {
-    const xdr = await entryStore.create();
-    const res = await walletConnectStore.signXdr(xdr);
-    console.log(res);
+    const res = await entryStore.create();
+    if (!res) {
+      return entryStore.setUploadingError(
+        'Something went wrong. Please try again!'
+      );
+    }
+    let { xdr, submitted, success } = res;
 
-    // await userEntriesStore.refreshEntries();
-    // entryStore.clearStore();
-    // linkTo('/dashboard/profile');
+    if (!success) {
+      return entryStore.setUploadingError(
+        'Something went very wrong. Please contact us!'
+      );
+    }
+
+    if (!submitted) {
+      const { status } = await walletConnectStore.signAndSubmitXdr(xdr);
+      if (status !== 'success') {
+        return entryStore.setUploadingError(
+          'Something went very wrong. Please contact us!'
+        );
+      }
+    }
+
+    const indexed = await entryStore.indexEntry();
+    if (!indexed) {
+      return entryStore.setUploadingError(
+        'Something went very wrong. Please contact us!'
+      );
+    }
+    await userEntriesStore.refreshEntries();
+    entryStore.clearStore();
+    linkTo('/dashboard/profile');
+    return;
   };
 
   if (entryStore.uploadingError) {

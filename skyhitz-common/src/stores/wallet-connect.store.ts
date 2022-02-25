@@ -137,4 +137,19 @@ export class WalletConnectStore {
       } as any,
     });
   }
+
+  async signAndSubmitXdr(xdr) {
+    return await this.client?.request({
+      topic: this.session.topic,
+      chainId: stellarMeta.chainName,
+      request: {
+        id: 1,
+        jsonrpc: '2.0',
+        method: 'stellar_signAndSubmitXDR',
+        params: {
+          xdr: xdr,
+        },
+      } as any,
+    });
+  }
 }

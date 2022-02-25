@@ -110,39 +110,21 @@ export class EntriesBackend {
       .then(({ buyEntry }) => buyEntry);
   }
 
-  async create(id: string) {
+  async indexEntry(issuer: string) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        createEntry(id: "${id}"){
-          imageUrl
-          description
-          title
-          artist
-          id
-          videoUrl
-        }
+        indexEntry(issuer: "${issuer}")
       }
       `,
       })
-      .then((data: any) => data.data)
-      .then(({ createEntry }) => {
-        return new Entry(createEntry);
-      })
-      .catch((e) => {
-        return this.getById(id);
-      });
+      .then(({ data }) => data.indexEntry);
   }
 
   async createFromUpload(
     cid: string,
-    imageUrl: string,
-    videoUrl: string,
     code: string,
-    description: string,
-    title: string,
-    artist: string,
     forSale: boolean = false,
     price: number = 0,
     equityForSale: number = 0
@@ -155,12 +137,28 @@ export class EntriesBackend {
           equityForSale / 100
         }){
           xdr
+          success
+          submitted
         }
       }
       `,
       })
       .then(({ data }) => data.createEntry)
-      .then(({ xdr }: { xdr: string }) => xdr)
+      .then(
+        ({
+          xdr,
+          success,
+          submitted,
+        }: {
+          xdr: string;
+          success: boolean;
+          submitted: boolean;
+        }) => ({
+          xdr,
+          success,
+          submitted,
+        })
+      )
       .catch((e) => {
         console.info(e);
         return null;
