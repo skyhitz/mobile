@@ -25,10 +25,7 @@ export default observer(({ route }) => {
 
   const renderSetPrice = (entry: any) => {
     if (!sessionStore.user) return;
-    if (
-      sessionStore.user.id === adminId ||
-      previousScreen === 'MyMusicScreen'
-    ) {
+    if (previousScreen === 'MyMusicScreen') {
       return <SetPrice entry={entry} />;
     }
     return null;
