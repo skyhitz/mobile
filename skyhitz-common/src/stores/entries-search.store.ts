@@ -15,7 +15,8 @@ export class EntriesSearchStore {
   @observable query: string = '';
   @observable public entries: L.List<Entry> = L.from([]);
   @observable public recentSearches: L.List<Entry> = L.from([]);
-  @observable public recentlyAdded: L.List<Entry> = L.from([]);
+  @observable public recentlyAdded: Entry[] = [];
+  @observable public hasMoreRecentlyAdded = true;
   @observable public topSearches: L.List<Entry> = L.from([]);
   @observable topChart: L.List<Entry> = L.from([]);
   disposer: any;
@@ -56,7 +57,7 @@ export class EntriesSearchStore {
     this.topChart = entries;
   }
 
-  public setRecentlyAdded(entries: L.List<Entry>) {
+  public setRecentlyAdded(entries: Entry[]) {
     this.recentlyAdded = entries;
   }
 
@@ -83,8 +84,23 @@ export class EntriesSearchStore {
   public getRecentlyAdded() {
     this.loadingRecentlyAdded = true;
     return entriesBackend.getRecentlyAdded().then((entries) => {
-      this.setRecentlyAdded(L.from(entries));
+      this.setRecentlyAdded(entries);
       this.loadingRecentlyAdded = false;
+      return this.recentlyAdded;
+    });
+  }
+
+  public loadMoreRecentlyAdded(page: number) {
+    this.loadingRecentlyAdded = true;
+    return entriesBackend.getRecentlyAdded(page).then((entries) => {
+      if (entries.length == 0) {
+        this.hasMoreRecentlyAdded = false;
+        this.loadingRecentlyAdded = false;
+        return;
+      }
+      this.setRecentlyAdded([...this.recentlyAdded, ...entries]);
+      this.loadingRecentlyAdded = false;
+      return this.recentlyAdded;
     });
   }
 

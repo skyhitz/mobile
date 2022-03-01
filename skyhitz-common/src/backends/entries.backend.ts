@@ -205,12 +205,12 @@ export class EntriesBackend {
     return [];
   }
 
-  async getRecentlyAdded(): Promise<Entry[]> {
+  async getRecentlyAdded(page = 0): Promise<Entry[]> {
     return client
       .query({
         query: gql`
           {
-            recentlyAdded {
+            recentlyAdded(page: ${page} ) {
               imageUrl
               description
               title

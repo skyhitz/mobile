@@ -21,7 +21,7 @@ const SearchingLoader = (searching: any, query?: any) => {
       </View>
     );
   }
-  return <View></View>;
+  return null;
 };
 
 let styles = StyleSheet.create({

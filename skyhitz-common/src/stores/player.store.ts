@@ -126,6 +126,11 @@ export class PlayerStore {
     this.cueList = entries;
   }
 
+  setPlaylistModeFromArray(entries: Entry[]) {
+    this.playlistMode = true;
+    this.cueList = L.from(entries);
+  }
+
   disablePlaylistMode() {
     this.playlistMode = false;
     this.cueList = L.from([]);
