@@ -10,7 +10,7 @@ const stellarExpertLink = (code: string, issuer: string) =>
   `https://stellar.expert/explorer/${
     Config.HORIZON_URL === "'https://horizon-testnet.stellar.org'"
       ? 'testnet'
-      : 'pubnet'
+      : 'public'
   }/asset/${code}-${issuer}`;
 
 function EntryPrice({ code, issuer }) {
