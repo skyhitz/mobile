@@ -22,9 +22,9 @@ export default observer(() => {
       return null;
     }
     if (userEntriesStore.entriesCount === 1) {
-      return '1 Video';
+      return '1 NFT';
     }
-    return `${userEntriesStore.entriesCount} Videos`;
+    return `${userEntriesStore.entriesCount} NFTs`;
   };
   return (
     <View style={styles.rowWrap}>

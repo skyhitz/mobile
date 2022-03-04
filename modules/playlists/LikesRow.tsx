@@ -22,9 +22,9 @@ export default observer(() => {
       return null;
     }
     if (likesStore.userLikesCount === 1) {
-      return '1 Video';
+      return '1 NFT';
     }
-    return `${likesStore.userLikesCount} Videos`;
+    return `${likesStore.userLikesCount} NFTs`;
   };
   return (
     <View style={styles.rowWrap}>
