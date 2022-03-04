@@ -21,10 +21,7 @@ export default observer(() => {
     if (!userEntriesStore.entriesCount) {
       return null;
     }
-    if (userEntriesStore.entriesCount === 1) {
-      return '1 NFT';
-    }
-    return `${userEntriesStore.entriesCount} NFTs`;
+    return `${userEntriesStore.entriesCount}`;
   };
   return (
     <View style={styles.rowWrap}>
