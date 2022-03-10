@@ -17,7 +17,6 @@ export class EntriesSearchStore {
   @observable public recentSearches: L.List<Entry> = L.from([]);
   @observable public recentlyAdded: Entry[] = [];
   @observable public hasMoreRecentlyAdded = true;
-  @observable public topSearches: Entry[] = [];
   @observable topChart: Entry[] = [];
   @observable public hasMoreTopChart = true;
   disposer: any;
@@ -60,10 +59,6 @@ export class EntriesSearchStore {
 
   public setRecentlyAdded(entries: Entry[]) {
     this.recentlyAdded = entries;
-  }
-
-  public setTopSearches(entries: Entry[]) {
-    this.topSearches = entries;
   }
 
   public getTopChart() {
@@ -116,14 +111,6 @@ export class EntriesSearchStore {
       this.setRecentlyAdded([...this.recentlyAdded, ...entries]);
       this.loadingRecentlyAdded = false;
       return this.recentlyAdded;
-    });
-  }
-
-  public getTopSearches() {
-    this.loadingTopSearches = true;
-    return entriesBackend.getTopSearches().then((entries) => {
-      this.setTopSearches(L.from(entries));
-      this.loadingTopSearches = false;
     });
   }
 }
