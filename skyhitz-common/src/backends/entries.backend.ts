@@ -170,12 +170,12 @@ export class EntriesBackend {
       });
   }
 
-  async getTopChart(): Promise<Entry[]> {
+  async getTopChart(page = 0): Promise<Entry[]> {
     return client
       .query({
         query: gql`
           {
-            topChart {
+            topChart(page: ${page} ) {
               imageUrl
               description
               title

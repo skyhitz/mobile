@@ -28,7 +28,7 @@ function EntryPrice({ code, issuer }) {
   }, []);
 
   const getAvailablePrice = () => {
-    return value.amount * value.price;
+    return (value.amount * value.price).toFixed(0);
   };
 
   return (
