@@ -28,7 +28,10 @@ export class EntriesBackend {
       .then((data: any) => data.data)
       .then(({ entryPrice }: any) => {
         return {
-          price: parseFloat(entryPrice.price),
+          price:
+            entryPrice.price && parseFloat(entryPrice.price)
+              ? parseFloat(entryPrice.price)
+              : 0,
           amount: parseFloat(entryPrice.amount),
         };
       })

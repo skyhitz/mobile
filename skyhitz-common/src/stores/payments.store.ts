@@ -94,8 +94,8 @@ export class PaymentsStore {
     ).then((res: any) => res.json());
 
     if (asks && asks[0]) {
-      let { price, amount }: { price: number; amount: number } = asks[0];
-      return { price, amount };
+      let { price, amount }: { price: string; amount: string } = asks[0];
+      return { price: parseFloat(price), amount: parseFloat(amount) };
     }
 
     return null;

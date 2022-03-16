@@ -40,6 +40,7 @@ var styles = StyleSheet.create({
     maxHeight: 50,
     height: 40,
     marginBottom: 10,
+    marginTop: 10,
     width: '100%',
   },
   text: {

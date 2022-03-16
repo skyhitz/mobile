@@ -8,6 +8,8 @@ import SetPrice from 'app/modules/search/SetPrice';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
+import BuyBtn from 'app/modules/ui/buy-btn/BuyBtn';
+
 const adminId = '-LbM3m6WKdVQAsY3zrAd';
 
 export default observer(({ route }) => {
@@ -43,7 +45,10 @@ export default observer(({ route }) => {
         </Text>
       </View>
       <View style={styles.options}>
+        <BuyBtn entry={entry} />
+
         <LikeOptionRow entry={entry} />
+
         {renderSetPrice(entry)}
         {renderRemoveFromMyMusic(entry)}
       </View>
