@@ -28,21 +28,21 @@ function EntryPrice({ code, issuer }) {
   }, []);
 
   const getAvailablePrice = () => {
-    return value.amount * value.price;
+    return (value.amount * value.price).toFixed(0);
   };
 
   return (
     <View style={styles.endSection}>
-      {value.price > 0 && (
-        <Text style={styles.price}>{getAvailablePrice()}</Text>
-      )}
       <A
         target="_blank"
         href={stellarExpertLink(code, issuer)}
         aria-label="View on Stellar Expert"
       >
-        <DollarIcon size={12} color={Colors.white} />
+        <DollarIcon size={10} color={Colors.white} />
       </A>
+      {value.price > 0 && (
+        <Text style={styles.price}>{getAvailablePrice()}</Text>
+      )}
     </View>
   );
 }
@@ -56,7 +56,7 @@ let styles = StyleSheet.create({
   },
   price: {
     color: Colors.white,
-    marginHorizontal: 10,
+    marginHorizontal: 5,
   },
 });
 

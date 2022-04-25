@@ -1,78 +1,69 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, FlatList, Text } from 'react-native';
 import BottomPlaceholder from 'app/modules/ui/BottomPlaceholder';
 import Colors from 'app/constants/Colors';
-import * as stores from 'app/skyhitz-common';
-import * as L from 'list';
-import { inject } from 'mobx-react';
 import SearchingLoader from '../ui/SearchingLoader';
 import EntryChartRow from '../ui/EntryChartRow';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
-type Stores = typeof stores;
+import { Stores } from 'app/functions/Stores';
+import { observer } from 'mobx-react';
 
-@inject((stores: Stores) => ({
-  loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
-  getTopChart: stores.entriesSearchStore.getTopChart.bind(
-    stores.entriesSearchStore
-  ),
-  topChart: stores.entriesSearchStore.topChart,
-  loadingTopChart: stores.entriesSearchStore.loadingTopChart,
-  setPlaylistMode: stores.playerStore.setPlaylistMode.bind(stores.playerStore),
-}))
-class TopEntries extends React.Component<any, any> {
-  setRecentlyAdded() {
-    this.props.setPlaylistMode(this.props.topChart);
-  }
-  componentDidMount() {
-    this.props.getTopChart();
-  }
-
-  render() {
-    if (!this.props.loadingTopChart && !this.props.topChart.length) {
-      return null;
-    }
+export default observer((props) => {
+  const { playerStore, entriesSearchStore } = Stores();
+  const [page, setPage] = useState(0);
+  const renderItem = (item, index) => {
     return (
-      <View>
-        <Text style={styles.recentText}>Top Beats</Text>
-        {SearchingLoader(this.props.loadingTopChart)}
-        {L.toArray(this.props.topChart).map((entry: any, index: number) => (
-          <EntryChartRow
-            key={entry.id}
-            play={this.props.loadAndPlay}
-            entry={entry}
-            options={null}
-            disablePlaylistMode={() => this.setRecentlyAdded()}
-            previousScreen={null}
-            position={index + 1}
-          />
-        ))}
-      </View>
+      <EntryChartRow
+        key={item.id}
+        play={playerStore.loadAndPlay}
+        entry={item}
+        options={null}
+        disablePlaylistMode={() =>
+          playerStore.setPlaylistModeFromArray(entriesSearchStore.topChart)
+        }
+        previousScreen={null}
+        position={index + 1}
+      />
     );
-  }
-}
+  };
 
-const ChartsView = () => (
-  <ScrollView style={styles.scrollView}>
-    <ResponsiveLayout>
-      <TopEntries />
-      <BottomPlaceholder />
-    </ResponsiveLayout>
-  </ScrollView>
-);
+  useEffect(() => {
+    handleLoadMore();
+  }, []);
+
+  const handleLoadMore = () => {
+    if (!entriesSearchStore.hasMoreTopChart) return;
+    setPage((oldPage) => oldPage + 1);
+    entriesSearchStore.loadMoreTopChart(page);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ResponsiveLayout>
+        {entriesSearchStore.topChart.length > 0 && (
+          <FlatList
+            data={entriesSearchStore.topChart}
+            renderItem={({ item, index }) => renderItem(item, index)}
+            keyExtractor={(entry) => entry.id}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0}
+            ListHeaderComponent={() => (
+              <Text style={styles.recentText}>Top Beats</Text>
+            )}
+            refreshing={entriesSearchStore.loadingTopChart}
+          />
+        )}
+        {SearchingLoader(entriesSearchStore.loadingTopChart)}
+        <BottomPlaceholder />
+      </ResponsiveLayout>
+    </SafeAreaView>
+  );
+});
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.listItemBackground,
+  container: {
+    backgroundColor: Colors.darkBlue,
     flex: 1,
-  },
-  chartRow: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  numbersText: {
-    color: Colors.defaultTextLight,
-    fontSize: 30,
   },
   recentText: {
     color: Colors.defaultTextLight,
@@ -82,5 +73,3 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
 });
-
-export default ChartsView;

@@ -3,25 +3,16 @@ import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
 import { observer } from 'mobx-react';
 import Colors from 'app/constants/Colors';
 import LikeOptionRow from 'app/modules/search/LikeOptionRow';
-import RemoveFromMyMusicRow from 'app/modules/search/RemoveFromMyMusicRow';
 import SetPrice from 'app/modules/search/SetPrice';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/constants/CursorPointer';
-const adminId = '-LbM3m6WKdVQAsY3zrAd';
+import BuyBtn from 'app/modules/ui/buy-btn/BuyBtn';
 
 export default observer(({ route }) => {
   const { sessionStore } = Stores();
   const { entry, previousScreen } = route.params;
   const { goBack } = useNavigation();
-
-  const renderRemoveFromMyMusic = (entry) => {
-    if (!sessionStore.user) return;
-    if (sessionStore.user.id === adminId) {
-      return <RemoveFromMyMusicRow entry={entry} />;
-    }
-    return null;
-  };
 
   const renderSetPrice = (entry: any) => {
     if (!sessionStore.user) return;
@@ -43,9 +34,11 @@ export default observer(({ route }) => {
         </Text>
       </View>
       <View style={styles.options}>
+        <BuyBtn entry={entry} />
+
         <LikeOptionRow entry={entry} />
+
         {renderSetPrice(entry)}
-        {renderRemoveFromMyMusic(entry)}
       </View>
       <View style={styles.bottomWrap}>
         <Pressable style={cursorPointer} onPress={() => goBack()}>

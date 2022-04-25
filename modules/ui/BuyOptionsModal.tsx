@@ -61,7 +61,8 @@ export default observer(({ route }) => {
     <View style={styles.container}>
       <View style={styles.infoWrap}>
         <Text style={styles.title}>
-          You are about to buy {priceInfo.amount}% equity for ${priceInfo.price}
+          You are about to buy {priceInfo.amount * 100}% equity for{' '}
+          {priceInfo.price * priceInfo.amount} XLM of:
         </Text>
         <Text style={styles.title}>{entry.title}</Text>
       </View>

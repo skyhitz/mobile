@@ -21,10 +21,7 @@ export default observer(() => {
     if (!userEntriesStore.entriesCount) {
       return null;
     }
-    if (userEntriesStore.entriesCount === 1) {
-      return '1 Video';
-    }
-    return `${userEntriesStore.entriesCount} Videos`;
+    return `${userEntriesStore.entriesCount}`;
   };
   return (
     <View style={styles.rowWrap}>

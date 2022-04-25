@@ -5,15 +5,16 @@ import { Stores } from 'app/functions/Stores';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import cursorPointer from 'app/constants/CursorPointer';
+import DollarIcon from 'app/modules/ui/icons/dollar';
 
 const Placeholder = () => <View style={styles.placeholder} />;
 
-export default observer(() => {
-  const { playerStore, paymentsStore } = Stores();
+export default observer(({ entry }) => {
+  const { paymentsStore } = Stores();
   const { dispatch } = useNavigation();
 
   const [priceInfo, setPriceInfo] = useState({
-    price: playerStore.entry ? playerStore.entry.price : 0,
+    price: entry && entry.price ? entry.price : 0,
     amount: 100,
   });
 
@@ -22,7 +23,7 @@ export default observer(() => {
       CommonActions.navigate({
         name: 'BuyOptionsModal',
         params: {
-          entry: playerStore.entry,
+          entry: entry,
           priceInfo: priceInfo,
         },
       })
@@ -30,18 +31,21 @@ export default observer(() => {
   };
 
   const getPriceInfo = async () => {
-    const data = await paymentsStore.getPriceInfo(playerStore.entry.id);
-    setPriceInfo(data);
+    const { price, amount } = await paymentsStore.fetchAndCachePrice(
+      entry.code,
+      entry.issuer
+    );
+    setPriceInfo({ price: price.toFixed(0), amount });
   };
 
   useEffect(() => {
-    if (playerStore.entry && playerStore.entry.id) {
+    if (entry && entry.id) {
       getPriceInfo();
       paymentsStore.refreshSubscription();
     }
-  }, [playerStore.entry]);
+  }, [entry]);
 
-  if (!playerStore.entry || !priceInfo.price) {
+  if (!entry || !priceInfo.price) {
     return <Placeholder />;
   }
   return (
@@ -50,7 +54,12 @@ export default observer(() => {
         style={[styles.controlTouch, cursorPointer]}
         onPress={showBuyOptionsModal}
       >
-        <Text style={styles.creditsText}>${priceInfo.price} - Buy Now</Text>
+        <View style={styles.wrap}>
+          <DollarIcon size={10} color={Colors.white} />
+          <Text style={styles.creditsText}>
+            {(priceInfo.price * priceInfo.amount).toFixed(0)} - Buy Now
+          </Text>
+        </View>
       </Pressable>
     </View>
   );
@@ -88,6 +97,7 @@ var styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 14,
     fontWeight: 'bold',
+    paddingLeft: 5,
   },
   priceTag: {
     paddingTop: 15,

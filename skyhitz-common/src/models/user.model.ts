@@ -11,7 +11,7 @@ class UserPayload extends Payload {
   userType?: number;
   jwt?: string;
   description?: string;
-  pk?: string;
+  publicKey?: string;
 }
 
 export class User extends UserPayload {
@@ -27,6 +27,7 @@ export class User extends UserPayload {
     this.userType = payload.userType;
     this.jwt = payload.jwt;
     this.description = payload.description;
+    this.publicKey = payload.publicKey;
   }
 
   get isYoutubeChannel(): boolean {

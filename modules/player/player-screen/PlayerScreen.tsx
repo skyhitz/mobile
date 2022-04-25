@@ -77,7 +77,7 @@ export default observer(() => {
       </View>
       <VideoPlayer />
       <PlayerEntryInfo />
-      <BuyBtn />
+      <BuyBtn entry={playerStore.entry} />
       <PlayerControls />
       <LikersSection />
     </SafeAreaView>

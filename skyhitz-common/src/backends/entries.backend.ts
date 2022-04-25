@@ -28,7 +28,10 @@ export class EntriesBackend {
       .then((data: any) => data.data)
       .then(({ entryPrice }: any) => {
         return {
-          price: parseFloat(entryPrice.price),
+          price:
+            entryPrice.price && parseFloat(entryPrice.price)
+              ? parseFloat(entryPrice.price)
+              : 0,
           amount: parseFloat(entryPrice.amount),
         };
       })
@@ -170,12 +173,12 @@ export class EntriesBackend {
       });
   }
 
-  async getTopChart(): Promise<Entry[]> {
+  async getTopChart(page = 0): Promise<Entry[]> {
     return client
       .query({
         query: gql`
           {
-            topChart {
+            topChart(page: ${page} ) {
               imageUrl
               description
               title

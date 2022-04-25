@@ -17,8 +17,8 @@ export class EntriesSearchStore {
   @observable public recentSearches: L.List<Entry> = L.from([]);
   @observable public recentlyAdded: Entry[] = [];
   @observable public hasMoreRecentlyAdded = true;
-  @observable public topSearches: L.List<Entry> = L.from([]);
-  @observable topChart: L.List<Entry> = L.from([]);
+  @observable topChart: Entry[] = [];
+  @observable public hasMoreTopChart = true;
   disposer: any;
 
   @computed get active() {
@@ -53,7 +53,7 @@ export class EntriesSearchStore {
     this.recentSearches = entries;
   }
 
-  public setTopChart(entries: L.List<Entry>) {
+  public setTopChart(entries: Entry[]) {
     this.topChart = entries;
   }
 
@@ -61,15 +61,25 @@ export class EntriesSearchStore {
     this.recentlyAdded = entries;
   }
 
-  public setTopSearches(entries: L.List<Entry>) {
-    this.topSearches = entries;
-  }
-
   public getTopChart() {
     this.loadingTopChart = true;
     return entriesBackend.getTopChart().then((entries) => {
-      this.setTopChart(L.from(entries));
+      this.setTopChart(entries);
       this.loadingTopChart = false;
+    });
+  }
+
+  public loadMoreTopChart(page: number) {
+    this.loadingTopChart = true;
+    return entriesBackend.getTopChart(page).then((entries) => {
+      if (entries.length == 0) {
+        this.hasMoreTopChart = false;
+        this.loadingTopChart = false;
+        return;
+      }
+      this.setTopChart([...this.topChart, ...entries]);
+      this.loadingTopChart = false;
+      return this.topChart;
     });
   }
 
@@ -101,14 +111,6 @@ export class EntriesSearchStore {
       this.setRecentlyAdded([...this.recentlyAdded, ...entries]);
       this.loadingRecentlyAdded = false;
       return this.recentlyAdded;
-    });
-  }
-
-  public getTopSearches() {
-    this.loadingTopSearches = true;
-    return entriesBackend.getTopSearches().then((entries) => {
-      this.setTopSearches(L.from(entries));
-      this.loadingTopSearches = false;
     });
   }
 }

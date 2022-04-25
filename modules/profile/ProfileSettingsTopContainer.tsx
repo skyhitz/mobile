@@ -7,6 +7,16 @@ import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
 import EditBtn from '../ui/EditBtn';
 import DollarIcon from 'app/modules/ui/icons/dollar';
+import KeyIcon from 'app/modules/ui/icons/key';
+import { Config } from 'app/skyhitz-common/src/config';
+import { A } from '@expo/html-elements';
+
+const stellarExpertLink = (publicKey: string) =>
+  `https://stellar.expert/explorer/${
+    Config.HORIZON_URL === "'https://horizon-testnet.stellar.org'"
+      ? 'testnet'
+      : 'public'
+  }/account/${publicKey}`;
 
 export default observer((props) => {
   const { paymentsStore, sessionStore } = Stores();
@@ -45,11 +55,36 @@ export default observer((props) => {
         <View style={styles.topContainer}>
           <View style={styles.topHeader}>
             {UserAvatarMedium(sessionStore.user)}
-            <View style={styles.profileInfo}>
-              <Text style={styles.text}>{sessionStore.user?.displayName}</Text>
-              {renderCreditsSection()}
+            <View style={styles.headerWrap}>
+              <View style={styles.profileInfo}>
+                <Text style={styles.text}>
+                  {sessionStore.user?.displayName}
+                </Text>
+                {renderCreditsSection()}
+                <EditBtn customStyles={styles.cogIcon} />
+              </View>
+              {sessionStore.user.publicKey ? (
+                <A
+                  target="_blank"
+                  href={stellarExpertLink(sessionStore.user.publicKey)}
+                  aria-label="View on Stellar Expert"
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: 10,
+                      alignItems: 'center',
+                    }}
+                  >
+                    <KeyIcon size={18} color={Colors.defaultTextLight} />
+
+                    <Text style={styles.textSmall}>
+                      {sessionStore.user.publicKey}
+                    </Text>
+                  </View>
+                </A>
+              ) : null}
             </View>
-            <EditBtn />
           </View>
         </View>
       </View>
@@ -79,19 +114,32 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingLeft: 5,
   },
+  headerWrap: {
+    marginLeft: 10,
+    marginRight: 10,
+  },
   profileInfo: {
     flexDirection: 'row',
-    height: 75,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginLeft: 10,
-    marginRight: 30,
   },
   text: {
     color: 'white',
     textAlign: 'left',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  textSmall: {
+    color: 'white',
+    textAlign: 'left',
+    fontSize: 12,
+    fontWeight: 'bold',
+    flex: 1,
+    flexWrap: 'wrap',
+    marginLeft: 10,
+  },
+  cogIcon: {
+    marginLeft: 10,
   },
   starsIcon: {
     backgroundColor: 'transparent',

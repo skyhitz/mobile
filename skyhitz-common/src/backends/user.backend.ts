@@ -83,6 +83,7 @@ export class UserBackend {
           publishedAt
           email
           description
+          publicKey
         }
       }
       `,

@@ -21,10 +21,7 @@ export default observer(() => {
     if (!likesStore.userLikesCount) {
       return null;
     }
-    if (likesStore.userLikesCount === 1) {
-      return '1 Video';
-    }
-    return `${likesStore.userLikesCount} Videos`;
+    return `${likesStore.userLikesCount}`;
   };
   return (
     <View style={styles.rowWrap}>
