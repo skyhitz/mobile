@@ -19,14 +19,6 @@ export default (props) => {
 
   return (
     <View style={styles.wrap}>
-      <View style={styles.bannerWrap}>
-        <LargeBtn
-          icon={() => <UploadIcon size={20} color={Colors.white} />}
-          onPress={onUpload}
-          text="Mint New NFT"
-        />
-      </View>
-
       {Platform.OS === 'web' ? (
         <View style={styles.bannerWrap}>
           <LargeBtn
@@ -36,6 +28,13 @@ export default (props) => {
           />
         </View>
       ) : null}
+      <View style={styles.bannerWrap}>
+        <LargeBtn
+          icon={() => <UploadIcon size={20} color={Colors.white} />}
+          onPress={onUpload}
+          text="Mint New NFT"
+        />
+      </View>
     </View>
   );
 };

@@ -10,6 +10,7 @@ import { setContext } from '@apollo/client/link/context';
 import { observable } from 'mobx';
 import { Config } from '../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { userDataKey } from '../constants/constants';
 
 export let forceSignOut = observable.box(false);
 
@@ -19,7 +20,7 @@ const httpLink = createHttpLink({
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const userData = await AsyncStorage.getItem('userData');
+  const userData = await AsyncStorage.getItem(userDataKey);
   if (userData) {
     const { jwt } = JSON.parse(userData);
     if (jwt) {

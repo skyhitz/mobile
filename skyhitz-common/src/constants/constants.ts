@@ -6,3 +6,4 @@ export const imagesGateway = 'https://cloudflare-ipfs.com/ipfs';
 export const skyhitzCdn = 'https://skyhitz.io/cdn-cgi/image';
 export const videosGateway = 'https://ipfs.io/ipfs';
 export const ipfsProtocol = 'ipfs://';
+export const userDataKey = 'sk:user';
