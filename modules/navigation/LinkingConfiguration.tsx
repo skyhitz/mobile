@@ -41,6 +41,7 @@ const config = {
       EntryOptionsModal: 'options',
       PricingOptionsModal: 'pricing-options',
       PaymentModal: 'payment',
+      LowBalanceModal: 'low-balance',
     },
   },
 };

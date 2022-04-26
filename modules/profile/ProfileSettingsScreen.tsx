@@ -30,7 +30,7 @@ const ProfileSettingsScreen = observer(() => {
         <View style={styles.settingsContainer}>
           <LikesRow />
           <MyMusicRow />
-          <ShareAppBanner />
+          <ShareAppBanner credits={paymentsStore.credits} />
         </View>
       </View>
     </ResponsiveLayout>
