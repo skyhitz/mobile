@@ -40,8 +40,8 @@ export default observer((props) => {
       <>
         {renderDollarSign()}
         <Text style={styles.text}>
-          {paymentsStore.credits ? paymentsStore.credits : ''}
-        </Text>{' '}
+          {paymentsStore.credits ? paymentsStore.credits.toFixed(4) : ''}
+        </Text>
       </>
     );
   };
