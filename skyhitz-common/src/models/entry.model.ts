@@ -76,7 +76,7 @@ export class Entry extends EntryPayload {
     if (this.isIpfs)
       return this.imageUrl?.replace(
         ipfsProtocol,
-        `${skyhitzCdn}/width=500/${imagesGateway}/`
+        `${skyhitzCdn}/width=225/${imagesGateway}/`
       );
     return this.imageUrl?.split('/upload/').join('/upload/w_500/');
   }
