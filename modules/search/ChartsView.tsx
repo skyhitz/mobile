@@ -15,7 +15,7 @@ export default observer((props) => {
     return (
       <EntryChartRow
         key={item.id}
-        play={playerStore.loadAndPlay}
+        play={() => playerStore.loadAndPlay(item)}
         entry={item}
         options={null}
         disablePlaylistMode={() =>
