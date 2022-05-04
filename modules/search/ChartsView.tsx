@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.darkBlue,
     flex: 1,
+    overflow: 'scroll',
   },
   recentText: {
     color: Colors.defaultTextLight,

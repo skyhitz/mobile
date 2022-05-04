@@ -27,7 +27,6 @@ import {
   MaybeScreen,
   MaybeScreenContainer,
 } from '@react-navigation/bottom-tabs/src/views/ScreenFallback';
-import { useMediaQuery } from 'react-responsive';
 
 type Props = BottomTabNavigationConfig & {
   state: TabNavigationState<ParamListBase>;
@@ -92,14 +91,12 @@ export default function BottomTabView(props: Props) {
 
   const { routes } = state;
 
-  const isDesktop = useMediaQuery({ minWidth: 768 });
-
   return (
     <SafeAreaProviderCompat>
       <View style={{ flex: 1 }}>
         <MaybeScreenContainer
           enabled={detachInactiveScreens}
-          style={isDesktop ? styles.webContainer : styles.container}
+          style={styles.container}
         >
           {routes.map((route, index) => {
             const descriptor = descriptors[route.key];
@@ -168,10 +165,6 @@ export default function BottomTabView(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    overflow: 'hidden',
-  },
-  webContainer: {
     flex: 1,
   },
 });
