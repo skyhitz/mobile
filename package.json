@@ -41,7 +41,7 @@
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.8.0",
     "@walletconnect/client": "^2.0.0-beta.26",
-    "@walletconnect/qrcode-modal": "^1.7.1",
+    "@walletconnect/qrcode-modal": "1.7.8",
     "algoliasearch": "^4.8.6",
     "dotenv": "^11.0.0",
     "expo": "^43.0.0",
