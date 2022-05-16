@@ -369,7 +369,7 @@ export default observer(() => {
           ellipsizeMode="tail"
           numberOfLines={1}
         >
-          {'MP4: '}
+          {'Media file: '}
         </Text>
 
         <UploadView
