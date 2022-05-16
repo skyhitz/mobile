@@ -17,9 +17,8 @@ ORG_OFFICIAL_EMAIL="support@skyhitz.io"
 ORG_SUPPORT_EMAIL="support@skyhitz.io"
 
 [[PRINCIPALS]]
-name="Alejo Skyhitz"
-email="alejo@skyhitz.io"
-keybase="alejomendoza"
-twitter="alejoskyhitz"
-github="alejomendoza"
+name="Skyhitz"
+email="hello@skyhitz.io"
+twitter="skyhitz"
+github="skyhitz"
 
