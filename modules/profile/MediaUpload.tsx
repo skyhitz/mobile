@@ -118,11 +118,11 @@ export default observer(() => {
 
     if (video && !video.cancelled) {
       entryStore.setLoadingVideo(true);
-      const isMp4 = video.uri.startsWith('data:video/mp4');
-      if (!isMp4) {
-        entryStore.setUploadingError('Only mp4 files supported!');
-        return;
-      }
+      // const isMp4 = video.uri.startsWith('data:video/mp4');
+      // if (!isMp4) {
+      //   entryStore.setUploadingError('Only mp4 files supported!');
+      //   return;
+      // }
 
       const res = await fetch(video.uri);
       const file = await res.blob();
