@@ -234,13 +234,12 @@ export class PlayerStore {
     if (!entry) {
       return null;
     }
-    if (
-      L.findIndex((item) => !!item && item.id === entry.id, this.cueList) !== -1
-    ) {
-      this.currentIndex = L.findIndex(
-        (item) => !!item && item.id === entry.id,
-        this.cueList
-      );
+    const currentIndex = L.findIndex(
+      (item) => !!item && item.id === entry.id,
+      this.cueList
+    );
+    if (currentIndex !== -1) {
+      this.currentIndex = currentIndex;
     }
 
     this.setPlaybackState('LOADING');

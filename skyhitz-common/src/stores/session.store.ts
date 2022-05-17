@@ -4,6 +4,7 @@ import { userBackend } from '../backends/user.backend';
 import { forceSignOut } from '../backends/apollo-client.backend';
 import { SignUpForm } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { userDataKey } from '../constants/constants';
 
 export class SessionStore {
   public session: { user: User | null } & IObservableObject = observable({
@@ -37,8 +38,8 @@ export class SessionStore {
 
   async setUser(value: any) {
     value = JSON.stringify(value);
-    if (value) return AsyncStorage.setItem('userData', value);
-    else console.info('not set, stringify failed:', 'userData', value);
+    if (value) return AsyncStorage.setItem(userDataKey, value);
+    else console.info('not set, stringify failed:', userDataKey, value);
   }
 
   public forceSignOutDisposer = observe(forceSignOut, ({ object }) => {
@@ -49,7 +50,7 @@ export class SessionStore {
 
   async signOut() {
     this.session.user = null;
-    return await AsyncStorage.removeItem('userData');
+    return await AsyncStorage.removeItem(userDataKey);
   }
 
   async loadSession() {
@@ -58,7 +59,7 @@ export class SessionStore {
 
   async loadFromStorage() {
     try {
-      let userPayload = await AsyncStorage.getItem('userData');
+      let userPayload = await AsyncStorage.getItem(userDataKey);
       if (userPayload) {
         this.session.user = new User(JSON.parse(userPayload));
         return this.session.user;

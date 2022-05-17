@@ -12,7 +12,10 @@ export default observer(({ signInWithPublicKey = (_) => {} }) => {
 
   useEffect(() => {
     if (!walletConnectStore.uri) return QRCodeModal.close();
-    QRCodeModal.open(walletConnectStore.uri, () => {}, { desktopLinks: [] });
+    QRCodeModal.open(walletConnectStore.uri, () => {}, {
+      desktopLinks: [],
+      mobileLinks: ['lobstr'],
+    });
   }, [walletConnectStore.uri]);
 
   useEffect(() => {

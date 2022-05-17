@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
 import EditBtn from '../ui/EditBtn';
 import DollarIcon from 'app/modules/ui/icons/dollar';
-import KeyIcon from 'app/modules/ui/icons/key';
+import WalletIcon from 'app/modules/ui/icons/wallet';
 import { Config } from 'app/skyhitz-common/src/config';
 import { A } from '@expo/html-elements';
 
@@ -40,8 +40,8 @@ export default observer((props) => {
       <>
         {renderDollarSign()}
         <Text style={styles.text}>
-          {paymentsStore.credits ? paymentsStore.credits : ''}
-        </Text>{' '}
+          {paymentsStore.credits ? paymentsStore.credits.toFixed(4) : ''}
+        </Text>
       </>
     );
   };
@@ -76,7 +76,7 @@ export default observer((props) => {
                       alignItems: 'center',
                     }}
                   >
-                    <KeyIcon size={18} color={Colors.defaultTextLight} />
+                    <WalletIcon size={18} color={Colors.defaultTextLight} />
 
                     <Text style={styles.textSmall}>
                       {sessionStore.user.publicKey}

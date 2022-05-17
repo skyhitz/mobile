@@ -179,6 +179,7 @@ export class EntryStore {
       image: imageUrl,
       animation_url: videoUrl,
       video: videoUrl,
+      url: videoUrl,
     };
 
     const blob = new Blob([JSON.stringify(json)], { type: 'application/json' });

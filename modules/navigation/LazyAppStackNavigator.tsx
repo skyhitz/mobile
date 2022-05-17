@@ -49,6 +49,16 @@ const PaymentModalSuspense = (props) => (
     <PaymentModal {...props} />
   </SuspenseLoading>
 );
+
+const LowBalanceModal = lazy(() =>
+  import('app/modules/profile/LowBalanceModal')
+);
+const LowBalanceModalSuspense = (props) => (
+  <SuspenseLoading>
+    <LowBalanceModal {...props} />
+  </SuspenseLoading>
+);
+
 const WithdrawalModal = lazy(() =>
   import('app/modules/profile/WithdrawalModal')
 );
@@ -268,6 +278,11 @@ export function LazyAppStackNavigator({ user, headerShown }) {
         <AppStack.Screen
           name="PricingOptionsModal"
           getComponent={() => PricingOptionsModalSuspense}
+          options={modalOptions}
+        />
+        <AppStack.Screen
+          name="LowBalanceModal"
+          getComponent={() => LowBalanceModalSuspense}
           options={modalOptions}
         />
       </AppStack.Group>

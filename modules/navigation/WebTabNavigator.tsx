@@ -37,13 +37,15 @@ function FlexRowReverseWrap(props) {
     return (
       <>
         <NavBar />
-        <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
+        <View
+          style={{ flexDirection: 'row-reverse', flex: 1, overflow: 'hidden' }}
+        >
           {props.children}
         </View>
       </>
     );
   }
-  return <>{props.children}</>;
+  return <View style={{ flex: 1, overflow: 'hidden' }}>{props.children}</View>;
 }
 
 function BottomTabNavigator({

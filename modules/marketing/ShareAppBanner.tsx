@@ -6,10 +6,13 @@ import { useLinkTo } from '@react-navigation/native';
 import UploadIcon from 'app/modules/ui/icons/upload';
 import DollarIcon from 'app/modules/ui/icons/dollar';
 
-export default (props) => {
+export default ({ credits }) => {
   const linkTo = useLinkTo();
 
   const onUpload = async () => {
+    if (credits < 2) {
+      return linkTo('/low-balance');
+    }
     linkTo('/dashboard/profile/mint-nft');
   };
 
@@ -19,14 +22,6 @@ export default (props) => {
 
   return (
     <View style={styles.wrap}>
-      <View style={styles.bannerWrap}>
-        <LargeBtn
-          icon={() => <UploadIcon size={20} color={Colors.white} />}
-          onPress={onUpload}
-          text="Mint New NFT"
-        />
-      </View>
-
       {Platform.OS === 'web' ? (
         <View style={styles.bannerWrap}>
           <LargeBtn
@@ -36,6 +31,13 @@ export default (props) => {
           />
         </View>
       ) : null}
+      <View style={styles.bannerWrap}>
+        <LargeBtn
+          icon={() => <UploadIcon size={20} color={Colors.white} />}
+          onPress={onUpload}
+          text="Mint New NFT"
+        />
+      </View>
     </View>
   );
 };
