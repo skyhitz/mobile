@@ -8,15 +8,8 @@ import { Stores } from 'app/functions/Stores';
 import EditBtn from '../ui/EditBtn';
 import DollarIcon from 'app/modules/ui/icons/dollar';
 import WalletIcon from 'app/modules/ui/icons/wallet';
-import { Config } from 'app/skyhitz-common/src/config';
 import { A } from '@expo/html-elements';
-
-const stellarExpertLink = (publicKey: string) =>
-  `https://stellar.expert/explorer/${
-    Config.HORIZON_URL === "'https://horizon-testnet.stellar.org'"
-      ? 'testnet'
-      : 'public'
-  }/account/${publicKey}`;
+import { stellarAccountLink } from 'app/functions/utils';
 
 export default observer((props) => {
   const { paymentsStore, sessionStore } = Stores();
@@ -66,7 +59,7 @@ export default observer((props) => {
               {sessionStore.user.publicKey ? (
                 <A
                   target="_blank"
-                  href={stellarExpertLink(sessionStore.user.publicKey)}
+                  href={stellarAccountLink(sessionStore.user.publicKey)}
                   aria-label="View on Stellar Expert"
                 >
                   <View
