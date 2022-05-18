@@ -247,7 +247,7 @@ export class EntryStore {
       code,
       this.availableForSale,
       this.price,
-      this.availableForSale ? this.equityForSale : 0
+      this.equityForSale
     );
   }
 

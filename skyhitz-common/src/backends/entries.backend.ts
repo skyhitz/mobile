@@ -134,8 +134,8 @@ export class EntriesBackend {
     metaCid: string,
     code: string,
     forSale: boolean = false,
-    price: number = 0,
-    equityForSale: number = 0
+    price: number = 1,
+    equityForSale: number = 1
   ) {
     return client
       .mutate({
