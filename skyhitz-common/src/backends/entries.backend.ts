@@ -109,7 +109,11 @@ export class EntriesBackend {
       .mutate({
         mutation: gql`
     mutation {
-      buyEntry(id: "${id}", amount: ${amount}, price: ${price})
+      buyEntry(id: "${id}", amount: ${amount}, price: ${price}) {
+        xdr
+        success
+        submitted
+      }
     }
     `,
       })
