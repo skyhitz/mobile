@@ -105,7 +105,7 @@ export default observer(() => {
     let video: any;
     try {
       video = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: false,
         base64: true,
         quality: 1,
