@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react';
 import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import * as Permissions from 'expo-permissions';
 import Colors from 'app/constants/Colors';
 import LargeBtn from 'app/modules/ui/LargeBtn';
@@ -104,12 +105,9 @@ export default observer(() => {
   const selectVideo = async () => {
     let video: any;
     try {
-      video = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: false,
-        base64: true,
-        quality: 1,
-        exif: true,
+      video = await DocumentPicker.getDocumentAsync({
+        type: ['video/*', 'audio/*'],
+        multiple: false,
       });
     } catch (e) {
       console.log('error', e);
@@ -176,20 +174,28 @@ export default observer(() => {
     }
 
     if (!submitted) {
-      const { status } = await walletConnectStore.signAndSubmitXdr(xdr);
-      if (status !== 'success') {
+      let message;
+      try {
+        message = await walletConnectStore.signAndSubmitXdr(xdr);
+      } catch (e) {
+        console.log(e);
+      }
+      console.log(message);
+    }
+    let indexed;
+    try {
+      indexed = await entryStore.indexEntry();
+      if (!indexed) {
         return entryStore.setUploadingError(
           'Something went very wrong. Please contact us!'
         );
       }
-    }
-
-    const indexed = await entryStore.indexEntry();
-    if (!indexed) {
+    } catch (e) {
       return entryStore.setUploadingError(
-        'Something went very wrong. Please contact us!'
+        'Please contact us and leave this page open!'
       );
     }
+
     await userEntriesStore.refreshEntries();
     entryStore.clearStore();
     linkTo('/dashboard/profile');

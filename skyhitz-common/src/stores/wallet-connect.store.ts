@@ -44,7 +44,7 @@ export class WalletConnectStore {
       .then(async (result) => {
         this.client = result;
         const itemsStored = await this.client?.storage.keyValueStorage.getItem(
-          'wc@2:client:0.2//session:settled'
+          'wc@2:client:0.3//session:settled'
         );
         if (itemsStored && itemsStored.length) {
           const [session] = itemsStored;
@@ -123,31 +123,29 @@ export class WalletConnectStore {
     });
   }
 
-  async signXdr(xdr) {
-    return await this.client?.request({
+  signXdr(xdr) {
+    return this.client?.request({
       topic: this.session.topic,
       chainId: stellarMeta.chainName,
       request: {
-        id: 1,
         jsonrpc: '2.0',
         method: 'stellar_signXDR',
         params: {
-          xdr: xdr,
+          xdr,
         },
       } as any,
     });
   }
 
-  async signAndSubmitXdr(xdr) {
-    return await this.client?.request({
+  signAndSubmitXdr(xdr) {
+    return this.client?.request({
       topic: this.session.topic,
       chainId: stellarMeta.chainName,
       request: {
-        id: 1,
         jsonrpc: '2.0',
         method: 'stellar_signAndSubmitXDR',
         params: {
-          xdr: xdr,
+          xdr,
         },
       } as any,
     });
