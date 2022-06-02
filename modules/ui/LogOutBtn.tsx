@@ -6,9 +6,12 @@ import { observer } from 'mobx-react';
 import LogOutIcon from 'app/modules/ui/icons/logout';
 
 export default observer(() => {
-  const { sessionStore, likesStore } = Stores();
+  const { sessionStore, likesStore, walletConnectStore } = Stores();
   const handleLogOut = async () => {
-    await sessionStore.signOut();
+    await Promise.all([
+      await sessionStore.signOut(),
+      await walletConnectStore.disconnect(),
+    ]);
     likesStore.clearLikes();
   };
   return (

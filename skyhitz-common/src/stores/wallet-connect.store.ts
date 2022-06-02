@@ -95,6 +95,16 @@ export class WalletConnectStore {
     return this.publicKey;
   }
 
+  disconnect() {
+    this.client?.disconnect({
+      topic: this.session.topic,
+      reason: {
+        code: 1,
+        message: 'Logged out',
+      },
+    });
+  }
+
   subscribeToEvents() {
     console.log('subscribed to events');
     this.client?.on(CLIENT_EVENTS.pairing.proposal, async (proposal) => {
