@@ -30,7 +30,7 @@ export class WalletConnectStore {
     this.proposals = new Map();
     WalletConnect.init({
       projectId: '7ba6184fa9faecd936a314cf61945da8',
-      relayUrl: 'wss://relay.walletconnect.org',
+      relayUrl: 'wss://relay.walletconnect.com',
       metadata: {
         name: 'Skyhitz',
         description: 'Skyhitz',
