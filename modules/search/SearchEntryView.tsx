@@ -6,7 +6,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Stores } from 'app/functions/Stores';
 
 export default observer(() => {
-  let { entriesSearchStore, inputSearchStore, playerStore } = Stores();
+  let { entriesSearchStore, inputSearchStore } = Stores();
 
   useFocusEffect(
     useCallback(() => {
@@ -15,9 +15,7 @@ export default observer(() => {
   );
 
   const handleRecentlyAdded = async () => {
-    let [entry] = await entriesSearchStore.getRecentlyAdded();
-    if (!entry) return;
-    await playerStore.loadAndPlay(entry, false);
+    await entriesSearchStore.getRecentlyAdded();
   };
 
   useEffect(() => {
