@@ -15,7 +15,8 @@
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-      "app/*": ["./*"]
+      "app/*": ["./*"],
+      "twin.macro/*": ["./twin.macro/*"]
     },
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

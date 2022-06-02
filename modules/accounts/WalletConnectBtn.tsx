@@ -4,7 +4,7 @@ import WalletConnectIcon from 'app/modules/ui/icons/walletconnect-icon';
 import { Stores } from 'app/functions/Stores';
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import { observer } from 'mobx-react';
-import tw from 'twrnc';
+import tw from 'twin.macro';
 
 export default observer(({ signInWithPublicKey = (_) => {} }) => {
   let { walletConnectStore } = Stores();
@@ -24,7 +24,7 @@ export default observer(({ signInWithPublicKey = (_) => {} }) => {
 
   return (
     <Pressable
-      style={tw`bg-white rounded-full flex-row items-center justify-center`}
+      style={tw`bg-blue rounded-full flex-row items-center justify-center text-white`}
       onPress={() => walletConnectStore.connect()}
     >
       <Text
