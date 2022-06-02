@@ -15,6 +15,7 @@ import ValidationIcon from 'app/modules/accounts/ValidationIcon';
 import { Stores } from 'app/functions/Stores';
 import BackgroundImage from 'app/modules/ui/BackgroundImage';
 import WalletConnectBtn from 'app/modules/accounts/WalletConnectBtn';
+import tw from 'twin.macro';
 
 export default observer(() => {
   const { signUpValidationStore, sessionStore, walletConnectStore } = Stores();
@@ -68,7 +69,7 @@ export default observer(() => {
     <BackgroundImage authBackground={true}>
       <View style={styles.inputContainer}>
         <WalletConnectBtn />
-        <View style={styles.orDivider}>
+        <View style={tw`flex my-8`}>
           <View style={styles.line} />
         </View>
         <View style={styles.field}>

@@ -19,6 +19,7 @@ import * as Linking from 'expo-linking';
 import { Config } from 'app/skyhitz-common/src/config';
 import * as Device from 'expo-device';
 import WalletConnectBtn from 'app/modules/accounts/WalletConnectBtn';
+import tw from 'twin.macro';
 
 export default observer(({ route, navigation }) => {
   const { signInValidationStore, sessionStore } = Stores();
@@ -140,9 +141,9 @@ export default observer(({ route, navigation }) => {
         <>
           <View style={styles.inputContainer}>
             <WalletConnectBtn signInWithPublicKey={signInWithPublicKey} />
-            <View style={styles.orDivider}>
+            <View style={tw`flex-row my-8 justify-center items-center`}>
               <View style={styles.line} />
-              <Text style={styles.orText}>or</Text>
+              <Text style={tw`text-white px-5`}>or</Text>
               <View style={styles.line} />
             </View>
           </View>
@@ -208,19 +209,6 @@ let styles = StyleSheet.create({
     flexGrow: 1,
     height: 1,
     backgroundColor: Colors.white,
-  },
-  orDivider: {
-    width: '100%',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  orText: {
-    backgroundColor: Colors.transparent,
-    color: Colors.white,
-    fontSize: 16,
-    padding: 10,
   },
   inputContainer: {
     alignSelf: 'center',
