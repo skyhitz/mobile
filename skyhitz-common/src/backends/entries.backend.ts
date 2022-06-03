@@ -94,9 +94,11 @@ export class EntriesBackend {
       .then((data: any) => data.data)
       .then(({ entries }: any) => {
         if (!entries.length) {
-          return null;
+          return [];
         }
-        return entries.map((entry: any) => new Entry(entry));
+        return entries
+          .filter((entry) => !!entry)
+          .map((entry: any) => new Entry(entry));
       })
       .catch((e) => {
         console.error(e);

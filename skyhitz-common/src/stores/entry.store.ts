@@ -223,9 +223,9 @@ export class EntryStore {
     );
   }
 
-  async indexEntry() {
-    if (!this.issuer) return false;
-    return await entriesBackend.indexEntry(this.issuer);
+  async indexEntry(issuer = this.issuer) {
+    if (!issuer) return false;
+    return await entriesBackend.indexEntry(issuer);
   }
 
   async create() {

@@ -44,6 +44,7 @@
     "@walletconnect/qrcode-modal": "1.7.8",
     "algoliasearch": "^4.8.6",
     "dotenv": "^11.0.0",
+    "eventsource": "^2.0.2",
     "expo": "^43.0.0",
     "expo-asset": "~8.4.3",
     "expo-av": "~10.1.3",

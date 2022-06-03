@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -27,6 +27,7 @@ import CircleIcon from 'app/modules/ui/icons/circle';
 import UploadIcon from 'app/modules/ui/icons/upload';
 import CheckIcon from 'app/modules/ui/icons/check';
 import CloseIcon from 'app/modules/ui/icons/x';
+import nftListener from 'app/hooks/nft-listener';
 
 const SwitchWeb: any = Switch;
 
@@ -77,6 +78,9 @@ export default observer(() => {
   const { entryStore, userEntriesStore, walletConnectStore } = Stores();
 
   const linkTo = useLinkTo();
+  const [openListener, setOpenListener] = useState(false);
+  const { indexed } = nftListener(openListener);
+
   let equityForSaleValue = entryStore.equityForSale;
   const getPermissionAsync = async () => {
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
@@ -98,6 +102,7 @@ export default observer(() => {
       }
     }
   };
+
   useEffect(() => {
     getPermissionAsync();
   }, []);
@@ -158,7 +163,22 @@ export default observer(() => {
     }
   };
 
+  const handleIndexedEntry = async () => {
+    await userEntriesStore.refreshEntries();
+    entryStore.clearStore();
+    linkTo('/dashboard/profile');
+  };
+
+  useEffect(() => {
+    if (indexed) {
+      setOpenListener(false);
+      handleIndexedEntry();
+    }
+  }, [indexed]);
+
   const onCreate = async () => {
+    setOpenListener(true);
+
     const res = await entryStore.create();
     if (!res) {
       return entryStore.setUploadingError(
@@ -182,23 +202,7 @@ export default observer(() => {
       }
       console.log(message);
     }
-    let indexed;
-    try {
-      indexed = await entryStore.indexEntry();
-      if (!indexed) {
-        return entryStore.setUploadingError(
-          'Something went very wrong. Please contact us!'
-        );
-      }
-    } catch (e) {
-      return entryStore.setUploadingError(
-        'Please contact us and leave this page open!'
-      );
-    }
 
-    await userEntriesStore.refreshEntries();
-    entryStore.clearStore();
-    linkTo('/dashboard/profile');
     return;
   };
 

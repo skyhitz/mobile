@@ -1,7 +1,8 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
 import cursorPointer from 'app/constants/CursorPointer';
+import tw from 'twin.macro';
 
 export default class LargeBtn extends React.Component<any, any> {
   getStyles() {
@@ -17,10 +18,8 @@ export default class LargeBtn extends React.Component<any, any> {
         onPress={this.props.onPress}
         disabled={this.props.disabled}
       >
-        <Text style={styles.white}>{this.props.text}</Text>
-        {this.props.icon ? (
-          <View style={styles.icon}> {this.props.icon()} </View>
-        ) : null}
+        <Text style={tw`px-2 text-white font-medium`}>{this.props.text}</Text>
+        {this.props.icon ? this.props.icon() : null}
       </Pressable>
     );
   }
@@ -52,14 +51,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.5,
-  },
-  white: {
-    color: Colors.white,
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  icon: {
-    paddingHorizontal: 5,
   },
 });

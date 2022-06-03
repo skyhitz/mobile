@@ -6,6 +6,7 @@ import { CommonActions, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import cursorPointer from 'app/constants/CursorPointer';
 import DollarIcon from 'app/modules/ui/icons/dollar';
+import tw from 'twin.macro';
 
 const Placeholder = () => <View style={styles.placeholder} />;
 
@@ -45,7 +46,7 @@ export default observer(({ entry }) => {
     }
   }, [entry]);
 
-  if (!entry || !priceInfo.price) {
+  if (!entry || !priceInfo.price || priceInfo.price == 0) {
     return <Placeholder />;
   }
   return (
@@ -56,7 +57,7 @@ export default observer(({ entry }) => {
       >
         <View style={styles.wrap}>
           <DollarIcon size={10} color={Colors.white} />
-          <Text style={styles.creditsText}>
+          <Text style={tw`px-2 text-white font-medium`}>
             {(priceInfo.price * priceInfo.amount).toFixed(0)} - Buy Now
           </Text>
         </View>
@@ -90,16 +91,5 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  creditsText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 14,
-    lineHeight: 14,
-    fontWeight: 'bold',
-    paddingLeft: 5,
-  },
-  priceTag: {
-    paddingTop: 15,
   },
 });
