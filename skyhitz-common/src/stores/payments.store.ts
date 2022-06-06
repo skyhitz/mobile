@@ -71,7 +71,7 @@ export class PaymentsStore {
   }
 
   public async buyEntry(id: string, amount: number, price: number) {
-    await entriesBackend.buyEntry(id, amount, price);
+    return await entriesBackend.buyEntry(id, amount, price);
   }
 
   public getPriceInfo(id: string) {

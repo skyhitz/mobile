@@ -3,6 +3,8 @@ import { gql } from '@apollo/client';
 import { Entry } from '../models/entry.model';
 import { entriesIndex } from '../algolia/algolia';
 
+type ConditionalXdr = { xdr: string; success: boolean; submitted: boolean };
+
 export class EntriesBackend {
   async search(q: string) {
     if (!q) {
@@ -119,8 +121,8 @@ export class EntriesBackend {
     }
     `,
       })
-      .then((data: any) => data.data)
-      .then(({ buyEntry }) => buyEntry);
+      .then(({ data }) => data)
+      .then(({ buyEntry }: { buyEntry: ConditionalXdr }) => buyEntry);
   }
 
   async indexEntry(issuer: string) {
@@ -157,22 +159,8 @@ export class EntriesBackend {
       }
       `,
       })
-      .then(({ data }) => data.createEntry)
-      .then(
-        ({
-          xdr,
-          success,
-          submitted,
-        }: {
-          xdr: string;
-          success: boolean;
-          submitted: boolean;
-        }) => ({
-          xdr,
-          success,
-          submitted,
-        })
-      )
+      .then(({ data }) => data)
+      .then(({ createEntry }: { createEntry: ConditionalXdr }) => createEntry)
       .catch((e) => {
         console.info(e);
         return null;

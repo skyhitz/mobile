@@ -9,6 +9,10 @@ import { useNavigation } from '@react-navigation/core';
 export default observer(({ route }) => {
   const { entry, priceInfo } = route.params;
   const [submitting, setSubmitting] = useState(false);
+  const [
+    mustSignAndSubmitWithWalletConnect,
+    setMustSignAndSubmitWithWalletConnect,
+  ] = useState(false);
   const { goBack } = useNavigation();
 
   const {
@@ -16,19 +20,32 @@ export default observer(({ route }) => {
     userEntriesStore,
     entriesSearchStore,
     playerStore,
+    walletConnectStore,
   } = Stores();
 
   const buyEntry = async (id: string) => {
     setSubmitting(true);
-    await paymentsStore.buyEntry(id, priceInfo.amount, priceInfo.price);
-    [
-      await userEntriesStore.refreshEntries(),
-      await entriesSearchStore.getRecentSearches(),
-      await paymentsStore.refreshSubscription(),
-    ];
-    playerStore.refreshEntry();
-    setSubmitting(false);
-    goBack();
+    let { xdr, success, submitted } = await paymentsStore.buyEntry(
+      id,
+      priceInfo.amount,
+      priceInfo.price
+    );
+
+    if (xdr && success) {
+      if (!submitted) {
+        setMustSignAndSubmitWithWalletConnect(true);
+        await walletConnectStore.signAndSubmitXdr(xdr);
+      }
+      await Promise.all([
+        await userEntriesStore.refreshEntries(),
+        await entriesSearchStore.getRecentSearches(),
+        await paymentsStore.refreshSubscription(),
+      ]);
+      playerStore.refreshEntry();
+      setSubmitting(false);
+      goBack();
+      return;
+    }
   };
 
   if (!paymentsStore.credits || paymentsStore.credits < entry.price) {
@@ -49,7 +66,11 @@ export default observer(({ route }) => {
     return (
       <View style={styles.container}>
         <View style={styles.infoWrap}>
-          <Text style={styles.title}>Submitting transaction...</Text>
+          <Text style={styles.title}>
+            {mustSignAndSubmitWithWalletConnect
+              ? 'Please sign and submit via WalletConnect'
+              : 'Submitting transaction...'}
+          </Text>
         </View>
         <View style={styles.bottomWrap}>
           <ActivityIndicator color={Colors.defaultTextLight} size={'small'} />
