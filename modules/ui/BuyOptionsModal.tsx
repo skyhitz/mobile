@@ -5,6 +5,7 @@ import LargeBtn from './LargeBtn';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
 import { useNavigation } from '@react-navigation/core';
+import { useLinkTo } from '@react-navigation/native';
 
 export default observer(({ route }) => {
   const { entry, priceInfo } = route.params;
@@ -14,6 +15,7 @@ export default observer(({ route }) => {
     setMustSignAndSubmitWithWalletConnect,
   ] = useState(false);
   const { goBack } = useNavigation();
+  const linkTo = useLinkTo();
 
   const {
     paymentsStore,
@@ -44,6 +46,7 @@ export default observer(({ route }) => {
       playerStore.refreshEntry();
       setSubmitting(false);
       goBack();
+      linkTo('/dashboard/profile');
       return;
     }
   };
