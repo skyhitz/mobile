@@ -29,7 +29,7 @@ export default () => {
       <View style={{ marginRight: 10 }}>
         <Anchor
           target="_blank"
-          href="https://discord.gg/A7kxDyC5"
+          href="https://discord.gg/2C3HzsPEuZ"
           aria-label="Join our server on Discord"
           style={[{ fontSize: 16, color: Colors.white }]}
         >
