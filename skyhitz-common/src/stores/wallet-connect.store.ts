@@ -95,14 +95,15 @@ export class WalletConnectStore {
     return this.publicKey;
   }
 
-  disconnect() {
-    this.client?.disconnect({
+  async disconnect() {
+    await this.client?.disconnect({
       topic: this.session.topic,
       reason: {
         code: 1,
         message: 'Logged out',
       },
     });
+    this.clearState();
   }
 
   subscribeToEvents() {
