@@ -5,9 +5,10 @@ import { Stores } from 'app/functions/Stores';
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import { observer } from 'mobx-react';
 import tw from 'twin.macro';
+import { generateFeeBumpXdr } from 'app/stellar';
 
-export default observer(({ signInWithPublicKey = (_) => {} }) => {
-  let { walletConnectStore } = Stores();
+export default observer(() => {
+  let { walletConnectStore, sessionStore } = Stores();
 
   useEffect(() => {
     if (!walletConnectStore.uri) return QRCodeModal.close();
@@ -17,9 +18,16 @@ export default observer(({ signInWithPublicKey = (_) => {} }) => {
     });
   }, [walletConnectStore.uri]);
 
+  const signInWithXdr = async (publicKey: string) => {
+    const xdr = await generateFeeBumpXdr(publicKey);
+    console.log(xdr);
+    const { result } = await walletConnectStore.signXdr(xdr);
+    await sessionStore.signIn(undefined, undefined, result.signedXdr);
+  };
+
   useEffect(() => {
     if (!walletConnectStore.publicKey) return;
-    signInWithPublicKey(walletConnectStore.publicKey);
+    signInWithXdr(walletConnectStore.publicKey);
   }, [walletConnectStore.publicKey]);
 
   return (

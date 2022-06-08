@@ -29,8 +29,8 @@ export class WalletConnectStore {
     this.uri = null;
     this.proposals = new Map();
     WalletConnect.init({
-      projectId: '7ba6184fa9faecd936a314cf61945da8',
-      relayUrl: 'wss://relay.walletconnect.com',
+      projectId: '422a527ddc3ed4c5fff60954fcc8ed83',
+      // relayUrl: 'wss://relay.walletconnect.com',
       metadata: {
         name: 'Skyhitz',
         description: 'Skyhitz',
@@ -65,6 +65,7 @@ export class WalletConnectStore {
   }
 
   setSession(session) {
+    console.log(session);
     this.session = session;
     const { state } = session;
     const [stellarAccount] = state.accounts;

@@ -80,6 +80,7 @@
     "react-native-web": "0.17.1",
     "react-responsive": "8.0.3",
     "setimmediate": "^1.0.5",
+    "stellar-base": "^8.0.1",
     "twrnc": "^3.3.2"
   },
   "devDependencies": {
