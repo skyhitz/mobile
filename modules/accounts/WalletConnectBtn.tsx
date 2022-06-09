@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import tw from 'twin.macro';
 import { signManageDataOp } from 'app/stellar';
 
-export default observer(({ signInWithXDR }) => {
+export default observer(({ signInWithXDR }: { signInWithXDR?: (_) => {} }) => {
   let { walletConnectStore } = Stores();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default observer(({ signInWithXDR }) => {
   const handleSignInWithXdr = async (publicKey: string) => {
     const xdr = await signManageDataOp(publicKey);
     const { signedXDR } = await walletConnectStore.signXdr(xdr);
-    signInWithXDR(signedXDR);
+    signInWithXDR && signInWithXDR(signedXDR);
   };
 
   useEffect(() => {
