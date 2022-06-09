@@ -20,8 +20,8 @@ export default observer(() => {
 
   const signInWithXdr = async (publicKey: string) => {
     const xdr = await signManageDataOp(publicKey);
-    const { result } = await walletConnectStore.signXdr(xdr);
-    await sessionStore.signIn(undefined, undefined, result.signedXdr);
+    const { signedXDR } = await walletConnectStore.signXdr(xdr);
+    await sessionStore.signIn(undefined, undefined, signedXDR);
   };
 
   useEffect(() => {

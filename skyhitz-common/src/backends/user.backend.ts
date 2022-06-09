@@ -74,7 +74,7 @@ export class UserBackend {
       .mutate({
         mutation: gql`
       mutation {
-        signIn(token: "${token}", uid: "${uid}", signedXdr: "${xdr}"){
+        signIn(token: "${token}", uid: "${uid}", signedXDR: "${xdr}"){
           avatarUrl
           displayName
           username

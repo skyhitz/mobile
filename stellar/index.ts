@@ -79,8 +79,7 @@ export const signManageDataOp = async (publicKey: string) => {
       Operation.manageData({
         source: publicKey,
         name: 'skyhitz',
-        value:
-          'This signature proves that the owner of this account is a Skyhitz user.',
+        value: 'The owner of this account is a Skyhitz user.',
       })
     )
     .setTimeout(0)
