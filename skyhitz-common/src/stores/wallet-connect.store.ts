@@ -61,6 +61,7 @@ export class WalletConnectStore {
     this.state = 'disconnected';
     this.publicKey = '';
     this.session = null;
+    return AsyncStorage.clear();
   }
 
   setSession(session) {
@@ -95,7 +96,6 @@ export class WalletConnectStore {
   }
 
   async disconnect() {
-    this.clearState();
     await this.client?.disconnect({
       topic: this.session.topic,
       reason: {
@@ -103,6 +103,7 @@ export class WalletConnectStore {
         message: 'Logged out',
       },
     });
+    await this.clearState();
   }
 
   subscribeToEvents() {

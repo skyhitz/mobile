@@ -7,8 +7,8 @@ import { observer } from 'mobx-react';
 import tw from 'twin.macro';
 import { signManageDataOp } from 'app/stellar';
 
-export default observer(() => {
-  let { walletConnectStore, sessionStore } = Stores();
+export default observer(({ signInWithXDR }) => {
+  let { walletConnectStore } = Stores();
 
   useEffect(() => {
     if (!walletConnectStore.uri) return QRCodeModal.close();
@@ -18,15 +18,15 @@ export default observer(() => {
     });
   }, [walletConnectStore.uri]);
 
-  const signInWithXdr = async (publicKey: string) => {
+  const handleSignInWithXdr = async (publicKey: string) => {
     const xdr = await signManageDataOp(publicKey);
     const { signedXDR } = await walletConnectStore.signXdr(xdr);
-    await sessionStore.signIn(undefined, undefined, signedXDR);
+    signInWithXDR(signedXDR);
   };
 
   useEffect(() => {
-    if (!walletConnectStore.publicKey) return;
-    signInWithXdr(walletConnectStore.publicKey);
+    if (walletConnectStore.publicKey && signInWithXDR)
+      handleSignInWithXdr(walletConnectStore.publicKey);
   }, [walletConnectStore.publicKey]);
 
   return (

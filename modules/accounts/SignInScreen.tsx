@@ -43,13 +43,12 @@ export default observer(({ route, navigation }) => {
     return setLoading(false);
   };
 
-  const signInWithPublicKey = async (publicKey) => {
+  const signInWithXDR = async (xdr) => {
     setLoading(true);
     try {
-      await sessionStore.requestToken('', publicKey);
+      await sessionStore.signIn(undefined, undefined, xdr);
       // check your email to access your account
       setLoading(false);
-      setShowEmailLink(true);
       return;
     } catch (e) {
       signInValidationStore.setBackendError(e as any);
@@ -140,7 +139,7 @@ export default observer(({ route, navigation }) => {
       ) : (
         <>
           <View style={styles.inputContainer}>
-            <WalletConnectBtn signInWithPublicKey={signInWithPublicKey} />
+            <WalletConnectBtn signInWithXDR={signInWithXDR} />
             <View style={tw`flex-row my-8 justify-center items-center`}>
               <View style={styles.line} />
               <Text style={tw`text-white px-5`}>or</Text>
