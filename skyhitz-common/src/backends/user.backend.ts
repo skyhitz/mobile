@@ -69,12 +69,12 @@ export class UserBackend {
       });
   }
 
-  async signIn(token: string, uid: string) {
+  async signIn(token?: string, uid?: string, xdr?: string) {
     return client
       .mutate({
         mutation: gql`
       mutation {
-        signIn(token: "${token}", uid: "${uid}"){
+        signIn(token: "${token}", uid: "${uid}", signedXDR: "${xdr}"){
           avatarUrl
           displayName
           username

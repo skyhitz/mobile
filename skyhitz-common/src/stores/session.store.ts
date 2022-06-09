@@ -27,8 +27,8 @@ export class SessionStore {
     return;
   }
 
-  async signIn(token: string, uid: string) {
-    let userPayload = await userBackend.signIn(token, uid);
+  async signIn(token?: string, uid?: string, xdr?: string) {
+    let userPayload = await userBackend.signIn(token, uid, xdr);
     if (userPayload) {
       await this.setUser(userPayload);
       return (this.session.user = new User(userPayload));

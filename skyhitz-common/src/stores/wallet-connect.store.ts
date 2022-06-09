@@ -30,7 +30,6 @@ export class WalletConnectStore {
     this.proposals = new Map();
     WalletConnect.init({
       projectId: '422a527ddc3ed4c5fff60954fcc8ed83',
-      relayUrl: 'wss://relay.walletconnect.com',
       metadata: {
         name: 'Skyhitz',
         description: 'Skyhitz',
@@ -62,6 +61,7 @@ export class WalletConnectStore {
     this.state = 'disconnected';
     this.publicKey = '';
     this.session = null;
+    return AsyncStorage.clear();
   }
 
   setSession(session) {
@@ -103,7 +103,7 @@ export class WalletConnectStore {
         message: 'Logged out',
       },
     });
-    this.clearState();
+    await this.clearState();
   }
 
   subscribeToEvents() {
