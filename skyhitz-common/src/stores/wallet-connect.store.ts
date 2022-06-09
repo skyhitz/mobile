@@ -95,6 +95,7 @@ export class WalletConnectStore {
   }
 
   async disconnect() {
+    this.clearState();
     await this.client?.disconnect({
       topic: this.session.topic,
       reason: {
@@ -102,7 +103,6 @@ export class WalletConnectStore {
         message: 'Logged out',
       },
     });
-    this.clearState();
   }
 
   subscribeToEvents() {
