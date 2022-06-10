@@ -4,14 +4,15 @@ import Colors from 'app/constants/Colors';
 import { Stores } from 'app/functions/Stores';
 import { observer } from 'mobx-react';
 import LogOutIcon from 'app/modules/ui/icons/logout';
+import { useLinkTo } from '@react-navigation/native';
 
 export default observer(() => {
+  const linkTo = useLinkTo();
   const { sessionStore, likesStore, walletConnectStore } = Stores();
   const handleLogOut = async () => {
-    await Promise.all([
-      await sessionStore.signOut(),
-      await walletConnectStore.disconnect(),
-    ]);
+    await walletConnectStore.disconnect();
+    await sessionStore.signOut();
+    linkTo('/');
     likesStore.clearLikes();
   };
   return (

@@ -1,18 +1,18 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import Colors from 'app/constants/Colors';
-import { useNavigation } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { Stores } from 'app/functions/Stores';
 import { observer } from 'mobx-react';
 import cursorPointer from 'app/constants/CursorPointer';
 
 const DoneEditBtn = observer(() => {
-  const { goBack } = useNavigation();
+  const linkTo = useLinkTo();
   const { editProfileStore } = Stores();
 
   const closeProfileModal = () => {
     editProfileStore.updateProfile();
-    goBack();
+    linkTo('/dashboard/profile');
   };
   return (
     <Pressable
