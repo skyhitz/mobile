@@ -10,13 +10,14 @@ import { signManageDataOp } from 'app/stellar';
 export default observer(({ signInWithXDR }: { signInWithXDR?: (_) => {} }) => {
   let { walletConnectStore } = Stores();
 
-  useEffect(() => {
-    if (!walletConnectStore.uri) return QRCodeModal.close();
-    QRCodeModal.open(walletConnectStore.uri, () => {}, {
+  const handleConnect = async () => {
+    const { uri } = await walletConnectStore.connect();
+    if (!uri) return QRCodeModal.close();
+    QRCodeModal.open(uri, () => {}, {
       desktopLinks: [],
       mobileLinks: ['lobstr'],
     });
-  }, [walletConnectStore.uri]);
+  };
 
   const handleSignInWithXdr = async (publicKey: string) => {
     const xdr = await signManageDataOp(publicKey);
@@ -32,7 +33,7 @@ export default observer(({ signInWithXDR }: { signInWithXDR?: (_) => {} }) => {
   return (
     <Pressable
       style={tw`bg-blue rounded-full flex-row items-center justify-center text-white`}
-      onPress={() => walletConnectStore.connect()}
+      onPress={handleConnect}
     >
       <Text
         style={tw`flex text-white text-center text-base font-bold py-2 mr-2`}
