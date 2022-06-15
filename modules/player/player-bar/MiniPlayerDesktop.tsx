@@ -20,7 +20,7 @@ export default observer(() => {
   return (
     <View style={styles.desktopWrap}>
       <View style={styles.videoWrap}>
-        <VideoComponent dynamicHeight={50} desktop={true} />
+        <VideoComponent desktop={true} />
         <View style={styles.infoWrap}>
           <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
             {playerStore.entry?.title}
@@ -96,8 +96,6 @@ let styles = StyleSheet.create({
     right: 0,
     left: 0,
     bottom: 0,
-    borderTopColor: 'rgb(216, 216, 216)',
-    borderTopWidth: 1,
   },
   infoWrap: {
     flexDirection: 'column',

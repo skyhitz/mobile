@@ -71,8 +71,7 @@ export class PlayerStore {
   sliding: boolean = false;
 
   @observable
-  streamUrl: string =
-    'https://res.cloudinary.com/skyhitz/video/upload/v1554330926/app/-LbM3m6WKdVQAsY3zrAd/videos/-Lb_KsQ7hbr0nquOTZee.mov';
+  streamUrl: string = '';
 
   video: any;
 
@@ -99,6 +98,7 @@ export class PlayerStore {
 
     if (!streamUrl) return;
     if (!this.video) return;
+
     await this.video.loadAsync(
       { uri: streamUrl },
       {
@@ -250,13 +250,9 @@ export class PlayerStore {
     if (!videoUrl) {
       return;
     }
-    let pos = videoUrl.lastIndexOf('.');
-    videoUrl = videoUrl.substr(0, pos < 0 ? videoUrl.length : pos) + '.mp4';
-    let optimizedVideo = '/upload/vc_auto/q_auto:good';
-    videoUrl.replace('/upload', optimizedVideo);
 
     this.streamUrl = isIpfs && videoSrc ? videoSrc : videoUrl;
-    await this.loadNewPlaybackInstance(play, videoUrl);
+    await this.loadNewPlaybackInstance(play, this.streamUrl);
     this.setPlaybackState(play ? 'PLAYING' : 'PAUSED');
     return;
   }

@@ -1,10 +1,9 @@
 import { Video, Audio } from 'expo-av';
 import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
-import { Platform, StyleSheet } from 'react-native';
-import { videoWidth } from './VideoConstants';
 import { useState } from 'react';
-import BlurImageBackground from './BlurImageBackground';
+import tw from 'twin.macro';
+import { Platform } from 'react-native';
 
 Audio.setAudioModeAsync({
   playsInSilentModeIOS: true,
@@ -16,71 +15,37 @@ Audio.setAudioModeAsync({
   playThroughEarpieceAndroid: false,
 });
 
-export default observer(({ dynamicHeight, desktop = false }) => {
+export default observer(({ desktop = false }) => {
   let { playerStore } = Stores();
-  const [dynamicWidth, setDynamicWidth] = useState<number>(dynamicHeight);
-  const [dynamicOpacity, setDynamicOpacity] = useState<number>(0);
-  const [blur, setBlur] = useState<number>(0);
+  const [readyForDisplay, setReadyForDisplay] = useState(false);
 
   return (
-    <BlurImageBackground
-      image={playerStore.entry?.imageSrc}
-      opacity={dynamicOpacity}
-      intensity={blur}
-    >
-      <Video
-        posterSource={{ uri: playerStore.entry?.imageSrc }}
-        usePoster={desktop ? true : false}
-        source={{
-          uri: playerStore.streamUrl,
-        }}
-        posterStyle={[styles.poster, { width: dynamicWidth }]}
-        ref={(ref) => playerStore.mountVideo(ref)}
-        onPlaybackStatusUpdate={(status) =>
-          playerStore.onPlaybackStatusUpdate(status)
-        }
-        resizeMode={Video.RESIZE_MODE_CONTAIN}
-        style={[
-          { opacity: dynamicOpacity },
-          desktop
-            ? {
-                maxWidth: dynamicWidth,
-                width: dynamicWidth,
-                minWidth: dynamicWidth,
-              }
-            : { height: dynamicHeight, maxHeight: 360 },
-          desktop ? styles.videoPlayerDesktop : styles.videoPlayer,
-        ]}
-        onError={(error) => playerStore.onError(error)}
-        onFullscreenUpdate={(update) => playerStore.onFullscreenUpdate(update)}
-        onReadyForDisplay={(res: any) => {
-          if (Platform.OS !== 'web') return;
-          const { videoHeight, videoWidth } = res.target;
-          const aspectRatio = videoWidth / videoHeight;
-          if (videoWidth === 0) {
-            setDynamicOpacity(1);
-            return;
-          }
-          setDynamicWidth(Math.ceil(aspectRatio * dynamicHeight));
-          // add delay or transition
+    <Video
+      source={{
+        uri: playerStore.streamUrl,
+      }}
+      ref={(ref) => {
+        console.log(ref);
+        playerStore.mountVideo(ref);
+      }}
+      onPlaybackStatusUpdate={(status) => {
+        playerStore.onPlaybackStatusUpdate(status);
+      }}
+      resizeMode={Video.RESIZE_MODE_CONTAIN}
+      style={[
+        readyForDisplay && tw`bg-blue-dark`,
+        desktop ? tw`h-12 w-12 flex-col justify-center` : { maxHeight: 360 },
+      ]}
+      onError={(error) => playerStore.onError(error)}
+      onFullscreenUpdate={(update) => playerStore.onFullscreenUpdate(update)}
+      onReadyForDisplay={(res: any) => {
+        if (Platform.OS !== 'web') return;
+        const { videoHeight, videoWidth } = res.target;
+        const aspectRatio = videoWidth / videoHeight;
+        console.log(aspectRatio);
 
-          setBlur(80);
-          setDynamicOpacity(1);
-        }}
-      />
-    </BlurImageBackground>
+        setReadyForDisplay(true);
+      }}
+    />
   );
-});
-
-let styles = StyleSheet.create({
-  videoPlayer: {
-    width: videoWidth,
-  },
-  videoPlayerDesktop: {
-    minHeight: 50,
-    flex: 1,
-  },
-  poster: {
-    height: 50,
-  },
 });
