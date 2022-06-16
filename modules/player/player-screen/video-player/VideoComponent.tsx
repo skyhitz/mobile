@@ -37,7 +37,6 @@ export default observer(({ desktop = false }) => {
           uri: playerStore.streamUrl,
         }}
         ref={(ref) => {
-          console.log(ref);
           playerStore.mountVideo(ref);
         }}
         onPlaybackStatusUpdate={(status) => {
