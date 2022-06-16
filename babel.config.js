@@ -15,6 +15,7 @@ module.exports = {
         root: ['./'],
         alias: {
           app: './',
+          'twin.macro': ['./twin.macro'],
         },
       },
     ],
