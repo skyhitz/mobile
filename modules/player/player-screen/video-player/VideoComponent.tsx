@@ -29,7 +29,7 @@ export default observer(({ desktop = false }) => {
             : playerStore.entry?.imageSrc
           : null
       }
-      style={tw`bg-blue-dark`}
+      style={[playerStore.streamUrl && tw`bg-blue-dark`]}
       intensity={0}
     >
       <Video
