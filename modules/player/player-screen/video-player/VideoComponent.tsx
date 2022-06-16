@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { Stores } from 'app/functions/Stores';
 import { useState } from 'react';
 import tw from 'twin.macro';
-import { Platform } from 'react-native';
+import BlurImageBackground from './BlurImageBackground';
 
 Audio.setAudioModeAsync({
   playsInSilentModeIOS: true,
@@ -17,35 +17,51 @@ Audio.setAudioModeAsync({
 
 export default observer(({ desktop = false }) => {
   let { playerStore } = Stores();
-  const [readyForDisplay, setReadyForDisplay] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [hasVideo, setHasVideo] = useState(false);
 
   return (
-    <Video
-      source={{
-        uri: playerStore.streamUrl,
-      }}
-      ref={(ref) => {
-        console.log(ref);
-        playerStore.mountVideo(ref);
-      }}
-      onPlaybackStatusUpdate={(status) => {
-        playerStore.onPlaybackStatusUpdate(status);
-      }}
-      resizeMode={Video.RESIZE_MODE_CONTAIN}
-      style={[
-        readyForDisplay && tw`bg-blue-dark`,
-        desktop ? tw`h-12 w-12 flex-col justify-center` : { maxHeight: 360 },
-      ]}
-      onError={(error) => playerStore.onError(error)}
-      onFullscreenUpdate={(update) => playerStore.onFullscreenUpdate(update)}
-      onReadyForDisplay={(res: any) => {
-        if (Platform.OS !== 'web') return;
-        const { videoHeight, videoWidth } = res.target;
-        const aspectRatio = videoWidth / videoHeight;
-        console.log(aspectRatio);
+    <BlurImageBackground
+      image={
+        loading || !hasVideo
+          ? desktop
+            ? playerStore.entry?.imageUrlSmall
+            : playerStore.entry?.imageSrc
+          : null
+      }
+      style={tw`bg-blue-dark`}
+      intensity={0}
+    >
+      <Video
+        source={{
+          uri: playerStore.streamUrl,
+        }}
+        ref={(ref) => {
+          console.log(ref);
+          playerStore.mountVideo(ref);
+        }}
+        onPlaybackStatusUpdate={(status) => {
+          playerStore.onPlaybackStatusUpdate(status);
+        }}
+        resizeMode={Video.RESIZE_MODE_CONTAIN}
+        style={[
+          hasVideo && tw`bg-blue-dark`,
+          desktop
+            ? tw`h-12 w-12 flex-col justify-center p-0 m-0`
+            : { maxHeight: 360 },
+        ]}
+        onError={(error) => playerStore.onError(error)}
+        onFullscreenUpdate={(update) => playerStore.onFullscreenUpdate(update)}
+        onReadyForDisplay={(res: any) => {
+          if (!res.target) return;
+          const { videoHeight, videoWidth } = res.target;
+          const aspectRatio = videoWidth / videoHeight;
 
-        setReadyForDisplay(true);
-      }}
-    />
+          setHasVideo(!!aspectRatio);
+        }}
+        onLoadStart={() => setLoading(true)}
+        onLoad={() => setLoading(false)}
+      />
+    </BlurImageBackground>
   );
 });

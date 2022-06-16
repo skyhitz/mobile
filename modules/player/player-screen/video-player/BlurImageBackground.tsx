@@ -7,9 +7,8 @@ function BlurImageBackground(props) {
       source={{
         uri: props.image,
       }}
-      style={{
-        opacity: props.opacity,
-      }}
+      style={props.style}
+      resizeMode="contain"
     >
       <BlurView intensity={props.intensity}>{props.children}</BlurView>
     </ImageBackground>
