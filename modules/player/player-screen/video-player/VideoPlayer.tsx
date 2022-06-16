@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
   CurrentTimeDisplay,
@@ -23,18 +23,10 @@ const BottomBar = () => {
 };
 
 export default () => {
-  let [dynamicHeight, setDynamicHeight] = useState(0);
-
-  const onLayout = ({ nativeEvent }) => {
-    let { layout } = nativeEvent;
-    let { width } = layout;
-    setDynamicHeight(width * (9 / 16));
-  };
-
   return (
     <View style={styles.container}>
-      <View style={styles.container} onLayout={onLayout}>
-        <VideoComponent dynamicHeight={dynamicHeight} />
+      <View style={styles.container}>
+        <VideoComponent />
         <PlayPauseInvisibleArea />
         <VideoErrorText />
       </View>
