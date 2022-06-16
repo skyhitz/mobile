@@ -14,6 +14,8 @@ import ResponsiveLayout from '../ui/ResponsiveLayout';
 import MintNFT from './MintNFT';
 import { useLinkTo } from '@react-navigation/native';
 import { HeaderBackButton } from '@react-navigation/elements';
+import ChevronLeftIcon from 'app/modules/ui/icons/chevron-left';
+import tw from 'twin.macro';
 
 const ProfileSettingsScreen = observer(() => {
   let { likesStore, userEntriesStore, paymentsStore } = Stores();
@@ -51,6 +53,8 @@ const ProfileSettingsNavigator = () => {
               linkTo('/dashboard/profile');
             }}
             tintColor={Colors.white}
+            style={tw`text-white`}
+            backImage={() => <ChevronLeftIcon color={Colors.white} />}
           />
         ),
       })}
