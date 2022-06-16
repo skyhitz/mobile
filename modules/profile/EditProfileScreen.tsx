@@ -137,7 +137,10 @@ export default class EditProfileScreen extends React.Component<any, any> {
                 autoCapitalize="none"
                 placeholder="Description"
                 autoCorrect={false}
-                style={styles.input}
+                style={[
+                  styles.input,
+                  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+                ]}
                 placeholderTextColor="white"
                 value={this.props.description}
                 onChangeText={(t) => this.props.updateDescription(t)}
@@ -153,7 +156,10 @@ export default class EditProfileScreen extends React.Component<any, any> {
                 autoCapitalize="none"
                 placeholder="Username"
                 autoCorrect={false}
-                style={styles.input}
+                style={[
+                  styles.input,
+                  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+                ]}
                 placeholderTextColor="white"
                 value={this.props.username}
                 onChangeText={(t) => this.props.updateUsername(t)}
@@ -173,7 +179,10 @@ export default class EditProfileScreen extends React.Component<any, any> {
                 autoCapitalize="none"
                 placeholder="Email address"
                 autoCorrect={false}
-                style={styles.input}
+                style={[
+                  styles.input,
+                  Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
+                ]}
                 placeholderTextColor="white"
                 value={this.props.email}
                 onChangeText={(t) => this.props.updateEmail(t)}
