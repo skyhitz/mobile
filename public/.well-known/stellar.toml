@@ -22,3 +22,5 @@ email="hello@skyhitz.io"
 twitter="skyhitz"
 github="skyhitz"
 
+ASSET_METADATA_SERVER="https://api.skyhitz.io/api/assets"
+
