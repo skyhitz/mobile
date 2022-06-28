@@ -62,7 +62,7 @@ class CustomDocument extends Document {
           />
           <meta name="viewport" content="width=device-width,initial-scale=1" />
           <meta name="theme-color" content="#000" />
-          <title>Skyhitz - Beats market for music creators</title>
+          <title>Skyhitz - Music NFTs on Stellar</title>
           <link rel="canonical" href="https://skyhitz.io" />
           <link rel="icon" href="/img/favicon.ico" />
           <link

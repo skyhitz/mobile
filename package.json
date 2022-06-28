@@ -28,7 +28,6 @@
   "license": "MIT",
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
-    "@apollo/client": "^3.5.6",
     "@expo/html-elements": "^0.1.0",
     "@expo/match-media": "^0.1.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
@@ -56,7 +55,8 @@
     "expo-linking": "~2.4.2",
     "expo-next-react-navigation": "0.0.25",
     "expo-permissions": "~13.0.3",
-    "graphql": "^16.2.0",
+    "graphql": "^16.5.0",
+    "graphql-request": "^4.3.0",
     "list": "^2.0.19",
     "lodash.debounce": "4.0.8",
     "mobx": "5.15.4",
@@ -79,6 +79,7 @@
     "react-native-tab-view": "^3.0.1",
     "react-native-web": "0.17.1",
     "react-responsive": "8.0.3",
+    "recoil": "^0.7.4",
     "setimmediate": "^1.0.5",
     "stellar-base": "^8.0.1",
     "twrnc": "^3.3.2"
