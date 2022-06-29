@@ -1,154 +1,172 @@
-import { observable, observe, IObservableObject } from 'mobx';
+import { useRecoilValue } from 'recoil';
 import * as L from 'list';
 import { likesBackend } from '../api/likes';
+import { userAtom } from '../atoms/atoms';
 import { Entry, User } from '../models';
 
-export class LikesStore {
-  @observable ids: Set<string> = new Set([]);
-  @observable loading: boolean = false;
-  @observable loadingEntryLikes: boolean = false;
-  @observable entry!: Entry;
-  @observable entryLikes: L.List<User> = L.from([]);
-  @observable entryLikesCount!: number;
-  @observable userLikes: L.List<Entry> = L.from([]);
-  @observable userLikesCount!: number;
-  @observable user!: User;
+export const LikesStore = () => {
+  let ids: Set<string> = new Set([]);
+  let loading: boolean = false;
+  let loadingEntryLikes: boolean = false;
+  let entry!: Entry;
+  let entryLikes: L.List<User> = L.from([]);
+  let entryLikesCount!: number;
+  let userLikes: L.List<Entry> = L.from([]);
+  let userLikesCount!: number;
 
-  public viewLimit: number = 8;
-  disposer: any;
-  userDisposer: any;
+  const user = useRecoilValue(userAtom);
 
-  get hasMoreLikers(): boolean {
-    if (this.entryLikesCount > this.viewLimit) {
+  let viewLimit: number = 8;
+  let disposer: any;
+  let userDisposer: any;
+
+  const hasMoreLikers = () => {
+    if (entryLikesCount > viewLimit) {
       return true;
     }
     return false;
-  }
+  };
 
-  get plusLikers() {
-    return this.kFormatter(this.entryLikesCount - this.viewLimit);
-  }
+  const plusLikers = () => {
+    return kFormatter(entryLikesCount - viewLimit);
+  };
 
-  kFormatter(num: number) {
+  const kFormatter = (num: number) => {
     return num > 999 ? (num / 1000).toFixed(1) + 'k' : num;
-  }
+  };
 
-  constructor(
-    public observables: IObservableObject,
-    public session: IObservableObject
-  ) {
-    this.disposer = observe(observables, ({ object }) => {
-      if (!object.entry) {
-        return;
-      }
-      this.entry = object.entry;
-      this.refreshEntryLikes(this.entry.id);
-    });
+  // TODO: wire up effects
+  // constructor(
+  //   public observables: IObservableObject,
+  //   public session: IObservableObject
+  // ) {
+  //   this.disposer = observe(observables, ({ object }) => {
+  //     if (!object.entry) {
+  //       return;
+  //     }
+  //     this.entry = object.entry;
+  //     this.refreshEntryLikes(this.entry.id);
+  //   });
 
-    this.userDisposer = observe(this.session, ({ object }) => {
-      this.user = object.user;
-    });
-  }
+  //   this.userDisposer = observe(this.session, ({ object }) => {
+  //     this.user = object.user;
+  //   });
+  // }
 
-  public clearLikes() {
-    this.entryLikes = L.from([]);
-    this.userLikes = L.from([]);
-  }
+  const clearLikes = () => {
+    entryLikes = L.from([]);
+    userLikes = L.from([]);
+  };
 
-  public refreshEntryLikes(id: string) {
-    this.loadingEntryLikes = true;
+  const refreshEntryLikes = (id: string) => {
+    loadingEntryLikes = true;
     likesBackend.entryLikes(id).then((payload) => {
       if (payload) {
-        this.entryLikesCount = payload.count;
+        entryLikesCount = payload.count;
         let users = payload.users.map(
           (userPayload: any) => new User(userPayload)
         );
-        this.entryLikes = L.from(users);
+        entryLikes = L.from(users);
       }
 
-      this.loadingEntryLikes = false;
+      loadingEntryLikes = false;
     });
-  }
+  };
 
-  public refreshLikes() {
-    this.loading = true;
+  const refreshLikes = () => {
+    loading = true;
     likesBackend.userLikes().then((userLikes) => {
       if (!userLikes) {
         return;
       } else {
         let ids = userLikes.map((like: any) => like.id);
         let entries = userLikes.map((like: any) => new Entry(like));
-        this.ids = new Set(ids);
-        this.userLikes = L.from(entries);
-        this.userLikesCount = this.userLikes.length;
+        ids = new Set(ids);
+        userLikes = L.from(entries);
+        userLikesCount = userLikes.length;
       }
 
-      this.loading = false;
+      loading = false;
     });
-  }
+  };
 
-  async unlike(entry: Entry) {
-    this.ids.delete(entry.id);
+  const unlike = async (entry: Entry) => {
+    ids.delete(entry.id);
     let index = L.findIndex((like) => {
       if (like) {
         return like.id === entry.id;
       }
       return false;
-    }, this.userLikes);
-    this.userLikes = L.remove(index, 1, this.userLikes);
+    }, userLikes);
+    userLikes = L.remove(index, 1, userLikes);
     let unliked = await likesBackend.like(entry.id, false);
     if (!unliked) {
-      this.ids = this.ids.add(entry.id);
-      this.userLikes = L.append(entry, this.userLikes);
+      ids = ids.add(entry.id);
+      userLikes = L.append(entry, userLikes);
     }
-    this.userLikesCount = this.userLikes.length;
+    userLikesCount = userLikes.length;
 
     let userIndex = L.findIndex((like) => {
       if (like) {
-        return like.id === this.user.id;
+        return like.id === user?.id;
       }
       return false;
-    }, this.entryLikes);
-    this.entryLikes = L.remove(userIndex, 1, this.entryLikes);
-  }
+    }, entryLikes);
+    entryLikes = L.remove(userIndex, 1, entryLikes);
+  };
 
-  async like(entry: Entry) {
-    this.ids = this.ids.add(entry.id);
-    this.userLikes = L.append(entry, this.userLikes);
+  const like = async (entry: Entry) => {
+    if (!user) return;
+    ids = ids.add(entry.id);
+    userLikes = L.append(entry, userLikes);
     let liked = await likesBackend.like(entry.id);
     if (!liked) {
-      this.ids.delete(entry.id);
+      ids.delete(entry.id);
       let index = L.findIndex((like) => {
         if (like) {
           return like.id === entry.id;
         }
         return false;
-      }, this.userLikes);
-      this.userLikes = L.remove(index, 1, this.userLikes);
+      }, userLikes);
+      userLikes = L.remove(index, 1, userLikes);
     }
-    this.userLikesCount = this.userLikes.length;
+    userLikesCount = userLikes.length;
 
-    this.entryLikes = L.append(this.user, this.entryLikes);
-  }
+    entryLikes = L.append(user, entryLikes);
+  };
 
-  public toggleLike(entry: Entry) {
-    if (this.isEntryLiked(entry)) {
-      return this.unlike(entry);
+  const toggleLike = (entry: Entry) => {
+    if (isEntryLiked(entry)) {
+      return unlike(entry);
     }
-    return this.like(entry);
-  }
+    return like(entry);
+  };
 
-  get isLiked() {
-    if (!this.entry) {
-      return false;
-    }
-    return this.ids.has(this.entry.id);
-  }
-
-  isEntryLiked(entry: Entry) {
+  const isLiked = () => {
     if (!entry) {
       return false;
     }
-    return this.ids.has(entry.id);
-  }
-}
+    return ids.has(entry.id);
+  };
+
+  const isEntryLiked = (entry: Entry) => {
+    if (!entry) {
+      return false;
+    }
+    return ids.has(entry.id);
+  };
+
+  return {
+    toggleLike,
+    isLiked,
+    entryLikes,
+    hasMoreLikers,
+    plusLikers,
+    userLikes,
+    userLikesCount,
+    loading,
+    refreshLikes,
+    isEntryLiked,
+    clearLikes,
+  };
+};

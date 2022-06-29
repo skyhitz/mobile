@@ -1,16 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
-import { observer } from 'mobx-react';
-
 import Colors from 'app/src/constants/Colors';
-import { Stores } from 'app/src/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import ChevronRightIcon from 'app/src/ui/icons/chevron-right';
 import StarBorderIcon from 'app/src/ui/icons/star-border';
+import { UserEntriesStore } from '../stores/user-entries.store';
 
-export default observer(() => {
-  let { userEntriesStore } = Stores();
+export default () => {
+  let { entries } = UserEntriesStore();
   let linkTo = useLinkTo();
 
   const handleNavigation = () => {
@@ -18,10 +16,10 @@ export default observer(() => {
   };
 
   const copy = () => {
-    if (!userEntriesStore.entriesCount) {
+    if (!entries.length) {
       return null;
     }
-    return `${userEntriesStore.entriesCount}`;
+    return `${entries.length}`;
   };
   return (
     <View style={styles.rowWrap}>
@@ -41,7 +39,7 @@ export default observer(() => {
       </View>
     </View>
   );
-});
+};
 
 let styles = StyleSheet.create({
   rowWrap: {

@@ -4,11 +4,11 @@ import SkyhitzLogo from './SkyhitzLogo';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
+import { userAtom } from 'app/src/atoms/atoms';
+import { useRecoilValue } from 'recoil';
 
-export default observer(() => {
-  const { sessionStore } = Stores();
+export default () => {
+  const user = useRecoilValue(userAtom);
 
   const linkTo = useLinkTo();
 
@@ -45,7 +45,7 @@ export default observer(() => {
           paddingRight: 20,
         }}
       >
-        {sessionStore.user ? null : (
+        {user ? null : (
           <>
             <Text
               onPress={() => linkTo('/accounts/sign-in')}
@@ -64,7 +64,7 @@ export default observer(() => {
       </View>
     </Nav>
   );
-});
+};
 
 let styles = StyleSheet.create({
   logo: {

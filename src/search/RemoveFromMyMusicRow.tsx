@@ -6,16 +6,18 @@ import Colors from 'app/src/constants/Colors';
 import * as stores from 'app/src/stores';
 import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
+import { UserEntriesStore } from '../stores/user-entries.store';
 
 type Stores = typeof stores;
 
 export default observer(({ entry }) => {
-  const { userEntriesStore, entryStore } = Stores();
+  const { entryStore } = Stores();
+  const { refreshEntries } = UserEntriesStore();
   const { goBack } = useNavigation();
 
   const handleRemoveEntry = async () => {
     await entryStore.remove(entry.id);
-    await userEntriesStore.refreshEntries();
+    await refreshEntries();
     goBack();
   };
   if (!entry) {

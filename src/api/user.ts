@@ -2,32 +2,36 @@ import { gql } from 'graphql-request';
 import { client } from './client';
 import { SignUpForm } from '../types';
 
-export class UserBackend {
-  async getAuthenticatedUser() {
-    return client
-      .request(
-        gql`
-          {
-            authenticatedUser {
-              avatarUrl
-              displayName
-              username
-              id
-              jwt
-              publishedAt
-              email
-              description
-            }
+export async function getAuthenticatedUser() {
+  return client
+    .request(
+      gql`
+        {
+          authenticatedUser {
+            avatarUrl
+            displayName
+            username
+            id
+            jwt
+            publishedAt
+            email
+            description
           }
-        `
-      )
-      .then(({ authenticatedUser }) => authenticatedUser);
-  }
+        }
+      `
+    )
+    .then(({ authenticatedUser }) => authenticatedUser);
+}
 
-  async signUp({ displayName, email, username, publicKey }: SignUpForm) {
-    return client
-      .request(
-        gql`
+export async function signUp({
+  displayName,
+  email,
+  username,
+  publicKey,
+}: SignUpForm) {
+  return client
+    .request(
+      gql`
           mutation {
             createUserWithEmail(displayName: "${displayName}", email: "${email}", username: "${username}",publicKey: "${publicKey}"){
               avatarUrl
@@ -42,33 +46,33 @@ export class UserBackend {
             }
           }
           `
-      )
-      .then(({ createUserWithEmail }) => createUserWithEmail)
-      .catch(({ graphQLErrors }) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
+    )
+    .then(({ createUserWithEmail }) => createUserWithEmail)
+    .catch(({ graphQLErrors }) => {
+      let [{ message }] = graphQLErrors;
+      throw message;
+    });
+}
 
-  async requestToken(usernameOrEmail, publicKey) {
-    return client
-      .request(
-        gql`
+export async function requestToken(usernameOrEmail, publicKey) {
+  return client
+    .request(
+      gql`
           mutation {
             requestToken(usernameOrEmail: "${usernameOrEmail}", publicKey: "${publicKey}")
           }
           `
-      )
-      .catch((graphQLErrors) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
+    )
+    .catch((graphQLErrors) => {
+      let [{ message }] = graphQLErrors;
+      throw message;
+    });
+}
 
-  async signIn(token?: string, uid?: string, xdr?: string) {
-    return client
-      .request(
-        gql`
+export async function signIn(token?: string, uid?: string, xdr?: string) {
+  return client
+    .request(
+      gql`
           mutation {
             signIn(token: "${token}", uid: "${uid}", signedXDR: "${xdr}"){
               avatarUrl
@@ -83,24 +87,24 @@ export class UserBackend {
             }
           }
           `
-      )
-      .then(({ signIn }) => signIn)
-      .catch(({ graphQLErrors }) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
+    )
+    .then(({ signIn }) => signIn)
+    .catch(({ graphQLErrors }) => {
+      let [{ message }] = graphQLErrors;
+      throw message;
+    });
+}
 
-  async updateUser(
-    avatarUrl: string,
-    displayName: string,
-    description: string,
-    username: string,
-    email: string
-  ) {
-    client
-      .request(
-        gql`
+export async function updateUser(
+  avatarUrl: string,
+  displayName: string,
+  description: string,
+  username: string,
+  email: string
+) {
+  client
+    .request(
+      gql`
           mutation {
             updateUser(avatarUrl: "${avatarUrl}", displayName: "${displayName}", description: "${description}", username: "${username}", email: "${email}"){
               avatarUrl
@@ -113,13 +117,10 @@ export class UserBackend {
             }
           }
           `
-      )
-      .then(({ updateUser }) => updateUser)
-      .catch(({ graphQLErrors }) => {
-        let [{ message }] = graphQLErrors;
-        throw message;
-      });
-  }
+    )
+    .then(({ updateUser }) => updateUser)
+    .catch(({ graphQLErrors }) => {
+      let [{ message }] = graphQLErrors;
+      throw message;
+    });
 }
-
-export const userBackend = new UserBackend();

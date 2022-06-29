@@ -1,56 +1,48 @@
 import React from 'react';
-import { inject } from 'mobx-react';
 import { StyleSheet, View, Text } from 'react-native';
 import LikeBtn from 'app/src/player/player-screen/like-btn/LikeBtn';
 import Divider from 'app/src/ui/Divider';
 import { UserAvatar } from 'app/src/ui/UserAvatar';
 import * as L from 'list';
-import * as stores from 'app/src/stores';
-type Stores = typeof stores;
+import { LikesStore } from 'app/src/stores/likes.store';
 
-@inject((stores: Stores) => ({
-  likers: stores.likesStore.entryLikes,
-  hasMoreLikers: stores.likesStore.hasMoreLikers,
-  plusLikers: stores.likesStore.plusLikers,
-}))
-export default class LikersSection extends React.Component<any, any> {
-  renderMoreLikersBtn() {
-    if (!this.props.hasMoreLikers) {
-      return null;
-    }
-    return (
-      <View style={styles.plusFriendsCircle}>
-        <Text style={styles.plusFriends}>+{this.props.plusLikers}</Text>
-      </View>
-    );
-  }
+export default () => {
+  const { entryLikes, hasMoreLikers, plusLikers } = LikesStore();
 
-  render() {
+  const renderMoreLikersBtn = () => {
     return (
-      <View style={styles.bottomSection}>
-        <View style={styles.likedByWrap}>
-          <Text style={styles.likedByText}>Liked By</Text>
-          <View style={styles.actionsWrap}>
-            <LikeBtn />
-          </View>
+      hasMoreLikers() && (
+        <View style={styles.plusFriendsCircle}>
+          <Text style={styles.plusFriends}>+{plusLikers}</Text>
         </View>
-        <Divider />
-        <View style={styles.likers}>
-          {this.props.likers &&
-            L.map(
-              (liker: any) => (
-                <View style={styles.liker} key={liker.id}>
-                  <UserAvatar user={liker} />
-                </View>
-              ),
-              this.props.likers
-            )}
-          {this.renderMoreLikersBtn()}
+      )
+    );
+  };
+
+  return (
+    <View style={styles.bottomSection}>
+      <View style={styles.likedByWrap}>
+        <Text style={styles.likedByText}>Liked By</Text>
+        <View style={styles.actionsWrap}>
+          <LikeBtn />
         </View>
       </View>
-    );
-  }
-}
+      <Divider />
+      <View style={styles.likers}>
+        {entryLikes &&
+          L.map(
+            (liker: any) => (
+              <View style={styles.liker} key={liker.id}>
+                <UserAvatar user={liker} />
+              </View>
+            ),
+            entryLikes
+          )}
+        {renderMoreLikersBtn()}
+      </View>
+    </View>
+  );
+};
 
 let styles = StyleSheet.create({
   bottomSection: {

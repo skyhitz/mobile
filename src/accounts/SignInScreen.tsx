@@ -20,19 +20,21 @@ import { Config } from 'app/src/config';
 import * as Device from 'expo-device';
 import WalletConnectBtn from 'app/src/accounts/WalletConnectBtn';
 import tw from 'twin.macro';
+import { SessionStore } from '../stores/session';
 
 export default observer(({ route, navigation }) => {
-  const { signInValidationStore, sessionStore } = Stores();
+  const { signInValidationStore } = Stores();
+  const { requestToken, signIn } = SessionStore();
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [showEmailLink, setShowEmailLink] = useState(false);
   const { token, uid } = route.params || {};
   const linkTo = useLinkTo();
 
-  const signIn = async () => {
+  const handleSignIn = async () => {
     setLoading(true);
     try {
-      await sessionStore.requestToken(usernameOrEmail, '');
+      await requestToken(usernameOrEmail, '');
       // check your email to access your account
       setLoading(false);
       setShowEmailLink(true);
@@ -46,7 +48,7 @@ export default observer(({ route, navigation }) => {
   const signInWithXDR = async (xdr) => {
     setLoading(true);
     try {
-      await sessionStore.signIn(undefined, undefined, xdr);
+      await signIn(undefined, undefined, xdr);
       // check your email to access your account
       setLoading(false);
       return;
@@ -86,7 +88,7 @@ export default observer(({ route, navigation }) => {
       );
       return;
     }
-    const res = await sessionStore.signIn(token, uid);
+    const res = await signIn(token, uid);
     if (res) {
       return linkTo('/');
     }
@@ -182,7 +184,7 @@ export default observer(({ route, navigation }) => {
                 styles.joinBtn,
                 { opacity: signInValidationStore.validForm ? 1 : 0.5 },
               ]}
-              onPress={signIn}
+              onPress={handleSignIn}
               underlayColor={Colors.underlayColor}
               disabled={!signInValidationStore.validForm}
             >

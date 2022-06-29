@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Stores } from 'app/src/functions/Stores';
 import { Config } from 'app/src/config';
+import { userAtom } from '../atoms/atoms';
+import { useRecoilValue } from 'recoil';
 const EventSource = require('eventsource');
 
 const nftListener = (open) => {
-  const { entryStore, sessionStore } = Stores();
+  const { entryStore } = Stores();
+  const user = useRecoilValue(userAtom);
+
   const [indexed, setIndexed] = useState(false);
 
   useEffect(() => {
     if (!open) return;
     const es = new EventSource(
       open
-        ? `${Config.HORIZON_URL}/accounts/${sessionStore.user?.publicKey}/payments?cursor=now&include_failed=false`
+        ? `${Config.HORIZON_URL}/accounts/${user?.publicKey}/payments?cursor=now&include_failed=false`
         : ''
     );
     es.onmessage = async function (message) {
@@ -31,9 +35,9 @@ const nftListener = (open) => {
     return () => {
       es.close();
     };
-  }, [sessionStore.user?.publicKey, open]);
+  }, [user?.publicKey, open]);
 
-  return { publicKey: sessionStore.user?.publicKey, indexed };
+  return { publicKey: user?.publicKey, indexed };
 };
 
 export default nftListener;

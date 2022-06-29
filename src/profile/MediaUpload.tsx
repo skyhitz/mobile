@@ -28,6 +28,7 @@ import UploadIcon from 'app/src/ui/icons/upload';
 import CheckIcon from 'app/src/ui/icons/check';
 import CloseIcon from 'app/src/ui/icons/x';
 import nftListener from 'app/src/hooks/nft-listener';
+import { UserEntriesStore } from '../stores/user-entries.store';
 
 const SwitchWeb: any = Switch;
 
@@ -75,7 +76,8 @@ const ArtworkSection = ({ imageSelected, selectArtwork }) => {
 };
 
 export default observer(() => {
-  const { entryStore, userEntriesStore, walletConnectStore } = Stores();
+  const { entryStore, walletConnectStore } = Stores();
+  const { refreshEntries } = UserEntriesStore();
 
   const linkTo = useLinkTo();
   const [openListener, setOpenListener] = useState(false);
@@ -164,7 +166,7 @@ export default observer(() => {
   };
 
   const handleIndexedEntry = async () => {
-    await userEntriesStore.refreshEntries();
+    await refreshEntries();
     entryStore.clearStore();
     linkTo('/dashboard/profile');
   };

@@ -1,22 +1,21 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
-import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import LikeIcon from 'app/src/ui/icons/like';
+import { LikesStore } from '../stores/likes.store';
 
-export default observer(({ entry, iconOnly = false, size = 24 }) => {
-  const { likesStore } = Stores();
+export default ({ entry, iconOnly = false, size = 24 }) => {
+  const { toggleLike, isEntryLiked } = LikesStore();
   const { goBack } = useNavigation();
 
   const handleToggle = async () => {
-    await likesStore.toggleLike(entry);
+    await toggleLike(entry);
     goBack();
   };
   const isLiked = () => {
-    return likesStore.isEntryLiked(entry);
+    return isEntryLiked(entry);
   };
   if (!entry) {
     return null;
@@ -46,7 +45,7 @@ export default observer(({ entry, iconOnly = false, size = 24 }) => {
       </View>
     </Pressable>
   );
-});
+};
 
 var styles = StyleSheet.create({
   field: {

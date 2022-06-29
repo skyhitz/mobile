@@ -2,9 +2,10 @@ import React, { useState, useEffect, lazy } from 'react';
 import { StatusBar } from 'react-native';
 import { observer } from 'mobx-react';
 import { useMediaQuery } from 'react-responsive';
-import { Stores } from 'app/src/functions/Stores';
 import LoadingScreen from 'app/src/accounts/LoadingScreen';
 import { SuspenseLoading } from './SuspenseLoading';
+import { userAtom } from '../atoms/atoms';
+import { useRecoilValue } from 'recoil';
 
 const LazyAppStackNavigator = lazy(() =>
   import('app/src/navigation/LazyAppStackNavigator').then((mod) => ({
@@ -30,12 +31,11 @@ const LazyNavigationContainerSuspense = (props) => (
 
 export default observer(() => {
   const [loaded, setLoaded] = useState(false);
-  const { sessionStore } = Stores();
+  const user = useRecoilValue(userAtom);
 
   StatusBar.setBarStyle('light-content');
 
   const loadAll = async () => {
-    await sessionStore.loadSession();
     setLoaded(true);
   };
 
@@ -54,10 +54,7 @@ export default observer(() => {
   if (loaded) {
     return (
       <LazyNavigationContainerSuspense>
-        <LazyAppStackNavigatorSuspense
-          user={sessionStore.user}
-          headerShown={headerShown}
-        />
+        <LazyAppStackNavigatorSuspense user={user} headerShown={headerShown} />
       </LazyNavigationContainerSuspense>
     );
   }

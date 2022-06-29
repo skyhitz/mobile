@@ -1,5 +1,7 @@
 import 'setimmediate';
 import React, { lazy, Suspense } from 'react';
+import { RecoilRoot } from 'recoil';
+
 import RootNavigation from 'app/src/navigation/RootNavigation';
 import '@expo/match-media';
 import useCachedResources from '../src/functions/CacheResourcesAsync';
@@ -29,10 +31,12 @@ export default () => {
     return <LoadingScreen />;
   }
   return (
-    <ErrorBoundary onError={errorHandler}>
-      <ProvidersSuspense>
-        <RootNavigation />
-      </ProvidersSuspense>
-    </ErrorBoundary>
+    <RecoilRoot>
+      <ErrorBoundary onError={errorHandler}>
+        <ProvidersSuspense>
+          <RootNavigation />
+        </ProvidersSuspense>
+      </ErrorBoundary>
+    </RecoilRoot>
   );
 };

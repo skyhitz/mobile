@@ -1,30 +1,27 @@
-import { observable } from 'mobx';
 import * as L from 'list';
 import { entriesBackend } from '../api/entries';
 import { Entry } from '../models';
-import { SessionStore } from './session.store';
+import { userAtom } from '../atoms/atoms';
+import { useRecoilValue } from 'recoil';
 
-export class UserEntriesStore {
-  @observable entries: L.List<Entry> = L.from([]);
-  @observable loading: boolean = false;
+export const UserEntriesStore = () => {
+  const user = useRecoilValue(userAtom);
 
-  constructor(private sessionStore: SessionStore) {}
+  let entries: L.List<Entry> = L.from([]);
+  let loading: boolean = false;
 
-  public async refreshEntries() {
-    if (!this.sessionStore.user) {
+  const refreshEntries = async () => {
+    if (!user) {
       return;
     }
-    if (!this.sessionStore.user.id) {
+    if (!user.id) {
       return;
     }
-    this.loading = true;
+    loading = true;
 
-    const entries = await entriesBackend.getByUserId(this.sessionStore.user.id);
-    this.loading = false;
-    this.entries = L.from(entries ? entries : []);
-  }
-
-  get entriesCount() {
-    return this.entries ? this.entries.length : 0;
-  }
-}
+    const res = await entriesBackend.getByUserId(user.id);
+    loading = false;
+    entries = L.from(res ? res : []);
+  };
+  return { entries, loading, refreshEntries };
+};

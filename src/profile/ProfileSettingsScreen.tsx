@@ -16,12 +16,17 @@ import { useLinkTo } from '@react-navigation/native';
 import { HeaderBackButton } from '@react-navigation/elements';
 import ChevronLeftIcon from 'app/src/ui/icons/chevron-left';
 import tw from 'twin.macro';
+import { UserEntriesStore } from '../stores/user-entries.store';
+import { LikesStore } from '../stores/likes.store';
 
 const ProfileSettingsScreen = observer(() => {
-  let { likesStore, userEntriesStore, paymentsStore } = Stores();
+  let { paymentsStore } = Stores();
+  const { refreshLikes } = LikesStore();
+  const { refreshEntries } = UserEntriesStore();
+
   useEffect(() => {
-    likesStore.refreshLikes();
-    userEntriesStore.refreshEntries();
+    refreshLikes();
+    refreshEntries();
     paymentsStore.refreshSubscription();
   });
 

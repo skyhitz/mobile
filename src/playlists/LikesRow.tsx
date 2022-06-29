@@ -7,21 +7,23 @@ import { observer } from 'mobx-react';
 import { Stores } from 'app/src/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
+import { LikesStore } from '../stores/likes.store';
 
 export default observer(() => {
-  let { likesStore, playerStore } = Stores();
+  let { playerStore } = Stores();
+  const { userLikes, userLikesCount } = LikesStore();
   let linkTo = useLinkTo();
 
   const handleLikesNavigation = () => {
     linkTo('/dashboard/profile/likes');
-    playerStore.setPlaylistMode(likesStore.userLikes);
+    playerStore.setPlaylistMode(userLikes);
   };
 
   const likesCopy = () => {
-    if (!likesStore.userLikesCount) {
+    if (!userLikesCount) {
       return null;
     }
-    return `${likesStore.userLikesCount}`;
+    return `${userLikesCount}`;
   };
   return (
     <View style={styles.rowWrap}>

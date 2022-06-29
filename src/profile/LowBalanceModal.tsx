@@ -16,9 +16,12 @@ import cursorPointer from 'app/src/constants/CursorPointer';
 import CloseIcon from 'app/src/ui/icons/x';
 import WalletIcon from 'app/src/ui/icons/wallet';
 import DollarIcon from 'app/src/ui/icons/dollar';
+import { userAtom } from '../atoms/atoms';
+import { useRecoilValue } from 'recoil';
 
 export default observer((props) => {
-  const { paymentsStore, sessionStore } = Stores();
+  const { paymentsStore } = Stores();
+  const user = useRecoilValue(userAtom);
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
 
@@ -80,7 +83,7 @@ export default observer((props) => {
               Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
             ]}
             placeholderTextColor="white"
-            value={sessionStore.user?.publicKey}
+            value={user?.publicKey}
             maxLength={56}
           />
         </View>

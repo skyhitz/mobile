@@ -17,11 +17,13 @@ import Slider from '@react-native-community/slider';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import PieIcon from 'app/src/ui/icons/pie';
 import CircleIcon from 'app/src/ui/icons/circle';
+import { UserEntriesStore } from '../stores/user-entries.store';
 
 const SwitchWeb: any = Switch;
 
 export default observer(({ route }) => {
-  const { entryStore, userEntriesStore } = Stores();
+  const { entryStore } = Stores();
+  const { refreshEntries } = UserEntriesStore();
   const { goBack } = useNavigation();
   const { entry } = route.params;
   let equityForSaleValue = entryStore.equityForSale
@@ -38,7 +40,7 @@ export default observer(({ route }) => {
 
   const handleUpdatePricing = async (entry: any) => {
     await entryStore.updatePricing(entry);
-    userEntriesStore.refreshEntries();
+    refreshEntries();
     goBack();
   };
 

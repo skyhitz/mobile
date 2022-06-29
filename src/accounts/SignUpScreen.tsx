@@ -16,9 +16,12 @@ import { Stores } from 'app/src/functions/Stores';
 import BackgroundImage from 'app/src/ui/BackgroundImage';
 import WalletConnectBtn from 'app/src/accounts/WalletConnectBtn';
 import tw from 'twin.macro';
+import { SessionStore } from '../stores/session';
 
 export default observer(() => {
-  const { signUpValidationStore, sessionStore, walletConnectStore } = Stores();
+  const { signUpValidationStore, walletConnectStore } = Stores();
+  const { signUp } = SessionStore();
+
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -40,10 +43,10 @@ export default observer(() => {
     signUpValidationStore.validateEmail(target.value);
   };
 
-  const signUp = async () => {
+  const handleSignUp = async () => {
     setLoading(true);
     try {
-      await sessionStore.signUp({
+      await signUp({
         username: username,
         displayName: displayName,
         email: email,
@@ -61,7 +64,7 @@ export default observer(() => {
 
   const onSubmit = (e) => {
     if (e.nativeEvent.key == 'Enter') {
-      signUp();
+      handleSignUp();
     }
   };
 
@@ -144,7 +147,7 @@ export default observer(() => {
             styles.joinBtn,
             { opacity: signUpValidationStore.validForm ? 1 : 0.5 },
           ]}
-          onPress={signUp}
+          onPress={handleSignUp}
           underlayColor={Colors.underlayColor}
           disabled={!signUpValidationStore.validForm}
         >

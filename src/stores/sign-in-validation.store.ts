@@ -46,7 +46,6 @@ export class SignInValidationStore {
   }
 
   setBackendError(error: string) {
-    debugger;
     this.backendError = error;
   }
 }
