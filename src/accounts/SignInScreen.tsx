@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import {
   StyleSheet,
@@ -10,7 +9,6 @@ import {
   ActivityIndicator,
   Platform,
 } from 'react-native';
-import { Stores } from 'app/src/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
 import BackgroundImage from 'app/src/ui/BackgroundImage';
 import cursorPointer from 'app/src/constants/CursorPointer';
@@ -21,10 +19,23 @@ import * as Device from 'expo-device';
 import WalletConnectBtn from 'app/src/accounts/WalletConnectBtn';
 import tw from 'twin.macro';
 import { SessionStore } from '../stores/session';
+import {
+  usernameOrEmailValidationErrorAtom,
+  usernameOrEmailBackendErrorAtom,
+  usernameOrEmailErrorAtom,
+  usernameOrEmailValidAtom,
+} from 'app/src/atoms/atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-export default observer(({ route, navigation }) => {
-  const { signInValidationStore } = Stores();
+export default ({ route, navigation }) => {
   const { requestToken, signIn } = SessionStore();
+  const setValidationError = useSetRecoilState(
+    usernameOrEmailValidationErrorAtom
+  );
+  const setBackendError = useSetRecoilState(usernameOrEmailBackendErrorAtom);
+  const error = useRecoilValue(usernameOrEmailErrorAtom);
+  const validForm = useRecoilValue(usernameOrEmailValidAtom);
+
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [showEmailLink, setShowEmailLink] = useState(false);
@@ -40,7 +51,7 @@ export default observer(({ route, navigation }) => {
       setShowEmailLink(true);
       return;
     } catch (e) {
-      signInValidationStore.setBackendError(e as any);
+      setBackendError(e as any);
     }
     return setLoading(false);
   };
@@ -53,7 +64,7 @@ export default observer(({ route, navigation }) => {
       setLoading(false);
       return;
     } catch (e) {
-      signInValidationStore.setBackendError(e as any);
+      setBackendError(e as any);
       linkTo('/accounts/sign-up');
     }
     return setLoading(false);
@@ -63,9 +74,23 @@ export default observer(({ route, navigation }) => {
     openEmail();
   };
 
+  const validateUsernameOrEmail = (usernameOrEmail: string) => {
+    if (!usernameOrEmail) {
+      setValidationError('Username is required.');
+      return;
+    }
+
+    if (usernameOrEmail.length < 2) {
+      setValidationError('Enter a valid username or email.');
+      return;
+    }
+
+    setValidationError('');
+  };
+
   const updateUsernameOrEmail = ({ target }: any) => {
     setUsernameOrEmail(target.value);
-    signInValidationStore.validateUsernameOrEmail(target.value);
+    validateUsernameOrEmail(target.value);
   };
 
   const onSubmit = (e) => {
@@ -170,23 +195,15 @@ export default observer(({ route, navigation }) => {
               />
             </View>
             <View style={styles.errorContainer}>
-              <Text
-                style={[
-                  styles.error,
-                  { opacity: signInValidationStore.error ? 1 : 0 },
-                ]}
-              >
-                {signInValidationStore.error}
+              <Text style={[styles.error, { opacity: error ? 1 : 0 }]}>
+                {error}
               </Text>
             </View>
             <TouchableHighlight
-              style={[
-                styles.joinBtn,
-                { opacity: signInValidationStore.validForm ? 1 : 0.5 },
-              ]}
+              style={[styles.joinBtn, { opacity: validForm ? 1 : 0.5 }]}
               onPress={handleSignIn}
               underlayColor={Colors.underlayColor}
-              disabled={!signInValidationStore.validForm}
+              disabled={!validForm}
             >
               {loading ? (
                 <ActivityIndicator
@@ -203,7 +220,7 @@ export default observer(({ route, navigation }) => {
       )}
     </BackgroundImage>
   );
-});
+};
 
 let styles = StyleSheet.create({
   line: {

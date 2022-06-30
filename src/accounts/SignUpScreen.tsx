@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Platform,
 } from 'react-native';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import { useLinkTo } from '@react-navigation/native';
@@ -17,10 +18,31 @@ import BackgroundImage from 'app/src/ui/BackgroundImage';
 import WalletConnectBtn from 'app/src/accounts/WalletConnectBtn';
 import tw from 'twin.macro';
 import { SessionStore } from '../stores/session';
+import {
+  displayNameValidationErrorAtom,
+  emailValidationErrorAtom,
+  signUpBackendErrorAtom,
+  usernameValidationErrorAtom,
+  signUpValidAtom,
+  signUpErrorAtom,
+} from '../atoms/atoms';
 
 export default observer(() => {
-  const { signUpValidationStore, walletConnectStore } = Stores();
+  const { walletConnectStore } = Stores();
   const { signUp } = SessionStore();
+  const [usernameValidation, setUsernameValidation] = useRecoilState(
+    usernameValidationErrorAtom
+  );
+  const [displayNameValidation, setDisplayNameValidation] = useRecoilState(
+    displayNameValidationErrorAtom
+  );
+  const [emailValidation, setEmailValidation] = useRecoilState(
+    emailValidationErrorAtom
+  );
+
+  const setBackendError = useSetRecoilState(signUpBackendErrorAtom);
+  const validForm = useRecoilValue(signUpValidAtom);
+  const error = useRecoilValue(signUpErrorAtom);
 
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -28,19 +50,70 @@ export default observer(() => {
   const [loading, setLoading] = useState(false);
   const linkTo = useLinkTo();
 
+  const validateUsername = (username: string) => {
+    if (!username) {
+      setUsernameValidation('Username is required.');
+      return;
+    }
+
+    if (username.length < 2) {
+      setUsernameValidation('Username is minimum 2 characters.');
+      return;
+    }
+
+    let validRegex = /^[a-zA-Z0-9_-]+$/.test(username);
+    if (!validRegex) {
+      setUsernameValidation(
+        'Usernames cannot have spaces or special characters.'
+      );
+      return;
+    }
+
+    setUsernameValidation('');
+  };
+
   const updateUsername = ({ target }: any) => {
     setUsername(target.value);
-    signUpValidationStore.validateUsername(target.value);
+    validateUsername(target.value);
+  };
+
+  const validateDisplayName = (displayName: string) => {
+    if (!displayName) {
+      setDisplayNameValidation('Display name is required.');
+      return;
+    }
+
+    if (displayName.length < 2) {
+      setDisplayNameValidation('Display name is minimum 2 characters.');
+      return;
+    }
+
+    setDisplayNameValidation('');
+  };
+
+  const validateEmail = (email: string) => {
+    if (!email) {
+      setEmailValidation('Email is required.');
+      return;
+    }
+
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(email)) {
+      setEmailValidation('Please enter a valid email.');
+      return;
+    }
+
+    setEmailValidation('');
   };
 
   const updateDisplayName = ({ target }: any) => {
     setDisplayName(target.value);
-    signUpValidationStore.validateDisplayName(target.value);
+    validateDisplayName(target.value);
   };
 
   const updateEmail = ({ target }: any) => {
     setEmail(target.value);
-    signUpValidationStore.validateEmail(target.value);
+    validateEmail(target.value);
   };
 
   const handleSignUp = async () => {
@@ -56,7 +129,7 @@ export default observer(() => {
       return linkTo('/');
     } catch (e) {
       if (typeof e === 'string') {
-        signUpValidationStore.setBackendError(e);
+        setBackendError(e);
       }
     }
     return setLoading(false);
@@ -91,7 +164,7 @@ export default observer(() => {
             onChange={updateUsername}
             maxLength={30}
           />
-          <ValidationIcon isFieldValid={signUpValidationStore.usernameValid} />
+          <ValidationIcon isFieldValid={!usernameValidation} />
         </View>
         <View style={styles.field}>
           <TextInput
@@ -111,9 +184,7 @@ export default observer(() => {
             }
             maxLength={30}
           />
-          <ValidationIcon
-            isFieldValid={signUpValidationStore.displayNameValid}
-          />
+          <ValidationIcon isFieldValid={!displayNameValidation} />
         </View>
         <View style={styles.field}>
           <TextInput
@@ -132,24 +203,16 @@ export default observer(() => {
             maxLength={34}
             onKeyPress={onSubmit}
           />
-          <ValidationIcon isFieldValid={signUpValidationStore.emailValid} />
+          <ValidationIcon isFieldValid={!emailValidation} />
         </View>
-        <View
-          style={[
-            styles.errorContainer,
-            { opacity: signUpValidationStore.error ? 1 : 0 },
-          ]}
-        >
-          <Text style={styles.error}>{signUpValidationStore.error}</Text>
+        <View style={[styles.errorContainer, { opacity: error ? 1 : 0 }]}>
+          <Text style={styles.error}>{error}</Text>
         </View>
         <TouchableHighlight
-          style={[
-            styles.joinBtn,
-            { opacity: signUpValidationStore.validForm ? 1 : 0.5 },
-          ]}
+          style={[styles.joinBtn, { opacity: validForm ? 1 : 0.5 }]}
           onPress={handleSignUp}
           underlayColor={Colors.underlayColor}
-          disabled={!signUpValidationStore.validForm}
+          disabled={!validForm}
         >
           {loading ? (
             <ActivityIndicator
