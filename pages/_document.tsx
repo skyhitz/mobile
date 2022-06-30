@@ -19,7 +19,7 @@ class CustomDocument extends Document {
           />
           <meta
             name="keywords"
-            content="music nfts, beats market, beats website, lofi beats, fresh beats, music creators, exclusive beats for sale"
+            content="stellar, crypto, music nfts, beats market, beats website, lofi beats, fresh beats, music creators, exclusive beats for sale"
           />
           <meta name="twitter:card" content="app" />
           <meta name="twitter:site" content="@skyhitzio" />
@@ -62,7 +62,7 @@ class CustomDocument extends Document {
           />
           <meta name="viewport" content="width=device-width,initial-scale=1" />
           <meta name="theme-color" content="#000" />
-          <title>Skyhitz - Beats market for music creators</title>
+          <title>Skyhitz - Music NFTs on Stellar</title>
           <link rel="canonical" href="https://skyhitz.io" />
           <link rel="icon" href="/img/favicon.ico" />
           <link
