@@ -3,7 +3,7 @@ import { StyleSheet, Pressable } from 'react-native';
 import LikeIcon from 'app/src/ui/icons/like';
 import Colors from 'app/src/constants/Colors';
 import cursorPointer from 'app/src/constants/CursorPointer';
-import { LikesStore } from 'app/src/stores/likes.store';
+import { LikesStore } from 'app/src/stores/likes';
 
 export default (props) => {
   const { toggleLike, isLiked } = LikesStore();

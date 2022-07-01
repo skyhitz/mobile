@@ -6,7 +6,7 @@ import Colors from 'app/src/constants/Colors';
 import BottomPlaceholder from 'app/src/ui/BottomPlaceholder';
 import * as L from 'list';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
-import { UserEntriesStore } from '../stores/user-entries.store';
+import { UserEntriesStore } from '../stores/user-entries';
 
 export default () => {
   const { entries, loading } = UserEntriesStore();

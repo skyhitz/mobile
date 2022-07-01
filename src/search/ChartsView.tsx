@@ -7,9 +7,16 @@ import EntryChartRow from '../ui/EntryChartRow';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
 import { Stores } from 'app/src/functions/Stores';
 import { observer } from 'mobx-react';
+import { SearchStore } from '../stores/search';
 
 export default observer((props) => {
-  const { playerStore, entriesSearchStore } = Stores();
+  const { playerStore } = Stores();
+  const {
+    topChart,
+    hasMoreTopChart,
+    loadMoreTopChart,
+    loadingTopChart,
+  } = SearchStore();
   const [page, setPage] = useState(0);
   const renderItem = (item, index) => {
     return (
@@ -19,7 +26,7 @@ export default observer((props) => {
         entry={item}
         options={null}
         disablePlaylistMode={() =>
-          playerStore.setPlaylistModeFromArray(entriesSearchStore.topChart)
+          playerStore.setPlaylistModeFromArray(topChart)
         }
         previousScreen={null}
         position={index + 1}
@@ -32,17 +39,17 @@ export default observer((props) => {
   }, []);
 
   const handleLoadMore = () => {
-    if (!entriesSearchStore.hasMoreTopChart) return;
+    if (!hasMoreTopChart) return;
     setPage((oldPage) => oldPage + 1);
-    entriesSearchStore.loadMoreTopChart(page);
+    loadMoreTopChart(page);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <ResponsiveLayout>
-        {entriesSearchStore.topChart.length > 0 && (
+        {topChart.length > 0 && (
           <FlatList
-            data={entriesSearchStore.topChart}
+            data={topChart}
             renderItem={({ item, index }) => renderItem(item, index)}
             keyExtractor={(entry) => entry.id}
             onEndReached={handleLoadMore}
@@ -50,10 +57,10 @@ export default observer((props) => {
             ListHeaderComponent={() => (
               <Text style={styles.recentText}>Top Beats</Text>
             )}
-            refreshing={entriesSearchStore.loadingTopChart}
+            refreshing={loadingTopChart}
           />
         )}
-        {SearchingLoader(entriesSearchStore.loadingTopChart)}
+        {SearchingLoader(loadingTopChart)}
         <BottomPlaceholder />
       </ResponsiveLayout>
     </SafeAreaView>

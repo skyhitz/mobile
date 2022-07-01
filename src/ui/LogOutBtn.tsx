@@ -5,7 +5,7 @@ import { Stores } from 'app/src/functions/Stores';
 import { observer } from 'mobx-react';
 import LogOutIcon from 'app/src/ui/icons/logout';
 import { useLinkTo } from '@react-navigation/native';
-import { LikesStore } from '../stores/likes.store';
+import { LikesStore } from '../stores/likes';
 import { SessionStore } from '../stores/session';
 
 export default observer(() => {

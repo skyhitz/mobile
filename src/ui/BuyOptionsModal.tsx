@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/core';
 import { useLinkTo } from '@react-navigation/native';
-import { UserEntriesStore } from '../stores/user-entries.store';
+import { UserEntriesStore } from '../stores/user-entries';
 
 export default observer(({ route }) => {
   const { entry, priceInfo } = route.params;
@@ -18,12 +18,7 @@ export default observer(({ route }) => {
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
 
-  const {
-    paymentsStore,
-    entriesSearchStore,
-    playerStore,
-    walletConnectStore,
-  } = Stores();
+  const { paymentsStore, playerStore, walletConnectStore } = Stores();
   const { refreshEntries } = UserEntriesStore();
 
   const buyEntry = async (id: string) => {
@@ -41,7 +36,6 @@ export default observer(({ route }) => {
       }
       await Promise.all([
         await refreshEntries(),
-        await entriesSearchStore.getRecentSearches(),
         await paymentsStore.refreshSubscription(),
       ]);
       playerStore.refreshEntry();

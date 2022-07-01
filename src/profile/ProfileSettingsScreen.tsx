@@ -16,8 +16,8 @@ import { useLinkTo } from '@react-navigation/native';
 import { HeaderBackButton } from '@react-navigation/elements';
 import ChevronLeftIcon from 'app/src/ui/icons/chevron-left';
 import tw from 'twin.macro';
-import { UserEntriesStore } from '../stores/user-entries.store';
-import { LikesStore } from '../stores/likes.store';
+import { UserEntriesStore } from '../stores/user-entries';
+import { LikesStore } from '../stores/likes';
 
 const ProfileSettingsScreen = observer(() => {
   let { paymentsStore } = Stores();

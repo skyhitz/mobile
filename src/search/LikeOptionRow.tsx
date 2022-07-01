@@ -4,7 +4,7 @@ import Colors from 'app/src/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import LikeIcon from 'app/src/ui/icons/like';
-import { LikesStore } from '../stores/likes.store';
+import { LikesStore } from '../stores/likes';
 
 export default ({ entry, iconOnly = false, size = 24 }) => {
   const { toggleLike, isEntryLiked } = LikesStore();

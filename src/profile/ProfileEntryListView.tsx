@@ -1,23 +1,19 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { inject } from 'mobx-react';
 import EntryRow from 'app/src/ui/EntryRow';
 import SearchingLoader from 'app/src/ui/SearchingLoader';
 import Colors from 'app/src/constants/Colors';
 import BottomPlaceholder from 'app/src/ui/BottomPlaceholder';
-import * as L from 'list';
-import * as stores from 'app/src/stores';
-type Stores = typeof stores;
+import ProfileStore from '../stores/profile';
 
-const ProfileEntryListView = inject((stores: Stores) => ({
-  loadAndPlay: stores.playerStore.loadAndPlay.bind(stores.playerStore),
-  entries: stores.profileStore.entries,
-  loading: stores.profileStore.loadingEntries,
-}))(({ loadAndPlay, entries, loading }: any) => (
-  <ScrollView style={{ backgroundColor: Colors.listItemBackground, flex: 1 }}>
-    {SearchingLoader(loading)}
-    {L.map(
-      (entry: any) => (
+const ProfileEntryListView = () => {
+  const { profileEntries, loadingEntries } = ProfileStore();
+  const loadAndPlay = () => {};
+
+  return (
+    <ScrollView style={{ backgroundColor: Colors.listItemBackground, flex: 1 }}>
+      {SearchingLoader(loadingEntries)}
+      {profileEntries.map((entry: any) => (
         <EntryRow
           key={entry.id}
           play={loadAndPlay}
@@ -26,11 +22,10 @@ const ProfileEntryListView = inject((stores: Stores) => ({
           options={null}
           previousScreen={null}
         />
-      ),
-      entries
-    )}
-    <BottomPlaceholder />
-  </ScrollView>
-));
+      ))}
+      <BottomPlaceholder />
+    </ScrollView>
+  );
+};
 
 export default ProfileEntryListView;

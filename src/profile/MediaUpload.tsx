@@ -28,7 +28,7 @@ import UploadIcon from 'app/src/ui/icons/upload';
 import CheckIcon from 'app/src/ui/icons/check';
 import CloseIcon from 'app/src/ui/icons/x';
 import nftListener from 'app/src/hooks/nft-listener';
-import { UserEntriesStore } from '../stores/user-entries.store';
+import { UserEntriesStore } from '../stores/user-entries';
 
 const SwitchWeb: any = Switch;
 

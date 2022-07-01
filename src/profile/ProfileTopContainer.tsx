@@ -2,39 +2,33 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Colors from 'app/src/constants/Colors';
 import { UserAvatarMedium } from 'app/src/ui/UserAvatar';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
+import ProfileStore from '../stores/profile';
 
-export default observer((props) => {
-  const { profileStore } = Stores();
+export default (props) => {
+  const { user } = ProfileStore();
 
-  const renderBlurSection = () => {
-    return (
+  if (!user) {
+    return null;
+  }
+  let source;
+  if (user.avatarUrl) {
+    source = { uri: user.avatarUrl };
+  }
+  return (
+    <View style={styles.container}>
       <View style={styles.overlay}>
         <View style={styles.topContainer}>
           <View style={styles.topHeader}>
-            {UserAvatarMedium(profileStore.user)}
+            {UserAvatarMedium(user)}
             <View style={styles.profileInfo}>
-              <Text style={styles.text}>{profileStore.user.displayName}</Text>
+              <Text style={styles.text}>{user.displayName}</Text>
             </View>
           </View>
         </View>
       </View>
-    );
-  };
-
-  if (!profileStore.user) {
-    return null;
-  }
-  let source;
-  if (profileStore.user.avatarUrl) {
-    source = { uri: profileStore.user.avatarUrl };
-  }
-  if (source) {
-    return <View style={styles.container}>{renderBlurSection()}</View>;
-  }
-  return <View style={styles.container}>{renderBlurSection()}</View>;
-});
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

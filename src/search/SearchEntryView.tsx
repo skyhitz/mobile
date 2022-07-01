@@ -1,29 +1,30 @@
 import React, { useCallback, useEffect } from 'react';
-import { observer } from 'mobx-react';
+import { useRecoilValue } from 'recoil';
 import SearchEntryList from 'app/src/search/SearchEntryList';
 import RecentlyAdded from 'app/src/search/RecentlyAdded';
 import { useFocusEffect } from '@react-navigation/native';
-import { Stores } from 'app/src/functions/Stores';
+import { SearchStore, activeSearchAtom } from '../stores/search';
 
-export default observer(() => {
-  let { entriesSearchStore, inputSearchStore } = Stores();
+export default () => {
+  const { getRecentlyAdded, updateSearchType } = SearchStore();
+  const active = useRecoilValue(activeSearchAtom);
 
   useFocusEffect(
     useCallback(() => {
-      inputSearchStore.updateSearchType('entries');
+      updateSearchType('entries');
     }, [])
   );
 
   const handleRecentlyAdded = async () => {
-    await entriesSearchStore.getRecentlyAdded();
+    await getRecentlyAdded();
   };
 
   useEffect(() => {
     handleRecentlyAdded();
   }, []);
 
-  if (entriesSearchStore.active) {
+  if (active) {
     return <SearchEntryList />;
   }
   return <RecentlyAdded />;
-});
+};

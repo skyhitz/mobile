@@ -1,21 +1,19 @@
 import React, { useCallback } from 'react';
-import { observer } from 'mobx-react';
 import SearchUserList from 'app/src/search/SearchUserList';
-import TopRecentUserView from 'app/src/search/TopRecentUserView';
 import { useFocusEffect } from '@react-navigation/native';
-import { Stores } from 'app/src/functions/Stores';
+import { SearchStore } from '../stores/search';
 
-export default observer(() => {
-  let { usersSearchStore, inputSearchStore } = Stores();
+export default () => {
+  const { updateSearchType, active } = SearchStore();
 
   useFocusEffect(
     useCallback(() => {
-      inputSearchStore.updateSearchType('users');
+      updateSearchType('users');
     }, [])
   );
 
-  if (usersSearchStore.active) {
+  if (active) {
     return <SearchUserList />;
   }
-  return <TopRecentUserView />;
-});
+  return null;
+};

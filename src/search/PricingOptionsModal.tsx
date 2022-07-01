@@ -17,7 +17,7 @@ import Slider from '@react-native-community/slider';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import PieIcon from 'app/src/ui/icons/pie';
 import CircleIcon from 'app/src/ui/icons/circle';
-import { UserEntriesStore } from '../stores/user-entries.store';
+import { UserEntriesStore } from '../stores/user-entries';
 
 const SwitchWeb: any = Switch;
 

@@ -5,16 +5,18 @@ import { UserAvatar } from 'app/src/ui/UserAvatar';
 import { Stores } from 'app/src/functions/Stores';
 import { observer } from 'mobx-react';
 import { CommonActions, useNavigation } from '@react-navigation/native';
+import ProfileStore from '../stores/profile';
 
 export default observer(({ user }) => {
-  const { profileStore, playerStore } = Stores();
+  const { playerStore } = Stores();
+  const { getProfileInfo } = ProfileStore();
   const { dispatch } = useNavigation();
   return (
     <View style={styles.rowWrap}>
       <View style={styles.rowWrap}>
         <Pressable
           onPress={() => {
-            profileStore.getProfileInfo(user).then((entries: any) => {
+            getProfileInfo(user).then((entries: any) => {
               playerStore.setPlaylistMode(entries);
             });
             dispatch(

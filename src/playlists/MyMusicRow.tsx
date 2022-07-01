@@ -5,7 +5,7 @@ import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import ChevronRightIcon from 'app/src/ui/icons/chevron-right';
 import StarBorderIcon from 'app/src/ui/icons/star-border';
-import { UserEntriesStore } from '../stores/user-entries.store';
+import { UserEntriesStore } from '../stores/user-entries';
 
 export default () => {
   let { entries } = UserEntriesStore();

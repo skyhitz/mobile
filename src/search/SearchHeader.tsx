@@ -1,52 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Platform } from 'react-native';
-import { inject } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import SearchBar from 'app/src/ui/searchbar/SearchBar';
-import * as stores from 'app/src/stores';
-type Stores = typeof stores;
+import { SearchStore } from '../stores/search';
 
 let platform = Platform.OS === 'ios' ? 'ios' : 'android';
 
-@inject((stores: Stores) => ({
-  inputSearchStore: stores.inputSearchStore,
-}))
-class SearchHeader extends React.Component<any, any> {
-  state = {
-    value: '',
+const SearchHeader = () => {
+  const [value, setValue] = useState('');
+  const { search } = SearchStore();
+
+  const changeText = (value: any) => {
+    setValue(value);
   };
 
-  changeText = (value: any) => {
-    this.setState({ value });
-  };
-
-  render() {
-    return (
-      <SearchBar
-        platform={platform}
-        onChangeText={(q: any) => {
-          this.props.inputSearchStore.search(q);
-          this.changeText(q);
-        }}
-        placeholder="Search"
-        icon={{
-          style: { top: 15 },
-          color: Colors.searchTextColor,
-          name: 'search',
-        }}
-        clearIcon={true}
-        value={this.state.value}
-        autoCorrect={false}
-        placeholderTextColor={Colors.searchTextColor}
-        inputStyle={{
-          height: 30,
-          margin: 7.5,
-          borderRadius: 5,
-          color: Colors.searchTextColor,
-        }}
-      />
-    );
-  }
-}
+  return (
+    <SearchBar
+      platform={platform}
+      onChangeText={(q: any) => {
+        search(q);
+        changeText(q);
+      }}
+      placeholder="Search"
+      icon={{
+        style: { top: 15 },
+        color: Colors.searchTextColor,
+        name: 'search',
+      }}
+      clearIcon={true}
+      value={value}
+      autoCorrect={false}
+      placeholderTextColor={Colors.searchTextColor}
+      inputStyle={{
+        height: 30,
+        margin: 7.5,
+        borderRadius: 5,
+        color: Colors.searchTextColor,
+      }}
+    />
+  );
+};
 
 export default SearchHeader;

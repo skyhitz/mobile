@@ -6,7 +6,7 @@ import Colors from 'app/src/constants/Colors';
 import * as stores from 'app/src/stores';
 import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
-import { UserEntriesStore } from '../stores/user-entries.store';
+import { UserEntriesStore } from '../stores/user-entries';
 
 type Stores = typeof stores;
 

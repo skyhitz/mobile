@@ -4,7 +4,7 @@ import LikeBtn from 'app/src/player/player-screen/like-btn/LikeBtn';
 import Divider from 'app/src/ui/Divider';
 import { UserAvatar } from 'app/src/ui/UserAvatar';
 import * as L from 'list';
-import { LikesStore } from 'app/src/stores/likes.store';
+import { LikesStore } from 'app/src/stores/likes';
 
 export default () => {
   const { entryLikes, hasMoreLikers, plusLikers } = LikesStore();

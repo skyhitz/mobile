@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import { Stores } from 'app/src/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
-import { LikesStore } from '../stores/likes.store';
+import { LikesStore } from '../stores/likes';
 
 export default observer(() => {
   let { playerStore } = Stores();

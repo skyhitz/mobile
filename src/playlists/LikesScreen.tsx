@@ -6,7 +6,7 @@ import Colors from 'app/src/constants/Colors';
 import BottomPlaceholder from 'app/src/ui/BottomPlaceholder';
 import * as L from 'list';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
-import { LikesStore } from '../stores/likes.store';
+import { LikesStore } from '../stores/likes';
 
 export default () => {
   const { userLikes, loading } = LikesStore();
