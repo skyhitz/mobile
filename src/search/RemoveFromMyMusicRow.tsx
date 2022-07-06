@@ -1,25 +1,22 @@
 import React from 'react';
 import { StyleSheet, Pressable, View, Text } from 'react-native';
-import { observer } from 'mobx-react';
 import RemoveIcon from 'app/src/ui/icons/remove';
 import Colors from 'app/src/constants/Colors';
-import * as stores from 'app/src/stores';
-import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import { UserEntriesStore } from '../stores/user-entries';
+import { EntryStore } from '../stores/entry.store';
 
-type Stores = typeof stores;
-
-export default observer(({ entry }) => {
-  const { entryStore } = Stores();
+export default ({ entry }) => {
+  const { remove } = EntryStore();
   const { refreshEntries } = UserEntriesStore();
   const { goBack } = useNavigation();
 
   const handleRemoveEntry = async () => {
-    await entryStore.remove(entry.id);
+    await remove(entry.id);
     await refreshEntries();
     goBack();
   };
+
   if (!entry) {
     return null;
   }
@@ -31,7 +28,7 @@ export default observer(({ entry }) => {
       </View>
     </Pressable>
   );
-});
+};
 
 var styles = StyleSheet.create({
   field: {

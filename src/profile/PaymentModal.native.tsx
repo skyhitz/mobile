@@ -1,19 +1,18 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Colors from 'app/src/constants/Colors';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
 import CloseIcon from 'app/src/ui/icons/x';
+import { EntryStore } from '../stores/entry.store';
 
-export default observer((props) => {
-  let { entryStore } = Stores();
+export default (props) => {
+  let { clearUploadingError } = EntryStore();
   return (
     <View style={styles.modal}>
       <View style={styles.modalWrap}>
         <Pressable
           style={styles.closeBtn}
           onPress={() => {
-            entryStore.clearUploadingError();
+            clearUploadingError();
             props.navigation.goBack();
           }}
         >
@@ -25,7 +24,7 @@ export default observer((props) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   btn: {

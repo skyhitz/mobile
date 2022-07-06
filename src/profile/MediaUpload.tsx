@@ -10,7 +10,6 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { observer } from 'mobx-react';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import * as Permissions from 'expo-permissions';
@@ -29,6 +28,7 @@ import CheckIcon from 'app/src/ui/icons/check';
 import CloseIcon from 'app/src/ui/icons/x';
 import nftListener from 'app/src/hooks/nft-listener';
 import { UserEntriesStore } from '../stores/user-entries';
+import { EntryStore } from '../stores/entry.store';
 
 const SwitchWeb: any = Switch;
 
@@ -75,15 +75,45 @@ const ArtworkSection = ({ imageSelected, selectArtwork }) => {
   return <CheckIcon size={30} color={Colors.lightGreen} />;
 };
 
-export default observer(() => {
-  const { entryStore, walletConnectStore } = Stores();
+export default () => {
+  const { walletConnectStore } = Stores();
+  const {
+    equityForSale,
+    setUploadingError,
+    create,
+    canCreate,
+    setLoadingVideo,
+    setImageBlob,
+    setVideoBlob,
+    clearStore,
+    uploadingError,
+    clearUploadingError,
+    setArtist,
+    artist,
+    title,
+    setTitle,
+    availableForSale,
+    setAvailableForSale,
+    description,
+    setDescription,
+    setPrice,
+    price,
+    setEquityForSale,
+    equityForSalePercentage,
+    imageBlob,
+    videoBlob,
+    creating,
+    currentUpload,
+    loadingVideo,
+    progress,
+  } = EntryStore();
   const { refreshEntries } = UserEntriesStore();
 
   const linkTo = useLinkTo();
   const [openListener, setOpenListener] = useState(false);
   const { indexed } = nftListener(openListener);
 
-  let equityForSaleValue = entryStore.equityForSale;
+  let equityForSaleValue = equityForSale;
   const getPermissionAsync = async () => {
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
       const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
@@ -118,21 +148,21 @@ export default observer(() => {
       });
     } catch (e) {
       console.log('error', e);
-      entryStore.setUploadingError('Error picking file!');
+      setUploadingError('Error picking file!');
     }
 
     if (video && !video.cancelled) {
-      entryStore.setLoadingVideo(true);
+      setLoadingVideo(true);
       // const isMp4 = video.uri.startsWith('data:video/mp4');
       // if (!isMp4) {
-      //   entryStore.setUploadingError('Only mp4 files supported!');
+      //   setUploadingError('Only mp4 files supported!');
       //   return;
       // }
 
       const res = await fetch(video.uri);
       const file = await res.blob();
-      entryStore.setLoadingVideo(false);
-      entryStore.setVideoBlob(file);
+      setLoadingVideo(false);
+      setVideoBlob(file);
     }
   };
 
@@ -148,26 +178,24 @@ export default observer(() => {
     if (image && !image.cancelled) {
       const isPng = image.uri.startsWith('data:image/png');
       if (!isPng) {
-        entryStore.setUploadingError('Only png files supported!');
+        setUploadingError('Only png files supported!');
         return;
       }
       if (image.height !== image.width) {
-        return entryStore.setUploadingError('Only square images supported!');
+        return setUploadingError('Only square images supported!');
       }
       if (image.width < 3000) {
-        return entryStore.setUploadingError(
-          'Image should be at least 3000px wide!'
-        );
+        return setUploadingError('Image should be at least 3000px wide!');
       }
       const res = await fetch(image.uri);
       const file = await res.blob();
-      entryStore.setImageBlob(file);
+      setImageBlob(file);
     }
   };
 
   const handleIndexedEntry = async () => {
     await refreshEntries();
-    entryStore.clearStore();
+    clearStore();
     linkTo('/dashboard/profile');
   };
 
@@ -181,18 +209,14 @@ export default observer(() => {
   const onCreate = async () => {
     setOpenListener(true);
 
-    const res = await entryStore.create();
+    const res = await create();
     if (!res) {
-      return entryStore.setUploadingError(
-        'Something went wrong. Please try again!'
-      );
+      return setUploadingError('Something went wrong. Please try again!');
     }
     let { xdr, submitted, success } = res;
 
     if (!success) {
-      return entryStore.setUploadingError(
-        'Something went very wrong. Please contact us!'
-      );
+      return setUploadingError('Something went very wrong. Please contact us!');
     }
 
     if (!submitted) {
@@ -208,11 +232,11 @@ export default observer(() => {
     return;
   };
 
-  if (entryStore.uploadingError) {
+  if (uploadingError) {
     return (
       <UploadErrorView
-        uploadingError={entryStore.uploadingError}
-        clearUploadingError={() => entryStore.clearUploadingError()}
+        uploadingError={uploadingError}
+        clearUploadingError={() => clearUploadingError()}
       />
     );
   }
@@ -232,8 +256,8 @@ export default observer(() => {
             Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
           ]}
           placeholderTextColor="white"
-          value={entryStore.artist}
-          onChangeText={(t) => entryStore.updateArtist(t)}
+          value={artist}
+          onChangeText={(t) => setArtist(t)}
           maxLength={34}
         />
       </View>
@@ -249,8 +273,8 @@ export default observer(() => {
             Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
           ]}
           placeholderTextColor="white"
-          value={entryStore.title}
-          onChangeText={(t) => entryStore.updateTitle(t)}
+          value={title}
+          onChangeText={(t) => setTitle(t)}
           maxLength={34}
         />
       </View>
@@ -266,8 +290,8 @@ export default observer(() => {
             Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
           ]}
           placeholderTextColor="white"
-          value={entryStore.description}
-          onChangeText={(t) => entryStore.updateDescription(t)}
+          value={description}
+          onChangeText={(t) => setDescription(t)}
           maxLength={60}
         />
       </View>
@@ -275,9 +299,7 @@ export default observer(() => {
         <CircleIcon
           size={10}
           color={
-            entryStore.availableForSale
-              ? Colors.lightBrandBlue
-              : Colors.dividerBackground
+            availableForSale ? Colors.lightBrandBlue : Colors.dividerBackground
           }
         />
         <Text
@@ -288,10 +310,8 @@ export default observer(() => {
           {'Available for Sale: '}
         </Text>
         <SwitchWeb
-          onValueChange={(forSale) =>
-            entryStore.updateAvailableForSale(forSale)
-          }
-          value={entryStore.availableForSale}
+          onValueChange={(forSale) => setAvailableForSale(forSale)}
+          value={availableForSale}
           style={[
             styles.switch,
             Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
@@ -304,7 +324,7 @@ export default observer(() => {
           thumbColor={Colors.defaultTextLight}
         />
       </View>
-      {entryStore.availableForSale && (
+      {availableForSale && (
         <>
           <View style={styles.field}>
             <DollarIcon size={20} color={Colors.dividerBackground} />
@@ -328,8 +348,8 @@ export default observer(() => {
                 Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
               ]}
               placeholderTextColor="white"
-              value={entryStore.price ? entryStore.price.toString() : ''}
-              onChangeText={(price) => entryStore.updatePrice(parseInt(price))}
+              value={price ? price.toString() : ''}
+              onChangeText={(price) => setPrice(parseInt(price))}
               maxLength={30}
             />
           </View>
@@ -341,7 +361,7 @@ export default observer(() => {
               numberOfLines={1}
             >
               {'Equity for Sale: '}
-              {entryStore.equityForSalePercentage}
+              {equityForSalePercentage}
             </Text>
 
             <Slider
@@ -350,7 +370,7 @@ export default observer(() => {
               maximumValue={100}
               value={equityForSaleValue}
               onValueChange={(target) => {
-                entryStore.updateEquityForSalePercentage(target);
+                setEquityForSale(target);
               }}
               step={1}
               minimumTrackTintColor={Colors.brandBlue}
@@ -370,7 +390,7 @@ export default observer(() => {
           {'Artwork: '}
         </Text>
         <ArtworkSection
-          imageSelected={!!entryStore.imageBlob}
+          imageSelected={!!imageBlob}
           selectArtwork={selectArtwork}
         />
       </View>
@@ -385,9 +405,9 @@ export default observer(() => {
         </Text>
 
         <UploadView
-          videoSelected={!!entryStore.videoBlob}
+          videoSelected={!!videoBlob}
           selectVideo={selectVideo}
-          loadingVideo={entryStore.loadingVideo}
+          loadingVideo={loadingVideo}
         />
       </View>
       <View style={styles.field}>
@@ -399,13 +419,13 @@ export default observer(() => {
 
       <View style={styles.btn}>
         <LargeBtn
-          disabled={!entryStore.canCreate}
+          disabled={!canCreate}
           onPress={onCreate}
           text={
-            entryStore.creating
-              ? entryStore.currentUpload === 'video'
-                ? `Uploading Files ${entryStore.progress}%`
-                : entryStore.currentUpload === 'meta'
+            creating
+              ? currentUpload === 'video'
+                ? `Uploading Files ${progress}%`
+                : currentUpload === 'meta'
                 ? `Uploading Meta`
                 : 'Uploading'
               : 'Mint'
@@ -414,7 +434,7 @@ export default observer(() => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   wrap: {

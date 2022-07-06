@@ -1,14 +1,13 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View, Platform } from 'react-native';
 import Colors from 'app/src/constants/Colors';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Config } from 'app/src/config/index';
 import PaymentStep from './PaymentStep';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import CloseIcon from 'app/src/ui/icons/x';
+import { EntryStore } from '../stores/entry.store';
 
 let stripePromise;
 
@@ -16,15 +15,15 @@ if (Platform.OS === 'web') {
   stripePromise = loadStripe(Config.STRIPE_PUBLISHABLE_KEY);
 }
 
-export default observer((props) => {
-  let { entryStore } = Stores();
+export default (props) => {
+  let { clearUploadingError } = EntryStore();
   return (
     <View style={styles.modal}>
       <View style={styles.modalWrap}>
         <Pressable
           style={[styles.closeBtn, cursorPointer]}
           onPress={() => {
-            entryStore.clearUploadingError();
+            clearUploadingError();
             props.navigation.goBack();
           }}
         >
@@ -41,7 +40,7 @@ export default observer((props) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   btn: {

@@ -8,38 +8,43 @@ import {
   Switch,
   Platform,
 } from 'react-native';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import cursorPointer from 'app/src/constants/CursorPointer';
-import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import PieIcon from 'app/src/ui/icons/pie';
 import CircleIcon from 'app/src/ui/icons/circle';
 import { UserEntriesStore } from '../stores/user-entries';
+import { EntryStore } from '../stores/entry.store';
 
 const SwitchWeb: any = Switch;
 
-export default observer(({ route }) => {
-  const { entryStore } = Stores();
+export default ({ route }) => {
+  const {
+    equityForSale,
+    setAvailableForSale,
+    setPrice,
+    setEquityForSale,
+    equityForSalePercentage,
+    availableForSale,
+    price,
+  } = EntryStore();
   const { refreshEntries } = UserEntriesStore();
   const { goBack } = useNavigation();
   const { entry } = route.params;
-  let equityForSaleValue = entryStore.equityForSale
-    ? entryStore.equityForSale
-    : 0;
+  let equityForSaleValue = equityForSale ? equityForSale : 0;
 
   useEffect(() => {
     if (!entry) return;
-    entryStore.updateAvailableForSale(entry.forSale);
+    setAvailableForSale(entry.forSale);
     if (entry.price) {
-      entryStore.updatePrice(entry.price);
+      setPrice(entry.price);
     }
   }, []);
 
   const handleUpdatePricing = async (entry: any) => {
-    await entryStore.updatePricing(entry);
+    await setPrice(entry);
     refreshEntries();
     goBack();
   };
@@ -60,9 +65,7 @@ export default observer(({ route }) => {
         <CircleIcon
           size={10}
           color={
-            entryStore.availableForSale
-              ? Colors.lightBrandBlue
-              : Colors.dividerBackground
+            availableForSale ? Colors.lightBrandBlue : Colors.dividerBackground
           }
         />
         <Text
@@ -73,10 +76,8 @@ export default observer(({ route }) => {
           {'Available for Sale: '}
         </Text>
         <SwitchWeb
-          onValueChange={(forSale) =>
-            entryStore.updateAvailableForSale(forSale)
-          }
-          value={entryStore.availableForSale}
+          onValueChange={(forSale) => setAvailableForSale(forSale)}
+          value={availableForSale}
           style={styles.switch}
           activeThumbColor={Colors.defaultTextLight}
           trackColor={{
@@ -107,8 +108,8 @@ export default observer(({ route }) => {
             Platform.OS === 'web' ? ({ outlineWidth: 0 } as any) : {},
           ]}
           placeholderTextColor="white"
-          value={entryStore.price ? String(entryStore.price) : undefined}
-          onChangeText={(price) => entryStore.updatePrice(parseInt(price))}
+          value={price ? String(price) : undefined}
+          onChangeText={(price) => setPrice(parseInt(price))}
           maxLength={30}
         />
       </View>
@@ -120,7 +121,7 @@ export default observer(({ route }) => {
           numberOfLines={1}
         >
           {'Equity for Sale: '}
-          {entryStore.equityForSalePercentage}
+          {equityForSalePercentage}
         </Text>
 
         <Slider
@@ -129,7 +130,7 @@ export default observer(({ route }) => {
           maximumValue={100}
           value={equityForSaleValue}
           onValueChange={(target) => {
-            entryStore.updateEquityForSalePercentage(target);
+            setEquityForSale(target);
           }}
           step={1}
           minimumTrackTintColor={Colors.brandBlue}
@@ -148,7 +149,7 @@ export default observer(({ route }) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

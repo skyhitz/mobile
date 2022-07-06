@@ -1,116 +1,141 @@
-import { observable, action, computed } from 'mobx';
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { nftStorageApi } from '../config/constants';
 import { entriesBackend } from '../api/entries';
 
-export class EntryStore {
-  @observable uploadingVideo: boolean = false;
-  @observable
-  uploadingError!: string;
-  @observable loadingVideo: boolean = false;
-  @observable
-  loadingImage!: boolean;
-  @observable
-  description!: string;
-  @observable
-  issuer = '';
-  @observable
-  title!: string;
-  @observable
-  artist!: string;
-  @observable
-  availableForSale!: boolean;
-  @observable
-  price: number | undefined;
-  @observable
-  equityForSale: number = 1;
-  @observable
-  equityForSalePercentage: string = '1 %';
-  @observable
-  filesProgress: { [key: string]: number } = {};
+const uploadingVideoAtom = atom<boolean>({
+  key: 'uploadingVideo',
+  default: false,
+});
+const uploadingErrorAtom = atom<string>({
+  key: 'uploadingError',
+  default: '',
+});
+const loadingVideoAtom = atom<boolean>({
+  key: 'loadingVideo',
+  default: false,
+});
+const loadingImageAtom = atom<boolean>({
+  key: 'loadingImage',
+  default: false,
+});
+const descriptionAtom = atom<string>({
+  key: 'description',
+  default: '',
+});
+const issuerAtom = atom<string>({
+  key: 'issuer',
+  default: '',
+});
+const titleAtom = atom<string>({
+  key: 'title',
+  default: '',
+});
+const artistAtom = atom<string>({
+  key: 'artist',
+  default: '',
+});
+const availableForSaleAtom = atom<boolean>({
+  key: 'availableForSale',
+  default: false,
+});
+const equityForSaleAtom = atom<number>({
+  key: 'equityForSale',
+  default: 1,
+});
+const equityForSalePercentageAtom = selector<string>({
+  key: 'equityForSalePercentage',
+  get: ({ get }) => {
+    const equity = get(equityForSaleAtom);
+    return `${equity} %`;
+  },
+});
+const priceAtom = atom<number>({
+  key: 'price',
+  default: 1,
+});
+const filesProgressAtom = atom<{ [key: string]: number }>({
+  key: 'filesProgress',
+  default: {},
+});
 
-  @observable
-  creating: boolean = false;
+const currentUploadAtom = selector({
+  key: 'currentUpload',
+  get: () => {
+    return Object.keys(filesProgressAtom).includes('video')
+      ? 'video'
+      : Object.keys(filesProgressAtom).includes('meta')
+      ? 'meta'
+      : 'none';
+  },
+});
+const canCreateAtom = selector({
+  key: 'canCreate',
+  get: ({ get }) => {
+    return (
+      get(imageBlobAtom) &&
+      get(videoBlobAtom) &&
+      get(descriptionAtom) &&
+      get(titleAtom) &&
+      get(artistAtom)
+    );
+  },
+});
+const progressAtom = selector<number>({
+  key: 'progress',
+  get: () => {
+    return Math.min(...Object.values(filesProgressAtom));
+  },
+});
+const creatingAtom = atom<boolean>({
+  key: 'creating',
+  default: false,
+});
+const imageBlobAtom = atom<Blob | undefined>({
+  key: 'imageBlob',
+  default: undefined,
+});
+const videoBlobAtom = atom<Blob | undefined>({
+  key: 'videoBlob',
+  default: undefined,
+});
 
-  @observable
-  imageBlob: Blob | undefined;
+export const EntryStore = () => {
+  const [filesProgress, setFilesProgress] = useRecoilState(filesProgressAtom);
+  const [issuer, setIssuer] = useRecoilState(issuerAtom);
+  const [uploadingError, setUploadingError] = useRecoilState(
+    uploadingErrorAtom
+  );
+  const [creating, setCreating] = useRecoilState(creatingAtom);
+  const [loadingVideo, setLoadingVideo] = useRecoilState(loadingVideoAtom);
+  const [loadingImage, setLoadingImage] = useRecoilState(loadingImageAtom);
+  const [uploadingVideo, setUploadingVideo] = useRecoilState(
+    uploadingVideoAtom
+  );
+  const [description, setDescription] = useRecoilState(descriptionAtom);
+  const [title, setTitle] = useRecoilState(titleAtom);
+  const [artist, setArtist] = useRecoilState(artistAtom);
+  const [availableForSale, setAvailableForSale] = useRecoilState(
+    availableForSaleAtom
+  );
+  const [price, setPrice] = useRecoilState(priceAtom);
+  const [equityForSale, setEquityForSale] = useRecoilState(equityForSaleAtom);
+  const [imageBlob, setImageBlob] = useRecoilState(imageBlobAtom);
+  const [videoBlob, setVideoBlob] = useRecoilState(videoBlobAtom);
+  const equityForSalePercentage = useRecoilValue(equityForSalePercentageAtom);
+  const currentUpload = useRecoilValue(currentUploadAtom);
+  const canCreate = useRecoilValue(canCreateAtom);
+  const progress = useRecoilValue(progressAtom);
 
-  @observable
-  videoBlob: Blob | undefined;
-
-  @action
-  clearUploadingError() {
-    this.uploadingError = '';
-  }
-
-  @action
-  setIssuer(issuer) {
-    this.issuer = issuer;
-  }
-
-  @action
-  setUploadingError(error) {
-    this.uploadingError = error;
-  }
-
-  @action
-  setLoadingVideo(loading: boolean) {
-    this.loadingVideo = loading;
-  }
-
-  @action
-  updateLoadingImage = (state: boolean) => {
-    this.loadingImage = state;
+  const clearUploadingError = () => {
+    setUploadingError('');
   };
 
-  @action
-  updateUploadingVideo = (state: boolean) => {
-    this.uploadingVideo = state;
-  };
-
-  @action
-  updateDescription = (text: string) => {
-    this.description = text;
-  };
-
-  @action
-  updateTitle = (text: string) => {
-    this.title = text;
-  };
-
-  @action
-  updateArtist = (text: string) => {
-    this.artist = text;
-  };
-
-  @action
-  updateAvailableForSale = (state: boolean) => {
-    this.availableForSale = state;
-  };
-
-  @action
-  updatePrice = (price: number) => {
-    this.price = price;
-  };
-
-  @action
-  updateEquityForSalePercentage = (value: number) => {
-    this.equityForSale = value;
-    this.equityForSalePercentage = `${value ? value : 0} %`;
-  };
-
-  constructor() {}
-
-  setImageBlob(imageBlob) {
-    this.imageBlob = imageBlob;
-  }
-
-  setVideoBlob(videoBlob) {
-    this.videoBlob = videoBlob;
-  }
-
-  async uploadFile(file: any, id: string) {
+  const uploadFile = async (file: any, id: string) => {
     return new Promise((resolve: (value: string) => void, reject) => {
-      this.filesProgress[id] = 0;
+      setFilesProgress((oldValue) => {
+        oldValue[id] = 0;
+        return oldValue;
+      });
       let xhr = new XMLHttpRequest();
       xhr.open('POST', `${nftStorageApi}/upload`, true);
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -122,9 +147,15 @@ export class EntryStore {
       xhr.upload.addEventListener('progress', (e) => {
         const progress = Math.round((e.loaded * 100.0) / e.total);
 
-        this.filesProgress[id] = progress;
+        setFilesProgress((oldValue) => {
+          oldValue[id] = progress;
+          return oldValue;
+        });
         if (progress === 100) {
-          delete this.filesProgress[id];
+          setFilesProgress((oldValue) => {
+            delete oldValue[id];
+            return oldValue;
+          });
         }
       });
 
@@ -132,7 +163,7 @@ export class EntryStore {
         if (xhr.readyState == 4 && xhr.status == 200) {
           let { value, ok } = JSON.parse(xhr.responseText);
           if (!ok) {
-            this.uploadingError = 'Something went wrong!';
+            setUploadingError('Something went wrong!');
             reject();
             return;
           }
@@ -142,13 +173,13 @@ export class EntryStore {
 
       xhr.send(file);
     });
-  }
+  };
 
-  async storeNFT() {
-    const name = `${this.artist} - ${this.title}`;
+  const storeNFT = async () => {
+    const name = `${artist} - ${title}`;
     const ipfsProtocol = 'ipfs://';
 
-    const code = `${this.title}${this.artist}`
+    const code = `${title}${artist}`
       .normalize('NFD')
       .replace(/\p{Diacritic}/gu, '')
       .replace(/ /g, '')
@@ -158,20 +189,20 @@ export class EntryStore {
       .toUpperCase();
 
     const [imageCid, videoCid] = [
-      await this.uploadFile(this.imageBlob, 'image'),
-      await this.uploadFile(this.videoBlob, 'video'),
+      await uploadFile(imageBlob, 'image'),
+      await uploadFile(videoBlob, 'video'),
     ];
 
     const imageUrl = `${ipfsProtocol}${imageCid}`;
     const videoUrl = `${ipfsProtocol}${videoCid}`;
 
     const issuer = await entriesBackend.getIssuer(videoCid);
-    this.setIssuer(issuer);
+    setIssuer(issuer);
     if (!issuer) throw 'could not generate issuer';
 
     const json = {
       name: name,
-      description: this.description,
+      description: description,
       code: code,
       issuer: issuer,
       domain: 'skyhitz.io',
@@ -184,93 +215,104 @@ export class EntryStore {
 
     const blob = new Blob([JSON.stringify(json)], { type: 'application/json' });
 
-    const nftCid = await this.uploadFile(blob, 'meta');
+    const nftCid = await uploadFile(blob, 'meta');
     return { videoCid, nftCid, imageUrl, videoUrl, code };
-  }
+  };
 
-  clearStore() {
-    this.updateUploadingVideo(false);
-    this.updateLoadingImage(false);
-    this.updateDescription('');
-    this.updateTitle('');
-    this.updateArtist('');
-    this.updateAvailableForSale(false);
-    this.updatePrice(0);
-    this.updateEquityForSalePercentage(1);
-    this.creating = false;
-  }
+  const clearStore = () => {
+    setUploadingVideo(false);
+    setLoadingImage(false);
+    setDescription('');
+    setTitle('');
+    setArtist('');
+    setAvailableForSale(false);
+    setPrice(0);
+    setEquityForSale(1);
+    setCreating(false);
+  };
 
-  get currentUpload() {
-    return Object.keys(this.filesProgress).includes('video')
-      ? 'video'
-      : Object.keys(this.filesProgress).includes('meta')
-      ? 'meta'
-      : 'none';
-  }
+  const indexEntry = async (issuerPayload = issuer) => {
+    if (!issuerPayload) return false;
+    return await entriesBackend.indexEntry(issuerPayload);
+  };
 
-  get progress() {
-    return Math.min(...Object.values(this.filesProgress));
-  }
-
-  @computed
-  get canCreate() {
-    return (
-      this.imageBlob &&
-      this.videoBlob &&
-      this.description &&
-      this.title &&
-      this.artist
-    );
-  }
-
-  async indexEntry(issuer = this.issuer) {
-    if (!issuer) return false;
-    return await entriesBackend.indexEntry(issuer);
-  }
-
-  async create() {
-    this.creating = true;
-    const {
-      videoCid,
-      nftCid,
-      imageUrl,
-      videoUrl,
-      code,
-    } = await this.storeNFT();
+  const create = async () => {
+    setCreating(true);
+    const { videoCid, nftCid, imageUrl, videoUrl, code } = await storeNFT();
     if (!nftCid || !imageUrl || !videoUrl) {
-      this.setUploadingError('Could not store NFT');
+      setUploadingError('Could not store NFT');
       return;
     }
     return await entriesBackend.createFromUpload(
       videoCid,
       nftCid,
       code,
-      this.availableForSale,
-      this.price,
-      this.equityForSale
+      availableForSale,
+      price,
+      equityForSale
     );
-  }
+  };
 
-  async updatePricing(entry: any) {
-    if (!this.availableForSale) {
+  const updatePricing = async (entry: any) => {
+    if (!availableForSale) {
       return;
     }
-    if (!this.price) {
+    if (!price) {
       return;
     }
-    if (!this.equityForSale) {
+    if (!equityForSale) {
       return;
     }
     await entriesBackend.updatePricing(
       entry.id,
-      this.price,
-      this.availableForSale,
-      this.equityForSale
+      price,
+      availableForSale,
+      equityForSale
     );
-    this.clearStore();
-  }
+    clearStore();
+  };
 
-  async remove(entryId: string) {
+  const remove = async (entryId: string) => {
     await entriesBackend.remove(entryId);
-  }
-}
+  };
+
+  return {
+    remove,
+    updatePricing,
+    create,
+    indexEntry,
+    clearStore,
+    storeNFT,
+    uploadFile,
+    clearUploadingError,
+    filesProgress,
+    uploadingError,
+    creating,
+    loadingVideo,
+    loadingImage,
+    uploadingVideo,
+    setLoadingVideo,
+    setImageBlob,
+    setVideoBlob,
+    equityForSalePercentage,
+    currentUpload,
+    canCreate,
+    progress,
+    issuer,
+    equityForSale,
+    setUploadingError,
+    setArtist,
+    artist,
+    setDescription,
+    title,
+    setTitle,
+    availableForSale,
+    setAvailableForSale,
+    description,
+    price,
+    setPrice,
+    setEquityForSale,
+    imageBlob,
+    videoBlob,
+  };
+};

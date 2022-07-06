@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Stores } from 'app/src/functions/Stores';
 import { Config } from 'app/src/config';
 import { userAtom } from '../atoms/atoms';
 import { useRecoilValue } from 'recoil';
+import { EntryStore } from '../stores/entry.store';
 const EventSource = require('eventsource');
 
 const nftListener = (open) => {
-  const { entryStore } = Stores();
+  const { indexEntry, issuer } = EntryStore();
   const user = useRecoilValue(userAtom);
 
   const [indexed, setIndexed] = useState(false);
@@ -21,9 +21,9 @@ const nftListener = (open) => {
     es.onmessage = async function (message) {
       const data = message.data ? JSON.parse(message.data) : message;
 
-      if ((data.type = 'payment' && entryStore.issuer === data.asset_issuer)) {
-        const indexEntry = await entryStore.indexEntry(data.asset_issuer);
-        if (indexEntry) {
+      if ((data.type = 'payment' && issuer === data.asset_issuer)) {
+        const res = await indexEntry(data.asset_issuer);
+        if (res) {
           setIndexed(true);
         }
       }
