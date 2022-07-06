@@ -9,11 +9,9 @@ import {
   Platform,
 } from 'react-native';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import { useLinkTo } from '@react-navigation/native';
 import ValidationIcon from 'app/src/accounts/ValidationIcon';
-import { Stores } from 'app/src/functions/Stores';
 import BackgroundImage from 'app/src/ui/BackgroundImage';
 import WalletConnectBtn from 'app/src/accounts/WalletConnectBtn';
 import tw from 'twin.macro';
@@ -26,9 +24,10 @@ import {
   signUpValidAtom,
   signUpErrorAtom,
 } from '../atoms/atoms';
+import { WalletConnectStore } from '../stores/wallet-connect';
 
-export default observer(() => {
-  const { walletConnectStore } = Stores();
+export default () => {
+  const { publicKey } = WalletConnectStore();
   const { signUp } = SessionStore();
   const [usernameValidation, setUsernameValidation] = useRecoilState(
     usernameValidationErrorAtom
@@ -123,7 +122,7 @@ export default observer(() => {
         username: username,
         displayName: displayName,
         email: email,
-        publicKey: walletConnectStore.publicKey,
+        publicKey: publicKey,
       });
       setLoading(false);
       return linkTo('/');
@@ -227,7 +226,7 @@ export default observer(() => {
       </View>
     </BackgroundImage>
   );
-});
+};
 
 var styles = StyleSheet.create({
   line: {

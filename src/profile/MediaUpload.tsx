@@ -16,7 +16,6 @@ import * as Permissions from 'expo-permissions';
 import Colors from 'app/src/constants/Colors';
 import LargeBtn from 'app/src/ui/LargeBtn';
 import cursorPointer from 'app/src/constants/CursorPointer';
-import { Stores } from 'app/src/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import PieChartIcon from 'app/src/ui/icons/pie';
@@ -29,6 +28,7 @@ import CloseIcon from 'app/src/ui/icons/x';
 import nftListener from 'app/src/hooks/nft-listener';
 import { UserEntriesStore } from '../stores/user-entries';
 import { EntryStore } from '../stores/entry.store';
+import { WalletConnectStore } from '../stores/wallet-connect';
 
 const SwitchWeb: any = Switch;
 
@@ -76,7 +76,7 @@ const ArtworkSection = ({ imageSelected, selectArtwork }) => {
 };
 
 export default () => {
-  const { walletConnectStore } = Stores();
+  const { signAndSubmitXdr } = WalletConnectStore();
   const {
     equityForSale,
     setUploadingError,
@@ -222,7 +222,7 @@ export default () => {
     if (!submitted) {
       let message;
       try {
-        message = await walletConnectStore.signAndSubmitXdr(xdr);
+        message = await signAndSubmitXdr(xdr);
       } catch (e) {
         console.log(e);
       }

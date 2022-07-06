@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import Colors from 'app/src/constants/Colors';
 import LargeBtn from './LargeBtn';
-import { observer } from 'mobx-react';
 import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/core';
 import { useLinkTo } from '@react-navigation/native';
 import { UserEntriesStore } from '../stores/user-entries';
 import { PaymentsStore } from '../stores/payments.store';
+import { WalletConnectStore } from '../stores/wallet-connect';
 
-export default observer(({ route }) => {
+export default ({ route }) => {
   const { entry, priceInfo } = route.params;
   const [submitting, setSubmitting] = useState(false);
   const [
@@ -19,7 +19,8 @@ export default observer(({ route }) => {
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
 
-  const { playerStore, walletConnectStore } = Stores();
+  const { playerStore } = Stores();
+  const { signAndSubmitXdr } = WalletConnectStore();
   const { buyEntry, refreshSubscription, credits } = PaymentsStore();
   const { refreshEntries } = UserEntriesStore();
 
@@ -34,7 +35,7 @@ export default observer(({ route }) => {
     if (xdr && success) {
       if (!submitted) {
         setMustSignAndSubmitWithWalletConnect(true);
-        await walletConnectStore.signAndSubmitXdr(xdr);
+        await signAndSubmitXdr(xdr);
       }
       await Promise.all([await refreshEntries(), await refreshSubscription()]);
       playerStore.refreshEntry();
@@ -90,7 +91,7 @@ export default observer(({ route }) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
