@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
 import {
   StyleSheet,
   View,
@@ -14,35 +12,49 @@ import { P, H3 } from '@expo/html-elements';
 import Colors from 'app/src/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
+import { PaymentsStore } from '../stores/payments.store';
 
 async function timeout(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export default observer((props) => {
+export default (props) => {
   const [amount, setAmount] = useState(200);
   const stripe = useStripe();
   const elements = useElements();
   const { goBack } = useNavigation();
 
-  const { paymentsStore } = Stores();
+  const {
+    subscribed,
+    refreshXLMPrice,
+    setLoadingBalance,
+    refreshSubscription,
+    credits,
+    subscribeUser,
+    setSubmittingSubscription,
+    buyCredits,
+    xlmPriceWithFees,
+    subscriptionLoaded,
+    xlmPrice,
+    submittingSubscription,
+  } = PaymentsStore();
   const [selectedOption, setSelectedOption] = useState(
-    paymentsStore.subscribed ? 'one-time' : 'subscription'
+    subscribed ? 'one-time' : 'subscription'
   );
 
   useEffect(() => {
-    paymentsStore.refreshXLMPrice();
+    refreshXLMPrice();
   }, []);
 
-  const refreshSubscription = async () => {
-    paymentsStore.setLoadingBalance(true);
-    let lastBalance = paymentsStore.credits;
+  const handleRefreshSubscription = async () => {
+    setLoadingBalance(true);
+    let lastBalance = credits;
     await timeout(15000);
-    await paymentsStore.refreshSubscription();
-    if (lastBalance === paymentsStore.credits) {
-      paymentsStore.setLoadingBalance(true);
+    await refreshSubscription();
+    if (lastBalance === credits) {
+      setLoadingBalance(true);
       await timeout(15000);
-      paymentsStore.refreshSubscription();
+      refreshSubscription();
     }
   };
 
@@ -53,7 +65,7 @@ export default observer((props) => {
   };
 
   const submit = async () => {
-    paymentsStore.setSubmittingSubscription(true);
+    setSubmittingSubscription(true);
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
@@ -72,22 +84,19 @@ export default observer((props) => {
     if (!token) return;
     const { id } = token;
     if (selectedOption === 'one-time') {
-      const purchased = await paymentsStore.buyCredits(
-        id,
-        amount * paymentsStore.xlmPriceWithFees
-      );
+      const purchased = await buyCredits(id, amount * xlmPriceWithFees());
 
       if (purchased) {
         goBack();
-        refreshSubscription();
+        handleRefreshSubscription();
       }
       return;
     }
 
-    const subscribed = await paymentsStore.subscribeUser(id);
+    const subscribed = await subscribeUser(id);
     if (subscribed) {
       goBack();
-      refreshSubscription();
+      handleRefreshSubscription();
     }
   };
 
@@ -110,7 +119,7 @@ export default observer((props) => {
     setSelectedOption('subscription');
   };
 
-  if (!paymentsStore.subscriptionLoaded) {
+  if (!subscriptionLoaded) {
     return (
       <View style={styles.checkoutWrap}>
         <P style={styles.checkingCopy}>Checking if you already subscribed...</P>
@@ -120,7 +129,7 @@ export default observer((props) => {
   return (
     <View style={styles.checkoutWrap}>
       <View style={styles.options}>
-        {!paymentsStore.subscribed && (
+        {!subscribed && (
           <TouchableHighlight onPress={changeToSubscription}>
             <View
               style={[
@@ -130,8 +139,7 @@ export default observer((props) => {
             >
               <View>
                 <H3 style={styles.priceHeaders}>
-                  {paymentsStore.xlmPrice &&
-                    (7.99 / paymentsStore.xlmPriceWithFees).toFixed(2)}
+                  {xlmPrice && (7.99 / xlmPriceWithFees()).toFixed(2)}
                 </H3>
                 <P style={styles.description}>Monthly XLM plan</P>
                 <View style={styles.priceSection}>
@@ -167,10 +175,8 @@ export default observer((props) => {
               <P style={styles.description}>Buy XLM</P>
               <View style={styles.priceSection}>
                 <P style={styles.perMonth}>
-                  $
-                  {paymentsStore.xlmPrice &&
-                    (amount * paymentsStore.xlmPriceWithFees).toFixed(2)}{' '}
-                  one time
+                  ${xlmPrice && (amount * xlmPriceWithFees()).toFixed(2)} one
+                  time
                 </P>
               </View>
             </View>
@@ -193,7 +199,7 @@ export default observer((props) => {
           },
         }}
       />
-      {paymentsStore.submittingSubscription ? (
+      {submittingSubscription ? (
         <Pressable style={[styles.submitPayment, cursorPointer]}>
           <P style={styles.submitPaymentText}>Submitting Transaction...</P>
         </Pressable>
@@ -207,7 +213,7 @@ export default observer((props) => {
       )}
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   radioWrapper: {

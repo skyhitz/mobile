@@ -7,18 +7,21 @@ import {
   TextInput,
   Platform,
 } from 'react-native';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import LargeBtn from 'app/src/ui/LargeBtn';
-import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import CloseIcon from 'app/src/ui/icons/x';
 import WalletIcon from 'app/src/ui/icons/wallet';
 import DollarIcon from 'app/src/ui/icons/dollar';
+import { PaymentsStore } from '../stores/payments.store';
 
-export default observer((props) => {
-  const { paymentsStore } = Stores();
+export default (props) => {
+  const {
+    credits,
+    withdrawToExternalWallet,
+    submittingWithdraw,
+  } = PaymentsStore();
   const { goBack } = useNavigation();
   const [address, setAddress] = useState('');
   const [creditsToWithdraw, setCreditsToWithdraw] = useState(0);
@@ -29,7 +32,7 @@ export default observer((props) => {
 
   const updateAmount = ({ target }: any) => {
     let creditsToWithdraw = parseFloat(target.value);
-    if (paymentsStore.credits < creditsToWithdraw) {
+    if (credits < creditsToWithdraw) {
       return;
     }
 
@@ -37,7 +40,7 @@ export default observer((props) => {
   };
 
   const onWithdraw = async () => {
-    await paymentsStore.withdrawToExternalWallet(address, creditsToWithdraw);
+    await withdrawToExternalWallet(address, creditsToWithdraw);
     goBack();
   };
 
@@ -54,9 +57,7 @@ export default observer((props) => {
           <Text style={styles.modalTitle}>Withdraw credits</Text>
         </View>
         <View style={styles.fieldWithoutBorderTop}>
-          <Text style={styles.currentBalance}>
-            Current balance: {paymentsStore.credits}
-          </Text>
+          <Text style={styles.currentBalance}>Current balance: {credits}</Text>
         </View>
         <View style={styles.field}>
           <View style={styles.placeholderIcon}>
@@ -114,16 +115,12 @@ export default observer((props) => {
         <LargeBtn
           disabled={!(address && creditsToWithdraw)}
           onPress={onWithdraw}
-          text={
-            paymentsStore.submittingWithdraw
-              ? 'Submitting withdraw...'
-              : 'Withdraw'
-          }
+          text={submittingWithdraw ? 'Submitting withdraw...' : 'Withdraw'}
         />
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   fieldWithoutBorderTop: {

@@ -9,7 +9,6 @@ import LikesScreen from 'app/src/playlists/LikesScreen';
 import CollectionScreen from 'app/src/playlists/CollectionScreen';
 import LikesRow from 'app/src/playlists/LikesRow';
 import MyMusicRow from 'app/src/playlists/MyMusicRow';
-import { Stores } from 'app/src/functions/Stores';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
 import MintNFT from './MintNFT';
 import { useLinkTo } from '@react-navigation/native';
@@ -18,16 +17,17 @@ import ChevronLeftIcon from 'app/src/ui/icons/chevron-left';
 import tw from 'twin.macro';
 import { UserEntriesStore } from '../stores/user-entries';
 import { LikesStore } from '../stores/likes';
+import { PaymentsStore } from '../stores/payments.store';
 
 const ProfileSettingsScreen = observer(() => {
-  let { paymentsStore } = Stores();
+  let { refreshSubscription, credits } = PaymentsStore();
   const { refreshLikes } = LikesStore();
   const { refreshEntries } = UserEntriesStore();
 
   useEffect(() => {
     refreshLikes();
     refreshEntries();
-    paymentsStore.refreshSubscription();
+    refreshSubscription();
   });
 
   return (
@@ -37,7 +37,7 @@ const ProfileSettingsScreen = observer(() => {
         <View style={styles.settingsContainer}>
           <LikesRow />
           <MyMusicRow />
-          <ShareAppBanner credits={paymentsStore.credits} />
+          <ShareAppBanner credits={credits} />
         </View>
       </View>
     </ResponsiveLayout>

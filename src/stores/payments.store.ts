@@ -1,94 +1,116 @@
-import { observable } from 'mobx';
 import { paymentsBackend } from '../api/payments';
 import { entriesBackend } from '../api/entries';
 import { Config } from '../config';
+import { atom, useRecoilState } from 'recoil';
 
-export class PaymentsStore {
-  @observable
-  subscribed: boolean = false;
-  @observable
-  subscriptionLoaded: boolean = false;
-  @observable
-  credits: number = 0;
-  @observable
-  submittingSubscription: boolean = false;
-  @observable
-  submittingWithdraw: boolean = false;
-  @observable
-  loadingBalance: boolean = false;
-  @observable
-  xlmPrice: number = 0;
+const subscribedAtom = atom<boolean>({
+  key: 'subscribed',
+  default: false,
+});
+const subscriptionLoadedAtom = atom<boolean>({
+  key: 'subscriptionLoaded',
+  default: false,
+});
+const creditsAtom = atom<number>({
+  key: 'credits',
+  default: 0,
+});
+const submittingSubscriptionAtom = atom<boolean>({
+  key: 'submittingSubscription',
+  default: false,
+});
+const submittingWithdrawAtom = atom<boolean>({
+  key: 'submittingWithdraw',
+  default: false,
+});
+const loadingBalanceAtom = atom<boolean>({
+  key: 'loadingBalance',
+  default: false,
+});
+const xlmPriceAtom = atom<number>({
+  key: 'xlmPrice',
+  default: 0,
+});
+const entryPricesAtom = atom<Map<string, { price: number; amount: number }>>({
+  key: 'entryPrices',
+  default: new Map(),
+});
 
-  @observable
-  entryPrices: Map<string, { price: number; amount: number }> = new Map();
+export const PaymentsStore = () => {
+  const [submittingSubscription, setSubmittingSubscription] = useRecoilState(
+    submittingSubscriptionAtom
+  );
+  const [subscribed, setSubscribed] = useRecoilState(subscribedAtom);
+  const [loadingBalance, setLoadingBalance] = useRecoilState(
+    loadingBalanceAtom
+  );
+  const [credits, setCredits] = useRecoilState(creditsAtom);
+  const [subscriptionLoaded, setSubscriptionLoaded] = useRecoilState(
+    subscriptionLoadedAtom
+  );
+  const [submittingWithdraw, setSubmittingWithdraw] = useRecoilState(
+    submittingWithdrawAtom
+  );
+  const [xlmPrice, setXlmPrice] = useRecoilState(xlmPriceAtom);
+  const [entryPrices, setEntryPrices] = useRecoilState(entryPricesAtom);
 
-  constructor() {}
-
-  setLoadingBalance(loading: boolean) {
-    this.loadingBalance = loading;
-  }
-
-  setSubmittingSubscription(submitting) {
-    this.submittingSubscription = submitting;
-  }
-
-  async subscribeUser(cardToken: string) {
-    this.submittingSubscription = true;
+  const subscribeUser = async (cardToken: string) => {
+    setSubmittingSubscription(true);
     await paymentsBackend.subscribe(cardToken);
-    this.submittingSubscription = false;
-    this.subscribed = true;
+    setSubmittingSubscription(false);
+    setSubscribed(true);
     return true;
-  }
+  };
 
-  async buyCredits(cardToken: string, amount: number) {
-    this.submittingSubscription = true;
+  const buyCredits = async (cardToken: string, amount: number) => {
+    setSubmittingSubscription(true);
     await paymentsBackend.buyCredits(cardToken, amount);
-    this.submittingSubscription = false;
-    this.subscribed = true;
+    setSubmittingSubscription(false);
+    setSubscribed(true);
     return true;
-  }
+  };
 
-  async refreshSubscription() {
-    this.loadingBalance = true;
+  const refreshSubscription = async () => {
+    setLoadingBalance(true);
     let { subscribed, credits } = await paymentsBackend.refreshSubscription();
-    this.subscribed = subscribed;
-    this.credits = credits;
-    this.subscriptionLoaded = true;
-    this.loadingBalance = false;
-  }
+    setSubscribed(subscribed);
+    setCredits(credits);
+    setSubscriptionLoaded(true);
+    setLoadingBalance(false);
+  };
 
-  async withdrawToExternalWallet(
+  const withdrawToExternalWallet = async (
     withdrawAddress: string,
     creditsToWithdraw: number
-  ) {
-    this.submittingWithdraw = true;
+  ) => {
+    setSubmittingWithdraw(true);
     await paymentsBackend.withdrawToExternalWallet(
       withdrawAddress,
       creditsToWithdraw
     );
-    await this.refreshSubscription();
-    this.submittingWithdraw = false;
-  }
+    await refreshSubscription();
+    setSubmittingWithdraw(false);
+  };
 
-  public async buyEntry(id: string, amount: number, price: number) {
+  const buyEntry = async (id: string, amount: number, price: number) => {
     return await entriesBackend.buyEntry(id, amount, price);
-  }
+  };
 
-  public getPriceInfo(id: string) {
+  const getPriceInfo = (id: string) => {
     return entriesBackend.getPriceInfo(id);
-  }
+  };
 
-  get xlmPriceWithFees() {
-    return this.xlmPrice * 1.06;
-  }
+  const xlmPriceWithFees = () => {
+    return xlmPrice * 1.06;
+  };
 
-  public async refreshXLMPrice() {
+  const refreshXLMPrice = async () => {
     const price = await paymentsBackend.getXLMPrice();
 
-    this.xlmPrice = parseFloat(price);
-  }
+    setXlmPrice(parseFloat(price));
+  };
 
-  public async fetchPriceFromHorizon(code: string, issuer: string) {
+  const fetchPriceFromHorizon = async (code: string, issuer: string) => {
     let { asks } = await fetch(
       `${Config.HORIZON_URL}/order_book?selling_asset_type=credit_alphanum12&selling_asset_code=${code}&selling_asset_issuer=${issuer}&buying_asset_type=native`
     ).then((res: any) => res.json());
@@ -99,19 +121,42 @@ export class PaymentsStore {
     }
 
     return null;
-  }
+  };
 
-  public async fetchAndCachePrice(code: string, issuer: string) {
+  const fetchAndCachePrice = async (code: string, issuer: string) => {
     const identifier = `${code}-${issuer}`;
-    const val = this.entryPrices.get(identifier);
+    const val = entryPrices.get(identifier);
     if (val) {
       return val;
     }
-    const newval = await this.fetchPriceFromHorizon(code, issuer);
+    const newval = await fetchPriceFromHorizon(code, issuer);
     if (newval) {
-      this.entryPrices.set(identifier, newval);
+      setEntryPrices((oldValue) => oldValue.set(identifier, newval));
       return newval;
     }
     return { price: 0, amount: 0 };
-  }
-}
+  };
+
+  return {
+    fetchAndCachePrice,
+    fetchPriceFromHorizon,
+    refreshXLMPrice,
+    xlmPriceWithFees,
+    getPriceInfo,
+    buyEntry,
+    withdrawToExternalWallet,
+    refreshSubscription,
+    buyCredits,
+    subscribeUser,
+    entryPrices,
+    xlmPrice,
+    submittingSubscription,
+    submittingWithdraw,
+    subscriptionLoaded,
+    credits,
+    loadingBalance,
+    subscribed,
+    setLoadingBalance,
+    setSubmittingSubscription,
+  };
+};

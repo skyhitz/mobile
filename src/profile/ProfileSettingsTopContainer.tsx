@@ -3,19 +3,21 @@ import { View, StyleSheet, Text } from 'react-native';
 import Colors from 'app/src/constants/Colors';
 import Layout from 'app/src/constants/Layout';
 import { UserAvatarMedium } from 'app/src/ui/UserAvatar';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
 import EditBtn from '../ui/EditBtn';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import WalletIcon from 'app/src/ui/icons/wallet';
 import { A } from '@expo/html-elements';
 import { stellarAccountLink } from 'app/src/functions/utils';
+import { PaymentsStore } from '../stores/payments.store';
+import { userAtom } from '../atoms/atoms';
+import { useRecoilValue } from 'recoil';
 
-export default observer((props) => {
-  const { paymentsStore, sessionStore } = Stores();
+export default (props) => {
+  const { credits, loadingBalance } = PaymentsStore();
+  const user = useRecoilValue(userAtom);
 
   const renderDollarSign = () => {
-    if (paymentsStore.credits > 0) {
+    if (credits > 0) {
       return (
         <View style={styles.starsIcon}>
           <DollarIcon size={22} color={Colors.white} />
@@ -26,20 +28,18 @@ export default observer((props) => {
   };
 
   const renderCreditsSection = () => {
-    if (paymentsStore.loadingBalance) {
+    if (loadingBalance) {
       return <Text style={styles.text}> {'   '}Loading Balance...</Text>;
     }
     return (
       <>
         {renderDollarSign()}
-        <Text style={styles.text}>
-          {paymentsStore.credits ? paymentsStore.credits.toFixed(4) : ''}
-        </Text>
+        <Text style={styles.text}>{credits ? credits.toFixed(4) : ''}</Text>
       </>
     );
   };
 
-  if (!sessionStore.user) {
+  if (!user) {
     return null;
   }
   return (
@@ -47,19 +47,17 @@ export default observer((props) => {
       <View style={styles.overlay}>
         <View style={styles.topContainer}>
           <View style={styles.topHeader}>
-            {UserAvatarMedium(sessionStore.user)}
+            {UserAvatarMedium(user)}
             <View style={styles.headerWrap}>
               <View style={styles.profileInfo}>
-                <Text style={styles.text}>
-                  {sessionStore.user?.displayName}
-                </Text>
+                <Text style={styles.text}>{user?.displayName}</Text>
                 {renderCreditsSection()}
                 <EditBtn customStyles={styles.cogIcon} />
               </View>
-              {sessionStore.user.publicKey ? (
+              {user.publicKey ? (
                 <A
                   target="_blank"
-                  href={stellarAccountLink(sessionStore.user.publicKey)}
+                  href={stellarAccountLink(user.publicKey)}
                   aria-label="View on Stellar Expert"
                 >
                   <View
@@ -71,9 +69,7 @@ export default observer((props) => {
                   >
                     <WalletIcon size={18} color={Colors.defaultTextLight} />
 
-                    <Text style={styles.textSmall}>
-                      {sessionStore.user.publicKey}
-                    </Text>
+                    <Text style={styles.textSmall}>{user.publicKey}</Text>
                   </View>
                 </A>
               ) : null}
@@ -83,7 +79,7 @@ export default observer((props) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

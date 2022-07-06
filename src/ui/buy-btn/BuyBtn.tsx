@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import Colors from 'app/src/constants/Colors';
-import { Stores } from 'app/src/functions/Stores';
 import { CommonActions, useNavigation } from '@react-navigation/native';
-import { observer } from 'mobx-react';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import tw from 'twin.macro';
+import { PaymentsStore } from 'app/src/stores/payments.store';
 
 const Placeholder = () => <View style={styles.placeholder} />;
 
-export default observer(({ entry }) => {
-  const { paymentsStore } = Stores();
+export default ({ entry }) => {
+  const { fetchAndCachePrice, refreshSubscription } = PaymentsStore();
   const { dispatch } = useNavigation();
 
   const [priceInfo, setPriceInfo] = useState({
@@ -32,7 +31,7 @@ export default observer(({ entry }) => {
   };
 
   const getPriceInfo = async () => {
-    const { price, amount } = await paymentsStore.fetchAndCachePrice(
+    const { price, amount } = await fetchAndCachePrice(
       entry.code,
       entry.issuer
     );
@@ -42,7 +41,7 @@ export default observer(({ entry }) => {
   useEffect(() => {
     if (entry && entry.id) {
       getPriceInfo();
-      paymentsStore.refreshSubscription();
+      refreshSubscription();
     }
   }, [entry]);
 
@@ -64,7 +63,7 @@ export default observer(({ entry }) => {
       </Pressable>
     </View>
   );
-});
+};
 
 var styles = StyleSheet.create({
   wrap: {

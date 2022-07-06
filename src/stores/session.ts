@@ -50,5 +50,5 @@ export const SessionStore = () => {
     return await signOut();
   }
 
-  return { requestToken, signUp, signIn, signOut, refreshUser };
+  return { requestToken, signUp, signIn, signOut, refreshUser, user };
 };

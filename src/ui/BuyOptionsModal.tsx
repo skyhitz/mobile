@@ -7,6 +7,7 @@ import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/core';
 import { useLinkTo } from '@react-navigation/native';
 import { UserEntriesStore } from '../stores/user-entries';
+import { PaymentsStore } from '../stores/payments.store';
 
 export default observer(({ route }) => {
   const { entry, priceInfo } = route.params;
@@ -18,12 +19,13 @@ export default observer(({ route }) => {
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
 
-  const { paymentsStore, playerStore, walletConnectStore } = Stores();
+  const { playerStore, walletConnectStore } = Stores();
+  const { buyEntry, refreshSubscription, credits } = PaymentsStore();
   const { refreshEntries } = UserEntriesStore();
 
-  const buyEntry = async (id: string) => {
+  const handleBuyEntry = async (id: string) => {
     setSubmitting(true);
-    let { xdr, success, submitted } = await paymentsStore.buyEntry(
+    let { xdr, success, submitted } = await buyEntry(
       id,
       priceInfo.amount,
       priceInfo.price
@@ -34,10 +36,7 @@ export default observer(({ route }) => {
         setMustSignAndSubmitWithWalletConnect(true);
         await walletConnectStore.signAndSubmitXdr(xdr);
       }
-      await Promise.all([
-        await refreshEntries(),
-        await paymentsStore.refreshSubscription(),
-      ]);
+      await Promise.all([await refreshEntries(), await refreshSubscription()]);
       playerStore.refreshEntry();
       setSubmitting(false);
       goBack();
@@ -46,7 +45,7 @@ export default observer(({ route }) => {
     }
   };
 
-  if (!paymentsStore.credits || paymentsStore.credits < entry.price) {
+  if (!credits || credits < entry.price) {
     return (
       <View style={styles.container}>
         <View style={styles.infoWrap}>
@@ -87,7 +86,7 @@ export default observer(({ route }) => {
       </View>
       <View style={styles.bottomWrap}>
         <LargeBtn text="Cancel" secondary={true} onPress={() => goBack()} />
-        <LargeBtn text="Confirm" onPress={() => buyEntry(entry.id)} />
+        <LargeBtn text="Confirm" onPress={() => handleBuyEntry(entry.id)} />
       </View>
     </View>
   );

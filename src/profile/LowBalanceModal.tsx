@@ -7,10 +7,8 @@ import {
   TextInput,
   Platform,
 } from 'react-native';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import LargeBtn from 'app/src/ui/LargeBtn';
-import { Stores } from 'app/src/functions/Stores';
 import { useLinkTo, useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import CloseIcon from 'app/src/ui/icons/x';
@@ -18,9 +16,10 @@ import WalletIcon from 'app/src/ui/icons/wallet';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import { userAtom } from '../atoms/atoms';
 import { useRecoilValue } from 'recoil';
+import { PaymentsStore } from '../stores/payments.store';
 
-export default observer((props) => {
-  const { paymentsStore } = Stores();
+export default (props) => {
+  const { credits } = PaymentsStore();
   const user = useRecoilValue(userAtom);
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
@@ -51,7 +50,7 @@ export default observer((props) => {
             <View>
               <DollarIcon size={12} color={Colors.white} />
             </View>{' '}
-            {paymentsStore.credits.toFixed(4)}
+            {credits.toFixed(4)}
           </Text>
         </View>
         <View>
@@ -94,7 +93,7 @@ export default observer((props) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   fieldWithoutBorderTop: {

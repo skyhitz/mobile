@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import Colors from 'app/src/constants/Colors';
-import { Stores } from 'app/src/functions/Stores';
 import { A } from '@expo/html-elements';
 import { stellarAssetLink } from 'app/src/functions/utils';
+import { PaymentsStore } from '../stores/payments.store';
 
 function EntryPrice({ code, issuer }) {
   const [value, setValue] = useState({ price: 0, amount: 0 });
-  const { paymentsStore } = Stores();
+  const { fetchAndCachePrice } = PaymentsStore();
 
   const handleFetchPrice = async () => {
-    setValue(await paymentsStore.fetchAndCachePrice(code, issuer));
+    setValue(await fetchAndCachePrice(code, issuer));
   };
 
   useEffect(() => {
