@@ -16,7 +16,7 @@ import WalletIcon from 'app/src/ui/icons/wallet';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import { userAtom } from '../atoms/atoms';
 import { useRecoilValue } from 'recoil';
-import { PaymentsStore } from '../stores/payments.store';
+import { PaymentsStore } from '../stores/payments';
 
 export default (props) => {
   const { credits } = PaymentsStore();

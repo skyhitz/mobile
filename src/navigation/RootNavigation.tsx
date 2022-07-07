@@ -1,6 +1,5 @@
 import React, { useState, useEffect, lazy } from 'react';
 import { StatusBar } from 'react-native';
-import { observer } from 'mobx-react';
 import { useMediaQuery } from 'react-responsive';
 import LoadingScreen from 'app/src/accounts/LoadingScreen';
 import { SuspenseLoading } from './SuspenseLoading';
@@ -29,7 +28,7 @@ const LazyNavigationContainerSuspense = (props) => (
   </SuspenseLoading>
 );
 
-export default observer(() => {
+export default () => {
   const [loaded, setLoaded] = useState(false);
   const user = useRecoilValue(userAtom);
 
@@ -59,4 +58,4 @@ export default observer(() => {
     );
   }
   return <LoadingScreen />;
-});
+};

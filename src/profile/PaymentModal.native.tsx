@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Colors from 'app/src/constants/Colors';
 import CloseIcon from 'app/src/ui/icons/x';
-import { EntryStore } from '../stores/entry.store';
+import { EntryStore } from '../stores/entry';
 
 export default (props) => {
   let { clearUploadingError } = EntryStore();

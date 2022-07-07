@@ -1,16 +1,12 @@
 import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
-import { inject } from 'mobx-react';
-import * as stores from 'app/src/stores';
 import ShuffleIcon from 'app/src/ui/icons/shuffle';
 import Colors from 'app/src/constants/Colors';
 import cursorPointer from 'app/src/constants/CursorPointer';
-type Stores = typeof stores;
+import { PlayerStore } from 'app/src/stores/player';
 
-const ShuffleBtn = inject((stores: Stores) => ({
-  toggleShuffle: stores.playerStore.toggleShuffle.bind(stores.playerStore),
-  shuffle: stores.playerStore.shuffle,
-}))(({ toggleShuffle, shuffle, size = 20 }: any) => {
+const ShuffleBtn = ({ size = 20 }) => {
+  const { toggleShuffle, shuffle } = PlayerStore();
   if (shuffle) {
     return (
       <Pressable
@@ -29,7 +25,7 @@ const ShuffleBtn = inject((stores: Stores) => ({
       <ShuffleIcon size={size} color={Colors.white} />
     </Pressable>
   );
-});
+};
 
 export default ShuffleBtn;
 

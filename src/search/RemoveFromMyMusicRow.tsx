@@ -4,7 +4,7 @@ import RemoveIcon from 'app/src/ui/icons/remove';
 import Colors from 'app/src/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { UserEntriesStore } from '../stores/user-entries';
-import { EntryStore } from '../stores/entry.store';
+import { EntryStore } from '../stores/entry';
 
 export default ({ entry }) => {
   const { remove } = EntryStore();

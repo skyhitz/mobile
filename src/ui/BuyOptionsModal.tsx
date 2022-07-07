@@ -6,7 +6,7 @@ import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/core';
 import { useLinkTo } from '@react-navigation/native';
 import { UserEntriesStore } from '../stores/user-entries';
-import { PaymentsStore } from '../stores/payments.store';
+import { PaymentsStore } from '../stores/payments';
 import { WalletConnectStore } from '../stores/wallet-connect';
 
 export default ({ route }) => {

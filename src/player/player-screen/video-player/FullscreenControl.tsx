@@ -1,28 +1,19 @@
 import React from 'react';
-import { inject } from 'mobx-react';
 import Control from 'app/src/player/player-screen/video-player/Control';
 import {
   FullscreenEnterIcon,
   FullscreenExitIcon,
 } from 'app/src/player/player-screen/video-player/VideoIcons';
-import * as stores from 'app/src/stores';
 import cursorPointer from 'app/src/constants/CursorPointer';
-type Stores = typeof stores;
+import { PlayerStore } from 'app/src/stores/player';
 
-const FullscreenControl = inject((stores: Stores) => ({
-  isOnFullScreenMode: stores.playerStore.isOnFullScreenMode,
-  presentFullscreenPlayer: stores.playerStore.presentFullscreenPlayer.bind(
-    stores.playerStore
-  ),
-  dismissFullscreenPlayer: stores.playerStore.dismissFullscreenPlayer.bind(
-    stores.playerStore
-  ),
-}))(
-  ({
-    isOnFullScreenMode,
+const FullscreenControl = () => {
+  const {
+    fullscreen,
     presentFullscreenPlayer,
     dismissFullscreenPlayer,
-  }: any) => (
+  } = PlayerStore();
+  return (
     <Control
       style={[
         {
@@ -34,14 +25,12 @@ const FullscreenControl = inject((stores: Stores) => ({
       ]}
       center={false}
       callback={() => {
-        isOnFullScreenMode
-          ? dismissFullscreenPlayer()
-          : presentFullscreenPlayer();
+        fullscreen ? dismissFullscreenPlayer() : presentFullscreenPlayer();
       }}
     >
-      {isOnFullScreenMode ? <FullscreenExitIcon /> : <FullscreenEnterIcon />}
+      {fullscreen ? <FullscreenExitIcon /> : <FullscreenEnterIcon />}
     </Control>
-  )
-);
+  );
+};
 
 export default FullscreenControl;

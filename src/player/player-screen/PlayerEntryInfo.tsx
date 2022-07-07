@@ -1,12 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { inject } from 'mobx-react';
-import * as stores from 'app/src/stores';
-type Stores = typeof stores;
+import { PlayerStore } from 'app/src/stores/player';
 
-const PlayerEntryInfo = inject((stores: Stores) => ({
-  entry: stores.playerStore.entry,
-}))(({ entry }: any) => {
+const PlayerEntryInfo = () => {
+  const { entry } = PlayerStore();
   if (!entry) {
     return null;
   }
@@ -24,7 +21,7 @@ const PlayerEntryInfo = inject((stores: Stores) => ({
       </View>
     </View>
   );
-});
+};
 
 export default PlayerEntryInfo;
 

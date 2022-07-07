@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, Pressable } from 'react-native';
-import { observer } from 'mobx-react';
 import PlayIcon from 'app/src/ui/icons/play';
 import PauseIcon from 'app/src/ui/icons/pause';
 
@@ -8,17 +7,17 @@ import {
   ReplayIcon,
   Spinner,
 } from 'app/src/player/player-screen/video-player/VideoIcons';
-import { Stores } from 'app/src/functions/Stores';
 import cursorPointer from 'app/src/constants/CursorPointer';
+import { PlayerStore } from 'app/src/stores/player';
 
-export default observer(({ size = 28 }) => {
-  let { playerStore } = Stores();
+export default ({ size = 28 }) => {
+  let { togglePlay, playbackState, replay } = PlayerStore();
 
-  if (playerStore.playbackState === 'PAUSED') {
+  if (playbackState === 'PAUSED') {
     return (
       <Pressable
         style={[styles.controlTouch, cursorPointer]}
-        onPress={() => playerStore.togglePlay()}
+        onPress={() => togglePlay()}
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
@@ -28,11 +27,11 @@ export default observer(({ size = 28 }) => {
       </Pressable>
     );
   }
-  if (playerStore.playbackState === 'PLAYING') {
+  if (playbackState === 'PLAYING') {
     return (
       <Pressable
         style={[styles.controlTouch, cursorPointer]}
-        onPress={() => playerStore.togglePlay()}
+        onPress={() => togglePlay()}
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
@@ -42,11 +41,11 @@ export default observer(({ size = 28 }) => {
       </Pressable>
     );
   }
-  if (playerStore.playbackState === 'ENDED') {
+  if (playbackState === 'ENDED') {
     return (
       <Pressable
         style={[styles.controlTouch, cursorPointer]}
-        onPress={() => playerStore.replay()}
+        onPress={() => replay()}
       >
         <View style={styles.containerWrap}>
           <View style={styles.playBtnCircle}>
@@ -63,7 +62,7 @@ export default observer(({ size = 28 }) => {
       </View>
     </View>
   );
-});
+};
 
 var styles = StyleSheet.create({
   controlTouch: {

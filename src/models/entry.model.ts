@@ -22,6 +22,7 @@ export class EntryPayload extends Payload {
   price?: number;
   issuer?: string;
   code?: string;
+  artist?: string;
 }
 
 export class Entry extends EntryPayload {
@@ -42,6 +43,7 @@ export class Entry extends EntryPayload {
     this.price = payload.price;
     this.issuer = payload.issuer;
     this.code = payload.code;
+    this.artist = payload.artist;
   }
 
   get isIpfs() {

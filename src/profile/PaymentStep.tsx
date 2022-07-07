@@ -12,7 +12,7 @@ import { P, H3 } from '@expo/html-elements';
 import Colors from 'app/src/constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
-import { PaymentsStore } from '../stores/payments.store';
+import { PaymentsStore } from '../stores/payments';
 
 async function timeout(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

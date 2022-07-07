@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, SafeAreaView, FlatList } from 'react-native';
-import { observer } from 'mobx-react';
 import EntryRow from 'app/src/ui/EntryRow';
 import SearchingLoader from 'app/src/ui/SearchingLoader';
 import Colors from 'app/src/constants/Colors';
-import { Stores } from 'app/src/functions/Stores';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
 import BottomPlaceholder from '../ui/BottomPlaceholder';
 import { SearchStore } from '../stores/search';
+import { PlayerStore } from '../stores/player';
 
-export default observer((props) => {
-  const { playerStore } = Stores();
+export default (props) => {
+  const { loadAndPlay, setPlaylistModeFromArray } = PlayerStore();
   const {
     recentlyAdded,
     hasMoreRecentlyAdded,
@@ -22,11 +21,11 @@ export default observer((props) => {
     return (
       <EntryRow
         key={item.id}
-        play={() => playerStore.loadAndPlay(item)}
+        play={() => loadAndPlay(item)}
         entry={item}
         options={null}
         disablePlaylistMode={() => {
-          playerStore.setPlaylistModeFromArray(recentlyAdded);
+          setPlaylistModeFromArray(recentlyAdded);
         }}
         previousScreen={null}
       />
@@ -60,7 +59,7 @@ export default observer((props) => {
       </ResponsiveLayout>
     </SafeAreaView>
   );
-});
+};
 
 const styles = StyleSheet.create({
   recentText: {

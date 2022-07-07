@@ -14,7 +14,7 @@ import cursorPointer from 'app/src/constants/CursorPointer';
 import CloseIcon from 'app/src/ui/icons/x';
 import WalletIcon from 'app/src/ui/icons/wallet';
 import DollarIcon from 'app/src/ui/icons/dollar';
-import { PaymentsStore } from '../stores/payments.store';
+import { PaymentsStore } from '../stores/payments';
 
 export default (props) => {
   const {

@@ -1,21 +1,17 @@
-import { observer } from 'mobx-react';
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { Stores } from 'app/src/functions/Stores';
 import Colors from 'app/src/constants/Colors';
 import PlayBtnSmall from './play-btn-small/PlayBtnSmall';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import ChevronUpIcon from 'app/src/ui/icons/chevron-up';
+import { PlayerStore } from 'app/src/stores/player';
 
-export default observer(() => {
-  let { playerStore } = Stores();
+export default () => {
+  const { setShow, entry } = PlayerStore();
 
   return (
     <View style={styles.bg}>
-      <Pressable
-        onPress={() => playerStore.showPlayer()}
-        style={[cursorPointer]}
-      >
+      <Pressable onPress={() => setShow(true)} style={[cursorPointer]}>
         <View style={styles.section}>
           <View style={styles.icon}>
             <ChevronUpIcon color={Colors.white} />
@@ -25,16 +21,14 @@ export default observer(() => {
             ellipsizeMode="tail"
             numberOfLines={1}
           >
-            {playerStore.entry
-              ? playerStore.entry.title + '  -  ' + playerStore.entry.artist
-              : ''}
+            {entry ? entry.title + '  -  ' + entry.artist : ''}
           </Text>
         </View>
       </Pressable>
       <PlayBtnSmall />
     </View>
   );
-});
+};
 
 let styles = StyleSheet.create({
   bg: {

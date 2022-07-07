@@ -7,7 +7,7 @@ import { Config } from 'app/src/config/index';
 import PaymentStep from './PaymentStep';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import CloseIcon from 'app/src/ui/icons/x';
-import { EntryStore } from '../stores/entry.store';
+import { EntryStore } from '../stores/entry';
 
 let stripePromise;
 

@@ -4,7 +4,7 @@ import DollarIcon from 'app/src/ui/icons/dollar';
 import Colors from 'app/src/constants/Colors';
 import { A } from '@expo/html-elements';
 import { stellarAssetLink } from 'app/src/functions/utils';
-import { PaymentsStore } from '../stores/payments.store';
+import { PaymentsStore } from '../stores/payments';
 
 function EntryPrice({ code, issuer }) {
   const [value, setValue] = useState({ price: 0, amount: 0 });

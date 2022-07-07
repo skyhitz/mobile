@@ -1,15 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { inject } from 'mobx-react';
 import { videoWidth } from 'app/src/player/player-screen/video-player/VideoConstants';
 import { PLAYBACK_STATES } from 'app/src/player/player-screen/video-player/UiStates';
-import * as stores from 'app/src/stores';
-type Stores = typeof stores;
+import { PlayerStore } from 'app/src/stores/player';
 
-const VideoErrorText = inject((stores: Stores) => ({
-  playbackState: stores.playerStore.playbackState,
-  error: stores.playerStore.error,
-}))(({ playbackState, error }: any) => {
+const VideoErrorText = () => {
+  const { playbackState, error } = PlayerStore();
   if (playbackState == PLAYBACK_STATES.ERROR) {
     <View
       style={{
@@ -31,6 +27,6 @@ const VideoErrorText = inject((stores: Stores) => ({
     </View>;
   }
   return null;
-});
+};
 
 export default VideoErrorText;

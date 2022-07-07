@@ -1,23 +1,22 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
-import { observer } from 'mobx-react';
 import ChevronDown from 'app/src/ui/icons/chevron-down';
 import Colors from 'app/src/constants/Colors';
-import { Stores } from 'app/src/functions/Stores';
+import { PlayerStore } from 'app/src/stores/player';
 
-export default observer(({ onPress }) => {
-  let { playerStore } = Stores();
+export default ({ onPress }) => {
+  let { entry } = PlayerStore();
 
   return (
     <View style={styles.playerNav}>
       <Pressable {...{ onPress }} style={styles.arrowDownTouchableArea}>
         <ChevronDown size={36} color={Colors.white} />
       </Pressable>
-      <Text style={styles.header}>{playerStore.entry?.artist}</Text>
+      <Text style={styles.header}>{entry?.artist}</Text>
       <View style={styles.rightOptions} />
     </View>
   );
-});
+};
 
 let styles = StyleSheet.create({
   playerNav: {

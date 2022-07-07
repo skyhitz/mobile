@@ -8,7 +8,7 @@ import DollarIcon from 'app/src/ui/icons/dollar';
 import WalletIcon from 'app/src/ui/icons/wallet';
 import { A } from '@expo/html-elements';
 import { stellarAccountLink } from 'app/src/functions/utils';
-import { PaymentsStore } from '../stores/payments.store';
+import { PaymentsStore } from '../stores/payments';
 import { userAtom } from '../atoms/atoms';
 import { useRecoilValue } from 'recoil';
 

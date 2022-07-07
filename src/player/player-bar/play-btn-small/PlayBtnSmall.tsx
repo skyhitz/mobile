@@ -1,19 +1,18 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import { StyleSheet, Pressable } from 'react-native';
 import Play from 'app/src/ui/icons/play';
 import Pause from 'app/src/ui/icons/pause';
-import { Stores } from 'app/src/functions/Stores';
 import cursorPointer from 'app/src/constants/CursorPointer';
+import { PlayerStore } from 'app/src/stores/player';
 
-export default observer(() => {
-  let { playerStore } = Stores();
+export default () => {
+  let { isPlaying, pauseAsync, playAsync } = PlayerStore();
 
-  if (playerStore.isPlaying) {
+  if (isPlaying()) {
     return (
       <Pressable
         style={[styles.playBtnWrapper, cursorPointer]}
-        onPress={() => playerStore.pauseAsync()}
+        onPress={() => pauseAsync()}
       >
         <Pause size={22} color={'white'} />
       </Pressable>
@@ -22,12 +21,12 @@ export default observer(() => {
   return (
     <Pressable
       style={[styles.playBtnWrapper, cursorPointer]}
-      onPress={() => playerStore.playAsync()}
+      onPress={() => playAsync()}
     >
       <Play size={22} color={'white'} />
     </Pressable>
   );
-});
+};
 
 let styles = StyleSheet.create({
   playBtnWrapper: {

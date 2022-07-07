@@ -1,19 +1,25 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
-import { Stores } from 'app/src/functions/Stores';
 import { Pressable } from 'react-native';
 import Slider from '@react-native-community/slider';
+import { PlayerStore } from 'app/src/stores/player';
 
-export default observer(() => {
-  const { playerStore } = Stores();
+export default () => {
+  const {
+    onSeekBarTap,
+    onSliderLayout,
+    seekPosition,
+    setSliding,
+    onSeekSliderValueChange,
+    onSeekSliderSlidingComplete,
+  } = PlayerStore();
   return (
     <Pressable
       onPressOut={(evt) => {
-        playerStore.onSeekBarTap(evt);
+        onSeekBarTap(evt);
       }}
       onLayout={(evt) => {
-        playerStore.onSliderLayout(evt);
+        onSliderLayout(evt);
       }}
       style={{
         zIndex: 15,
@@ -24,14 +30,14 @@ export default observer(() => {
         style={{ flex: 1 }}
         minimumValue={0}
         maximumValue={1}
-        value={playerStore.seekPosition}
+        value={seekPosition}
         onSlidingStart={(_) => {
-          playerStore.setSliding(true);
-          playerStore.onSeekSliderValueChange();
+          setSliding(true);
+          onSeekSliderValueChange();
         }}
         onSlidingComplete={(value) => {
-          playerStore.setSliding(false);
-          playerStore.onSeekSliderSlidingComplete(value);
+          setSliding(false);
+          onSeekSliderSlidingComplete(value);
         }}
         minimumTrackTintColor={Colors.brandBlue}
         maximumTrackTintColor={Colors.backgroundTrackColor}
@@ -39,4 +45,4 @@ export default observer(() => {
       />
     </Pressable>
   );
-});
+};

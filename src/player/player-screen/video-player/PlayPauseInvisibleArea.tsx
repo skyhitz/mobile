@@ -1,6 +1,5 @@
 import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import { inject } from 'mobx-react';
 import {
   PLAYBACK_STATES,
   SEEK_STATES,
@@ -9,14 +8,10 @@ import {
   videoHeight,
   videoWidth,
 } from 'app/src/player/player-screen/video-player/VideoConstants';
-import * as stores from 'app/src/stores';
-type Stores = typeof stores;
+import { PlayerStore } from 'app/src/stores/player';
 
-const PlayPauseInvisibleArea = inject((stores: Stores) => ({
-  playbackState: stores.playerStore.playbackState,
-  seekState: stores.playerStore.seekState,
-  togglePlay: stores.playerStore.togglePlay.bind(stores.playerStore),
-}))(({ playbackState, seekState, togglePlay }: any) => {
+const PlayPauseInvisibleArea = () => {
+  const { playbackState, seekState, togglePlay } = PlayerStore();
   if (
     (seekState == SEEK_STATES.NOT_SEEKING || seekState == SEEK_STATES.SEEKED) &&
     (playbackState == PLAYBACK_STATES.PLAYING ||
@@ -39,6 +34,6 @@ const PlayPauseInvisibleArea = inject((stores: Stores) => ({
     );
   }
   return null;
-});
+};
 
 export default PlayPauseInvisibleArea;

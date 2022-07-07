@@ -5,7 +5,7 @@ import { CommonActions, useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import DollarIcon from 'app/src/ui/icons/dollar';
 import tw from 'twin.macro';
-import { PaymentsStore } from 'app/src/stores/payments.store';
+import { PaymentsStore } from 'app/src/stores/payments';
 
 const Placeholder = () => <View style={styles.placeholder} />;
 

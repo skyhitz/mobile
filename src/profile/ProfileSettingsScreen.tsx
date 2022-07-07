@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import ProfileSettingsTopContainer from 'app/src/profile/ProfileSettingsTopContainer';
 import ShareAppBanner from 'app/src/marketing/ShareAppBanner';
@@ -17,9 +16,9 @@ import ChevronLeftIcon from 'app/src/ui/icons/chevron-left';
 import tw from 'twin.macro';
 import { UserEntriesStore } from '../stores/user-entries';
 import { LikesStore } from '../stores/likes';
-import { PaymentsStore } from '../stores/payments.store';
+import { PaymentsStore } from '../stores/payments';
 
-const ProfileSettingsScreen = observer(() => {
+const ProfileSettingsScreen = () => {
   let { refreshSubscription, credits } = PaymentsStore();
   const { refreshLikes } = LikesStore();
   const { refreshEntries } = UserEntriesStore();
@@ -42,7 +41,7 @@ const ProfileSettingsScreen = observer(() => {
       </View>
     </ResponsiveLayout>
   );
-});
+};
 
 const ProfileSettingsStack = createStackNavigator();
 

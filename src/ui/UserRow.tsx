@@ -2,13 +2,12 @@ import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Colors from 'app/src/constants/Colors';
 import { UserAvatar } from 'app/src/ui/UserAvatar';
-import { Stores } from 'app/src/functions/Stores';
-import { observer } from 'mobx-react';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import ProfileStore from '../stores/profile';
+import { PlayerStore } from '../stores/player';
 
-export default observer(({ user }) => {
-  const { playerStore } = Stores();
+export default ({ user }) => {
+  const { handleSetPlaylistMode } = PlayerStore();
   const { getProfileInfo } = ProfileStore();
   const { dispatch } = useNavigation();
   return (
@@ -17,7 +16,7 @@ export default observer(({ user }) => {
         <Pressable
           onPress={() => {
             getProfileInfo(user).then((entries: any) => {
-              playerStore.setPlaylistMode(entries);
+              handleSetPlaylistMode(entries);
             });
             dispatch(
               CommonActions.navigate({
@@ -40,7 +39,7 @@ export default observer(({ user }) => {
       </View>
     </View>
   );
-});
+};
 
 let styles = StyleSheet.create({
   rowWrap: {

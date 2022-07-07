@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { observer } from 'mobx-react';
 import { StyleSheet, Dimensions } from 'react-native';
 import PlayerScreen from '../player-screen/PlayerScreen';
 import MiniPlayer from './MiniPlayer';
 import { State } from 'react-native-gesture-handler';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { clamp, timing, withSpring } from 'react-native-redash/lib/module/v1';
-import { Stores } from 'app/src/functions/Stores';
 import Colors from 'app/src/constants/Colors';
 import Animated from 'react-native-reanimated';
+import { PlayerStore } from 'app/src/stores/player';
 
 let tabNavBottom = 89;
 
@@ -48,8 +47,8 @@ const state = new Value(State.UNDETERMINED);
 const offset = new Value(SNAP_BOTTOM);
 const clock = new Clock();
 
-export default observer(({ children }) => {
-  const { playerStore } = Stores();
+export default ({ children }) => {
+  const { show, entry } = PlayerStore();
 
   const translateY = withSpring({
     value: clamp(translationY, SNAP_TOP, SNAP_BOTTOM),
@@ -85,12 +84,12 @@ export default observer(({ children }) => {
   });
 
   useEffect(() => {
-    if (playerStore.show) {
+    if (show) {
       goUp.setValue(1 as any);
     } else {
       goDown.setValue(1 as any);
     }
-  }, [playerStore.show]);
+  }, [show]);
 
   useCode(
     () =>
@@ -126,7 +125,7 @@ export default observer(({ children }) => {
       <Animated.View
         style={[
           styles.playerSheet,
-          { opacity: playerStore.entry ? 1 : 0 },
+          { opacity: entry ? 1 : 0 },
           {
             transform: [{ translateY }],
           },
@@ -170,7 +169,7 @@ export default observer(({ children }) => {
       </Animated.View>
     </>
   );
-});
+};
 
 let styles = StyleSheet.create({
   playerSheet: {

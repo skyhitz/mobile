@@ -3,20 +3,19 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Colors from 'app/src/constants/Colors';
 import LikeIcon from 'app/src/ui/icons/like';
 import ChevronRight from 'app/src/ui/icons/chevron-right';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
 import { useLinkTo } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import { LikesStore } from '../stores/likes';
+import { PlayerStore } from '../stores/player';
 
-export default observer(() => {
-  let { playerStore } = Stores();
+export default () => {
+  let { handleSetPlaylistMode } = PlayerStore();
   const { userLikes, userLikesCount } = LikesStore();
   let linkTo = useLinkTo();
 
   const handleLikesNavigation = () => {
     linkTo('/dashboard/profile/likes');
-    playerStore.setPlaylistMode(userLikes);
+    handleSetPlaylistMode(userLikes);
   };
 
   const likesCopy = () => {
@@ -43,7 +42,7 @@ export default observer(() => {
       </View>
     </View>
   );
-});
+};
 
 let styles = StyleSheet.create({
   rowWrap: {

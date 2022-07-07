@@ -1,6 +1,5 @@
+import { PlayerStore } from 'app/src/stores/player';
 import { Video, Audio } from 'expo-av';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
 import { useState } from 'react';
 import tw from 'twin.macro';
 import BlurImageBackground from './BlurImageBackground';
@@ -15,8 +14,15 @@ Audio.setAudioModeAsync({
   playThroughEarpieceAndroid: false,
 });
 
-export default observer(({ desktop = false }) => {
-  let { playerStore } = Stores();
+export default ({ desktop = false }) => {
+  const {
+    entry,
+    streamUrl,
+    onPlaybackStatusUpdate,
+    mountVideo,
+    onFullscreenUpdate,
+    onError,
+  } = PlayerStore();
   const [loading, setLoading] = useState(false);
   const [hasVideo, setHasVideo] = useState(false);
 
@@ -25,22 +31,22 @@ export default observer(({ desktop = false }) => {
       image={
         loading || !hasVideo
           ? desktop
-            ? playerStore.entry?.imageUrlSmall
-            : playerStore.entry?.imageSrc
+            ? entry?.imageUrlSmall
+            : entry?.imageSrc
           : null
       }
-      style={[playerStore.streamUrl && tw`bg-blue-dark`]}
+      style={[streamUrl && tw`bg-blue-dark`]}
       intensity={0}
     >
       <Video
         source={{
-          uri: playerStore.streamUrl,
+          uri: streamUrl,
         }}
         ref={(ref) => {
-          playerStore.mountVideo(ref);
+          mountVideo(ref);
         }}
         onPlaybackStatusUpdate={(status) => {
-          playerStore.onPlaybackStatusUpdate(status);
+          onPlaybackStatusUpdate(status);
         }}
         resizeMode={Video.RESIZE_MODE_CONTAIN}
         style={[
@@ -49,8 +55,8 @@ export default observer(({ desktop = false }) => {
             ? tw`h-12 w-12 flex-col justify-center p-0 m-0`
             : { maxHeight: 360 },
         ]}
-        onError={(error) => playerStore.onError(error)}
-        onFullscreenUpdate={(update) => playerStore.onFullscreenUpdate(update)}
+        onError={(error) => onError(error)}
+        onFullscreenUpdate={(update) => onFullscreenUpdate(update)}
         onReadyForDisplay={(res: any) => {
           if (!res.target) return;
           const { videoHeight, videoWidth } = res.target;
@@ -63,4 +69,4 @@ export default observer(({ desktop = false }) => {
       />
     </BlurImageBackground>
   );
-});
+};

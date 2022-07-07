@@ -5,12 +5,11 @@ import Colors from 'app/src/constants/Colors';
 import SearchingLoader from '../ui/SearchingLoader';
 import EntryChartRow from '../ui/EntryChartRow';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
-import { Stores } from 'app/src/functions/Stores';
-import { observer } from 'mobx-react';
 import { SearchStore } from '../stores/search';
+import { PlayerStore } from '../stores/player';
 
-export default observer((props) => {
-  const { playerStore } = Stores();
+export default (props) => {
+  const { loadAndPlay, setPlaylistModeFromArray } = PlayerStore();
   const {
     topChart,
     hasMoreTopChart,
@@ -22,12 +21,10 @@ export default observer((props) => {
     return (
       <EntryChartRow
         key={item.id}
-        play={() => playerStore.loadAndPlay(item)}
+        play={() => loadAndPlay(item)}
         entry={item}
         options={null}
-        disablePlaylistMode={() =>
-          playerStore.setPlaylistModeFromArray(topChart)
-        }
+        disablePlaylistMode={() => setPlaylistModeFromArray(topChart)}
         previousScreen={null}
         position={index + 1}
       />
@@ -65,7 +62,7 @@ export default observer((props) => {
       </ResponsiveLayout>
     </SafeAreaView>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

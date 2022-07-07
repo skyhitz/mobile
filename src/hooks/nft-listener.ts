@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Config } from 'app/src/config';
 import { userAtom } from '../atoms/atoms';
 import { useRecoilValue } from 'recoil';
-import { EntryStore } from '../stores/entry.store';
+import { EntryStore } from '../stores/entry';
 const EventSource = require('eventsource');
 
 const nftListener = (open) => {

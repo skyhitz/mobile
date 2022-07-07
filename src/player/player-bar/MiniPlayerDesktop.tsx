@@ -12,25 +12,24 @@ import {
 import Slider from '../player-screen/slider/Slider';
 import VideoComponent from '../player-screen/video-player/VideoComponent';
 import Colors from 'app/src/constants/Colors';
-import { Stores } from 'app/src/functions/Stores';
-import { observer } from 'mobx-react';
+import { PlayerStore } from 'app/src/stores/player';
 
-export default observer(() => {
-  let { playerStore } = Stores();
+export default () => {
+  let { entry } = PlayerStore();
   return (
     <View style={styles.desktopWrap}>
       <View style={styles.videoWrap}>
         <VideoComponent desktop={true} />
         <View style={styles.infoWrap}>
           <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
-            {playerStore.entry?.title}
+            {entry?.title}
           </Text>
           <Text
             style={styles.artistName}
             ellipsizeMode="tail"
             numberOfLines={1}
           >
-            {playerStore.entry?.artist}
+            {entry?.artist}
           </Text>
         </View>
       </View>
@@ -51,7 +50,7 @@ export default observer(() => {
       <View style={styles.videoWrap} />
     </View>
   );
-});
+};
 
 let styles = StyleSheet.create({
   rowControls: {

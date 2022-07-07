@@ -1,21 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
-import { observer } from 'mobx-react';
 import Colors from 'app/src/constants/Colors';
 import LikeOptionRow from 'app/src/search/LikeOptionRow';
 import SetPrice from 'app/src/search/SetPrice';
-import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/native';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import BuyBtn from 'app/src/ui/buy-btn/BuyBtn';
+import { SessionStore } from '../stores/session';
 
-export default observer(({ route }) => {
-  const { sessionStore } = Stores();
+export default ({ route }) => {
+  const { user } = SessionStore();
   const { entry, previousScreen } = route.params;
   const { goBack } = useNavigation();
 
   const renderSetPrice = (entry: any) => {
-    if (!sessionStore.user) return;
+    if (!user) return;
     if (previousScreen === 'MyMusicScreen') {
       return <SetPrice entry={entry} />;
     }
@@ -47,7 +46,7 @@ export default observer(({ route }) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -13,9 +13,8 @@ import BuyBtn from 'app/src/ui/buy-btn/BuyBtn';
 import PlayerControls from './player-controls/PlayerControls';
 import LikersSection from './likers-section/LikersSection';
 import Colors from 'app/src/constants/Colors';
-import { observer } from 'mobx-react';
-import { Stores } from 'app/src/functions/Stores';
 import cursorPointer from 'app/src/constants/CursorPointer';
+import { PlayerStore } from 'app/src/stores/player';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -62,24 +61,24 @@ const styles = StyleSheet.create({
   },
 });
 
-export default observer(() => {
-  let { playerStore } = Stores();
+export default () => {
+  let { hidePlayer, entry } = PlayerStore();
 
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
         <Pressable
           style={[styles.button, cursorPointer]}
-          onPress={() => playerStore.hidePlayer()}
+          onPress={() => hidePlayer()}
         >
           <ChevronDown size={24} color={Colors.white} />
         </Pressable>
       </View>
       <VideoPlayer />
       <PlayerEntryInfo />
-      <BuyBtn entry={playerStore.entry} />
+      <BuyBtn entry={entry} />
       <PlayerControls />
       <LikersSection />
     </SafeAreaView>
   );
-});
+};
