@@ -1,5 +1,4 @@
 import { useRecoilValue } from 'recoil';
-import * as L from 'list';
 import { likesBackend } from '../api/likes';
 import { userAtom } from '../atoms/atoms';
 import { Entry, User } from '../models';
@@ -9,16 +8,14 @@ export const LikesStore = () => {
   let loading: boolean = false;
   let loadingEntryLikes: boolean = false;
   let entry!: Entry;
-  let entryLikes: L.List<User> = L.from([]);
+  let entryLikes: User[] = [];
   let entryLikesCount!: number;
-  let userLikes: L.List<Entry> = L.from([]);
+  let userLikes: Entry[] = [];
   let userLikesCount!: number;
 
   const user = useRecoilValue(userAtom);
 
   let viewLimit: number = 8;
-  let disposer: any;
-  let userDisposer: any;
 
   const hasMoreLikers = () => {
     if (entryLikesCount > viewLimit) {
@@ -54,8 +51,8 @@ export const LikesStore = () => {
   // }
 
   const clearLikes = () => {
-    entryLikes = L.from([]);
-    userLikes = L.from([]);
+    entryLikes = [];
+    userLikes = [];
   };
 
   const refreshEntryLikes = (id: string) => {
@@ -66,7 +63,7 @@ export const LikesStore = () => {
         let users = payload.users.map(
           (userPayload: any) => new User(userPayload)
         );
-        entryLikes = L.from(users);
+        entryLikes = users;
       }
 
       loadingEntryLikes = false;
@@ -82,7 +79,7 @@ export const LikesStore = () => {
         let ids = userLikes.map((like: any) => like.id);
         let entries = userLikes.map((like: any) => new Entry(like));
         ids = new Set(ids);
-        userLikes = L.from(entries);
+        userLikes = entries;
         userLikesCount = userLikes.length;
       }
 
@@ -92,47 +89,47 @@ export const LikesStore = () => {
 
   const unlike = async (entry: Entry) => {
     ids.delete(entry.id);
-    let index = L.findIndex((like) => {
+    let index = userLikes.findIndex((like) => {
       if (like) {
         return like.id === entry.id;
       }
       return false;
-    }, userLikes);
-    userLikes = L.remove(index, 1, userLikes);
+    });
+    userLikes.splice(index, 1);
     let unliked = await likesBackend.like(entry.id, false);
     if (!unliked) {
       ids = ids.add(entry.id);
-      userLikes = L.append(entry, userLikes);
+      userLikes.push(entry);
     }
     userLikesCount = userLikes.length;
 
-    let userIndex = L.findIndex((like) => {
+    let userIndex = entryLikes.findIndex((like) => {
       if (like) {
         return like.id === user?.id;
       }
       return false;
-    }, entryLikes);
-    entryLikes = L.remove(userIndex, 1, entryLikes);
+    });
+    entryLikes.splice(userIndex, 1);
   };
 
   const like = async (entry: Entry) => {
     if (!user) return;
     ids = ids.add(entry.id);
-    userLikes = L.append(entry, userLikes);
+    userLikes.push(entry);
     let liked = await likesBackend.like(entry.id);
     if (!liked) {
       ids.delete(entry.id);
-      let index = L.findIndex((like) => {
+      let index = userLikes.findIndex((like) => {
         if (like) {
           return like.id === entry.id;
         }
         return false;
-      }, userLikes);
-      userLikes = L.remove(index, 1, userLikes);
+      });
+      userLikes.splice(index, 1);
     }
     userLikesCount = userLikes.length;
 
-    entryLikes = L.append(user, entryLikes);
+    entryLikes.push(user);
   };
 
   const toggleLike = (entry: Entry) => {

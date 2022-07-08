@@ -4,7 +4,6 @@ import EntryRow from 'app/src/ui/EntryRow';
 import SearchingLoader from 'app/src/ui/SearchingLoader';
 import Colors from 'app/src/constants/Colors';
 import BottomPlaceholder from 'app/src/ui/BottomPlaceholder';
-import * as L from 'list';
 import ResponsiveLayout from '../ui/ResponsiveLayout';
 import { UserEntriesStore } from '../stores/user-entries';
 
@@ -20,19 +19,16 @@ export default () => {
     >
       <ResponsiveLayout>
         {SearchingLoader(loading)}
-        {L.map(
-          (entry: any) => (
-            <EntryRow
-              key={entry.id}
-              play={() => {}}
-              entry={entry}
-              options={null}
-              disablePlaylistMode={null}
-              previousScreen={'CollectionScreen'}
-            />
-          ),
-          entries
-        )}
+        {entries.map((entry: any) => (
+          <EntryRow
+            key={entry.id}
+            play={() => {}}
+            entry={entry}
+            options={null}
+            disablePlaylistMode={null}
+            previousScreen={'CollectionScreen'}
+          />
+        ))}
         <BottomPlaceholder />
       </ResponsiveLayout>
     </ScrollView>

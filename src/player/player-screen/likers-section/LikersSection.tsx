@@ -3,7 +3,6 @@ import { StyleSheet, View, Text } from 'react-native';
 import LikeBtn from 'app/src/player/player-screen/like-btn/LikeBtn';
 import Divider from 'app/src/ui/Divider';
 import { UserAvatar } from 'app/src/ui/UserAvatar';
-import * as L from 'list';
 import { LikesStore } from 'app/src/stores/likes';
 
 export default () => {
@@ -30,14 +29,11 @@ export default () => {
       <Divider />
       <View style={styles.likers}>
         {entryLikes &&
-          L.map(
-            (liker: any) => (
-              <View style={styles.liker} key={liker.id}>
-                <UserAvatar user={liker} />
-              </View>
-            ),
-            entryLikes
-          )}
+          entryLikes.map((liker) => (
+            <View style={styles.liker} key={liker.id}>
+              <UserAvatar user={liker} />
+            </View>
+          ))}
         {renderMoreLikersBtn()}
       </View>
     </View>
