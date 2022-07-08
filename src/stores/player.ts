@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 import { atom, useRecoilState } from 'recoil';
 
 const entryAtom = atom<Entry | null>({
-  key: 'subscribed',
+  key: 'playerEntry',
   default: null,
 });
 const showMiniPlayerAtom = atom<boolean>({
@@ -21,7 +21,7 @@ const tabBarBottomAtom = atom<number>({
   default: 0,
 });
 const loopAtom = atom<boolean>({
-  key: 'tabBarBottom',
+  key: 'loop',
   default: false,
 });
 const shuffleAtom = atom<boolean>({

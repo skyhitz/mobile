@@ -1,10 +1,13 @@
 import React, { lazy } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useMediaQuery } from 'react-responsive';
 import { SuspenseLoading } from './SuspenseLoading';
 import Colors from 'app/src/constants/Colors';
 import { Platform } from 'react-native';
 import CancelEditBtn from '../ui/CancelEditBtn';
 import DoneEditBtn from '../ui/DoneEditBtn';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../atoms/atoms';
 
 const MainTabNavigator = lazy(() =>
   import('app/src/navigation/MainTabNavigator')
@@ -132,7 +135,10 @@ export const AppStack = createStackNavigator();
 
 const appTitle = 'Skyhitz - Music NFTs on Stellar';
 
-export function LazyAppStackNavigator({ user, headerShown }) {
+export function LazyAppStackNavigator() {
+  const user = useRecoilValue(userAtom);
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const headerShown = !isDesktop;
   return (
     <AppStack.Navigator
       screenOptions={{
