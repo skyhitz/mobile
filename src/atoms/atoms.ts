@@ -37,7 +37,7 @@ export const userAtom = atom<null | User>({
 export const profileAtom = atom<ProfileEdit>({
   key: 'profileEdit',
   default: selector({
-    key: 'user',
+    key: 'userSelect',
     get: ({ get }) => {
       const user = get(userAtom);
       if (!user)
@@ -71,7 +71,7 @@ export const profileAtom = atom<ProfileEdit>({
 });
 
 export const profileValidationErrorAtom = selector<string | null>({
-  key: 'profileError',
+  key: 'profileValidationError',
   get: ({ get }) => {
     const { avatarUrl, displayName, description, username, email } = get(
       profileAtom
@@ -100,7 +100,7 @@ export const profileValidationErrorAtom = selector<string | null>({
 });
 
 export const canUpdateProfileAtom = selector<boolean>({
-  key: 'profileError',
+  key: 'canUpdateProfile',
   get: ({ get }) => {
     const { avatarUrl, displayName, description, username, email } = get(
       profileAtom
