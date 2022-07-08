@@ -10,10 +10,6 @@ export default (props) => {
   if (!user) {
     return null;
   }
-  let source;
-  if (user.avatarUrl) {
-    source = { uri: user.avatarUrl };
-  }
   return (
     <View style={styles.container}>
       <View style={styles.overlay}>

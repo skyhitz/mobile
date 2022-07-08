@@ -4,11 +4,11 @@ import LikeIcon from 'app/src/ui/icons/like';
 import Colors from 'app/src/constants/Colors';
 import cursorPointer from 'app/src/constants/CursorPointer';
 import { LikesStore } from 'app/src/stores/likes';
+import { PlayerStore } from 'app/src/stores/player';
 
 export default (props) => {
   const { toggleLike, isLiked } = LikesStore();
-  // const { entry } = PlayerStore();
-  const entry = null;
+  const { entry } = PlayerStore();
 
   if (!entry) {
     return null;

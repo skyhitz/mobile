@@ -165,5 +165,7 @@ export const LikesStore = () => {
     refreshLikes,
     isEntryLiked,
     clearLikes,
+    refreshEntryLikes,
+    loadingEntryLikes,
   };
 };

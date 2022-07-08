@@ -74,7 +74,6 @@ const shouldPlayAtEndOfSeekAtom = atom<boolean>({
 const sliderWidthAtom = atom<number>({ key: 'sliderWidth', default: 0 });
 const cueListAtom = atom<any[]>({ key: 'cueList', default: [] });
 const currentIndexAtom = atom<number>({ key: 'currentIndex', default: 0 });
-const retryTimesAtom = atom<number>({ key: 'retryTimes', default: 0 });
 const playlistModeAtom = atom<boolean>({ key: 'playlistMode', default: false });
 const playbackInstanceAtom = atom<any>({ key: 'playbackInstance' });
 const seekPositionAtom = atom<number>({ key: 'seekPosition', default: 0 });
@@ -118,7 +117,6 @@ export const PlayerStore = () => {
   const [sliderWidth, setSliderWidth] = useRecoilState(sliderWidthAtom);
   const [cueList, setCueList] = useRecoilState(cueListAtom);
   const [currentIndex, setCurrentIndex] = useRecoilState(currentIndexAtom);
-  const [retryTimes, setRetryTimes] = useRecoilState(retryTimesAtom);
   const [playlistMode, setPlaylistMode] = useRecoilState(playlistModeAtom);
   const [playbackInstance, setPlaybackInstance] = useRecoilState(
     playbackInstanceAtom
@@ -604,5 +602,20 @@ export const PlayerStore = () => {
     handleSetPlaylistMode,
     loadAndPlay,
     setPlaylistModeFromArray,
+    showMiniPlayer,
+    tabBarBottom,
+    setControlsState,
+    positionMillis,
+    setPositionMillis,
+    lastPlaybackState,
+    setLastPlaybackState,
+    setNetworkState,
+    refreshEntry,
+    disablePlaylistMode,
+    loadPlayAndUnshiftToCueList,
+    unmountMiniPlayer,
+    mountMiniPlayer,
+    loadPlayAndPushToCueList,
+    handleSetPlaybackInstance,
   };
 };

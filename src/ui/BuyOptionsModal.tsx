@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import Colors from 'app/src/constants/Colors';
 import LargeBtn from './LargeBtn';
-import { Stores } from 'app/src/functions/Stores';
 import { useNavigation } from '@react-navigation/core';
 import { useLinkTo } from '@react-navigation/native';
 import { UserEntriesStore } from '../stores/user-entries';
 import { PaymentsStore } from '../stores/payments';
 import { WalletConnectStore } from '../stores/wallet-connect';
+import { PlayerStore } from '../stores/player';
 
 export default ({ route }) => {
   const { entry, priceInfo } = route.params;
@@ -19,7 +19,7 @@ export default ({ route }) => {
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
 
-  const { playerStore } = Stores();
+  const { refreshEntry } = PlayerStore();
   const { signAndSubmitXdr } = WalletConnectStore();
   const { buyEntry, refreshSubscription, credits } = PaymentsStore();
   const { refreshEntries } = UserEntriesStore();
@@ -38,7 +38,7 @@ export default ({ route }) => {
         await signAndSubmitXdr(xdr);
       }
       await Promise.all([await refreshEntries(), await refreshSubscription()]);
-      playerStore.refreshEntry();
+      refreshEntry();
       setSubmitting(false);
       goBack();
       linkTo('/dashboard/profile');
