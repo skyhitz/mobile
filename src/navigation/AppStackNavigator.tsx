@@ -1,113 +1,26 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useMediaQuery } from 'react-responsive';
-import { SuspenseLoading } from './SuspenseLoading';
 import Colors from 'app/src/constants/Colors';
 import { Platform } from 'react-native';
 import CancelEditBtn from '../ui/CancelEditBtn';
 import DoneEditBtn from '../ui/DoneEditBtn';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '../atoms/atoms';
-
-const MainTabNavigator = lazy(() =>
-  import('app/src/navigation/MainTabNavigator')
-);
-
-const MainTabNavigatorSuspense = (props) => (
-  <SuspenseLoading>
-    <MainTabNavigator {...props} />
-  </SuspenseLoading>
-);
-
-const EditProfileScreen = lazy(() =>
-  import('app/src/profile/EditProfileScreen')
-);
-
-const EditProfileScreenSuspense = (props) => (
-  <SuspenseLoading>
-    <EditProfileScreen {...props} />
-  </SuspenseLoading>
-);
-const EntryOptionsModal = lazy(() =>
-  import('app/src/search/EntryOptionsModal')
-);
-
-const EntryOptionsModalSuspense = (props) => (
-  <SuspenseLoading>
-    <EntryOptionsModal {...props} />
-  </SuspenseLoading>
-);
-const PricingOptionsModal = lazy(() =>
-  import('app/src/search/PricingOptionsModal')
-);
-const PricingOptionsModalSuspense = (props) => (
-  <SuspenseLoading>
-    <PricingOptionsModal {...props} />
-  </SuspenseLoading>
-);
-
-const PaymentModal = lazy(() => import('app/src/profile/PaymentModal'));
-const PaymentModalSuspense = (props) => (
-  <SuspenseLoading>
-    <PaymentModal {...props} />
-  </SuspenseLoading>
-);
-
-const LowBalanceModal = lazy(() => import('app/src/profile/LowBalanceModal'));
-const LowBalanceModalSuspense = (props) => (
-  <SuspenseLoading>
-    <LowBalanceModal {...props} />
-  </SuspenseLoading>
-);
-
-const WithdrawalModal = lazy(() => import('app/src/profile/WithdrawalModal'));
-const WithdrawalModalSuspense = (props) => (
-  <SuspenseLoading>
-    <WithdrawalModal {...props} />
-  </SuspenseLoading>
-);
-const BuyOptionsModal = lazy(() => import('app/src/ui/BuyOptionsModal'));
-const BuyOptionsModalSuspense = (props) => (
-  <SuspenseLoading>
-    <BuyOptionsModal {...props} />
-  </SuspenseLoading>
-);
-const AuthScreen = lazy(() => import('app/src/accounts/AuthScreen'));
-const AuthScreenSuspense = (props) => (
-  <SuspenseLoading>
-    <AuthScreen {...props} />
-  </SuspenseLoading>
-);
-const SignUpScreen = lazy(() => import('app/src/accounts/SignUpScreen'));
-const SignUpScreenSuspense = (props) => (
-  <SuspenseLoading>
-    <SignUpScreen {...props} />
-  </SuspenseLoading>
-);
-const SignInScreen = lazy(() => import('app/src/accounts/SignInScreen'));
-const SignInScreenSuspense = (props) => (
-  <SuspenseLoading>
-    <SignInScreen {...props} />
-  </SuspenseLoading>
-);
-const WebApp = lazy(() => import('app/src/marketing/web/Home'));
-const WebAppSuspense = (props) => (
-  <SuspenseLoading>
-    <WebApp {...props} />
-  </SuspenseLoading>
-);
-const Privacy = lazy(() => import('app/src/marketing/web/Privacy'));
-const PrivacySuspense = (props) => (
-  <SuspenseLoading>
-    <Privacy {...props} />
-  </SuspenseLoading>
-);
-const Terms = lazy(() => import('app/src/marketing/web/Terms'));
-const TermsSuspense = (props) => (
-  <SuspenseLoading>
-    <Terms {...props} />
-  </SuspenseLoading>
-);
+import SignInScreen from 'app/src/accounts/SignInScreen';
+import MainTabNavigator from 'app/src/navigation/MainTabNavigator';
+import EditProfileModal from 'app/src/profile/EditProfileScreen';
+import EntryOptionsModal from 'app/src/search/EntryOptionsModal';
+import PricingOptionsModal from 'app/src/search/PricingOptionsModal';
+import PaymentModal from 'app/src/profile/PaymentModal';
+import LowBalanceModal from 'app/src/profile/LowBalanceModal';
+import WithdrawalModal from 'app/src/profile/WithdrawalModal';
+import BuyOptionsModal from 'app/src/ui/BuyOptionsModal';
+import AuthScreen from 'app/src/accounts/AuthScreen';
+import SignUpScreen from 'app/src/accounts/SignUpScreen';
+import WebApp from 'app/src/marketing/web/Home';
+import Privacy from 'app/src/marketing/web/Privacy';
+import Terms from 'app/src/marketing/web/Terms';
 
 const modalOptions = {
   headerShown: false,
@@ -135,7 +48,7 @@ export const AppStack = createStackNavigator();
 
 const appTitle = 'Skyhitz - Music NFTs on Stellar';
 
-export function LazyAppStackNavigator() {
+export function AppStackNavigator() {
   const user = useRecoilValue(userAtom);
   const isDesktop = useMediaQuery({ minWidth: 768 });
   const headerShown = !isDesktop;
@@ -151,7 +64,7 @@ export function LazyAppStackNavigator() {
           <>
             <AppStack.Screen
               name="Main"
-              getComponent={() => MainTabNavigatorSuspense}
+              getComponent={() => MainTabNavigator}
               options={{ headerShown: false }}
             />
           </>
@@ -160,7 +73,7 @@ export function LazyAppStackNavigator() {
             {Platform.OS === 'web' ? (
               <AppStack.Screen
                 name="WebApp"
-                getComponent={() => WebAppSuspense}
+                getComponent={() => WebApp}
                 options={{
                   headerShown: false,
                   title: appTitle,
@@ -169,7 +82,7 @@ export function LazyAppStackNavigator() {
             ) : (
               <AppStack.Screen
                 name="AuthScreen"
-                getComponent={() => AuthScreenSuspense}
+                getComponent={() => AuthScreen}
                 options={{
                   headerShown: false,
                   gestureEnabled: false,
@@ -179,7 +92,7 @@ export function LazyAppStackNavigator() {
             )}
             <AppStack.Screen
               name="SignUp"
-              getComponent={() => SignUpScreenSuspense}
+              getComponent={() => SignUpScreen}
               options={{
                 headerShown: headerShown,
                 headerTitleStyle: { color: Colors.white },
@@ -193,7 +106,7 @@ export function LazyAppStackNavigator() {
             />
             <AppStack.Screen
               name="SignIn"
-              getComponent={() => SignInScreenSuspense}
+              getComponent={() => SignInScreen}
               options={{
                 headerShown: headerShown,
                 headerTitleStyle: { color: Colors.white },
@@ -207,7 +120,7 @@ export function LazyAppStackNavigator() {
             />
             <AppStack.Screen
               name="Privacy"
-              getComponent={() => PrivacySuspense}
+              getComponent={() => Privacy}
               options={{
                 headerShown: headerShown,
                 headerTitleStyle: { color: Colors.white },
@@ -221,7 +134,7 @@ export function LazyAppStackNavigator() {
             />
             <AppStack.Screen
               name="Terms"
-              getComponent={() => TermsSuspense}
+              getComponent={() => Terms}
               options={{
                 headerShown: headerShown,
                 headerTitleStyle: { color: Colors.white },
@@ -239,7 +152,7 @@ export function LazyAppStackNavigator() {
       <AppStack.Group screenOptions={{ presentation: 'transparentModal' }}>
         <AppStack.Screen
           name="EditProfileModal"
-          getComponent={() => EditProfileScreenSuspense}
+          getComponent={() => EditProfileModal}
           options={{
             gestureEnabled: false,
             title: 'Edit Profile',
@@ -259,32 +172,32 @@ export function LazyAppStackNavigator() {
 
         <AppStack.Screen
           name="PaymentModal"
-          getComponent={() => PaymentModalSuspense}
+          getComponent={() => PaymentModal}
           options={modalOptions}
         />
         <AppStack.Screen
           name="WithdrawalModal"
-          getComponent={() => WithdrawalModalSuspense}
+          getComponent={() => WithdrawalModal}
           options={modalOptions}
         />
         <AppStack.Screen
           name="BuyOptionsModal"
-          getComponent={() => BuyOptionsModalSuspense}
+          getComponent={() => BuyOptionsModal}
           options={modalOptions}
         />
         <AppStack.Screen
           name="EntryOptionsModal"
-          getComponent={() => EntryOptionsModalSuspense}
+          getComponent={() => EntryOptionsModal}
           options={modalOptions}
         />
         <AppStack.Screen
           name="PricingOptionsModal"
-          getComponent={() => PricingOptionsModalSuspense}
+          getComponent={() => PricingOptionsModal}
           options={modalOptions}
         />
         <AppStack.Screen
           name="LowBalanceModal"
-          getComponent={() => LowBalanceModalSuspense}
+          getComponent={() => LowBalanceModal}
           options={modalOptions}
         />
       </AppStack.Group>

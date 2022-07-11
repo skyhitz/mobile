@@ -1,36 +1,31 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import { StatusBar } from 'react-native';
-import { SuspenseLoading } from './SuspenseLoading';
+import { AppStackNavigator } from 'app/src/navigation/AppStackNavigator';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import Colors from 'app/src/constants/Colors';
+import LinkingConfiguration from './LinkingConfiguration';
+import LoadingScreen from 'app/src/accounts/LoadingScreen';
 
-const LazyAppStackNavigator = lazy(() =>
-  import('app/src/navigation/LazyAppStackNavigator').then((mod) => ({
-    default: mod.LazyAppStackNavigator,
-  }))
-);
-
-export const LazyAppStackNavigatorSuspense = (props) => (
-  <SuspenseLoading>
-    <LazyAppStackNavigator {...props} />
-  </SuspenseLoading>
-);
-
-const LazyNavigationContainer = lazy(() =>
-  import('app/src/navigation/LazyNavigationContainer')
-);
-
-const LazyNavigationContainerSuspense = (props) => (
-  <SuspenseLoading>
-    <LazyNavigationContainer {...props} />
-  </SuspenseLoading>
-);
+const Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    card: Colors.darkBlue,
+    background: Colors.darkBlue,
+  },
+};
 
 const RootNavigation = () => {
   StatusBar.setBarStyle('light-content');
 
   return (
-    <LazyNavigationContainerSuspense>
-      <LazyAppStackNavigatorSuspense />
-    </LazyNavigationContainerSuspense>
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      fallback={<LoadingScreen />}
+      theme={Theme}
+    >
+      <AppStackNavigator />
+    </NavigationContainer>
   );
 };
 

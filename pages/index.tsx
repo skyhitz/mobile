@@ -21,10 +21,10 @@ export default () => {
     return <LoadingScreen />;
   }
   return (
-    <RecoilRoot>
-      <ErrorBoundary onError={errorHandler}>
+    <ErrorBoundary onError={errorHandler} FallbackComponent={LoadingScreen}>
+      <RecoilRoot>
         <RootNavigation />
-      </ErrorBoundary>
-    </RecoilRoot>
+      </RecoilRoot>
+    </ErrorBoundary>
   );
 };
