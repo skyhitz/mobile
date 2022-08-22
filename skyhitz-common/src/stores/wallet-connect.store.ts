@@ -30,6 +30,7 @@ export class WalletConnectStore {
     this.proposals = new Map();
     SignClient.init({
       projectId: '422a527ddc3ed4c5fff60954fcc8ed83',
+      logger: 'debug',
       metadata: {
         name: 'Skyhitz',
         description: 'Skyhitz',
@@ -67,6 +68,8 @@ export class WalletConnectStore {
   async connect() {
     if (!this.client) return { uri: '' };
     return await this.client.connect({
+      // pairingTopic: undefined,
+      // relays: [{ protocol: 'iridium' }],
       requiredNamespaces: {
         stellar: {
           chains: [stellarMeta.chainName],
